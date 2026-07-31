@@ -1,0 +1,265 @@
+:root {
+    --navy: #0d2e5c;
+    --navy-dark: #061a35;
+    --navy-subtle: #eef2f7; /* Warna background light blue */
+    --gold: #fca311;
+    --gold-hover: #e0900e;
+    --gold-subtle: #fff9ed;
+    --text-body: #555555;
+    --text-heading: #14213d;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    color: var(--text-body);
+    line-height: 1.7;
+    background-color: var(--white);
+    overflow-x: hidden; /* Tambahkan ini untuk mencegah layar goyang ke samping di HP */
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-heading);
+}
+
+/* --- UTILITIES --- */
+/* Kita ubah bg-navy menjadi tetap navy untuk tombol/elemen kecil, 
+   tapi untuk layout besar kita override nanti */
+.bg-navy { background-color: var(--navy) !important; }
+.bg-navy-dark { background-color: var(--navy-dark) !important; }
+.bg-navy-subtle { background-color: var(--navy-subtle) !important; }
+.text-navy { color: var(--navy) !important; }
+.text-gold { color: var(--gold) !important; }
+.ls-2 { letter-spacing: 2px; }
+
+/* Responsive Width Utilities */
+@media (min-width: 768px) {
+    .w-md-auto { width: auto !important; }
+}
+@media (min-width: 992px) {
+    .w-lg-auto { width: auto !important; }
+}
+
+/* --- BUTTONS --- */
+/* Tombol tetap kontras (Gelap di atas Terang) */
+.btn-gold {
+    background-color: var(--gold);
+    color: var(--navy-dark);
+    border: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+.btn-gold:hover { 
+    background-color: var(--gold-hover); 
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+}
+
+.btn-navy {
+    background-color: var(--navy);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-navy:hover {
+    background-color: var(--navy-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(13, 46, 92, 0.4);
+}
+
+/* --- NAVBAR (LIGHT THEME) --- */
+/* Paksa navbar jadi putih bersih */
+.navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.95) !important; /* Putih Transparan */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.navbar.shadow-sm {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+}
+
+/* Ubah warna teks navbar jadi Navy */
+.navbar-brand, 
+.nav-link {
+    color: var(--navy) !important;
+    font-weight: 500;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: var(--gold) !important;
+}
+
+/* Toggler (Hamburger menu) jadi gelap */
+.navbar-toggler {
+    border-color: rgba(13, 46, 92, 0.1) !important;
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(13, 46, 92, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* --- HERO SECTION (LIGHT THEME) --- */
+.hero-section {
+    background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-top: 80px;
+    position: relative;
+}
+
+/* Overlay diganti jadi Putih/Light Blue Transparan */
+.bg-overlay {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 242, 247, 0.85) 100%);
+}
+
+/* Paksa teks di Hero jadi Gelap */
+.hero-section h1, 
+.hero-section .lead, 
+.hero-section p {
+    color: var(--navy) !important;
+    text-shadow: none !important;
+}
+
+.hero-section .text-white-50 {
+    color: #666 !important; /* Ubah teks pudar jadi abu-abu */
+}
+
+/* --- SERVICES & CARDS --- */
+.service-card {
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+}
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 1rem 3rem rgba(13, 46, 92, 0.1) !important;
+    border-color: var(--gold) !important;
+}
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- CONTACT SECTION (MODIFIKASI LIGHT) --- */
+/* Bagian Kiri Form (Info Kontak) kita ubah jadi Navy Subtle (Biru Muda) */
+#contact .bg-navy {
+    background-color: var(--navy) !important; /* Tetap navy biar kontras sama form kanan */
+}
+
+/* Input Form */
+.form-floating > .form-control {
+    background-color: #f8f9fa !important; /* Abu-abu sangat muda */
+    border: 1px solid #eee !important;
+}
+.form-floating > .form-control:focus {
+    background-color: white !important;
+    border-color: var(--navy) !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 46, 92, 0.1);
+}
+.form-floating > label {
+    color: #888;
+}
+
+/* --- FOOTER (LIGHT THEME) --- */
+/* Kita override class bg-navy-dark di footer menjadi light gray */
+footer.bg-navy-dark {
+    background-color: var(--light-gray) !important;
+    color: var(--navy) !important;
+    border-top: 1px solid #e9ecef !important;
+}
+
+/* Link di footer */
+footer a, 
+footer p, 
+footer li {
+    color: #6c757d !important; /* Abu-abu */
+}
+
+footer a:hover {
+    color: var(--navy) !important;
+}
+
+footer .text-white-50 {
+    color: #6c757d !important;
+}
+
+footer h5, footer h6 {
+    color: var(--navy) !important; /* Judul footer jadi navy */
+}
+
+/* Social Icons di Footer */
+.social-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: 0.3s;
+    border: 1px solid #ddd;
+}
+.social-icon:hover {
+    background-color: var(--navy);
+    color: var(--gold);
+    border-color: var(--navy);
+}
+
+/* --- ANIMATIONS & EXTRAS --- */
+.hover-up {
+    transition: transform 0.3s ease;
+}
+.hover-up:hover {
+    transform: translateY(-3px);
+}
+
+.divide-cols > div:not(:last-child) {
+    border-right: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .divide-cols > div:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    .hero-section {
+        text-align: center;
+    }
+}
+
+/* Custom Tabs for Portfolio */
+.nav-pills .nav-link {
+    color: var(--text-body);
+    background-color: var(--light-gray);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+.nav-pills .nav-link.active, 
+.nav-pills .nav-link:hover {
+    background-color: var(--navy);
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(13, 46, 92, 0.2);
+}
+.hover-navy:hover {
+    color: var(--navy) !important;
+}
+.object-fit-cover {
+    object-fit: cover;
+}

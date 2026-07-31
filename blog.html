@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Wawasan - Skillance</title>
+    
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-code text-gold fs-4"></i>
+                <div class="d-flex flex-column">
+                    <span class="fw-bold lh-1 text-white">SKILLANCE</span>
+                    <span class="small text-white-50" style="font-size: 0.65rem;">KEMBALI KE BERANDA</span>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <section class="bg-navy text-white text-center py-5 mt-5">
+        <div class="container py-4">
+            <h1 class="fw-bold font-heading mb-3">Wawasan & Kabar Terbaru</h1>
+            <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                Temukan berbagai artikel menarik seputar teknologi, edukasi bisnis digital, dan kegiatan Laskar Wonua.
+            </p>
+            
+            <div class="mx-auto mt-4" style="max-width: 500px;">
+                <div class="input-group mb-3 shadow-sm">
+                    <input type="text" class="form-control border-0 py-3 px-4 rounded-start-pill" placeholder="Cari artikel...">
+                    <button class="btn btn-gold px-4 rounded-end-pill fw-bold" type="button"><i class="fa-solid fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row g-4" id="all-blogs-list">
+            <div class="col-12 text-center py-5 text-muted" id="loading-all">
+                <i class="fa-solid fa-spinner fa-spin fa-2x mb-3"></i>
+                <p>Memuat semua artikel...</p>
+            </div>
+        </div>
+        
+        <nav class="mt-5" aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
+                <li class="page-item active"><a class="page-link bg-navy border-navy" href="#">1</a></li>
+                <li class="page-item"><a class="page-link text-navy" href="#">2</a></li>
+                <li class="page-item"><a class="page-link text-navy" href="#">Selanjutnya</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <footer class="bg-navy-dark text-white py-4 text-center mt-5 border-top border-secondary">
+        <small class="text-white-50">&copy; 2026 CV Skillance Digital Indonesia. All Rights Reserved.</small>
+    </footer>
+
+    <script>
+        // Script khusus untuk memuat SEMUA artikel di halaman blog.html
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('api/get_blogs.php')
+                .then(response => response.json())
+                .then(res => {
+                    const container = document.getElementById('all-blogs-list');
+                    document.getElementById('loading-all').style.display = 'none'; // Sembunyikan loading
+                    
+                    if (res.status === 'success' && res.data.length > 0) {
+                        res.data.forEach(blog => {
+                            const cardHtml = `
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden hover-up">
+                                        <img src="${blog.image}" alt="${blog.title}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body p-4 d-flex flex-column bg-white">
+                                            <div class="mb-2">
+                                                <span class="badge ${blog.badge_class} mb-2">${blog.category}</span>
+                                                <small class="text-muted float-end"><i class="fa-regular fa-calendar me-1"></i> ${blog.date}</small>
+                                            </div>
+                                            <h5 class="fw-bold text-navy mb-3">${blog.title}</h5>
+                                            <p class="text-muted small mb-4">${blog.excerpt}</p>
+                                            
+                                            <div class="mt-auto">
+                                                <a href="blog-detail.html?id=${blog.id}" class="btn btn-sm btn-outline-navy w-100 rounded-pill fw-bold hover-up">
+                                                    Baca Selengkapnya
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', cardHtml);
+                        });
+                    } else {
+                        container.innerHTML = '<div class="col-12 text-center text-muted">Belum ada artikel yang dipublikasikan.</div>';
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('loading-all').innerHTML = '<h5 class="text-danger">Gagal menghubungi server.</h5>';
+                });
+        });
+    </script>
+</body>
+</html>

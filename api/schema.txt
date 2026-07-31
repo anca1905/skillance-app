@@ -1,0 +1,11 @@
+id - int(11)
+name - varchar(255)
+client_name - varchar(100)
+client_contact - varchar(20)
+client_institution - varchar(150)
+platform - varchar(50)
+deadline - date
+status - enum('Development','Testing','On Hold','Selesai')
+payment_status - enum('Belum Bayar','DP 50%','Lunas')
+cover_image - varchar(255)
+created_at - timestamp
