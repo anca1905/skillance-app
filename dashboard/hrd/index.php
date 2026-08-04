@@ -125,7 +125,8 @@ if (!isset($_SESSION['user_id'])) {
                     <i class="fa-solid fa-users"></i> HRD
                 </a>
             </li>
-                                    <li class="nav-item"><a href="../	eam/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
+                                    <li class="nav-item"><a href="../team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
+            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
             <li class="nav-item">
                 <a href="../profile.php" class="nav-link text-warning">
                     <i class="fa-solid fa-user-gear"></i> Profil Saya
