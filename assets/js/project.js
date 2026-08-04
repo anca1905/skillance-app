@@ -83,6 +83,7 @@ function loadProjects() {
                         <td><span class="badge ${statusBadge}">${item.status}</span></td>
                         <td><span class="badge bg-light text-dark border">${item.payment}</span></td>
                         <td class="text-end pe-4">
+                            <a href="board.php?id=${item.id}" class="btn btn-sm btn-outline-primary" title="Task Board"><i class="fa-solid fa-list-check"></i></a>
                             <button class="btn btn-sm btn-light border" onclick="editProject(${item.id})"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-sm btn-outline-info" onclick="viewProject(${item.id})"><i class="fa-solid fa-book"></i></button>
                             <button class="btn btn-sm btn-outline-danger" onclick="deleteProject(${item.id})"><i class="fa-solid fa-trash"></i></button>
