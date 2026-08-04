@@ -131,6 +131,7 @@ $photoUrl = !empty($myProfile['photo']) ? "../assets/img/profile/" . $myProfile[
             <li class="nav-item"><a href="investment/index.php" class="nav-link"><i class="fa-solid fa-hand-holding-dollar"></i> Investasi Admin</a></li>
             <li class="nav-item"><a href="hrd/index.php" class="nav-link text-primary"><i class="fa-solid fa-users"></i> HRD</a></li>
             <li class="nav-item"><a href="team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
+            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
             <li class="nav-item"><a href="blog/index.php" class="nav-link"><i class="fa-solid fa-newspaper"></i> Kelola Artikel</a></li>
             <li class="nav-item">
                 <a href="profile.php" class="nav-link active text-warning">

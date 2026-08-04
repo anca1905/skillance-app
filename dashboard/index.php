@@ -151,6 +151,7 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
             </li>
             <li class="nav-item"><a href="team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
+            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
             <li class="nav-item"><a href="blog/index.php" class="nav-link"><i class="fa-solid fa-newspaper"></i> Kelola Artikel</a></li>
             <li class="nav-item">
                 <a href="profile.php" class="nav-link text-warning">

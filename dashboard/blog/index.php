@@ -53,6 +53,7 @@ if (!isset($_SESSION['user_id'])) {
             <li class="nav-item"><a href="../investment/index.php" class="nav-link"><i class="fa-solid fa-hand-holding-dollar"></i> Investasi Admin</a></li>
             <li class="nav-item"><a href="../hrd/index.php" class="nav-link"><i class="fa-solid fa-users"></i> HRD</a></li>
             <li class="nav-item"><a href="../team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
+            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
             <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fa-solid fa-newspaper"></i> Kelola Artikel</a></li>
             <li class="nav-item"><a href="../profile.php" class="nav-link text-warning"><i class="fa-solid fa-user-gear"></i> Profil Saya</a></li>
             <li class="nav-item mt-4"><a href="#" class="nav-link text-danger" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
