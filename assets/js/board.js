@@ -33,6 +33,27 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         saveTask(projectId);
     });
+
+    const coverInput = document.getElementById('tCover');
+    if (coverInput) {
+        coverInput.addEventListener('change', function() {
+            const file = this.files[0];
+            const previewContainer = document.getElementById('coverPreviewContainer');
+            const previewImage = document.getElementById('coverPreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('d-none');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '';
+                previewContainer.classList.add('d-none');
+            }
+        });
+    }
 });
 
 function loadBoardData(projectId) {
@@ -117,8 +138,16 @@ function createTaskCard(task) {
         dueDateHtml = `<span class="${isOverdue ? 'text-danger fw-bold' : ''}"><i class="fa-regular fa-clock me-1"></i> ${dateStr}</span>`;
     }
 
+    let coverHtml = '';
+    if (task.cover_photo) {
+        coverHtml = `<div class="task-cover mb-2" style="height: 120px; border-radius: 6px; overflow: hidden; margin: -15px -15px 15px -15px;">
+                        <img src="../../${task.cover_photo}" style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;" alt="Cover" onclick="event.stopPropagation(); openFullImage(this.src)">
+                     </div>`;
+    }
+
     return `
         <div class="task-card ${priorityClass}" data-id="${task.id}" onclick="editTask(${task.id})">
+            ${coverHtml}
             <div class="task-title">${task.title}</div>
             ${tagsHtml ? `<div class="task-tags">${tagsHtml}</div>` : ''}
             <div class="task-footer">
@@ -138,6 +167,11 @@ function createTaskCard(task) {
 function openTaskModal() {
     document.getElementById('taskForm').reset();
     document.getElementById('taskId').value = '';
+    if(document.getElementById('tCover')) document.getElementById('tCover').value = '';
+    if(document.getElementById('coverPreviewContainer')) {
+        document.getElementById('coverPreviewContainer').classList.add('d-none');
+        document.getElementById('coverPreview').src = '';
+    }
     document.getElementById('taskModalTitle').innerText = 'Tambah Task';
     document.getElementById('btnDeleteTask').classList.add('d-none');
     
@@ -157,6 +191,16 @@ function editTask(id) {
     document.getElementById('tDueDate').value = task.due_date || '';
     document.getElementById('tAssignee').value = task.assignee_id || '';
     document.getElementById('tTags').value = task.tags || '';
+    if(document.getElementById('tCover')) document.getElementById('tCover').value = '';
+    if(document.getElementById('coverPreviewContainer')) {
+        if(task.cover_photo) {
+            document.getElementById('coverPreview').src = '../../' + task.cover_photo;
+            document.getElementById('coverPreviewContainer').classList.remove('d-none');
+        } else {
+            document.getElementById('coverPreview').src = '';
+            document.getElementById('coverPreviewContainer').classList.add('d-none');
+        }
+    }
 
     document.getElementById('taskModalTitle').innerText = 'Edit Task';
     document.getElementById('btnDeleteTask').classList.remove('d-none');
@@ -167,30 +211,31 @@ function editTask(id) {
 
 function saveTask(projectId) {
     const id = document.getElementById('taskId').value;
+    const coverFile = document.getElementById('tCover') ? document.getElementById('tCover').files[0] : null;
     
-    const payload = {
-        project_id: projectId,
-        title: document.getElementById('tTitle').value,
-        description: document.getElementById('tDescription').value,
-        status: document.getElementById('tStatus').value,
-        priority: document.getElementById('tPriority').value,
-        due_date: document.getElementById('tDueDate').value,
-        assignee_id: document.getElementById('tAssignee').value,
-        tags: document.getElementById('tTags').value
-    };
-
+    const formData = new FormData();
+    formData.append('project_id', projectId);
+    formData.append('title', document.getElementById('tTitle').value);
+    formData.append('description', document.getElementById('tDescription').value);
+    formData.append('status', document.getElementById('tStatus').value);
+    formData.append('priority', document.getElementById('tPriority').value);
+    formData.append('due_date', document.getElementById('tDueDate').value);
+    formData.append('assignee_id', document.getElementById('tAssignee').value);
+    formData.append('tags', document.getElementById('tTags').value);
+    
+    if (coverFile) {
+        formData.append('cover_photo', coverFile);
+    }
+    
     let url = '../../api/tasks.php';
-    let method = 'POST';
     
     if (id) {
-        payload.id = id;
-        method = 'PUT';
+        formData.append('id', id);
     }
 
     fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        method: 'POST',
+        body: formData
     })
     .then(response => response.json())
     .then(res => {
@@ -293,4 +338,11 @@ function deleteTask() {
             });
         }
     });
+}
+
+function openFullImage(src) {
+    if (!src) return;
+    document.getElementById('fullImagePreview').src = src;
+    const modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    modal.show();
 }

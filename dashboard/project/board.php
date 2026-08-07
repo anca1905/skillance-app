@@ -334,6 +334,13 @@ $project = $result->fetch_assoc();
                     <input type="hidden" id="taskId">
                     <div class="modal-body">
                         <div class="mb-3">
+                            <label class="small text-muted fw-bold">COVER PHOTO (OPSIONAL)</label>
+                            <input type="file" id="tCover" class="form-control" accept="image/*">
+                            <div id="coverPreviewContainer" class="mt-2 d-none">
+                                <img id="coverPreview" src="" alt="Cover Preview" class="img-fluid rounded" style="max-height: 150px; width: 100%; object-fit: cover; cursor: pointer;" onclick="openFullImage(this.src)">
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label class="small text-muted fw-bold">NAMA TASK</label>
                             <input type="text" id="tTitle" class="form-control" placeholder="Contoh: Fitur Export Riwayat Presensi Guru" required>
                         </div>
@@ -388,6 +395,20 @@ $project = $result->fetch_assoc();
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center pt-0">
+                    <img id="fullImagePreview" src="" class="img-fluid rounded shadow-lg" style="max-height: 85vh;" alt="Full Preview">
+                </div>
             </div>
         </div>
     </div>

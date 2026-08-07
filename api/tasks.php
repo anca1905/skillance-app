@@ -94,8 +94,14 @@ switch ($method) {
 
     case 'POST':
         $input = json_decode(file_get_contents('php://input'), true);
+        if (empty($input)) {
+            $input = $_POST;
+        }
         
-        $project_id = intval($input['project_id']);
+        $is_update = isset($input['id']) && intval($input['id']) > 0;
+        $id = $is_update ? intval($input['id']) : 0;
+        
+        $project_id = isset($input['project_id']) ? intval($input['project_id']) : 0;
         $title = $conn->real_escape_string($input['title'] ?? '');
         $description = $conn->real_escape_string($input['description'] ?? '');
         $status = $conn->real_escape_string($input['status'] ?? 'Backlog');
@@ -105,19 +111,63 @@ switch ($method) {
         $due_date = !empty($input['due_date']) ? "'" . $conn->real_escape_string($input['due_date']) . "'" : 'NULL';
         $tags = $conn->real_escape_string($input['tags'] ?? '');
         
-        if (empty($title) || $project_id === 0) {
+        if (empty($title) || ($project_id === 0 && !$is_update)) {
             echo json_encode(['status' => 'error', 'message' => 'Project ID dan Title wajib diisi']);
             exit();
         }
         
-        $sql = "INSERT INTO project_tasks (project_id, title, description, status, priority, assignee_id, due_date, tags) 
-                VALUES ($project_id, '$title', '$description', '$status', '$priority', $assignee_id, $due_date, '$tags')";
-                
-        if ($conn->query($sql) === TRUE) {
-            sendWANotification($conn, $assignee_id, $project_id, $title, $priority, $due_date);
-            echo json_encode(['status' => 'success', 'message' => 'Task berhasil ditambahkan']);
+        // Handle cover photo upload
+        $cover_photo = null;
+        if (isset($_FILES['cover_photo']) && $_FILES['cover_photo']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = '../assets/uploads/tasks/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            $file_ext = strtolower(pathinfo($_FILES['cover_photo']['name'], PATHINFO_EXTENSION));
+            $allowed_exts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            if (in_array($file_ext, $allowed_exts)) {
+                $new_filename = uniqid('task_') . '.' . $file_ext;
+                $target_file = $upload_dir . $new_filename;
+                if (move_uploaded_file($_FILES['cover_photo']['tmp_name'], $target_file)) {
+                    $cover_photo = 'assets/uploads/tasks/' . $new_filename;
+                }
+            }
+        }
+        
+        if ($is_update) {
+            // Update logic
+            $sql = "UPDATE project_tasks SET 
+                    title = '$title',
+                    description = '$description',
+                    status = '$status',
+                    priority = '$priority',
+                    assignee_id = $assignee_id,
+                    due_date = $due_date,
+                    tags = '$tags'";
+            
+            if ($cover_photo) {
+                $sql .= ", cover_photo = '$cover_photo'";
+            }
+            
+            $sql .= " WHERE id = $id";
+            
+            if ($conn->query($sql) === TRUE) {
+                echo json_encode(['status' => 'success', 'message' => 'Task berhasil diperbarui']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui task: ' . $conn->error]);
+            }
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Gagal menambah task: ' . $conn->error]);
+            // Insert logic
+            $cover_val = $cover_photo ? "'$cover_photo'" : 'NULL';
+            $sql = "INSERT INTO project_tasks (project_id, title, description, status, priority, assignee_id, due_date, tags, cover_photo) 
+                    VALUES ($project_id, '$title', '$description', '$status', '$priority', $assignee_id, $due_date, '$tags', $cover_val)";
+                    
+            if ($conn->query($sql) === TRUE) {
+                sendWANotification($conn, $assignee_id, $project_id, $title, $priority, $due_date);
+                echo json_encode(['status' => 'success', 'message' => 'Task berhasil ditambahkan']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Gagal menambah task: ' . $conn->error]);
+            }
         }
         break;
 
