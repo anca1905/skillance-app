@@ -24,15 +24,52 @@ h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
     color: var(--text-heading);
 }
 
+/* Ensure headings in dark containers stay pure crisp white */
+.text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6,
+.bg-navy h1, .bg-navy h2, .bg-navy h3, .bg-navy h4, .bg-navy h5, .bg-navy h6,
+.bg-navy-dark h1, .bg-navy-dark h2, .bg-navy-dark h3, .bg-navy-dark h4, .bg-navy-dark h5, .bg-navy-dark h6,
+header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
+.page-header-banner h1, .page-header-banner h2, .page-header-banner h3,
+footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
+    color: #ffffff !important;
+}
+
 /* --- UTILITIES --- */
-/* Kita ubah bg-navy menjadi tetap navy untuk tombol/elemen kecil, 
-   tapi untuk layout besar kita override nanti */
-.bg-navy { background-color: var(--navy) !important; }
-.bg-navy-dark { background-color: var(--navy-dark) !important; }
+.bg-navy { background-color: var(--navy) !important; color: #ffffff; }
+.bg-navy-dark { background-color: var(--navy-dark) !important; color: #ffffff; }
 .bg-navy-subtle { background-color: var(--navy-subtle) !important; }
+.bg-gold { 
+    background-color: var(--gold) !important; 
+    color: var(--navy-dark) !important; 
+    font-weight: 700;
+}
+.bg-gold-subtle { 
+    background-color: #fef3c7 !important; 
+    color: #92400e !important; 
+    border: 1px solid #fde68a !important; 
+}
 .text-navy { color: var(--navy) !important; }
 .text-gold { color: var(--gold) !important; }
 .ls-2 { letter-spacing: 2px; }
+
+/* Page Header Banner Styling */
+.page-header-banner {
+    margin-top: 76px;
+    background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%) !important;
+    padding: 3.5rem 1rem 3rem 1rem;
+    text-align: center;
+    color: #ffffff !important;
+}
+.page-header-banner h1 {
+    color: #ffffff !important;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+.page-header-banner p {
+    color: #e2e8f0 !important;
+    font-size: 1.1rem;
+    line-height: 1.75;
+}
 
 /* Responsive Width Utilities */
 @media (min-width: 768px) {
