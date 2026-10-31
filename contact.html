@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi & Konsultasi | CV Skillance Digital Indonesia</title>
+
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl fixed-top transition-all" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-code text-gold fs-4"></i>
+                <div class="d-flex flex-column">
+                    <span class="fw-bold lh-1">SKILLANCE</span>
+                    <span class="small text-muted" style="font-size: 0.65rem; letter-spacing: 1px;">DIGITAL INDONESIA</span>
+                </div>
+            </a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-xl-center gap-xl-1 gap-xxl-2 text-center text-xl-start mt-3 mt-xl-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Karya Kami</a></li>
+                    <li class="nav-item"><a class="nav-link text-gold fw-bold" href="freelance.html"><i class="fa-solid fa-briefcase text-gold me-1"></i> Bursa Freelance</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link text-navy fw-bold" href="academy.html"><i class="fa-solid fa-graduation-cap me-1"></i> Academy</a></li>
+
+                    <li class="nav-item mt-3 mt-xl-0 ms-xl-2">
+                        <a href="contact.html" class="btn btn-navbar-cta w-100 w-xl-auto active">Mulai Konsultasi</a>
+                    </li>
+                    <li class="nav-item mt-2 mt-xl-0 ms-xl-1">
+                        <a href="auth/index.php" class="btn btn-navbar-auth w-100 w-xl-auto">
+                            <svg width="15" height="15" viewBox="0 0 48 48" class="me-1">
+                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.79l7.97-6.2z"/>
+                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                            </svg>
+                            Masuk / Freelance
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header Banner -->
+    <header class="py-5 bg-navy text-white text-center position-relative" style="margin-top: 76px; background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%);">
+        <div class="container py-4">
+            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="font-size: 0.75rem;">Konsultasi & Kemitraan</span>
+            <h1 class="display-5 fw-bold font-heading mb-2">Hubungi Skillance</h1>
+            <p class="lead text-white-50 mx-auto mb-0" style="max-width: 650px;">
+                Diskusikan ide aplikasi, sistem bisnis, atau kolaborasi freelance Anda bersama kami. Kami siap memberikan solusi teknis yang tepat sasaran dan efisien.
+            </p>
+        </div>
+    </header>
+
+    <!-- 3 Quick Channels -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-up bg-white">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-success-subtle text-success p-3 rounded-3">
+                                <i class="fa-brands fa-whatsapp fa-2x"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold ls-1">Respon Cepat</small>
+                                <h5 class="fw-bold text-navy mb-0">WhatsApp Langsung</h5>
+                            </div>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            Ingin diskusi instan atau butuh penawaran proposal cepat? Hubungi tim kami melalui pesan WhatsApp resmi.
+                        </p>
+                        <a href="https://wa.me/6282291700778?text=Halo%20Skillance%2C%20saya%20ingin%20konsultasi%20mengenai%20kebutuhan%20teknologi%20saya" target="_blank" class="btn btn-sm btn-outline-success fw-bold rounded-pill mt-auto">
+                            <i class="fa-brands fa-whatsapp me-1"></i> +62 822-9170-0778
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-up bg-white">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-primary-subtle text-primary p-3 rounded-3">
+                                <i class="fa-solid fa-envelope fa-2x"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold ls-1">Korespondensi Resmi</small>
+                                <h5 class="fw-bold text-navy mb-0">Email Resmi</h5>
+                            </div>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            Kirimkan dokumen Kerangka Acuan Kerja (KAK), permohonan tender, penawaran MoU, atau undangan kerjasama instansi.
+                        </p>
+                        <a href="mailto:official@skillance.my.id" class="btn btn-sm btn-outline-primary fw-bold rounded-pill mt-auto">
+                            <i class="fa-solid fa-envelope me-1"></i> official@skillance.my.id
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 hover-up bg-white">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="bg-warning-subtle text-warning p-3 rounded-3">
+                                <i class="fa-solid fa-location-dot fa-2x"></i>
+                            </div>
+                            <div>
+                                <small class="text-muted text-uppercase fw-bold ls-1">Kantor Operasional</small>
+                                <h5 class="fw-bold text-navy mb-0">Bombana, Sultra</h5>
+                            </div>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772.
+                        </p>
+                        <span class="badge bg-light text-navy border py-2 px-3 rounded-pill mt-auto align-self-start small">
+                            <i class="fa-regular fa-clock me-1 text-gold"></i> Senin - Sabtu: 08.00 - 17.00 WITA
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Consultation Form & Value Proposition -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container py-3">
+            <div class="row g-5 align-items-start">
+                
+                <!-- Form Box -->
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-light">
+                        <div class="mb-4">
+                            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2">Formulir Diskusi Proyek</span>
+                            <h2 class="fw-bold text-navy font-heading">Ceritakan Rencana Anda</h2>
+                            <p class="text-muted small">
+                                Isi formulir di bawah ini dan kami akan membalas dengan estimasi teknis, roadmap, serta rekomendasi solusi dalam waktu 1x24 jam.
+                            </p>
+                        </div>
+
+                        <form id="standaloneContactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Nama Lengkap <span class="text-danger">*</span></label>
+                                    <input type="text" id="contactName" class="form-control rounded-3 border-0 py-2 shadow-none" placeholder="Contoh: Budi Santoso" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Nomor WhatsApp <span class="text-danger">*</span></label>
+                                    <input type="tel" id="contactPhone" class="form-control rounded-3 border-0 py-2 shadow-none" placeholder="08xxxxxxxxxx" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Alamat Email</label>
+                                    <input type="email" id="contactEmail" class="form-control rounded-3 border-0 py-2 shadow-none" placeholder="nama@email.com">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Instansi / Perusahaan</label>
+                                    <input type="text" id="contactOrg" class="form-control rounded-3 border-0 py-2 shadow-none" placeholder="Nama Kantor / Bisnis Anda">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Kategori Kebutuhan</label>
+                                    <select id="contactCategory" class="form-select rounded-3 border-0 py-2 shadow-none">
+                                        <option value="Website Profil & Bisnis">Website Profil & Bisnis</option>
+                                        <option value="Sistem Informasi Manajemen (SIM / ERP)">Sistem Informasi Manajemen (SIM / ERP)</option>
+                                        <option value="Aplikasi Mobile (Android / iOS)">Aplikasi Mobile (Android / iOS)</option>
+                                        <option value="Lowongan / Rekrutmen Freelance">Lowongan / Rekrutmen Freelance</option>
+                                        <option value="Skillance Academy & Pelatihan">Skillance Academy & Pelatihan</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold text-navy">Estimasi Anggaran</label>
+                                    <select id="contactBudget" class="form-select rounded-3 border-0 py-2 shadow-none">
+                                        <option value="Fleksibel / Diskusi Dahulu">Fleksibel / Diskusi Dahulu</option>
+                                        <option value="Di bawah Rp 5 Juta">Di bawah Rp 5 Juta</option>
+                                        <option value="Rp 5 Juta - Rp 15 Juta">Rp 5 Juta - Rp 15 Juta</option>
+                                        <option value="Rp 15 Juta - Rp 50 Juta">Rp 15 Juta - Rp 50 Juta</option>
+                                        <option value="Di atas Rp 50 Juta">Di atas Rp 50 Juta</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label small fw-bold text-navy">Deskripsi Kebutuhan & Fitur Utama <span class="text-danger">*</span></label>
+                                    <textarea id="contactMessage" rows="4" class="form-control rounded-3 border-0 py-2 shadow-none" placeholder="Jelaskan gambaran sistem atau masalah yang ingin Anda selesaikan..." required></textarea>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <button type="submit" id="btnSubmitContact" class="btn btn-navy w-100 py-3 fw-bold rounded-pill shadow-sm hover-up">
+                                        <i class="fa-solid fa-paper-plane me-2"></i> Kirim Permintaan Konsultasi
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Side: Value Props & direct action -->
+                <div class="col-lg-5">
+                    <div class="ps-lg-4">
+                        <span class="badge bg-navy-subtle text-navy fw-bold px-3 py-2 rounded-pill mb-2">Mengapa Skillance?</span>
+                        <h3 class="fw-bold text-navy font-heading mb-4">Pengalaman Kemitraan yang Terstruktur & Nyaman</h3>
+
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="bg-navy text-gold p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; min-width: 48px;">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Transparan & Sesuai Kebutuhan</h6>
+                                <p class="text-muted small mb-0">Kami tidak menyarankan fitur mahal yang tidak Anda butuhkan. Arsitektur dibangun proporsional sesuai skala bisnis.</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="bg-navy text-gold p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; min-width: 48px;">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Source Code Bersih & Mudah Dirawat</h6>
+                                <p class="text-muted small mb-0">Standar coding profesional berdokumentasi rapi, siap untuk di-scale up di kemudian hari.</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3 mb-4">
+                            <div class="bg-navy text-gold p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; min-width: 48px;">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Garansi Pasca-Rilis & Training</h6>
+                                <p class="text-muted small mb-0">Pendampingan teknis gratis setelah serah terima sistem, lengkap dengan pelatihan operator dan panduan admin.</p>
+                            </div>
+                        </div>
+
+                        <!-- Direct WhatsApp Box -->
+                        <div class="card border-0 rounded-4 p-4 text-white mt-4 shadow-sm" style="background: linear-gradient(135deg, #0d2e5c 0%, #1e4a86 100%);">
+                            <h5 class="fw-bold mb-2"><i class="fa-solid fa-bolt text-gold me-2"></i> Butuh Respon Cepat Hari Ini?</h5>
+                            <p class="text-white-50 small mb-3">
+                                Tim teknis kami siap membalas pertanyaan atau mendiskusikan kebutuhan Anda secara langsung di WhatsApp.
+                            </p>
+                            <a href="https://wa.me/6282291700778?text=Halo%20Skillance%2C%20saya%20ingin%20konsultasi%20langsung%20mengenai%20proyek%20aplikasi%2Fsistem" target="_blank" class="btn btn-gold text-navy fw-bold rounded-pill">
+                                <i class="fa-brands fa-whatsapp me-2"></i> Chat Langsung via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2">FAQ</span>
+                <h2 class="fw-bold text-navy font-heading">Pertanyaan yang Sering Diajukan</h2>
+                <p class="text-muted small mx-auto" style="max-width: 550px;">
+                    Beberapa hal penting terkait skema kerja sama, waktu pengerjaan, dan dukungan teknis.
+                </p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion accordion-flush bg-white rounded-4 shadow-sm p-3" id="accordionFaq">
+                        <div class="accordion-item border-0 mb-3 border-bottom">
+                            <h2 class="accordion-header" id="faqOne">
+                                <button class="accordion-button collapsed fw-bold text-navy bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Berapa lama estimasi pengerjaan aplikasi atau website?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="faqOne" data-bs-parent="#accordionFaq">
+                                <div class="accordion-body text-muted small">
+                                    Durasi tergantung kompleksitas sistem. Untuk website profil perusahaan biasanya memakan waktu 7–14 hari kerja. Sedangkan untuk Sistem Informasi Manajemen (SIM), aplikasi mobile, atau platform kustom, durasi berkisar antara 3 hingga 8 minggu kerja.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 border-bottom">
+                            <h2 class="accordion-header" id="faqTwo">
+                                <button class="accordion-button collapsed fw-bold text-navy bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Bagaimana skema pembayaran proyek di Skillance?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#accordionFaq">
+                                <div class="accordion-body text-muted small">
+                                    Pembayaran dilakukan bertahap sesuai termin (milestone) yang disepakati bersama dalam kontrak perjanjian kerja. Biasanya terbagi menjadi DP awal (30–40%), termin prototype/pengujian sistem (30%), dan pelunasan saat serah terima akhir (30–40%).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 border-bottom">
+                            <h2 class="accordion-header" id="faqThree">
+                                <button class="accordion-button collapsed fw-bold text-navy bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Apakah ada garansi jika terjadi error atau bug setelah rilis?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#accordionFaq">
+                                <div class="accordion-body text-muted small">
+                                    Tentu saja! Kami memberikan masa garansi perbaikan bug secara cuma-cuma selama 1 hingga 3 bulan setelah peluncuran sistem, serta opsi perpanjangan maintenance rutin tahunan.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0">
+                            <h2 class="accordion-header" id="faqFour">
+                                <button class="accordion-button collapsed fw-bold text-navy bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Apakah saya sebagai pencari talenta bisa merekrut freelancer di Skillance?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#accordionFaq">
+                                <div class="accordion-body text-muted small">
+                                    Bisa! Platform Skillance membuka bursa pekerjaan freelance bagi mahasiswa dan umum yang terkurasi. Anda dapat menghubungi kami untuk membuka lowongan khusus atau mempercayakan pengerjaan modul kepada jaringan talenta binaan kami.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy text-white pt-5 pb-3 mt-5">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="fa-solid fa-code text-gold fs-3"></i>
+                        <span class="fw-bold fs-5 text-white">SKILLANCE DIGITAL INDONESIA</span>
+                    </div>
+                    <p class="text-white-50 small mb-3">
+                        Perusahaan Software House & Konsultan IT berbasis di Sulawesi Tenggara. Menyediakan solusi rekayasa teknologi dan wadah bursa freelance digital mahasiswa & umum.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="https://wa.me/6282291700778" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="mailto:official@skillance.my.id" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Menu Cepat</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li><a href="index.html" class="text-white-50 text-decoration-none hover-white">Beranda</a></li>
+                        <li><a href="about.html" class="text-white-50 text-decoration-none hover-white">Tentang Kami</a></li>
+                        <li><a href="services.html" class="text-white-50 text-decoration-none hover-white">Layanan</a></li>
+                        <li><a href="portfolio.html" class="text-white-50 text-decoration-none hover-white">Karya Kami</a></li>
+                        <li><a href="freelance.html" class="text-gold text-decoration-none hover-gold fw-bold">Bursa Freelance</a></li>
+                        <li><a href="academy.html" class="text-white-50 text-decoration-none hover-white">Academy</a></li>
+                        <li><a href="blog.html" class="text-white-50 text-decoration-none hover-white">Blog & Wawasan</a></li>
+                        <li><a href="contact.html" class="text-white text-decoration-none fw-bold">Kontak Kami</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Layanan Kami</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li>Sistem Informasi Manajemen</li>
+                        <li>Pembuatan Website Profesional</li>
+                        <li>Aplikasi Mobile Android & iOS</li>
+                        <li>UI/UX Design & Prototyping</li>
+                        <li>IT Infrastructure & Server</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Kontak Kantor</h6>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-location-dot text-gold me-2"></i> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra</p>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-phone text-gold me-2"></i> +62 822-9170-0778</p>
+                    <p class="text-white-50 small mb-0"><i class="fa-solid fa-envelope text-gold me-2"></i> official@skillance.my.id</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-3 text-center small text-white-50">
+                &copy; 2026 CV Skillance Digital Indonesia. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        document.getElementById('standaloneContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitContact');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Mengirim data...';
+
+            const payload = {
+                name: document.getElementById('contactName').value.trim(),
+                phone: document.getElementById('contactPhone').value.trim(),
+                email: document.getElementById('contactEmail').value.trim(),
+                organization: document.getElementById('contactOrg').value.trim(),
+                category: document.getElementById('contactCategory').value,
+                budget: document.getElementById('contactBudget').value,
+                message: document.getElementById('contactMessage').value.trim()
+            };
+
+            fetch('api/contact.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pesan Terkirim!',
+                    html: `Terima kasih <strong>${payload.name}</strong>, formulir Anda telah kami terima.<br>Tim Skillance akan segera menghubungi Anda melalui WhatsApp/Email.`,
+                    confirmButtonColor: '#0d2e5c',
+                    confirmButtonText: 'OK, Mantap!'
+                }).then(() => {
+                    document.getElementById('standaloneContactForm').reset();
+                });
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                // Fallback to whatsapp if api fails
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Ingin Langsung Lanjut ke WhatsApp?',
+                    text: 'Kirimkan pesan Anda langsung ke tim WhatsApp kami untuk respon seketika.',
+                    showCancelButton: true,
+                    confirmButtonColor: '#25D366',
+                    confirmButtonText: '<i class="fa-brands fa-whatsapp me-1"></i> Buka WhatsApp',
+                    cancelButtonText: 'Tutup'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const waText = encodeURIComponent(`Halo Skillance, nama saya ${payload.name} (${payload.phone}). Kebutuhan: ${payload.category}. Detail: ${payload.message}`);
+                        window.open(`https://wa.me/6282291700778?text=${waText}`, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

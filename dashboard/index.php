@@ -4,6 +4,10 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/index.php");
     exit();
 }
+if (($_SESSION['user_role'] ?? '') === 'freelancer') {
+    header("Location: freelancer/index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -128,6 +132,11 @@ if (!isset($_SESSION['user_id'])) {
             <li class="nav-item">
                 <a href="#" class="nav-link active">
                     <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="freelance/index.php" class="nav-link text-success fw-bold">
+                    <i class="fa-solid fa-handshake"></i> Bursa Freelance
                 </a>
             </li>
             <li class="nav-item">

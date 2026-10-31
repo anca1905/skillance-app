@@ -3,108 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog & Wawasan - Skillance</title>
+    <title>Blog & Wawasan | CV Skillance Digital Indonesia</title>
     
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow-sm sticky-top">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl fixed-top transition-all" id="mainNavbar">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
                 <i class="fa-solid fa-code text-gold fs-4"></i>
                 <div class="d-flex flex-column">
-                    <span class="fw-bold lh-1 text-white">SKILLANCE</span>
-                    <span class="small text-white-50" style="font-size: 0.65rem;">KEMBALI KE BERANDA</span>
+                    <span class="fw-bold lh-1">SKILLANCE</span>
+                    <span class="small text-muted" style="font-size: 0.65rem; letter-spacing: 1px;">DIGITAL INDONESIA</span>
                 </div>
             </a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-xl-center gap-xl-1 gap-xxl-2 text-center text-xl-start mt-3 mt-xl-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Karya Kami</a></li>
+                    <li class="nav-item"><a class="nav-link text-gold fw-bold" href="freelance.html"><i class="fa-solid fa-briefcase text-gold me-1"></i> Bursa Freelance</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link text-navy fw-bold" href="academy.html"><i class="fa-solid fa-graduation-cap me-1"></i> Academy</a></li>
+
+                    <li class="nav-item mt-3 mt-xl-0 ms-xl-2">
+                        <a href="contact.html" class="btn btn-navbar-cta w-100 w-xl-auto">Mulai Konsultasi</a>
+                    </li>
+                    <li class="nav-item mt-2 mt-xl-0 ms-xl-1">
+                        <a href="auth/index.php" class="btn btn-navbar-auth w-100 w-xl-auto">
+                            <svg width="15" height="15" viewBox="0 0 48 48" class="me-1">
+                                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.79l7.97-6.2z"/>
+                                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                            </svg>
+                            Masuk / Freelance
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <section class="bg-navy text-white text-center py-5 mt-5">
+    <!-- Header Banner -->
+    <header class="py-5 bg-navy text-white text-center position-relative" style="margin-top: 76px; background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%);">
         <div class="container py-4">
-            <h1 class="fw-bold font-heading mb-3">Wawasan & Kabar Terbaru</h1>
-            <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
-                Temukan berbagai artikel menarik seputar teknologi, edukasi bisnis digital, dan kegiatan Laskar Wonua.
+            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="font-size: 0.75rem;">Publikasi & Edukasi</span>
+            <h1 class="display-5 fw-bold font-heading mb-2">Wawasan & Kabar Terbaru</h1>
+            <p class="lead text-white-50 mx-auto mb-4" style="max-width: 650px;">
+                Temukan artikel menarik seputar tren teknologi, tips bisnis digital, kabar komunitas, dan kegiatan Skillance Academy.
             </p>
             
-            <div class="mx-auto mt-4" style="max-width: 500px;">
-                <div class="input-group mb-3 shadow-sm">
-                    <input type="text" class="form-control border-0 py-3 px-4 rounded-start-pill" placeholder="Cari artikel...">
-                    <button class="btn btn-gold px-4 rounded-end-pill fw-bold" type="button"><i class="fa-solid fa-search"></i></button>
+            <div class="mx-auto" style="max-width: 500px;">
+                <div class="input-group mb-0 shadow-sm">
+                    <input type="text" id="blogSearchInput" class="form-control border-0 py-3 px-4 rounded-start-pill" placeholder="Cari judul artikel atau topik...">
+                    <button class="btn btn-gold px-4 rounded-end-pill fw-bold" id="btnBlogSearch" type="button"><i class="fa-solid fa-search"></i></button>
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
     <div class="container py-5">
         <div class="row g-4" id="all-blogs-list">
             <div class="col-12 text-center py-5 text-muted" id="loading-all">
-                <i class="fa-solid fa-spinner fa-spin fa-2x mb-3"></i>
+                <i class="fa-solid fa-spinner fa-spin fa-2x mb-3 text-gold"></i>
                 <p>Memuat semua artikel...</p>
             </div>
         </div>
-        
-        <nav class="mt-5" aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
-                <li class="page-item active"><a class="page-link bg-navy border-navy" href="#">1</a></li>
-                <li class="page-item"><a class="page-link text-navy" href="#">2</a></li>
-                <li class="page-item"><a class="page-link text-navy" href="#">Selanjutnya</a></li>
-            </ul>
-        </nav>
     </div>
 
-    <footer class="bg-navy-dark text-white py-4 text-center mt-5 border-top border-secondary">
-        <small class="text-white-50">&copy; 2026 CV Skillance Digital Indonesia. All Rights Reserved.</small>
+    <!-- Footer -->
+    <footer class="bg-navy text-white pt-5 pb-3 mt-5">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="fa-solid fa-code text-gold fs-3"></i>
+                        <span class="fw-bold fs-5 text-white">SKILLANCE DIGITAL INDONESIA</span>
+                    </div>
+                    <p class="text-white-50 small mb-3">
+                        Perusahaan Software House & Konsultan IT berbasis di Sulawesi Tenggara. Menyediakan solusi rekayasa teknologi dan wadah bursa freelance digital mahasiswa & umum.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="https://wa.me/6282291700778" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="mailto:official@skillance.my.id" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="btn btn-sm btn-outline-light rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Menu Cepat</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li><a href="index.html" class="text-white-50 text-decoration-none hover-white">Beranda</a></li>
+                        <li><a href="about.html" class="text-white-50 text-decoration-none hover-white">Tentang Kami</a></li>
+                        <li><a href="services.html" class="text-white-50 text-decoration-none hover-white">Layanan</a></li>
+                        <li><a href="portfolio.html" class="text-white-50 text-decoration-none hover-white">Karya Kami</a></li>
+                        <li><a href="freelance.html" class="text-gold text-decoration-none hover-gold fw-bold">Bursa Freelance</a></li>
+                        <li><a href="academy.html" class="text-white-50 text-decoration-none hover-white">Academy</a></li>
+                        <li><a href="blog.html" class="text-white text-decoration-none fw-bold">Blog & Wawasan</a></li>
+                        <li><a href="contact.html" class="text-white-50 text-decoration-none hover-white">Kontak Kami</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Layanan Kami</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li>Sistem Informasi Manajemen</li>
+                        <li>Pembuatan Website Profesional</li>
+                        <li>Aplikasi Mobile Android & iOS</li>
+                        <li>UI/UX Design & Prototyping</li>
+                        <li>IT Infrastructure & Server</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Kontak Kantor</h6>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-location-dot text-gold me-2"></i> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra</p>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-phone text-gold me-2"></i> +62 822-9170-0778</p>
+                    <p class="text-white-50 small mb-0"><i class="fa-solid fa-envelope text-gold me-2"></i> official@skillance.my.id</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-3 text-center small text-white-50">
+                &copy; 2026 CV Skillance Digital Indonesia. All rights reserved.
+            </div>
+        </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
     <script>
-        // Script khusus untuk memuat SEMUA artikel di halaman blog.html
         document.addEventListener("DOMContentLoaded", function() {
-            fetch('api/get_blogs.php')
-                .then(response => response.json())
-                .then(res => {
-                    const container = document.getElementById('all-blogs-list');
-                    document.getElementById('loading-all').style.display = 'none'; // Sembunyikan loading
-                    
-                    if (res.status === 'success' && res.data.length > 0) {
-                        res.data.forEach(blog => {
-                            const cardHtml = `
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden hover-up">
-                                        <img src="${blog.image}" alt="${blog.title}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                                        <div class="card-body p-4 d-flex flex-column bg-white">
-                                            <div class="mb-2">
-                                                <span class="badge ${blog.badge_class} mb-2">${blog.category}</span>
-                                                <small class="text-muted float-end"><i class="fa-regular fa-calendar me-1"></i> ${blog.date}</small>
-                                            </div>
-                                            <h5 class="fw-bold text-navy mb-3">${blog.title}</h5>
-                                            <p class="text-muted small mb-4">${blog.excerpt}</p>
-                                            
-                                            <div class="mt-auto">
-                                                <a href="blog-detail.html?id=${blog.id}" class="btn btn-sm btn-outline-navy w-100 rounded-pill fw-bold hover-up">
-                                                    Baca Selengkapnya
-                                                </a>
-                                            </div>
+            let allArticles = [];
+
+            function renderBlogs(items) {
+                const container = document.getElementById('all-blogs-list');
+                container.innerHTML = '';
+                
+                if (items && items.length > 0) {
+                    items.forEach(blog => {
+                        const cardHtml = `
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden hover-up">
+                                    <div style="height: 200px; overflow: hidden;" class="bg-light">
+                                        <img src="${blog.image}" alt="${blog.title}" class="w-100 h-100 object-fit-cover" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+                                    </div>
+                                    <div class="card-body p-4 d-flex flex-column bg-white">
+                                        <div class="mb-2">
+                                            <span class="badge ${blog.badge_class || 'bg-light text-navy border'} mb-2">${blog.category || 'Teknologi'}</span>
+                                            <small class="text-muted float-end"><i class="fa-regular fa-calendar me-1"></i> ${blog.date}</small>
+                                        </div>
+                                        <h5 class="fw-bold text-navy mb-3">${blog.title}</h5>
+                                        <p class="text-muted small mb-4">${blog.excerpt}</p>
+                                        
+                                        <div class="mt-auto">
+                                            <a href="blog-detail.html?id=${blog.id}" class="btn btn-sm btn-outline-navy w-100 rounded-pill fw-bold hover-up">
+                                                Baca Selengkapnya <i class="fa-solid fa-arrow-right ms-1"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            `;
-                            container.insertAdjacentHTML('beforeend', cardHtml);
-                        });
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', cardHtml);
+                    });
+                } else {
+                    container.innerHTML = '<div class="col-12 text-center text-muted py-5"><i class="fa-solid fa-newspaper fa-3x mb-3 text-secondary"></i><p>Tidak ada artikel yang cocok dengan pencarian.</p></div>';
+                }
+            }
+
+            fetch('api/get_blogs.php')
+                .then(response => response.json())
+                .then(res => {
+                    const loading = document.getElementById('loading-all');
+                    if (loading) loading.style.display = 'none';
+                    
+                    if (res.status === 'success' && res.data.length > 0) {
+                        allArticles = res.data;
+                        renderBlogs(allArticles);
                     } else {
-                        container.innerHTML = '<div class="col-12 text-center text-muted">Belum ada artikel yang dipublikasikan.</div>';
+                        document.getElementById('all-blogs-list').innerHTML = '<div class="col-12 text-center text-muted py-5">Belum ada artikel yang dipublikasikan.</div>';
                     }
                 })
                 .catch(err => {
-                    document.getElementById('loading-all').innerHTML = '<h5 class="text-danger">Gagal menghubungi server.</h5>';
+                    document.getElementById('all-blogs-list').innerHTML = '<h5 class="text-danger text-center py-5">Gagal menghubungi server untuk memuat artikel.</h5>';
                 });
+
+            // Search filter
+            const searchInput = document.getElementById('blogSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const q = this.value.toLowerCase().trim();
+                    if (!q) {
+                        renderBlogs(allArticles);
+                    } else {
+                        const filtered = allArticles.filter(item => 
+                            item.title.toLowerCase().includes(q) || 
+                            (item.category && item.category.toLowerCase().includes(q)) ||
+                            (item.excerpt && item.excerpt.toLowerCase().includes(q))
+                        );
+                        renderBlogs(filtered);
+                    }
+                });
+            }
         });
     </script>
 </body>

@@ -70,39 +70,138 @@ h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
     box-shadow: 0 4px 15px rgba(13, 46, 92, 0.4);
 }
 
-/* --- NAVBAR (LIGHT THEME) --- */
-/* Paksa navbar jadi putih bersih */
+/* --- NAVBAR (LIGHT & RESPONSIVE THEME) --- */
 .navbar {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     transition: all 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.95) !important; /* Putih Transparan */
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .navbar.shadow-sm {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Ubah warna teks navbar jadi Navy */
-.navbar-brand, 
-.nav-link {
+.navbar-brand {
+    color: var(--navy) !important;
+    font-weight: 700;
+}
+
+.navbar .nav-link {
     color: var(--navy) !important;
     font-weight: 500;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    padding: 0.45rem 0.65rem !important;
+    transition: color 0.2s ease;
 }
 
-.nav-link:hover, 
-.nav-link.active {
+.navbar .nav-link:hover, 
+.navbar .nav-link.active {
     color: var(--gold) !important;
 }
 
-/* Toggler (Hamburger menu) jadi gelap */
+/* Custom Navbar Buttons */
+.btn-navbar-auth {
+    background-color: var(--navy);
+    color: #ffffff !important;
+    border: 1.5px solid var(--navy);
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    padding: 0.45rem 1.1rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.btn-navbar-auth:hover {
+    background-color: var(--navy-dark);
+    color: var(--gold) !important;
+    border-color: var(--navy-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 46, 92, 0.25);
+}
+
+.btn-navbar-cta {
+    background-color: var(--gold);
+    color: var(--navy-dark) !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    padding: 0.45rem 1.15rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.btn-navbar-cta:hover {
+    background-color: var(--gold-hover);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(252, 163, 17, 0.4);
+}
+
+/* Toggler (Hamburger menu) */
 .navbar-toggler {
-    border-color: rgba(13, 46, 92, 0.1) !important;
+    border: 1px solid rgba(13, 46, 92, 0.15) !important;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+}
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 46, 92, 0.15);
 }
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(13, 46, 92, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(13, 46, 92, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Responsive Utilities & Dropdown Menu */
+@media (min-width: 1200px) {
+    .w-xl-auto { width: auto !important; }
+}
+
+@media (max-width: 1199.98px) {
+    .navbar-collapse {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        margin-top: 0.75rem;
+        box-shadow: 0 12px 35px rgba(13, 46, 92, 0.14);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .navbar-nav .nav-link {
+        padding: 0.65rem 0 !important;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.98rem;
+    }
+    .navbar-nav .nav-item:last-child .nav-link {
+        border-bottom: none;
+    }
+    .navbar-collapse .btn-navbar-cta,
+    .navbar-collapse .btn-navbar-auth {
+        width: 100% !important;
+        padding: 0.65rem 1rem;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand span.fw-bold {
+        font-size: 1.15rem;
+    }
+    .navbar-brand span.small {
+        font-size: 0.58rem !important;
+    }
 }
 
 /* --- HERO SECTION (LIGHT THEME) --- */
