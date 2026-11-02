@@ -124,11 +124,63 @@ switch ($action) {
                 @mkdir($uploadDir, 0775, true);
             }
 
-            $imageName = 'job_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+            // Target extension: convert to JPG or keep PNG for guaranteed WhatsApp & social preview compatibility
+            $targetExt = ($ext === 'png') ? 'png' : 'jpg';
+            $imageName = 'job_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $targetExt;
             $destPath = $uploadDir . $imageName;
 
-            if (!move_uploaded_file($tmpPath, $destPath)) {
-                $imageName = null;
+            // Load source image using GD for auto-resizing & format optimization
+            $srcImg = null;
+            if ($ext === 'jpg' || $ext === 'jpeg') {
+                $srcImg = @imagecreatefromjpeg($tmpPath);
+            } elseif ($ext === 'png') {
+                $srcImg = @imagecreatefrompng($tmpPath);
+            } elseif ($ext === 'webp') {
+                if (function_exists('imagecreatefromwebp')) {
+                    $srcImg = @imagecreatefromwebp($tmpPath);
+                }
+            } elseif ($ext === 'gif') {
+                $srcImg = @imagecreatefromgif($tmpPath);
+            }
+
+            if ($srcImg) {
+                $origW = imagesx($srcImg);
+                $origH = imagesy($srcImg);
+                $maxW = 1200;
+                if ($origW > $maxW) {
+                    $newW = $maxW;
+                    $newH = (int)($origH * ($newW / $origW));
+                } else {
+                    $newW = $origW;
+                    $newH = $origH;
+                }
+
+                $destImg = imagecreatetruecolor($newW, $newH);
+
+                if ($targetExt === 'png') {
+                    imagealphablending($destImg, false);
+                    imagesavealpha($destImg, true);
+                    $transparent = imagecolorallocatealpha($destImg, 255, 255, 255, 127);
+                    imagefilledrectangle($destImg, 0, 0, $newW, $newH, $transparent);
+                    imagecopyresampled($destImg, $srcImg, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
+                    imagepng($destImg, $destPath, 8);
+                } else {
+                    // Fill white background in case source had alpha transparency
+                    $white = imagecolorallocate($destImg, 255, 255, 255);
+                    imagefilledrectangle($destImg, 0, 0, $newW, $newH, $white);
+                    imagecopyresampled($destImg, $srcImg, 0, 0, 0, 0, $newW, $newH, $origW, $origH);
+                    imagejpeg($destImg, $destPath, 85);
+                }
+
+                imagedestroy($srcImg);
+                imagedestroy($destImg);
+            } else {
+                // Fallback direct move if GD load failed
+                $imageName = 'job_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+                $destPath = $uploadDir . $imageName;
+                if (!move_uploaded_file($tmpPath, $destPath)) {
+                    $imageName = null;
+                }
             }
         }
 

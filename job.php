@@ -67,11 +67,18 @@ if ($jobFound) {
     
     // WA share text
     $waShareText = urlencode("Halo! Ada info lowongan freelance di Skillance:\n\n📌 *" . $jobTitle . "*\n💰 Fee: *" . $rewardText . "*\n🎯 Kategori: " . $category . " (" . $target . ")\n⏰ Batas: " . $deadline . "\n\nCek detail tugas & ambil pekerjaan ini langsung di:\n" . $pageUrl);
+    $ogImgMime = 'image/jpeg';
+    if (preg_match('/\.png(\?.*)?$/i', $ogImgUrl) || strpos($ogImgUrl, 'og_job.php') !== false) {
+        $ogImgMime = 'image/png';
+    } elseif (preg_match('/\.webp(\?.*)?$/i', $ogImgUrl)) {
+        $ogImgMime = 'image/webp';
+    }
 } else {
     $pageTitle   = "Lowongan Tidak Ditemukan | Skillance Freelance";
     $ogTitle     = "Bursa Lowongan Freelance | Skillance Indonesia";
     $ogDesc      = "Cari dan ambil lowongan freelance digital untuk mahasiswa dan umum di Skillance.";
     $ogImgUrl    = "https://skillance.my.id/assets/img/og-preview.png";
+    $ogImgMime   = "image/png";
     $pageUrl     = "https://skillance.my.id/freelance.html";
 }
 ?>
@@ -96,10 +103,13 @@ if ($jobFound) {
     <meta property="og:title" content="<?= htmlspecialchars($ogTitle) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($ogDesc) ?>">
     <meta property="og:image" content="<?= htmlspecialchars($ogImgUrl) ?>">
+    <meta property="og:image:secure_url" content="<?= htmlspecialchars($ogImgUrl) ?>">
+    <meta property="og:image:type" content="<?= htmlspecialchars($ogImgMime) ?>">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="<?= htmlspecialchars($ogTitle) ?>">
     <meta property="og:url" content="<?= htmlspecialchars($pageUrl) ?>">
+    <link rel="image_src" href="<?= htmlspecialchars($ogImgUrl) ?>">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
