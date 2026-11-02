@@ -120,34 +120,59 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <!-- Statistik Ringkasan Project & Keuangan -->
-        <div class="row g-3 mb-4 align-items-stretch">
-            <!-- 1. Sisa Uang Belum Dibayar (Piutang Klien) -->
-            <div class="col-12 col-md-6 col-xl-4">
+        <!-- Baris 1: Ringkasan Finansial Utama (Omset & Piutang) -->
+        <div class="row g-3 mb-3 align-items-stretch">
+            <!-- 1. Total Omset Seluruh Project -->
+            <div class="col-12 col-md-6">
+                <div class="card h-100 p-3 p-md-3 border-start border-4 border-primary shadow-sm bg-white d-flex flex-column justify-content-between hover-shadow">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <div>
+                                <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem; letter-spacing: 0.5px;">Total Omset Seluruh Project</small>
+                                <h3 class="fw-bold text-navy my-1" id="statTotalOmset">Rp 0</h3>
+                            </div>
+                            <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 42px; height: 42px;">
+                                <i class="fa-solid fa-sack-dollar fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top border-light-subtle">
+                        <small class="text-muted" id="statTotalProjectsCount" style="font-size: 0.72rem;"><i class="fa-solid fa-briefcase text-primary me-1"></i> Dari 0 total project</small>
+                        <span class="badge bg-primary-subtle text-primary fw-bold" style="font-size: 0.7rem;">Nilai Kontrak</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Sisa Uang Belum Dibayar (Piutang Klien) -->
+            <div class="col-12 col-md-6">
                 <div class="card h-100 p-3 p-md-3 border-start border-4 border-danger shadow-sm bg-white position-relative overflow-hidden cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
                     <div>
                         <div class="d-flex justify-content-between align-items-start mb-1">
                             <div>
-                                <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.68rem; letter-spacing: 0.5px;">Sisa Uang Belum Dibayar ke Saya</small>
+                                <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.7rem; letter-spacing: 0.5px;">Sisa Uang Belum Dibayar ke Saya</small>
                                 <h3 class="fw-bold text-danger my-1" id="statRemainingBalance">Rp 0</h3>
                             </div>
-                            <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 42px; height: 42px;">
                                 <i class="fa-solid fa-hand-holding-dollar fs-5"></i>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top border-light-subtle">
                         <small class="text-muted" id="statUnpaidProjectsCount" style="font-size: 0.72rem;"><i class="fa-solid fa-circle-exclamation text-danger me-1"></i> 0 project belum lunas</small>
-                        <span class="badge bg-danger-subtle text-danger" style="font-size: 0.7rem;">Sisa Piutang</span>
+                        <span class="badge bg-danger-subtle text-danger fw-bold" style="font-size: 0.7rem;">Sisa Piutang</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- 2. Status Proyek: Selesai vs Belum Selesai -->
-            <div class="col-6 col-md-3 col-xl-2">
+        <!-- Baris 2: Status Operasional & Pembayaran (4 Kotak Rata) -->
+        <div class="row g-3 mb-4 align-items-stretch">
+            <!-- Sudah Selesai -->
+            <div class="col-6 col-md-3">
                 <div class="card h-100 p-3 border-start border-4 border-success shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('selesai')" title="Klik untuk filter project selesai">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Selesai</small>
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Sudah Selesai</small>
                             <i class="fa-solid fa-circle-check text-success fs-6"></i>
                         </div>
                         <h3 class="fw-bold text-success mb-0" id="statProjectsCompleted">0</h3>
@@ -158,11 +183,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
             </div>
 
-            <div class="col-6 col-md-3 col-xl-2">
+            <!-- Belum Selesai -->
+            <div class="col-6 col-md-3">
                 <div class="card h-100 p-3 border-start border-4 border-warning shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_selesai')" title="Klik untuk filter project belum selesai">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Selesai</small>
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Belum Selesai</small>
                             <i class="fa-solid fa-spinner fa-spin-pulse text-warning fs-6"></i>
                         </div>
                         <h3 class="fw-bold text-warning mb-0" id="statProjectsInProgress">0</h3>
@@ -173,12 +199,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
             </div>
 
-            <!-- 3. Status Pembayaran: Lunas vs Belum Lunas -->
-            <div class="col-6 col-md-3 col-xl-2">
+            <!-- Sudah Lunas -->
+            <div class="col-6 col-md-3">
                 <div class="card h-100 p-3 border-start border-4 border-primary shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('lunas')" title="Klik untuk filter project lunas">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Lunas</small>
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Sudah Lunas</small>
                             <i class="fa-solid fa-badge-check text-primary fs-6"></i>
                         </div>
                         <h3 class="fw-bold text-primary mb-0" id="statPaymentsPaid">0</h3>
@@ -189,11 +215,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
             </div>
 
-            <div class="col-6 col-md-3 col-xl-2">
+            <!-- Belum Lunas -->
+            <div class="col-6 col-md-3">
                 <div class="card h-100 p-3 border-start border-4 border-secondary shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Lunas</small>
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Belum Lunas</small>
                             <i class="fa-solid fa-clock-rotate-left text-danger fs-6"></i>
                         </div>
                         <h3 class="fw-bold text-navy mb-0" id="statPaymentsUnpaid">0</h3>
@@ -526,7 +553,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/project.js?v=3"></script>
+    <script src="../../assets/js/project.js?v=4"></script>
     <script>
         // Helper Sidebar & Logout (Sama utk semua halaman)
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }

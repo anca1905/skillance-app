@@ -91,6 +91,7 @@ function updateProjectStatistics(data) {
     let paidCount = 0;
     let unpaidCount = 0;
     let totalRemainingBalance = 0;
+    let totalOmset = 0;
 
     data.forEach(item => {
         // Status pengerjaan
@@ -106,6 +107,8 @@ function updateProjectStatistics(data) {
         const totalPrice = price + totalAddons;
         const dpAmount = parseInt(item.dp_amount) || 0;
 
+        totalOmset += totalPrice;
+
         if (item.payment === 'Lunas') {
             paidCount++;
         } else {
@@ -114,6 +117,12 @@ function updateProjectStatistics(data) {
             totalRemainingBalance += remaining;
         }
     });
+
+    const elOmset = document.getElementById('statTotalOmset');
+    if (elOmset) elOmset.innerText = formatRp(totalOmset);
+
+    const elTotalProjects = document.getElementById('statTotalProjectsCount');
+    if (elTotalProjects) elTotalProjects.innerHTML = `<i class="fa-solid fa-briefcase text-navy me-1"></i> Dari ${data.length} total project`;
 
     const elRem = document.getElementById('statRemainingBalance');
     if (elRem) elRem.innerText = formatRp(totalRemainingBalance);
