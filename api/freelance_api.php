@@ -157,7 +157,7 @@ switch ($action) {
         $target   = $_GET['target'] ?? '';
         $search   = $_GET['search'] ?? '';
 
-        $where = "WHERE j.status = 'open'";
+        $where = "WHERE j.status IN ('open', 'in_progress')";
         if (!empty($category)) {
             $where .= " AND j.category = '" . $conn->real_escape_string($category) . "'";
         }
@@ -171,11 +171,12 @@ switch ($action) {
 
         $query = "
             SELECT j.*, DATEDIFF(j.deadline, CURDATE()) as days_left,
+                   (SELECT COUNT(*) FROM freelance_assignments a WHERE a.job_id = j.id AND a.status IN ('in_progress','submitted','completed')) as taken_count,
                    (SELECT COUNT(*) FROM freelance_assignments a WHERE a.job_id = j.id AND a.freelancer_id = $userId) as has_applied,
                    (SELECT a.status FROM freelance_assignments a WHERE a.job_id = j.id AND a.freelancer_id = $userId LIMIT 1) as my_task_status
             FROM freelance_jobs j
             $where
-            ORDER BY j.id DESC
+            ORDER BY (CASE WHEN j.status = 'open' THEN 1 ELSE 2 END), j.id DESC
         ";
 
         $res = $conn->query($query);
@@ -204,8 +205,8 @@ switch ($action) {
             exit();
         }
 
-        // Cek apakah pekerjaan masih open
-        $jStmt = $conn->prepare("SELECT * FROM freelance_jobs WHERE id = ? AND status = 'open'");
+        // Cek data pekerjaan
+        $jStmt = $conn->prepare("SELECT * FROM freelance_jobs WHERE id = ? AND status IN ('open', 'in_progress')");
         $jStmt->bind_param("i", $jobId);
         $jStmt->execute();
         $job = $jStmt->get_result()->fetch_assoc();
@@ -217,7 +218,7 @@ switch ($action) {
             exit();
         }
 
-        // Cek apakah sudah pernah ambil/apply
+        // Cek apakah user saat ini sudah pernah ambil/apply
         $cStmt = $conn->prepare("SELECT id FROM freelance_assignments WHERE job_id = ? AND freelancer_id = ?");
         $cStmt->bind_param("ii", $jobId, $userId);
         $cStmt->execute();
@@ -230,6 +231,19 @@ switch ($action) {
             exit();
         }
 
+        // Cek kuota pengerja aktif
+        $takenStmt = $conn->prepare("SELECT COUNT(*) as c FROM freelance_assignments WHERE job_id = ? AND status IN ('in_progress','submitted','completed')");
+        $takenStmt->bind_param("i", $jobId);
+        $takenStmt->execute();
+        $takenCount = intval($takenStmt->get_result()->fetch_assoc()['c'] ?? 0);
+        $takenStmt->close();
+
+        if ($takenCount >= intval($job['max_freelancers'])) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "Mohon maaf, kuota untuk pekerjaan ini sudah penuh / sedang dikerjakan oleh freelancer lain."]);
+            exit();
+        }
+
         // Masukkan sebagai 'in_progress' agar freelancer bisa langsung mulai kerja
         $status = 'in_progress';
         $ins = $conn->prepare("INSERT INTO freelance_assignments (job_id, freelancer_id, status, application_notes) VALUES (?, ?, ?, ?)");
@@ -238,6 +252,12 @@ switch ($action) {
         if ($ins->execute()) {
             $assignmentId = $ins->insert_id;
             $ins->close();
+
+            // Otomatis update status lowongan jika kuota penuh
+            if (($takenCount + 1) >= intval($job['max_freelancers'])) {
+                $conn->query("UPDATE freelance_jobs SET status = 'in_progress' WHERE id = $jobId");
+            }
+
             echo json_encode([
                 "status" => "success",
                 "message" => "Pekerjaan berhasil diambil! Selamat mengerjakan tugas.",

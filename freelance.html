@@ -419,6 +419,30 @@
 
             let html = '<div class="row g-3 g-md-4">';
             jobs.forEach(j => {
+                const isJobTaken = (j.status === 'in_progress' || (parseInt(j.taken_count || 0) >= parseInt(j.max_freelancers || 1)));
+                const hasUserApplied = (parseInt(j.has_applied || 0) > 0);
+
+                let actionBtnHtml = '';
+                if (hasUserApplied) {
+                    actionBtnHtml = `
+                        <a href="dashboard/freelancer/my_tasks.php" class="btn btn-primary btn-sm fw-bold flex-grow-1 rounded-pill py-2">
+                            <i class="fa-solid fa-list-check me-1"></i> Tugas Saya
+                        </a>
+                    `;
+                } else if (isJobTaken) {
+                    actionBtnHtml = `
+                        <button class="btn btn-light border text-muted btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
+                            <i class="fa-solid fa-lock me-1"></i> Sedang Dikerjakan
+                        </button>
+                    `;
+                } else {
+                    actionBtnHtml = `
+                        <button class="btn btn-gold btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
+                            <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil
+                        </button>
+                    `;
+                }
+
                 let targetBadge = '';
                 if (j.target_audience === 'mahasiswa') {
                     targetBadge = '<span class="badge bg-primary text-capitalize" style="font-size:0.7rem;">Mahasiswa</span>';
@@ -443,7 +467,7 @@
                                 <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(13, 46, 92, 0.2) 0%, rgba(13, 46, 92, 0.7) 100%);"></div>
                                 <div class="position-absolute top-0 start-0 p-3 d-flex justify-content-between align-items-center w-100">
                                     <span class="badge bg-white text-navy shadow-sm fw-bold" style="font-size:0.72rem;">${j.category}</span>
-                                    ${targetBadge}
+                                    ${hasUserApplied ? '<span class="badge bg-success shadow-sm" style="font-size:0.7rem;"><i class="fa-solid fa-circle-check me-1"></i> Sedang Dikerjakan</span>' : (isJobTaken ? '<span class="badge bg-secondary shadow-sm" style="font-size:0.7rem;"><i class="fa-solid fa-lock me-1"></i> Kuota Penuh</span>' : targetBadge)}
                                 </div>
                                 <div class="position-absolute bottom-0 start-0 p-3">
                                     <span class="badge bg-dark bg-opacity-75 text-white shadow-sm" style="font-size:0.72rem;">
@@ -472,9 +496,7 @@
                                     </div>
 
                                     <div class="d-flex gap-2">
-                                        <button class="btn btn-gold btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
-                                            <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil
-                                        </button>
+                                        ${actionBtnHtml}
                                         <button class="btn btn-outline-success btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Bagikan ke WhatsApp" onclick="shareJobWhatsApp(${j.id}, event)">
                                             <i class="fa-brands fa-whatsapp fs-6"></i>
                                         </button>
@@ -555,12 +577,38 @@
             }
 
             const noticeEl = document.getElementById('jobModalNotice');
-            if (isUserLoggedIn) {
+            const btnAction = document.getElementById('btnTakeJobAction');
+            const isJobTaken = (job.status === 'in_progress' || (parseInt(job.taken_count || 0) >= parseInt(job.max_freelancers || 1)));
+            const hasUserApplied = (parseInt(job.has_applied || 0) > 0);
+
+            if (hasUserApplied) {
+                noticeEl.className = 'alert alert-info py-2 px-3 small d-flex align-items-center gap-2 mb-0';
+                noticeEl.innerHTML = '<i class="fa-solid fa-circle-check text-primary fs-5"></i><div>Pekerjaan ini sudah Anda ambil dan sedang dalam tahap pengerjaan.</div>';
+                btnAction.className = 'btn btn-primary fw-bold px-4 rounded-pill';
+                btnAction.disabled = false;
+                btnAction.innerHTML = '<i class="fa-solid fa-list-check me-1"></i> Buka di Dashboard Saya';
+                btnAction.onclick = () => window.location.href = 'dashboard/freelancer/my_tasks.php';
+            } else if (isJobTaken) {
+                noticeEl.className = 'alert alert-secondary py-2 px-3 small d-flex align-items-center gap-2 mb-0';
+                noticeEl.innerHTML = '<i class="fa-solid fa-lock text-secondary fs-5"></i><div><strong>Kuota Terisi:</strong> Lowongan ini sudah diambil oleh freelancer lain dan saat ini sedang dalam proses pengerjaan.</div>';
+                btnAction.className = 'btn btn-secondary fw-bold px-4 rounded-pill';
+                btnAction.disabled = true;
+                btnAction.innerHTML = '<i class="fa-solid fa-lock me-1"></i> Sedang Dikerjakan';
+                btnAction.onclick = null;
+            } else if (isUserLoggedIn) {
                 noticeEl.className = 'alert alert-info py-2 px-3 small d-flex align-items-center gap-2 mb-0';
                 noticeEl.innerHTML = '<i class="fa-solid fa-circle-check text-primary fs-5"></i><div>Anda sudah login. Anda dapat langsung mengambil pekerjaan ini ke dashboard Anda.</div>';
+                btnAction.className = 'btn btn-gold fw-bold px-4 rounded-pill';
+                btnAction.disabled = false;
+                btnAction.innerHTML = '<i class="fa-solid fa-handshake me-1"></i> Ambil Pekerjaan Ini';
+                btnAction.onclick = () => handleJobApplication(selectedJob);
             } else {
                 noticeEl.className = 'alert alert-warning py-2 px-3 small d-flex align-items-center gap-2 mb-0';
                 noticeEl.innerHTML = '<i class="fa-solid fa-circle-info text-warning fs-5"></i><div><strong>Catatan:</strong> Anda perlu login dengan Akun Google terlebih dahulu untuk mengambil pekerjaan ini.</div>';
+                btnAction.className = 'btn btn-gold fw-bold px-4 rounded-pill';
+                btnAction.disabled = false;
+                btnAction.innerHTML = '<i class="fa-solid fa-handshake me-1"></i> Ambil Pekerjaan Ini';
+                btnAction.onclick = () => handleJobApplication(selectedJob);
             }
 
             new bootstrap.Modal(document.getElementById('modalFreelanceJobDetail')).show();

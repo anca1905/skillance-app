@@ -17,6 +17,7 @@ if ($jobId <= 0) {
 // Ambil data pekerjaan dari database
 $stmt = $conn->prepare("
     SELECT j.*, DATEDIFF(j.deadline, CURDATE()) as days_left,
+           (SELECT COUNT(*) FROM freelance_assignments a WHERE a.job_id = j.id AND a.status IN ('in_progress','submitted','completed')) as taken_count,
            (SELECT COUNT(*) FROM freelance_assignments a WHERE a.job_id = j.id AND a.freelancer_id = ?) as has_applied,
            (SELECT a.status FROM freelance_assignments a WHERE a.job_id = j.id AND a.freelancer_id = ? LIMIT 1) as my_task_status
     FROM freelance_jobs j
@@ -324,7 +325,18 @@ if ($jobFound) {
                                             <h6 class="fw-bold mb-1">Anda Sudah Mengambil Pekerjaan Ini</h6>
                                             <p class="small mb-2 text-muted">Status pengerjaan saat ini: <strong><?= strtoupper($job['my_task_status'] ?? 'Sedang Berjalan') ?></strong>.</p>
                                             <a href="dashboard/freelancer/my_tasks.php" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
-                                                Buka di Dashboard Saya
+                                                <i class="fa-solid fa-list-check me-1"></i> Buka di Dashboard Saya
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php elseif ($job['status'] === 'in_progress' || intval($job['taken_count'] ?? 0) >= intval($job['max_freelancers'] ?? 1)): ?>
+                                    <div class="alert alert-secondary d-flex align-items-center gap-3 p-3 rounded-3 mb-0">
+                                        <i class="fa-solid fa-lock fs-2 text-secondary"></i>
+                                        <div>
+                                            <h6 class="fw-bold mb-1 text-navy">Pekerjaan Sedang Dikerjakan (Kuota Penuh)</h6>
+                                            <p class="small mb-2 text-muted">Lowongan ini telah diambil oleh freelancer lain dan saat ini sedang dalam proses pengerjaan.</p>
+                                            <a href="freelance.html" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
+                                                <i class="fa-solid fa-magnifying-glass me-1"></i> Telusuri Lowongan Lain
                                             </a>
                                         </div>
                                     </div>
