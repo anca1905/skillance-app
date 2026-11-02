@@ -30,7 +30,29 @@ h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
 .bg-navy-dark h1, .bg-navy-dark h2, .bg-navy-dark h3, .bg-navy-dark h4, .bg-navy-dark h5, .bg-navy-dark h6,
 header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
 .page-header-banner h1, .page-header-banner h2, .page-header-banner h3,
-footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
+[style*="linear-gradient"] h1, [style*="linear-gradient"] h2, [style*="linear-gradient"] h3,
+[style*="linear-gradient"] h4, [style*="linear-gradient"] h5, [style*="linear-gradient"] h6,
+.card[style*="background"] h1, .card[style*="background"] h2, .card[style*="background"] h3,
+.card[style*="background"] h4, .card[style*="background"] h5, .card[style*="background"] h6,
+.card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4, .card-dark h5, .card-dark h6 {
+    color: #ffffff !important;
+}
+
+/* Ensure text-white-50 has high contrast and is never washed out */
+.text-white-50,
+.bg-navy .text-white-50,
+.bg-navy-dark .text-white-50,
+.page-header-banner .text-white-50,
+footer .text-white-50,
+[style*="linear-gradient"] .text-white-50 {
+    color: #cbd5e1 !important;
+    opacity: 1 !important;
+}
+
+.hover-gold:hover {
+    color: var(--gold) !important;
+}
+.hover-white:hover {
     color: #ffffff !important;
 }
 
@@ -309,51 +331,92 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
     color: #888;
 }
 
-/* --- FOOTER (LIGHT THEME) --- */
-/* Kita override class bg-navy-dark di footer menjadi light gray */
+/* --- FOOTER (CRISP DARK NAVY THEME) --- */
+footer,
+footer.bg-navy,
 footer.bg-navy-dark {
-    background-color: var(--light-gray) !important;
-    color: var(--navy) !important;
-    border-top: 1px solid #e9ecef !important;
+    background-color: var(--navy) !important;
+    color: #cbd5e1 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Judul kolom footer */
+footer h5, 
+footer h6,
+footer .text-gold {
+    color: var(--gold) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+
+footer h1, footer h2, footer h3, footer h4,
+footer .text-white {
+    color: #ffffff !important;
+}
+
+/* Teks dan paragraf footer - kontras tinggi slate-300 */
+footer p, 
+footer li, 
+footer span,
+footer small {
+    color: #cbd5e1 !important;
+    line-height: 1.7;
 }
 
 /* Link di footer */
-footer a, 
-footer p, 
-footer li {
-    color: #6c757d !important; /* Abu-abu */
+footer a,
+footer .list-unstyled a {
+    color: #cbd5e1 !important;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-footer a:hover {
-    color: var(--navy) !important;
+footer a:hover,
+footer .list-unstyled a:hover {
+    color: var(--gold) !important;
+    text-decoration: none;
 }
 
-footer .text-white-50 {
-    color: #6c757d !important;
+footer a.text-gold,
+footer a.text-gold:hover {
+    color: var(--gold) !important;
 }
 
-footer h5, footer h6 {
-    color: var(--navy) !important; /* Judul footer jadi navy */
+/* Tombol / Ikon Sosial Media di Footer */
+footer .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.25s ease;
 }
 
-/* Social Icons di Footer */
+footer .btn-outline-light:hover {
+    background-color: var(--gold) !important;
+    border-color: var(--gold) !important;
+    color: var(--navy-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(252, 163, 17, 0.3);
+}
+
 .social-icon {
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
-    color: var(--navy);
-    display: flex;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     text-decoration: none;
-    transition: 0.3s;
-    border: 1px solid #ddd;
+    transition: 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .social-icon:hover {
-    background-color: var(--navy);
-    color: var(--gold);
-    border-color: var(--navy);
+    background-color: var(--gold);
+    color: var(--navy-dark);
+    border-color: var(--gold);
+    transform: translateY(-2px);
 }
 
 /* --- ANIMATIONS & EXTRAS --- */
