@@ -1,6 +1,6 @@
         <!-- Footer -->
         <footer class="mt-5 pt-4 text-center text-muted border-top">
-            <small>&copy; <?= date('Y') ?> <strong>CV Skillance Digital Indonesia</strong>. Platform Kolaborasi Freelance Mahasiswa & Umum.</small>
+            <small>&copy; <?= date('Y') ?> <strong>Skillance Digital Indonesia</strong>. Platform Kolaborasi Freelance Mahasiswa & Umum.</small>
         </footer>
     </div> <!-- End Main Wrapper -->
 

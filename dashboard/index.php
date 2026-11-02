@@ -75,10 +75,28 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
             text-align: center;
         }
 
-        /* Responsive Sidebar */
+        /* Responsive Sidebar & Mobile Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13, 46, 92, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
-                margin-left: -250px;
+                margin-left: -260px;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25);
             }
 
             .sidebar.active {
@@ -87,6 +105,7 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
 
             .main-content {
                 margin-left: 0;
+                padding: 16px 12px;
             }
         }
 
@@ -119,13 +138,21 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
 
 <body>
 
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <nav class="sidebar shadow-sm" id="sidebar">
-        <div class="px-4 mb-4 d-flex align-items-center gap-2">
-            <i class="fa-solid fa-code text-gold fs-4"></i>
-            <div>
-                <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
-                <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
+        <div class="px-3 px-md-4 mb-4 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-code text-gold fs-4"></i>
+                <div>
+                    <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
+                    <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
+                </div>
             </div>
+            <button class="btn btn-sm btn-light d-md-none rounded-circle" id="btnCloseSidebar" title="Tutup Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <ul class="nav flex-column">
@@ -178,8 +205,15 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
     <div class="main-content">
 
         <div class="d-flex justify-content-between align-items-center mb-4 d-md-none">
-            <button class="btn btn-navy btn-sm" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-            <span class="fw-bold text-navy">Dashboard</span>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-navy btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 38px; height: 38px;" id="sidebarToggle" title="Buka Menu">
+                    <i class="fa-solid fa-bars fs-6"></i>
+                </button>
+                <span class="fw-bold text-navy fs-5">Dashboard</span>
+            </div>
+            <div class="bg-navy text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                <i class="fa-solid fa-user small"></i>
+            </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mb-4 d-none d-md-flex">

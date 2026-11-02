@@ -70,23 +70,51 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
             border-radius: 12px;
             background: #ffffff;
         }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13, 46, 92, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 1040;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
         @media (max-width: 768px) {
-            .sidebar { margin-left: -250px; }
-            .sidebar.active { margin-left: 0; }
-            .main-content { margin-left: 0; padding: 15px; }
+            .sidebar { 
+                margin-left: -260px;
+                box-shadow: 4px 0 25px rgba(0,0,0,0.25);
+            }
+            .sidebar.active { 
+                margin-left: 0; 
+            }
+            .main-content { 
+                margin-left: 0; 
+                padding: 16px 12px; 
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <!-- Sidebar Admin -->
     <nav class="sidebar shadow-sm" id="sidebar">
-        <div class="px-4 mb-4 d-flex align-items-center gap-2">
-            <i class="fa-solid fa-code text-gold fs-4"></i>
-            <div>
-                <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
-                <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
+        <div class="px-3 px-md-4 mb-4 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-code text-gold fs-4"></i>
+                <div>
+                    <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
+                    <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
+                </div>
             </div>
+            <button class="btn btn-sm btn-light d-md-none rounded-circle" id="btnCloseSidebar" title="Tutup Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <ul class="nav flex-column">
@@ -114,14 +142,21 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Topbar -->
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
-            <div>
-                <h4 class="fw-bold text-navy mb-1"><i class="fa-solid fa-handshake text-gold me-2"></i> Manajemen Freelance & Pencari Jasa</h4>
-                <small class="text-muted">Kelola lowongan freelance mahasiswa & umum, review hasil pengerjaan, dan lakukan transfer pembayaran manual.</small>
+        <!-- Topbar Mobile & Desktop -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4 pb-2 border-bottom">
+            <div class="d-flex align-items-center gap-2 gap-sm-3">
+                <button class="btn btn-navy btn-sm d-md-none shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" id="sidebarToggle" title="Buka Menu">
+                    <i class="fa-solid fa-bars fs-6"></i>
+                </button>
+                <div>
+                    <h4 class="fw-bold text-navy mb-0 fs-5 fs-md-4">
+                        <i class="fa-solid fa-handshake text-gold me-1"></i> Manajemen Freelance
+                    </h4>
+                    <small class="text-muted d-none d-sm-block">Kelola lowongan, review tugas, dan transfer fee.</small>
+                </div>
             </div>
-            <div class="d-flex gap-2">
-                <button class="btn btn-gold btn-sm fw-bold px-3 py-2" data-bs-toggle="modal" data-bs-target="#modalCreateJob">
+            <div class="d-flex gap-2 ms-auto">
+                <button class="btn btn-gold btn-sm fw-bold px-3 py-2 shadow-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#modalCreateJob">
                     <i class="fa-solid fa-plus me-1"></i> Buka Lowongan Baru
                 </button>
             </div>
@@ -158,8 +193,8 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
 
         <!-- Nav Tabs Admin Freelance -->
         <div class="card card-custom mb-4">
-            <div class="card-header bg-white border-bottom-0 pt-3 px-4">
-                <ul class="nav nav-tabs card-header-tabs" id="freelanceAdminTabs">
+            <div class="card-header bg-white border-bottom-0 pt-3 px-3 px-md-4 overflow-x-auto" style="-webkit-overflow-scrolling: touch;">
+                <ul class="nav nav-tabs card-header-tabs flex-nowrap" id="freelanceAdminTabs" style="white-space: nowrap; min-width: max-content;">
                     <li class="nav-item">
                         <button class="nav-link active fw-bold text-navy" data-bs-toggle="tab" data-bs-target="#tabSubmissions" onclick="loadSubmissions()">
                             <i class="fa-solid fa-inbox me-1"></i> Review Hasil Kerja
@@ -425,6 +460,31 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar Mobile Toggle & Overlay
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const closeBtn = document.getElementById('btnCloseSidebar');
+
+            if (toggleBtn && sidebar) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                    if (overlay) overlay.classList.toggle('active');
+                });
+            }
+            if (closeBtn && sidebar) {
+                closeBtn.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    if (overlay) overlay.classList.remove('active');
+                });
+            }
+            if (overlay && sidebar) {
+                overlay.addEventListener('click', () => {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+
             loadAdminStats();
             loadSubmissions();
             loadPayouts();

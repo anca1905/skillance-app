@@ -71,11 +71,28 @@ document.addEventListener("DOMContentLoaded", function () {
         agendaForm.reset();
     });
 
-    // 5. TOGGLE SIDEBAR MOBILE
+    // 5. TOGGLE SIDEBAR MOBILE & OVERLAY
     const toggleBtn = document.getElementById('sidebarToggle');
-    if (toggleBtn) {
+    const closeBtn = document.getElementById('btnCloseSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if (toggleBtn && sidebar) {
         toggleBtn.addEventListener('click', function () {
-            document.getElementById('sidebar').classList.toggle('active');
+            sidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+        });
+    }
+    if (closeBtn && sidebar) {
+        closeBtn.addEventListener('click', function () {
+            sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+        });
+    }
+    if (overlay && sidebar) {
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
         });
     }
 
