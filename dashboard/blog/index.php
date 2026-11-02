@@ -37,28 +37,10 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
 
-    <nav class="sidebar shadow-sm" id="sidebar">
-        <div class="px-4 mb-4 d-flex align-items-center gap-2">
-            <i class="fa-solid fa-code text-gold fs-4"></i>
-            <div>
-                <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
-                <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
-            </div>
-        </div>
-
-        <ul class="nav flex-column">
-            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="../project/index.php" class="nav-link"><i class="fa-solid fa-briefcase"></i> Project</a></li>
-            <li class="nav-item"><a href="../finance/index.php" class="nav-link"><i class="fa-solid fa-wallet"></i> Keuangan</a></li>
-            <li class="nav-item"><a href="../investment/index.php" class="nav-link"><i class="fa-solid fa-hand-holding-dollar"></i> Investasi Admin</a></li>
-            <li class="nav-item"><a href="../hrd/index.php" class="nav-link"><i class="fa-solid fa-users"></i> HRD</a></li>
-            <li class="nav-item"><a href="../team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Manajemen Tim</a></li>
-            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
-            <li class="nav-item"><a href="index.php" class="nav-link active"><i class="fa-solid fa-newspaper"></i> Kelola Artikel</a></li>
-            <li class="nav-item"><a href="../profile.php" class="nav-link text-warning"><i class="fa-solid fa-user-gear"></i> Profil Saya</a></li>
-            <li class="nav-item mt-4"><a href="#" class="nav-link text-danger" id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-        </ul>
-    </nav>
+    <?php
+    $activeMenu = 'blog';
+    include __DIR__ . '/../includes/sidebar.php';
+    ?>
 
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">

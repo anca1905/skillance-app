@@ -99,46 +99,10 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
 </head>
 <body>
 
-    <!-- Mobile Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Sidebar Admin -->
-    <nav class="sidebar shadow-sm" id="sidebar">
-        <div class="px-3 px-md-4 mb-4 d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-2">
-                <i class="fa-solid fa-code text-gold fs-4"></i>
-                <div>
-                    <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
-                    <small class="text-muted" style="font-size: 0.65rem;">OFFICE SYSTEM</small>
-                </div>
-            </div>
-            <button class="btn btn-sm btn-light d-md-none rounded-circle" id="btnCloseSidebar" title="Tutup Menu">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <ul class="nav flex-column">
-            <li class="nav-item"><a href="../index.php" class="nav-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="#" class="nav-link active fw-bold text-navy"><i class="fa-solid fa-handshake text-gold"></i> Bursa Freelance</a></li>
-            <li class="nav-item"><a href="../project/index.php" class="nav-link"><i class="fa-solid fa-briefcase"></i> Project</a></li>
-            <li class="nav-item"><a href="../finance/index.php" class="nav-link"><i class="fa-solid fa-wallet"></i> Keuangan</a></li>
-            <li class="nav-item"><a href="../hrd/index.php" class="nav-link text-primary"><i class="fa-solid fa-users"></i> HRD</a></li>
-            <li class="nav-item"><a href="../team/index.php" class="nav-link"><i class="fa-solid fa-people-group"></i> Tim Internal</a></li>
-            <li class="nav-item"><a href="../payroll/index.php" class="nav-link"><i class="fa-solid fa-money-check-dollar"></i> Penggajian</a></li>
-            <li class="nav-item"><a href="../profile.php" class="nav-link text-warning"><i class="fa-solid fa-user-gear"></i> Profil Saya</a></li>
-            
-            <li class="nav-item mt-4 px-3">
-                <a href="../freelancer/index.php" class="btn btn-sm btn-outline-primary w-100" style="font-size: 0.78rem;">
-                    <i class="fa-solid fa-eye me-1"></i> Mode Freelancer
-                </a>
-            </li>
-            <li class="nav-item mt-2">
-                <a href="../../api/logout.php" class="nav-link text-danger" onclick="confirmLogout(event)">
-                    <i class="fa-solid fa-right-from-bracket"></i> Logout
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <?php
+    $activeMenu = 'freelance';
+    include __DIR__ . '/../includes/sidebar.php';
+    ?>
 
     <!-- Main Content -->
     <div class="main-content">
