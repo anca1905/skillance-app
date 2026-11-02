@@ -216,6 +216,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
+                    <div class="rounded-3 overflow-hidden mb-3 border shadow-sm" style="max-height: 220px;">
+                        <img id="jobModalBanner" src="" alt="Banner Lowongan" class="w-100 h-100 object-fit-cover" style="max-height: 220px; object-fit: cover;">
+                    </div>
                     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                         <span class="badge bg-light text-navy border" id="jobModalCategory">Kategori</span>
                         <span class="badge bg-primary text-capitalize" id="jobModalTarget">Target</span>
@@ -386,6 +389,21 @@
             });
         }
 
+        function getJobBannerUrl(img, category) {
+            if (img && img.trim() !== '') {
+                return `uploads/freelance_jobs/${img}`;
+            }
+            const fallbacks = {
+                'Web & Pemrograman': 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80',
+                'Desain & UI/UX': 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=700&q=80',
+                'Penulisan & Konten': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=80',
+                'Digital Marketing': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80',
+                'Data & Administrasi': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80',
+                'Lainnya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80'
+            };
+            return fallbacks[category] || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80';
+        }
+
         function renderFreelanceGrid(jobs) {
             const container = document.getElementById('freelanceJobsContainer');
             if (!jobs || jobs.length === 0) {
@@ -411,44 +429,59 @@
                 }
 
                 let deadlineBadge = j.days_left >= 0 ? 
-                    `<span class="badge bg-light text-muted border"><i class="fa-regular fa-clock me-1"></i> ${j.days_left} hari lagi</span>` :
+                    `<span class="badge bg-light text-muted border"><i class="fa-regular fa-clock me-1 text-gold"></i> ${j.days_left} hari lagi</span>` :
                     `<span class="badge bg-danger text-white"><i class="fa-solid fa-triangle-exclamation me-1"></i> Lewat deadline</span>`;
+
+                const bannerImg = getJobBannerUrl(j.image, j.category);
 
                 html += `
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card border-0 shadow-sm rounded-4 p-3 p-md-4 h-100 d-flex flex-column justify-content-between bg-white hover-up" style="border-top: 4px solid var(--navy) !important; transition: all 0.25s;">
-                            <div>
-                                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                                    <span class="badge bg-light text-navy border" style="font-size:0.75rem;">${j.category}</span>
+                        <div class="card border-0 shadow-sm rounded-4 h-100 d-flex flex-column justify-content-between bg-white hover-up overflow-hidden" style="transition: all 0.25s;">
+                            <!-- Cover Banner -->
+                            <div class="position-relative" style="height: 150px; overflow: hidden; background: #0d2e5c;">
+                                <img src="${bannerImg}" alt="${escapeHtml(j.title)}" class="w-100 h-100 object-fit-cover" loading="lazy">
+                                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(13, 46, 92, 0.2) 0%, rgba(13, 46, 92, 0.7) 100%);"></div>
+                                <div class="position-absolute top-0 start-0 p-3 d-flex justify-content-between align-items-center w-100">
+                                    <span class="badge bg-white text-navy shadow-sm fw-bold" style="font-size:0.72rem;">${j.category}</span>
                                     ${targetBadge}
                                 </div>
-                                <h5 class="fw-bold text-navy mb-2" style="font-size: 1.05rem; line-height: 1.4;">${escapeHtml(j.title)}</h5>
-                                <p class="text-muted small mb-3" style="line-height: 1.6; min-height: 54px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                    ${escapeHtml(j.description)}
-                                </p>
+                                <div class="position-absolute bottom-0 start-0 p-3">
+                                    <span class="badge bg-dark bg-opacity-75 text-white shadow-sm" style="font-size:0.72rem;">
+                                        <i class="fa-regular fa-calendar-days me-1 text-gold"></i> Batas: ${j.deadline}
+                                    </span>
+                                </div>
                             </div>
 
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light mb-3">
-                                    <div>
-                                        <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">FEE PEKERJAAN</small>
-                                        <span class="fw-bold text-success fs-6">${formatRupiah(j.reward_amount)}</span>
-                                    </div>
-                                    <div class="text-end">
-                                        ${deadlineBadge}
-                                    </div>
+                            <div class="p-3 p-md-4 d-flex flex-column justify-content-between flex-grow-1">
+                                <div>
+                                    <h5 class="fw-bold text-navy mb-2" style="font-size: 1.05rem; line-height: 1.4;">${escapeHtml(j.title)}</h5>
+                                    <p class="text-muted small mb-3" style="line-height: 1.6; min-height: 52px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                        ${escapeHtml(j.description)}
+                                    </p>
                                 </div>
 
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-gold btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
-                                        <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil
-                                    </button>
-                                    <button class="btn btn-outline-success btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Bagikan ke WhatsApp" onclick="shareJobWhatsApp(${j.id}, event)">
-                                        <i class="fa-brands fa-whatsapp fs-6"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Salin Tautan" onclick="copyJobShareLink(${j.id}, event)">
-                                        <i class="fa-regular fa-copy"></i>
-                                    </button>
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light mb-3">
+                                        <div>
+                                            <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">FEE PEKERJAAN</small>
+                                            <span class="fw-bold text-success fs-6">${formatRupiah(j.reward_amount)}</span>
+                                        </div>
+                                        <div class="text-end">
+                                            ${deadlineBadge}
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-gold btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
+                                            <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil
+                                        </button>
+                                        <button class="btn btn-outline-success btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Bagikan ke WhatsApp" onclick="shareJobWhatsApp(${j.id}, event)">
+                                            <i class="fa-brands fa-whatsapp fs-6"></i>
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Salin Tautan" onclick="copyJobShareLink(${j.id}, event)">
+                                            <i class="fa-regular fa-copy"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -496,6 +529,9 @@
             if (!job) return;
 
             selectedJob = job;
+            const bannerEl = document.getElementById('jobModalBanner');
+            if (bannerEl) bannerEl.src = getJobBannerUrl(job.image, job.category);
+
             document.getElementById('jobModalTitle').innerText = job.title;
             document.getElementById('jobModalCategory').innerText = job.category;
             document.getElementById('jobModalTarget').innerText = 'Target: ' + job.target_audience;

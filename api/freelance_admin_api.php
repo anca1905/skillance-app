@@ -99,17 +99,51 @@ switch ($action) {
             exit();
         }
 
+        // Handle image upload if provided
+        $imageName = null;
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $tmpPath = $_FILES['image']['tmp_name'];
+            $origName = $_FILES['image']['name'];
+            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+            $allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+            if (!in_array($ext, $allowedExts)) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "Format gambar tidak didukung. Harap gunakan JPG, PNG, atau WebP."]);
+                exit();
+            }
+
+            if ($_FILES['image']['size'] > 5 * 1024 * 1024) {
+                http_response_code(400);
+                echo json_encode(["status" => "error", "message" => "Ukuran gambar terlalu besar (maksimal 5MB)."]);
+                exit();
+            }
+
+            $uploadDir = __DIR__ . '/../uploads/freelance_jobs/';
+            if (!is_dir($uploadDir)) {
+                @mkdir($uploadDir, 0775, true);
+            }
+
+            $imageName = 'job_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+            $destPath = $uploadDir . $imageName;
+
+            if (!move_uploaded_file($tmpPath, $destPath)) {
+                $imageName = null;
+            }
+        }
+
         $stmt = $conn->prepare("
-            INSERT INTO freelance_jobs (client_id, title, category, target_audience, description, requirements, reward_amount, deadline, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'open')
+            INSERT INTO freelance_jobs (client_id, title, category, target_audience, description, requirements, reward_amount, deadline, status, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'open', ?)
         ");
-        $stmt->bind_param("isssssds", $clientId, $title, $category, $target, $desc, $reqs, $reward, $deadline);
+        $stmt->bind_param("isssssdss", $clientId, $title, $category, $target, $desc, $reqs, $reward, $deadline, $imageName);
 
         if ($stmt->execute()) {
             echo json_encode([
                 "status" => "success",
                 "message" => "Lowongan freelance baru berhasil diterbitkan!",
-                "job_id" => $stmt->insert_id
+                "job_id" => $stmt->insert_id,
+                "image" => $imageName
             ]);
         } else {
             http_response_code(500);
@@ -157,6 +191,17 @@ switch ($action) {
                 "message" => "Lowongan ini memiliki tugas yang sudah selesai dan masuk laporan keuangan. Sebaiknya ubah statusnya menjadi 'Closed' agar riwayat keuangan tetap utuh."
             ]);
             exit();
+        }
+
+        // Hapus file gambar jika ada
+        $imgRes = $conn->query("SELECT image FROM freelance_jobs WHERE id = $jobId");
+        if ($imgRow = $imgRes->fetch_assoc()) {
+            if (!empty($imgRow['image'])) {
+                $imgPath = __DIR__ . '/../uploads/freelance_jobs/' . $imgRow['image'];
+                if (file_exists($imgPath)) {
+                    @unlink($imgPath);
+                }
+            }
         }
 
         // Hapus penugasan terkait

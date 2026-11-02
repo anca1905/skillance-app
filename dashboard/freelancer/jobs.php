@@ -67,6 +67,9 @@ require_once __DIR__ . '/includes/header.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
+                <div class="rounded-3 overflow-hidden mb-3 border shadow-sm" style="max-height: 220px;">
+                    <img id="modalJobBanner" src="" alt="Banner Lowongan" class="w-100 h-100 object-fit-cover" style="max-height: 220px; object-fit: cover;">
+                </div>
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                     <span class="badge bg-light text-navy border" id="modalJobCategory">Kategori</span>
                     <span class="badge bg-primary text-capitalize" id="modalJobTarget">Target</span>
@@ -205,6 +208,21 @@ function loadJobs() {
     });
 }
 
+function getJobBannerUrl(img, category) {
+    if (img && img.trim() !== '') {
+        return `../../uploads/freelance_jobs/${img}`;
+    }
+    const fallbacks = {
+        'Web & Pemrograman': 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80',
+        'Desain & UI/UX': 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=700&q=80',
+        'Penulisan & Konten': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=80',
+        'Digital Marketing': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80',
+        'Data & Administrasi': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80',
+        'Lainnya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80'
+    };
+    return fallbacks[category] || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80';
+}
+
 function renderJobsGrid(jobs) {
     const container = document.getElementById('jobsGridContainer');
     if (!jobs || jobs.length === 0) {
@@ -226,35 +244,45 @@ function renderJobsGrid(jobs) {
             `<button class="btn btn-sm btn-gold fw-bold w-100" onclick="showJobDetail(${j.id})"><i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil Tugas</button>`;
 
         let deadlineBadge = j.days_left >= 0 ? 
-            `<span class="badge bg-light text-muted border"><i class="fa-regular fa-clock me-1"></i> ${j.days_left} hari lagi</span>` :
+            `<span class="badge bg-light text-muted border"><i class="fa-regular fa-clock me-1 text-gold"></i> ${j.days_left} hari lagi</span>` :
             `<span class="badge bg-danger text-white"><i class="fa-solid fa-triangle-exclamation me-1"></i> Lewat deadline</span>`;
+
+        const bannerImg = getJobBannerUrl(j.image, j.category);
 
         html += `
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-custom p-4 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                            <span class="badge bg-light text-navy border">${j.category}</span>
-                            <span class="badge bg-primary-subtle text-primary text-capitalize">${j.target_audience}</span>
+                <div class="card card-custom h-100 d-flex flex-column justify-content-between overflow-hidden">
+                    <!-- Card Cover Banner -->
+                    <div class="position-relative" style="height: 140px; overflow: hidden; background: #0d2e5c;">
+                        <img src="${bannerImg}" alt="${escapeHtml(j.title)}" class="w-100 h-100 object-fit-cover" loading="lazy">
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(180deg, rgba(13, 46, 92, 0.2) 0%, rgba(13, 46, 92, 0.7) 100%);"></div>
+                        <div class="position-absolute top-0 start-0 p-3 d-flex justify-content-between align-items-center w-100">
+                            <span class="badge bg-white text-navy shadow-sm fw-bold" style="font-size: 0.72rem;">${j.category}</span>
+                            <span class="badge bg-primary text-capitalize" style="font-size: 0.7rem;">${j.target_audience}</span>
                         </div>
-                        <h5 class="fw-bold text-navy mb-2" style="font-size: 1.05rem;">${escapeHtml(j.title)}</h5>
-                        <p class="text-muted small mb-3 text-truncate-3" style="line-height: 1.6; min-height: 58px;">
-                            ${escapeHtml(j.description)}
-                        </p>
                     </div>
 
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center p-2 rounded-2 bg-light mb-3">
-                            <div>
-                                <small class="text-muted d-block" style="font-size: 0.68rem; font-weight: 700;">FEE PEKERJAAN</small>
-                                <span class="fw-bold text-success fs-6">${formatRupiah(j.reward_amount)}</span>
-                            </div>
-                            <div class="text-end">
-                                ${deadlineBadge}
-                            </div>
+                    <div class="p-3 p-md-4 d-flex flex-column justify-content-between flex-grow-1">
+                        <div>
+                            <h5 class="fw-bold text-navy mb-2" style="font-size: 1.05rem;">${escapeHtml(j.title)}</h5>
+                            <p class="text-muted small mb-3 text-truncate-3" style="line-height: 1.6; min-height: 54px;">
+                                ${escapeHtml(j.description)}
+                            </p>
                         </div>
 
-                        ${actionBtn}
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center p-2 rounded-2 bg-light mb-3">
+                                <div>
+                                    <small class="text-muted d-block" style="font-size: 0.68rem; font-weight: 700;">FEE PEKERJAAN</small>
+                                    <span class="fw-bold text-success fs-6">${formatRupiah(j.reward_amount)}</span>
+                                </div>
+                                <div class="text-end">
+                                    ${deadlineBadge}
+                                </div>
+                            </div>
+
+                            ${actionBtn}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -269,6 +297,9 @@ function showJobDetail(jobId) {
     if (!job) return;
 
     selectedJobId = jobId;
+    const bannerEl = document.getElementById('modalJobBanner');
+    if (bannerEl) bannerEl.src = getJobBannerUrl(job.image, job.category);
+
     document.getElementById('modalJobTitle').innerText = job.title;
     document.getElementById('modalJobCategory').innerText = job.category;
     document.getElementById('modalJobTarget').innerText = 'Target: ' + job.target_audience;

@@ -42,7 +42,24 @@ if ($jobFound) {
     $desc        = trim($job['description']);
     $reqs        = trim($job['requirements'] ?? '');
     $pageUrl     = "https://skillance.my.id/job.php?id=" . $job['id'];
-    $ogImgUrl    = "https://skillance.my.id/api/og_job.php?id=" . $job['id'];
+    
+    // Cover image banner logic
+    $jobImageName = trim($job['image'] ?? '');
+    if (!empty($jobImageName)) {
+        $jobImageUrl = "https://skillance.my.id/uploads/freelance_jobs/" . $jobImageName;
+        $ogImgUrl    = $jobImageUrl; // Use custom uploaded image for WhatsApp / Social Media preview!
+    } else {
+        $categoryFallbacks = [
+            'Web & Pemrograman' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
+            'Desain & UI/UX' => 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=1200&q=80',
+            'Penulisan & Konten' => 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80',
+            'Digital Marketing' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+            'Data & Administrasi' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+            'Lainnya' => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80'
+        ];
+        $jobImageUrl = $categoryFallbacks[$category] ?? 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80';
+        $ogImgUrl    = "https://skillance.my.id/api/og_job.php?id=" . $job['id'];
+    }
 
     $pageTitle   = "[Lowongan Freelance] " . $jobTitle . " (Fee " . $rewardText . ") | Skillance";
     $ogTitle     = "[Freelance] " . $jobTitle . " (Fee " . $rewardText . ")";
@@ -219,6 +236,11 @@ if ($jobFound) {
                     <div class="col-lg-8">
                         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
                             
+                            <!-- Cover Banner Image -->
+                            <div class="rounded-4 overflow-hidden mb-4 shadow-sm" style="max-height: 380px;">
+                                <img src="<?= htmlspecialchars($jobImageUrl) ?>" alt="<?= htmlspecialchars($jobTitle) ?>" class="w-100 object-fit-cover" style="max-height: 380px; object-fit: cover;">
+                            </div>
+
                             <!-- Badges -->
                             <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                                 <span class="badge bg-navy-subtle text-navy border px-3 py-2 fs-6">

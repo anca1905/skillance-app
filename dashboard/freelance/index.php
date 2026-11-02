@@ -273,7 +273,7 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                     <h5 class="modal-title fw-bold text-navy"><i class="fa-solid fa-briefcase text-gold me-2"></i> Buka Lowongan Freelance Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form id="formCreateJob">
+                <form id="formCreateJob" enctype="multipart/form-data">
                     <div class="modal-body p-4">
                         <input type="hidden" name="action" value="create_job">
 
@@ -326,6 +326,22 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-navy">Kriteria & Syarat Pengerjaan</label>
                             <textarea name="requirements" class="form-control" rows="2" placeholder="Contoh: 1. Melampirkan link file Figma rapi. 2. Revisi minor maks. 2 kali."></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-navy">
+                                <i class="fa-solid fa-image text-gold me-1"></i> Foto / Banner Lowongan (Opsional)
+                            </label>
+                            <input type="file" name="image" id="jobImageInput" class="form-control" accept="image/png, image/jpeg, image/jpg, image/webp">
+                            <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">Format: JPG, PNG, WebP (Maksimal 5MB). Banner akan tampil di kartu lowongan publik dan saat dibagikan ke medsos.</small>
+                            <div id="jobImagePreviewWrapper" class="mt-2 d-none">
+                                <div class="position-relative d-inline-block w-100">
+                                    <img id="jobImagePreview" src="" alt="Preview Banner" class="img-fluid rounded border shadow-sm w-100" style="max-height: 200px; object-fit: cover;">
+                                    <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle" id="btnRemoveImagePreview" title="Hapus Foto" style="width: 30px; height: 30px; padding: 0;">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer border-top">
@@ -454,6 +470,37 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
             loadPayouts();
             loadAllJobs();
 
+            // Image preview listener for Create Job
+            const jobImageInput = document.getElementById('jobImageInput');
+            const jobImagePreviewWrapper = document.getElementById('jobImagePreviewWrapper');
+            const jobImagePreview = document.getElementById('jobImagePreview');
+            const btnRemoveImagePreview = document.getElementById('btnRemoveImagePreview');
+
+            if (jobImageInput) {
+                jobImageInput.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            jobImagePreview.src = e.target.result;
+                            jobImagePreviewWrapper.classList.remove('d-none');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        jobImagePreview.src = '';
+                        jobImagePreviewWrapper.classList.add('d-none');
+                    }
+                });
+            }
+
+            if (btnRemoveImagePreview) {
+                btnRemoveImagePreview.addEventListener('click', function() {
+                    jobImageInput.value = '';
+                    jobImagePreview.src = '';
+                    jobImagePreviewWrapper.classList.add('d-none');
+                });
+            }
+
             // Create job submit
             const formJob = document.getElementById('formCreateJob');
             formJob.addEventListener('submit', function(e) {
@@ -471,6 +518,8 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                         const modal = bootstrap.Modal.getInstance(document.getElementById('modalCreateJob'));
                         if (modal) modal.hide();
                         formJob.reset();
+                        if (jobImagePreview) jobImagePreview.src = '';
+                        if (jobImagePreviewWrapper) jobImagePreviewWrapper.classList.add('d-none');
                         Swal.fire({ icon: 'success', title: 'Berhasil!', text: d.message });
                         loadAdminStats();
                         loadAllJobs();
@@ -767,6 +816,21 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
             .catch(err => console.error(err));
         }
 
+        function getJobBannerUrl(img, category) {
+            if (img && img.trim() !== '') {
+                return `../../uploads/freelance_jobs/${img}`;
+            }
+            const fallbacks = {
+                'Web & Pemrograman': 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80',
+                'Desain & UI/UX': 'https://images.unsplash.com/photo-1581291518655-9523c932694b?auto=format&fit=crop&w=700&q=80',
+                'Penulisan & Konten': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=80',
+                'Digital Marketing': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80',
+                'Data & Administrasi': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=700&q=80',
+                'Lainnya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80'
+            };
+            return fallbacks[category] || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=80';
+        }
+
         function renderJobsTable(jobs) {
             const tbody = document.getElementById('jobsTableBody');
             if (!jobs || jobs.length === 0) {
@@ -780,11 +844,18 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                                  (j.status === 'completed' ? '<span class="badge bg-secondary">Selesai</span>' :
                                  `<span class="badge bg-light text-dark border text-capitalize">${j.status}</span>`);
 
+                const bannerImg = getJobBannerUrl(j.image, j.category);
+
                 html += `
                     <tr>
                         <td>
-                            <div class="fw-bold text-navy">${escapeHtml(j.title)}</div>
-                            <small class="text-muted text-truncate d-block" style="max-width: 250px;">${escapeHtml(j.description)}</small>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="${bannerImg}" alt="${escapeHtml(j.title)}" class="rounded border object-fit-cover shadow-sm flex-shrink-0" style="width: 50px; height: 38px;">
+                                <div style="min-width: 0;">
+                                    <div class="fw-bold text-navy text-truncate" style="max-width: 230px;">${escapeHtml(j.title)}</div>
+                                    <small class="text-muted text-truncate d-block" style="max-width: 230px;">${escapeHtml(j.description)}</small>
+                                </div>
+                            </div>
                         </td>
                         <td>
                             <span class="badge bg-light text-navy border mb-1">${j.category}</span><br>
