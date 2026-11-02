@@ -83,6 +83,19 @@ if (!isset($_SESSION['user_id'])) {
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
             border-radius: 8px;
         }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .hover-shadow {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+        }
     </style>
 </head>
 
@@ -104,6 +117,95 @@ if (!isset($_SESSION['user_id'])) {
                 data-bs-target="#addProjectModal">
                 <i class="fa-solid fa-plus me-1"></i> Project Baru
             </button>
+        </div>
+
+        <!-- Statistik Ringkasan Project & Keuangan -->
+        <div class="row g-3 mb-4">
+            <!-- 1. Sisa Uang Belum Dibayar (Piutang Klien) -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card h-100 p-3 p-md-4 border-start border-4 border-danger shadow-sm bg-white position-relative overflow-hidden cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.72rem; letter-spacing: 0.5px;">Sisa Uang Belum Dibayar ke Saya</small>
+                            <h3 class="fw-bold text-danger my-1" id="statRemainingBalance">Rp 0</h3>
+                        </div>
+                        <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 44px; height: 44px;">
+                            <i class="fa-solid fa-hand-holding-dollar fs-5"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top">
+                        <small class="text-muted" id="statUnpaidProjectsCount"><i class="fa-solid fa-circle-exclamation text-danger me-1"></i> 0 project belum lunas</small>
+                        <span class="badge bg-danger-subtle text-danger" style="font-size: 0.72rem;">Sisa Piutang</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Status Proyek: Selesai vs Belum Selesai -->
+            <div class="col-6 col-md-3 col-xl-2">
+                <div class="card h-100 p-3 border-start border-4 border-success shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('selesai')" title="Klik untuk filter project selesai">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Selesai</small>
+                        <i class="fa-solid fa-circle-check text-success fs-6"></i>
+                    </div>
+                    <h3 class="fw-bold text-success mb-0" id="statProjectsCompleted">0</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Project tuntas</small>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3 col-xl-2">
+                <div class="card h-100 p-3 border-start border-4 border-warning shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_selesai')" title="Klik untuk filter project belum selesai">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Selesai</small>
+                        <i class="fa-solid fa-spinner fa-spin-pulse text-warning fs-6"></i>
+                    </div>
+                    <h3 class="fw-bold text-warning mb-0" id="statProjectsInProgress">0</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Dev, Test, On Hold</small>
+                </div>
+            </div>
+
+            <!-- 3. Status Pembayaran: Lunas vs Belum Lunas -->
+            <div class="col-6 col-md-3 col-xl-2">
+                <div class="card h-100 p-3 border-start border-4 border-primary shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('lunas')" title="Klik untuk filter project lunas">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Lunas</small>
+                        <i class="fa-solid fa-badge-check text-primary fs-6"></i>
+                    </div>
+                    <h3 class="fw-bold text-primary mb-0" id="statPaymentsPaid">0</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">Pembayaran tuntas</small>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3 col-xl-2">
+                <div class="card h-100 p-3 border-start border-4 border-secondary shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Lunas</small>
+                        <i class="fa-solid fa-clock-rotate-left text-danger fs-6"></i>
+                    </div>
+                    <h3 class="fw-bold text-navy mb-0" id="statPaymentsUnpaid">0</h3>
+                    <small class="text-muted" style="font-size: 0.72rem;">DP / Belum bayar</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Bar -->
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body p-3">
+                <div class="row g-2 align-items-center">
+                    <div class="col-12 col-md-5">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                            <input type="text" id="projectSearchInput" class="form-control border-start-0 bg-light" placeholder="Cari nama project, klien, atau platform...">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-7 d-flex flex-wrap gap-1 justify-content-md-end overflow-x-auto" style="-webkit-overflow-scrolling: touch;">
+                        <button class="btn btn-sm btn-navy fw-bold filter-btn active" data-filter="all" onclick="filterProjectsBy('all')">Semua (<span id="countAll">0</span>)</button>
+                        <button class="btn btn-sm btn-outline-warning fw-bold filter-btn text-dark" data-filter="belum_selesai" onclick="filterProjectsBy('belum_selesai')">Belum Selesai (<span id="countBelumSelesai">0</span>)</button>
+                        <button class="btn btn-sm btn-outline-success fw-bold filter-btn" data-filter="selesai" onclick="filterProjectsBy('selesai')">Selesai (<span id="countSelesai">0</span>)</button>
+                        <button class="btn btn-sm btn-outline-danger fw-bold filter-btn" data-filter="belum_lunas" onclick="filterProjectsBy('belum_lunas')">Belum Lunas (<span id="countBelumLunas">0</span>)</button>
+                        <button class="btn btn-sm btn-outline-primary fw-bold filter-btn" data-filter="lunas" onclick="filterProjectsBy('lunas')">Lunas (<span id="countLunas">0</span>)</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="card">
@@ -406,7 +508,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/project.js?v=2"></script>
+    <script src="../../assets/js/project.js?v=3"></script>
     <script>
         // Helper Sidebar & Logout (Sama utk semua halaman)
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }

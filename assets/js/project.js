@@ -1,5 +1,19 @@
+let allProjectsData = [];
+let currentFilter = 'all';
+let currentSearchQuery = '';
+
+const formatRp = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num || 0);
+
 document.addEventListener("DOMContentLoaded", function () {
     loadProjects();
+
+    const searchInput = document.getElementById('projectSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+            currentSearchQuery = e.target.value;
+            renderProjectTable();
+        });
+    }
 
     document.getElementById('projectForm').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -58,41 +72,188 @@ function loadProjects() {
     fetch('../../api/projects.php')
         .then(response => response.json())
         .then(data => {
+            allProjectsData = Array.isArray(data) ? data : [];
+            updateProjectStatistics(allProjectsData);
+            renderProjectTable();
+        })
+        .catch(err => {
+            console.error(err);
             const container = document.getElementById('projectList');
-            container.innerHTML = '';
-
-            data.forEach(item => {
-                let statusBadge = item.status === 'Selesai' ? 'bg-success' : (item.status === 'Testing' ? 'bg-info' : 'bg-warning text-dark');
-                let platformIcon = item.platform.includes('Android') ? 'fa-android text-success' : 'fa-globe text-primary';
-
-                const html = `
-                    <tr>
-                        <td class="ps-4">
-                            <span class="fw-bold d-block text-navy">${item.name}</span>
-                            <small class="text-muted"><i class="fa-brands ${platformIcon} me-1"></i> ${item.platform}</small>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle bg-navy text-white d-flex align-items-center justify-content-center me-2" style="width:30px; height:30px; font-size:0.8rem;">
-                                    ${item.client_name.charAt(0)}
-                                </div>
-                                <div><div class="fw-bold">${item.client_name}</div></div>
-                            </div>
-                        </td>
-                        <td>${item.deadline}</td>
-                        <td><span class="badge ${statusBadge}">${item.status}</span></td>
-                        <td><span class="badge bg-light text-dark border">${item.payment}</span></td>
-                        <td class="text-end pe-4">
-                            <a href="board.php?id=${item.id}" class="btn btn-sm btn-outline-primary" title="Task Board"><i class="fa-solid fa-list-check"></i></a>
-                            <button class="btn btn-sm btn-light border" onclick="editProject(${item.id})"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-sm btn-outline-info" onclick="viewProject(${item.id})"><i class="fa-solid fa-book"></i></button>
-                            <button class="btn btn-sm btn-outline-danger" onclick="deleteProject(${item.id})"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-                container.insertAdjacentHTML('beforeend', html);
-            });
+            if (container) {
+                container.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i> Gagal memuat data project.</td></tr>';
+            }
         });
+}
+
+function updateProjectStatistics(data) {
+    let completedCount = 0;
+    let inProgressCount = 0;
+    let paidCount = 0;
+    let unpaidCount = 0;
+    let totalRemainingBalance = 0;
+
+    data.forEach(item => {
+        // Status pengerjaan
+        if (item.status === 'Selesai') {
+            completedCount++;
+        } else {
+            inProgressCount++;
+        }
+
+        // Status pembayaran & sisa piutang
+        const price = parseInt(item.price) || 0;
+        const totalAddons = parseInt(item.total_addons) || 0;
+        const totalPrice = price + totalAddons;
+        const dpAmount = parseInt(item.dp_amount) || 0;
+
+        if (item.payment === 'Lunas') {
+            paidCount++;
+        } else {
+            unpaidCount++;
+            const remaining = Math.max(0, totalPrice - dpAmount);
+            totalRemainingBalance += remaining;
+        }
+    });
+
+    const elRem = document.getElementById('statRemainingBalance');
+    if (elRem) elRem.innerText = formatRp(totalRemainingBalance);
+
+    const elUnpaidCount = document.getElementById('statUnpaidProjectsCount');
+    if (elUnpaidCount) elUnpaidCount.innerHTML = `<i class="fa-solid fa-circle-exclamation text-danger me-1"></i> ${unpaidCount} project belum lunas`;
+
+    const elComp = document.getElementById('statProjectsCompleted');
+    if (elComp) elComp.innerText = completedCount;
+
+    const elInProg = document.getElementById('statProjectsInProgress');
+    if (elInProg) elInProg.innerText = inProgressCount;
+
+    const elPaid = document.getElementById('statPaymentsPaid');
+    if (elPaid) elPaid.innerText = paidCount;
+
+    const elUnpaid = document.getElementById('statPaymentsUnpaid');
+    if (elUnpaid) elUnpaid.innerText = unpaidCount;
+
+    // Filter button count badges
+    const elCountAll = document.getElementById('countAll');
+    if (elCountAll) elCountAll.innerText = data.length;
+
+    const elCountBelumSelesai = document.getElementById('countBelumSelesai');
+    if (elCountBelumSelesai) elCountBelumSelesai.innerText = inProgressCount;
+
+    const elCountSelesai = document.getElementById('countSelesai');
+    if (elCountSelesai) elCountSelesai.innerText = completedCount;
+
+    const elCountBelumLunas = document.getElementById('countBelumLunas');
+    if (elCountBelumLunas) elCountBelumLunas.innerText = unpaidCount;
+
+    const elCountLunas = document.getElementById('countLunas');
+    if (elCountLunas) elCountLunas.innerText = paidCount;
+}
+
+function renderProjectTable() {
+    const container = document.getElementById('projectList');
+    if (!container) return;
+    container.innerHTML = '';
+
+    let filtered = allProjectsData.filter(item => {
+        // Filter type
+        if (currentFilter === 'selesai' && item.status !== 'Selesai') return false;
+        if (currentFilter === 'belum_selesai' && item.status === 'Selesai') return false;
+        if (currentFilter === 'lunas' && item.payment !== 'Lunas') return false;
+        if (currentFilter === 'belum_lunas' && item.payment === 'Lunas') return false;
+
+        // Search query
+        if (currentSearchQuery.trim() !== '') {
+            const q = currentSearchQuery.toLowerCase();
+            const name = (item.name || '').toLowerCase();
+            const client = (item.client_name || '').toLowerCase();
+            const platform = (item.platform || '').toLowerCase();
+            if (!name.includes(q) && !client.includes(q) && !platform.includes(q)) {
+                return false;
+            }
+        }
+        return true;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fa-solid fa-folder-open fs-2 mb-2 d-block text-secondary"></i> Tidak ada project yang sesuai dengan filter atau pencarian.</td></tr>`;
+        return;
+    }
+
+    filtered.forEach(item => {
+        let statusBadge = item.status === 'Selesai' ? 'bg-success' : (item.status === 'Testing' ? 'bg-info text-white' : (item.status === 'On Hold' ? 'bg-secondary' : 'bg-warning text-dark'));
+        let platformIcon = (item.platform && item.platform.includes('Android')) ? 'fa-android text-success' : 'fa-globe text-primary';
+
+        const price = parseInt(item.price) || 0;
+        const totalAddons = parseInt(item.total_addons) || 0;
+        const totalPrice = price + totalAddons;
+        const dpAmount = parseInt(item.dp_amount) || 0;
+        const remaining = Math.max(0, totalPrice - dpAmount);
+
+        let paymentBadgeHtml = '';
+        if (item.payment === 'Lunas') {
+            paymentBadgeHtml = `<span class="badge bg-success-subtle text-success border border-success-subtle fw-bold"><i class="fa-solid fa-check me-1"></i> Lunas</span>`;
+        } else {
+            paymentBadgeHtml = `
+                <span class="badge bg-warning text-dark border mb-1">${item.payment}</span>
+                <small class="d-block text-danger fw-bold" style="font-size:0.75rem;" title="Sisa tagihan yang belum dibayar">
+                    Sisa: ${formatRp(remaining)}
+                </small>
+            `;
+        }
+
+        const html = `
+            <tr>
+                <td class="ps-4">
+                    <span class="fw-bold d-block text-navy">${item.name}</span>
+                    <small class="text-muted"><i class="fa-brands ${platformIcon} me-1"></i> ${item.platform}</small>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-navy text-white d-flex align-items-center justify-content-center me-2 flex-shrink-0" style="width:30px; height:30px; font-size:0.8rem;">
+                            ${(item.client_name || 'K').charAt(0).toUpperCase()}
+                        </div>
+                        <div><div class="fw-bold">${item.client_name}</div></div>
+                    </div>
+                </td>
+                <td><small class="text-muted">${item.deadline}</small></td>
+                <td><span class="badge ${statusBadge}">${item.status}</span></td>
+                <td>${paymentBadgeHtml}</td>
+                <td class="text-end pe-4">
+                    <div class="d-flex justify-content-end gap-1">
+                        <a href="board.php?id=${item.id}" class="btn btn-sm btn-outline-primary" title="Task Board"><i class="fa-solid fa-list-check"></i></a>
+                        <button class="btn btn-sm btn-light border" onclick="editProject(${item.id})" title="Edit Project"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-sm btn-outline-info" onclick="viewProject(${item.id})" title="Dokumentasi & Tagihan"><i class="fa-solid fa-book"></i></button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteProject(${item.id})" title="Hapus Project"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+function filterProjectsBy(filterType) {
+    currentFilter = filterType;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        const type = btn.getAttribute('data-filter');
+        if (type === filterType) {
+            btn.classList.add('active');
+            if (filterType === 'all') btn.className = 'btn btn-sm btn-navy fw-bold filter-btn active';
+            else if (filterType === 'belum_selesai') btn.className = 'btn btn-sm btn-warning text-dark fw-bold filter-btn active';
+            else if (filterType === 'selesai') btn.className = 'btn btn-sm btn-success fw-bold filter-btn active';
+            else if (filterType === 'belum_lunas') btn.className = 'btn btn-sm btn-danger fw-bold filter-btn active';
+            else if (filterType === 'lunas') btn.className = 'btn btn-sm btn-primary fw-bold filter-btn active';
+        } else {
+            btn.classList.remove('active');
+            if (type === 'all') btn.className = 'btn btn-sm btn-outline-secondary fw-bold filter-btn';
+            else if (type === 'belum_selesai') btn.className = 'btn btn-sm btn-outline-warning text-dark fw-bold filter-btn';
+            else if (type === 'selesai') btn.className = 'btn btn-sm btn-outline-success fw-bold filter-btn';
+            else if (type === 'belum_lunas') btn.className = 'btn btn-sm btn-outline-danger fw-bold filter-btn';
+            else if (type === 'lunas') btn.className = 'btn btn-sm btn-outline-primary fw-bold filter-btn';
+        }
+    });
+    renderProjectTable();
 }
 
 function editProject(id) {
