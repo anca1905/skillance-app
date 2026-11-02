@@ -1,4 +1,5 @@
 <?php
+session_start();
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, DELETE");
@@ -10,26 +11,28 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $role = isset($_GET['role']) ? $conn->real_escape_string($_GET['role']) : null;
 
-    $query = "SELECT id, name, email, role, created_at FROM users";
+    $query = "SELECT id, name, email, role, user_type, institution, created_at FROM users";
     if ($role) {
         $query .= " WHERE role='$role'";
-    } else {
-        $query .= " WHERE role != 'admin'"; // Default hide admins from HRD view if wanted
     }
-    $query .= " ORDER BY created_at DESC";
+    $query .= " ORDER BY FIELD(role, 'admin', 'staff', 'freelancer'), created_at DESC";
 
     $result = $conn->query($query);
     $users = [];
 
+    $countAdmin = 0;
     $countStaff = 0;
-    $countInvestor = 0;
+    $countFreelancer = 0;
+    $countTotal = 0;
 
-    // Also get totals
+    // Get role summaries
     $q_summary = $conn->query("SELECT role, COUNT(id) as total FROM users GROUP BY role");
     if ($q_summary) {
         while ($row = $q_summary->fetch_assoc()) {
-            if ($row['role'] == 'staff') $countStaff = (int)$row['total'];
-            if ($row['role'] == 'investor') $countInvestor = (int)$row['total'];
+            if ($row['role'] === 'admin') $countAdmin = (int)$row['total'];
+            if ($row['role'] === 'staff') $countStaff = (int)$row['total'];
+            if ($row['role'] === 'freelancer') $countFreelancer = (int)$row['total'];
+            $countTotal += (int)$row['total'];
         }
     }
 
@@ -43,51 +46,51 @@ if ($method === 'GET') {
         "status" => "success",
         "users" => $users,
         "summary" => [
+            "admin" => $countAdmin,
             "staff" => $countStaff,
-            "investor" => $countInvestor
+            "freelancer" => $countFreelancer,
+            "total" => $countTotal
         ]
     ]);
     exit();
 }
 
 if ($method === 'POST') {
-    // Determine if it's an insert or update based on 'id' existence (optional for future updates)
     $data = json_decode(file_get_contents("php://input"), true);
     if (!$data) $data = $_POST;
 
     $name = trim($data['name'] ?? '');
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
-    $role = $data['role'] ?? 'staff';
+    $role = in_array($data['role'] ?? '', ['admin', 'staff']) ? $data['role'] : 'staff';
+    $userType = 'umum';
 
     if (empty($name) || empty($email) || empty($password)) {
-        echo json_encode(["status" => "error", "message" => "Data tidak lengkap"]);
+        echo json_encode(["status" => "error", "message" => "Mohon lengkapi nama, email, dan password."]);
         exit();
     }
 
-    // Check if email already exists using prepared statement
+    // Check if email already exists
     $stmtCheck = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmtCheck->bind_param("s", $email);
     $stmtCheck->execute();
     $resultCheck = $stmtCheck->get_result();
     if ($resultCheck->num_rows > 0) {
-        echo json_encode(["status" => "error", "message" => "Email sudah terdaftar"]);
+        echo json_encode(["status" => "error", "message" => "Email sudah terdaftar dalam sistem."]);
         $stmtCheck->close();
         exit();
     }
     $stmtCheck->close();
 
-    // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert new user using prepared statement
-    $stmtInsert = $conn->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-    $stmtInsert->bind_param("ssss", $name, $email, $hashedPassword, $role);
+    $stmtInsert = $conn->prepare("INSERT INTO users (name, email, password, role, user_type) VALUES (?, ?, ?, ?, ?)");
+    $stmtInsert->bind_param("sssss", $name, $email, $hashedPassword, $role, $userType);
     
     if ($stmtInsert->execute()) {
-        echo json_encode(["status" => "success", "message" => "Pengguna berhasil ditambahkan"]);
+        echo json_encode(["status" => "success", "message" => "Akun pengguna baru berhasil dibuat."]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Gagal menyimpan pengguna: " . $stmtInsert->error]);
+        echo json_encode(["status" => "error", "message" => "Gagal menyimpan akun: " . $stmtInsert->error]);
     }
     
     $stmtInsert->close();
@@ -103,13 +106,20 @@ if ($method === 'DELETE') {
         exit();
     }
 
-    // Prevent deleting admin? (Optional safety)
-    $stmt = $conn->query("DELETE FROM users WHERE id=$id AND role != 'admin'");
-    if ($stmt) {
-        echo json_encode(["status" => "success", "message" => "Pengguna berhasil dihapus"]);
+    $currentUserId = intval($_SESSION['user_id'] ?? 0);
+    if ($id === $currentUserId || $id === 1) {
+        echo json_encode(["status" => "error", "message" => "Akun Administrator Utama tidak boleh dihapus demi keamanan."]);
+        exit();
+    }
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        echo json_encode(["status" => "success", "message" => "Pengguna berhasil dihapus."]);
     } else {
         echo json_encode(["status" => "error", "message" => "Gagal menghapus pengguna: " . $conn->error]);
     }
+    $stmt->close();
     exit();
 }
 

@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRD | S-OS Skillance</title>
+    <title>Manajemen Pengguna | Skillance Office</title>
 
     <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +23,7 @@ if (!isset($_SESSION['user_id'])) {
         body {
             background-color: #f3f4f6;
             overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
 
         .sidebar {
@@ -40,7 +41,7 @@ if (!isset($_SESSION['user_id'])) {
 
         .main-content {
             margin-left: 250px;
-            padding: 20px;
+            padding: 24px 30px;
             transition: 0.3s;
         }
 
@@ -68,7 +69,7 @@ if (!isset($_SESSION['user_id'])) {
 
         @media (max-width: 768px) {
             .sidebar {
-                margin-left: -250px;
+                margin-left: -260px;
             }
 
             .sidebar.active {
@@ -77,13 +78,14 @@ if (!isset($_SESSION['user_id'])) {
 
             .main-content {
                 margin-left: 0;
+                padding: 16px 12px;
             }
         }
 
         .card {
             border: none;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
-            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
         }
     </style>
 </head>
@@ -91,82 +93,95 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
     <?php
-    $activeMenu = 'hrd';
+    $activeMenu = 'users';
     include __DIR__ . '/../includes/sidebar.php';
     ?>
 
     <div class="main-content">
+        <!-- Topbar Mobile -->
         <div class="d-flex justify-content-between align-items-center mb-4 d-md-none">
             <button class="btn btn-navy btn-sm" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-            <span class="fw-bold text-navy">HRD Admin</span>
+            <span class="fw-bold text-navy">Manajemen Pengguna</span>
         </div>
 
+        <!-- Header Desktop -->
         <div class="d-flex justify-content-between align-items-center mb-4 d-none d-md-flex">
             <div>
-                <h4 class="fw-bold text-navy mb-0">Human Resource Department (HRD)</h4>
-                <small class="text-muted">Kelola akun Karyawan dan Investor</small>
+                <h4 class="fw-bold text-navy mb-0">
+                    <i class="fa-solid fa-users-gear text-navy me-2"></i>Manajemen Pengguna
+                </h4>
+                <small class="text-muted">Kelola akun Administrator, Staff Internal, dan Freelancer Skillance.</small>
             </div>
         </div>
 
-        <!-- Summary Cards -->
-        <div class="row g-4 mb-4">
-            <div class="col-12 col-md-6">
-                <div class="card bg-info text-white h-100 shadow-sm">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-center">
+        <!-- Summary KPI Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-4">
+                <div class="card bg-navy text-white h-100 shadow-sm border-0">
+                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold opacity-75">Terkonfirmasi Karyawan (Staff)</small>
-                            <h3 class="fw-bold mb-0 mt-2" id="totalStaff">0</h3>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Administrator</small>
+                            <h3 class="fw-bold mb-0 mt-1 text-white" id="totalAdmin">0</h3>
                         </div>
-                        <i class="fa-solid fa-user-tie fs-1 opacity-50"></i>
+                        <i class="fa-solid fa-user-shield fs-1 text-white opacity-50 d-none d-sm-block"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="card bg-success text-white h-100 shadow-sm">
-                    <div class="card-body p-4 d-flex justify-content-between align-items-center">
+            <div class="col-4">
+                <div class="card bg-primary text-white h-100 shadow-sm border-0">
+                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold opacity-75">Terkonfirmasi Investor Aktif</small>
-                            <h3 class="fw-bold mb-0 mt-2" id="totalInvestor">0</h3>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Staff Internal</small>
+                            <h3 class="fw-bold mb-0 mt-1 text-white" id="totalStaff">0</h3>
                         </div>
-                        <i class="fa-solid fa-user-group fs-1 opacity-50"></i>
+                        <i class="fa-solid fa-user-tie fs-1 text-white opacity-50 d-none d-sm-block"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card bg-success text-white h-100 shadow-sm border-0">
+                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Freelancer</small>
+                            <h3 class="fw-bold mb-0 mt-1 text-white" id="totalFreelancer">0</h3>
+                        </div>
+                        <i class="fa-solid fa-laptop-code fs-1 text-white opacity-50 d-none d-sm-block"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row g-4">
-            <!-- Form Tambah User -->
+            <!-- Form Tambah User Internal -->
             <div class="col-12 col-lg-4">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white py-3 border-bottom text-navy fw-bold">
-                        <i class="fa-solid fa-user-plus me-2"></i>Buat Akun Baru
+                        <i class="fa-solid fa-user-plus text-gold me-2"></i>Tambah Akun Pengguna
                     </div>
                     <div class="card-body p-4">
                         <form id="formUser">
                             <div class="mb-3">
-                                <label class="form-label small fw-bold text-muted">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Contoh: Darniati"
-                                    required>
+                                <label class="form-label small fw-bold text-muted">NAMA LENGKAP</label>
+                                <input type="text" class="form-control" id="userName" placeholder="Contoh: Rian Pratama" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label small fw-bold text-muted">Email (Username)</label>
-                                <input type="email" class="form-control" id="userEmail"
-                                    placeholder="contoh@investor.com" required>
+                                <label class="form-label small fw-bold text-muted">EMAIL LOGIN</label>
+                                <input type="email" class="form-control" id="userEmail" placeholder="nama@skillance.id" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label small fw-bold text-muted">Password Sementara</label>
-                                <input type="text" class="form-control" id="userPass" required
-                                    placeholder="minimal 5 karakter">
+                                <label class="form-label small fw-bold text-muted">PASSWORD</label>
+                                <input type="text" class="form-control" id="userPass" required placeholder="Minimal 6 karakter">
                             </div>
                             <div class="mb-4">
-                                <label class="form-label small fw-bold text-muted">Peran (Role)</label>
+                                <label class="form-label small fw-bold text-muted">PERAN (ROLE)</label>
                                 <select class="form-select" id="userRole" required>
-                                    <option value="staff">Karyawan (Staff)</option>
-                                    <option value="investor">Investor</option>
+                                    <option value="staff" selected>Staff Internal</option>
+                                    <option value="admin">Administrator</option>
                                 </select>
+                                <small class="text-muted" style="font-size: 0.72rem;">Freelancer mendaftar otomatis melalui halaman login/register.</small>
                             </div>
-                            <button type="submit" class="btn btn-navy w-100" id="btnSubmit">
-                                <i class="fa-solid fa-save me-1"></i> Buat Akun
+                            <button type="submit" class="btn btn-navy w-100 py-2 fw-bold" id="btnSubmit">
+                                <i class="fa-solid fa-save me-1"></i> Simpan Akun Pengguna
                             </button>
                         </form>
                     </div>
@@ -176,25 +191,30 @@ if (!isset($_SESSION['user_id'])) {
             <!-- List Users -->
             <div class="col-12 col-lg-8">
                 <div class="card border-0 shadow-sm">
-                    <div
-                        class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 fw-bold text-navy"><i class="fa-solid fa-list me-2"></i>Direktori Pengguna</h6>
+                    <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <h6 class="m-0 fw-bold text-navy">
+                            <i class="fa-solid fa-list me-2"></i>Daftar Pengguna Sistem
+                        </h6>
+                        <div class="d-flex gap-2">
+                            <input type="text" id="searchUser" class="form-control form-control-sm" placeholder="Cari nama / email..." style="width: 200px;">
+                        </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light text-muted small">
                                     <tr>
-                                        <th class="ps-4">NAMA / NIK</th>
-                                        <th>EMAIL LOGIN</th>
+                                        <th class="ps-4">PENGGUNA</th>
                                         <th>PERAN</th>
+                                        <th>STATUS / KAMPUS</th>
+                                        <th>TERDAFTAR</th>
                                         <th class="text-end pe-4">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
                                     <tr>
-                                        <td colspan="4" class="text-center py-4 text-muted">
-                                            <i class="fa-solid fa-spinner fa-spin me-2"></i>Memuat data...
+                                        <td colspan="5" class="text-center py-4 text-muted">
+                                            <i class="fa-solid fa-spinner fa-spin me-2"></i>Memuat data pengguna...
                                         </td>
                                     </tr>
                                 </tbody>
@@ -209,49 +229,83 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        let allUsersData = [];
+
         document.addEventListener('DOMContentLoaded', () => {
-
-            document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-                document.getElementById('sidebar').classList.toggle('active');
-            });
-
             function loadData() {
                 fetch('../../api/hrd_api.php')
                     .then(r => r.json())
                     .then(res => {
                         if (res.status === 'success') {
-                            document.getElementById('totalStaff').textContent = res.summary.staff;
-                            document.getElementById('totalInvestor').textContent = res.summary.investor;
+                            document.getElementById('totalAdmin').textContent = res.summary.admin || 0;
+                            document.getElementById('totalStaff').textContent = res.summary.staff || 0;
+                            document.getElementById('totalFreelancer').textContent = res.summary.freelancer || 0;
 
-                            const tbody = document.getElementById('tableBody');
-                            tbody.innerHTML = '';
-
-                            if (res.users.length === 0) {
-                                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-muted">Belum ada data anggota tim.</td></tr>`;
-                            } else {
-                                res.users.forEach(item => {
-                                    const badgeColor = item.role === 'investor' ? 'bg-success' : 'bg-info';
-                                    const roleStr = item.role.toUpperCase();
-
-                                    tbody.innerHTML += `
-                                        <tr>
-                                            <td class="ps-4 fw-semibold">${item.name}</td>
-                                            <td class="text-muted">${item.email}</td>
-                                            <td><span class="badge ${badgeColor}">${roleStr}</span></td>
-                                            <td class="text-end pe-4">
-                                                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${item.id}, '${item.name}')"><i class="fa-solid fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    `;
-                                });
-                            }
+                            allUsersData = res.users || [];
+                            renderUsers(allUsersData);
                         }
                     })
                     .catch(err => console.error(err));
             }
 
+            function renderUsers(users) {
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = '';
+
+                if (users.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-muted">Tidak ada pengguna ditemukan.</td></tr>`;
+                    return;
+                }
+
+                users.forEach(item => {
+                    let roleBadge = '';
+                    if (item.role === 'admin') {
+                        roleBadge = '<span class="badge bg-navy text-white px-2 py-1"><i class="fa-solid fa-shield-halved me-1"></i> Admin</span>';
+                    } else if (item.role === 'staff') {
+                        roleBadge = '<span class="badge bg-primary text-white px-2 py-1"><i class="fa-solid fa-user-tie me-1"></i> Staff</span>';
+                    } else {
+                        roleBadge = '<span class="badge bg-success text-white px-2 py-1"><i class="fa-solid fa-laptop-code me-1"></i> Freelancer</span>';
+                    }
+
+                    let typeInfo = item.institution ? `<span class="badge bg-light text-dark border">${item.institution}</span>` : `<span class="text-muted small text-capitalize">${item.user_type || '-'}</span>`;
+
+                    const dateFormatted = item.created_at ? item.created_at.split(' ')[0] : '-';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold text-navy">${item.name}</div>
+                                <small class="text-muted">${item.email}</small>
+                            </td>
+                            <td>${roleBadge}</td>
+                            <td>${typeInfo}</td>
+                            <td><small class="text-muted">${dateFormatted}</small></td>
+                            <td class="text-end pe-4">
+                                ${item.id == 1 ? '<span class="badge bg-light text-muted">Utama</span>' : `
+                                <button class="btn btn-sm btn-outline-danger" title="Hapus Akun" onclick="deleteUser(${item.id}, '${item.name.replace(/'/g, "\\'")}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>`}
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Search filter
+            document.getElementById('searchUser')?.addEventListener('input', function(e) {
+                const q = e.target.value.toLowerCase().trim();
+                const filtered = allUsersData.filter(u => 
+                    u.name.toLowerCase().includes(q) || 
+                    u.email.toLowerCase().includes(q) ||
+                    u.role.toLowerCase().includes(q) ||
+                    (u.institution && u.institution.toLowerCase().includes(q))
+                );
+                renderUsers(filtered);
+            });
+
             loadData();
 
+            // Submit Tambah User
             document.getElementById('formUser').addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -273,7 +327,7 @@ if (!isset($_SESSION['user_id'])) {
                 })
                     .then(r => r.json())
                     .then(res => {
-                        btn.innerHTML = '<i class="fa-solid fa-save me-1"></i> Buat Akun';
+                        btn.innerHTML = '<i class="fa-solid fa-save me-1"></i> Simpan Akun Pengguna';
                         btn.disabled = false;
 
                         if (res.status === 'success') {
@@ -286,7 +340,7 @@ if (!isset($_SESSION['user_id'])) {
                     })
                     .catch(err => {
                         console.error(err);
-                        btn.innerHTML = '<i class="fa-solid fa-save me-1"></i> Buat Akun';
+                        btn.innerHTML = '<i class="fa-solid fa-save me-1"></i> Simpan Akun Pengguna';
                         btn.disabled = false;
                         Swal.fire({ icon: 'error', title: 'Oops', text: 'Terjadi kesalahan sistem.' });
                     });
@@ -294,12 +348,12 @@ if (!isset($_SESSION['user_id'])) {
 
             window.deleteUser = function (id, name) {
                 Swal.fire({
-                    title: 'Hapus Akses?',
-                    text: `Apakah Anda yakin ingin menghapus akun ${name}?`,
+                    title: 'Hapus Akun Pengguna?',
+                    text: `Apakah Anda yakin ingin menghapus akun ${name}? Tindakan ini tidak dapat dibatalkan.`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
-                    cancelButtonColor: '#secondary',
+                    cancelButtonColor: '#6c757d',
                     confirmButtonText: 'Ya, Hapus!'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -318,28 +372,8 @@ if (!isset($_SESSION['user_id'])) {
                     }
                 });
             }
-
-            // Logout
-            document.getElementById('btnLogout').addEventListener('click', (e) => {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Keluar Sistem?',
-                    text: "Sesi Anda akan diakhiri.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#0d2e5c',
-                    confirmButtonText: 'Ya, Logout'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        localStorage.clear();
-                        window.location.href = '../../auth/index.html';
-                    }
-                });
-            });
         });
     </script>
 </body>
 
 </html>
-
-

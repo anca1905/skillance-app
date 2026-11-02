@@ -3,7 +3,7 @@
  * Shared Master Sidebar for Skillance Office Dashboard
  * 
  * Usage:
- *   $activeMenu = 'dashboard'; // 'dashboard', 'freelance', 'project', 'finance', 'investment', 'hrd', 'team', 'payroll', 'blog', 'profile'
+ *   $activeMenu = 'dashboard'; // 'dashboard', 'freelance', 'project', 'finance', 'team', 'blog', 'users', 'profile'
  *   include __DIR__ . '/includes/sidebar.php'; // or /../includes/sidebar.php
  */
 
@@ -62,28 +62,18 @@ $activeMenu = $activeMenu ?? '';
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= $dashRoot ?>investment/index.php" class="nav-link <?= $activeMenu === 'investment' ? 'active' : '' ?>">
-                <i class="fa-solid fa-hand-holding-dollar"></i> Investasi Admin
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>hrd/index.php" class="nav-link text-primary <?= $activeMenu === 'hrd' ? 'active' : '' ?>">
-                <i class="fa-solid fa-users"></i> HRD
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="<?= $dashRoot ?>team/index.php" class="nav-link <?= $activeMenu === 'team' ? 'active' : '' ?>">
                 <i class="fa-solid fa-people-group"></i> Manajemen Tim
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= $dashRoot ?>payroll/index.php" class="nav-link <?= $activeMenu === 'payroll' ? 'active' : '' ?>">
-                <i class="fa-solid fa-money-check-dollar"></i> Penggajian
+            <a href="<?= $dashRoot ?>blog/index.php" class="nav-link <?= $activeMenu === 'blog' ? 'active' : '' ?>">
+                <i class="fa-solid fa-newspaper"></i> Kelola Artikel
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= $dashRoot ?>blog/index.php" class="nav-link <?= $activeMenu === 'blog' ? 'active' : '' ?>">
-                <i class="fa-solid fa-newspaper"></i> Kelola Artikel
+            <a href="<?= $dashRoot ?>hrd/index.php" class="nav-link <?= ($activeMenu === 'users' || $activeMenu === 'hrd') ? 'active' : 'text-primary' ?>">
+                <i class="fa-solid fa-users-gear text-primary"></i> Manajemen Pengguna
             </a>
         </li>
         <li class="nav-item">
