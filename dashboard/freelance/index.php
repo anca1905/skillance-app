@@ -773,12 +773,20 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                         </td>
                         <td>${statusBadge}</td>
                         <td>
-                            <select class="form-select form-select-sm" style="width: auto; font-size: 0.75rem;" onchange="updateJobStatus(${j.id}, this.value)">
-                                <option value="open" ${j.status === 'open' ? 'selected' : ''}>Open</option>
-                                <option value="in_progress" ${j.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
-                                <option value="completed" ${j.status === 'completed' ? 'selected' : ''}>Completed</option>
-                                <option value="closed" ${j.status === 'closed' ? 'selected' : ''}>Closed</option>
-                            </select>
+                            <div class="d-flex align-items-center gap-1">
+                                <select class="form-select form-select-sm" style="width: auto; font-size: 0.75rem;" onchange="updateJobStatus(${j.id}, this.value)">
+                                    <option value="open" ${j.status === 'open' ? 'selected' : ''}>Open</option>
+                                    <option value="in_progress" ${j.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                                    <option value="completed" ${j.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                    <option value="closed" ${j.status === 'closed' ? 'selected' : ''}>Closed</option>
+                                </select>
+                                <a href="../../job.php?id=${j.id}" target="_blank" class="btn btn-sm btn-outline-primary" title="Lihat Halaman Publik Lowongan">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger" title="Hapus Lowongan" onclick="confirmDeleteJob(${j.id}, '${escapeHtml(j.title)}')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -801,6 +809,64 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
                 }
             })
             .catch(err => console.error(err));
+        }
+
+        function confirmDeleteJob(jobId, jobTitle) {
+            Swal.fire({
+                title: 'Hapus Lowongan Ini?',
+                html: `Apakah Anda yakin ingin menghapus lowongan:<br><strong>${jobTitle}</strong>?<br><small class="text-danger">Tindakan ini akan menghapus data lowongan secara permanen.</small>`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fa-solid fa-trash-can me-1"></i> Ya, Hapus Lowongan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Menghapus...',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading()
+                    });
+
+                    const formData = new FormData();
+                    formData.append('action', 'delete_job');
+                    formData.append('job_id', jobId);
+
+                    fetch('../../api/freelance_admin_api.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(r => r.json())
+                    .then(d => {
+                        if (d.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Terhapus!',
+                                text: d.message,
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                            loadAllJobs();
+                            if (typeof loadAdminStats === 'function') loadAdminStats();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal Menghapus',
+                                text: d.message || 'Terjadi kesalahan saat menghapus.'
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Gagal menghubungi server.'
+                        });
+                    });
+                }
+            });
         }
 
         function escapeHtml(str) {

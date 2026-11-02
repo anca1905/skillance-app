@@ -137,6 +137,43 @@ switch ($action) {
         echo json_encode(["status" => "success", "message" => "Status lowongan diperbarui!"]);
         break;
 
+    // 4.1 DELETE JOB
+    case 'delete_job':
+        $jobId = intval($_POST['job_id'] ?? 0);
+
+        if ($jobId <= 0) {
+            http_response_code(400);
+            echo json_encode(["status" => "error", "message" => "ID Lowongan tidak valid."]);
+            exit();
+        }
+
+        // Cek apakah ada tugas yang sudah dibayar/selesai
+        $chk = $conn->query("SELECT COUNT(*) as cnt FROM freelance_assignments WHERE job_id = $jobId AND status = 'completed'");
+        $cnt = intval($chk->fetch_assoc()['cnt'] ?? 0);
+        if ($cnt > 0) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error", 
+                "message" => "Lowongan ini memiliki tugas yang sudah selesai dan masuk laporan keuangan. Sebaiknya ubah statusnya menjadi 'Closed' agar riwayat keuangan tetap utuh."
+            ]);
+            exit();
+        }
+
+        // Hapus penugasan terkait
+        $conn->query("DELETE FROM freelance_assignments WHERE job_id = $jobId");
+
+        // Hapus pekerjaan
+        $delStmt = $conn->prepare("DELETE FROM freelance_jobs WHERE id = ?");
+        $delStmt->bind_param("i", $jobId);
+        if ($delStmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Lowongan berhasil dihapus dari sistem."]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => "Gagal menghapus lowongan: " . $conn->error]);
+        }
+        $delStmt->close();
+        break;
+
     // 5. GET ALL SUBMISSIONS & TASKS FOR REVIEW
     case 'get_submissions':
         $filterStatus = $_GET['status'] ?? '';
