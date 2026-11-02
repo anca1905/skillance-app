@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    
+    <!-- Beranda Utama -->
+    <url>
+        <loc>https://skillance.my.id/</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Bursa Lowongan Freelance (Mahasiswa & Umum) -->
+    <url>
+        <loc>https://skillance.my.id/freelance.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.95</priority>
+    </url>
+
+    <!-- Layanan Software House & IT Consultant -->
+    <url>
+        <loc>https://skillance.my.id/services.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.90</priority>
+    </url>
+
+    <!-- Portofolio Proyek & Studi Kasus -->
+    <url>
+        <loc>https://skillance.my.id/portfolio.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Wawasan & Artikel Blog -->
+    <url>
+        <loc>https://skillance.my.id/blog.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Artikel Blog Spesifik -->
+    <url>
+        <loc>https://skillance.my.id/blog-detail.html?id=1</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.75</priority>
+    </url>
+    <url>
+        <loc>https://skillance.my.id/blog-detail.html?id=2</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.75</priority>
+    </url>
+
+    <!-- Tentang Perusahaan (CV Skillance Digital Indonesia) -->
+    <url>
+        <loc>https://skillance.my.id/about.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Skillance Academy & Bootcamp Komunitas -->
+    <url>
+        <loc>https://skillance.my.id/academy.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Kontak & Konsultasi Langsung -->
+    <url>
+        <loc>https://skillance.my.id/contact.html</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+</urlset>

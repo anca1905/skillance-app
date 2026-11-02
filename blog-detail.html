@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
     <title>Membaca Artikel | CV Skillance Digital Indonesia</title>
+    <meta name="description" id="meta-description" content="Baca artikel lengkap, tutorial teknologi, dan wawasan bisnis digital dari tim praktisi dan konsultan CV Skillance Digital Indonesia.">
+    <meta name="keywords" content="artikel teknologi, transformasi digital, software house sultra, cv skillance digital indonesia">
+    <meta name="author" content="CV Skillance Digital Indonesia">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="og-title" content="Membaca Artikel | CV Skillance Digital Indonesia">
+    <meta property="og:description" id="og-desc" content="Baca artikel lengkap dan wawasan teknologi terkini dari Skillance.">
+    <meta property="og:site_name" content="Skillance Digital Indonesia">
+    <meta property="og:image" id="og-img" content="https://skillance.my.id/assets/img/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="tw-title" content="Membaca Artikel | CV Skillance Digital Indonesia">
+    <meta name="twitter:description" id="tw-desc" content="Wawasan dan artikel teknologi terpercaya dari CV Skillance Digital Indonesia.">
+    <meta name="twitter:image" id="tw-img" content="https://skillance.my.id/assets/img/og-preview.png">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -194,6 +216,25 @@
                         document.getElementById('b-content').innerHTML = res.data.content;
                         
                         document.title = res.data.title + " | Skillance";
+
+                        // Update SEO Meta Tags Dynamically
+                        const excerpt = res.data.excerpt || res.data.title;
+                        const metaDesc = document.getElementById('meta-description');
+                        if(metaDesc) metaDesc.setAttribute('content', excerpt);
+                        const ogTitle = document.getElementById('og-title');
+                        if(ogTitle) ogTitle.setAttribute('content', res.data.title);
+                        const ogDesc = document.getElementById('og-desc');
+                        if(ogDesc) ogDesc.setAttribute('content', excerpt);
+                        const twTitle = document.getElementById('tw-title');
+                        if(twTitle) twTitle.setAttribute('content', res.data.title);
+                        const twDesc = document.getElementById('tw-desc');
+                        if(twDesc) twDesc.setAttribute('content', excerpt);
+                        if(res.data.image) {
+                            const ogImg = document.getElementById('og-img');
+                            if(ogImg) ogImg.setAttribute('content', res.data.image);
+                            const twImg = document.getElementById('tw-img');
+                            if(twImg) twImg.setAttribute('content', res.data.image);
+                        }
                     } else {
                         document.getElementById('loading').innerHTML = `<div class="alert alert-danger">${res.message || 'Artikel tidak ditemukan.'} <a href="blog.html" class="alert-link">Kembali</a></div>`;
                     }

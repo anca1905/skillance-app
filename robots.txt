@@ -1,0 +1,29 @@
+# robots.txt for https://skillance.my.id
+# CV Skillance Digital Indonesia - Software House & Bursa Freelance
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /index.html
+Allow: /about.html
+Allow: /services.html
+Allow: /portfolio.html
+Allow: /freelance.html
+Allow: /academy.html
+Allow: /blog.html
+Allow: /blog-detail.html
+Allow: /contact.html
+
+# Disallow internal systems & private data
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /config/
+Disallow: /uploads/
+Disallow: /laskar_wonua/
+Disallow: /mobile/
+Disallow: /wa-gateway/
+
+# Host & Sitemap specification
+Host: https://skillance.my.id
+Sitemap: https://skillance.my.id/sitemap.xml
