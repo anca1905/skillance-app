@@ -127,30 +127,61 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
         </div>
 
         <!-- KPI Cards -->
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4 align-items-stretch">
             <div class="col-6 col-md-3">
-                <div class="card card-custom p-3 border-start border-4 border-warning">
-                    <small class="text-muted fw-bold text-uppercase" style="font-size: 0.7rem;">Butuh Review</small>
-                    <h4 class="fw-bold text-warning mb-0" id="statPendingReview">0 Tugas</h4>
+                <div class="card card-custom h-100 p-3 border-start border-4 border-warning d-flex flex-column justify-content-between shadow-sm">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Butuh Review</small>
+                            <i class="fa-solid fa-inbox text-warning" style="font-size: 0.85rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-warning mb-0" id="statPendingReview">0 Tugas</h4>
+                    </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Hasil kerja masuk</small>
+                    </div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="card card-custom p-3 border-start border-4 border-danger">
-                    <small class="text-muted fw-bold text-uppercase" style="font-size: 0.7rem;">Antrean Transfer</small>
-                    <h4 class="fw-bold text-danger mb-0" id="statPendingPayouts">Rp 0</h4>
-                    <small class="text-muted" id="statPendingPayoutsCount">0 antrean</small>
+                <div class="card card-custom h-100 p-3 border-start border-4 border-danger d-flex flex-column justify-content-between shadow-sm">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Antrean Transfer</small>
+                            <i class="fa-solid fa-money-bill-transfer text-danger" style="font-size: 0.85rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-danger mb-0" id="statPendingPayouts">Rp 0</h4>
+                    </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" id="statPendingPayoutsCount" style="font-size: 0.72rem;">0 antrean transfer</small>
+                    </div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="card card-custom p-3 border-start border-4 border-success">
-                    <small class="text-muted fw-bold text-uppercase" style="font-size: 0.7rem;">Fee Telah Ditransfer</small>
-                    <h4 class="fw-bold text-success mb-0" id="statTransferred">Rp 0</h4>
+                <div class="card card-custom h-100 p-3 border-start border-4 border-success d-flex flex-column justify-content-between shadow-sm">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Fee Telah Ditransfer</small>
+                            <i class="fa-solid fa-circle-check text-success" style="font-size: 0.85rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-success mb-0" id="statTransferred">Rp 0</h4>
+                    </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Total fee dibayarkan</small>
+                    </div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="card card-custom p-3 border-start border-4 border-primary">
-                    <small class="text-muted fw-bold text-uppercase" style="font-size: 0.7rem;">Total Lowongan</small>
-                    <h4 class="fw-bold text-navy mb-0" id="statTotalJobs">0 Lowongan</h4>
+                <div class="card card-custom h-100 p-3 border-start border-4 border-primary d-flex flex-column justify-content-between shadow-sm">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Total Lowongan</small>
+                            <i class="fa-solid fa-briefcase text-primary" style="font-size: 0.85rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-0" id="statTotalJobs">0 Lowongan</h4>
+                    </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Bursa freelance aktif</small>
+                    </div>
                 </div>
             </div>
         </div>

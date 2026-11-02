@@ -120,69 +120,87 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
         <!-- Statistik Ringkasan Project & Keuangan -->
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4 align-items-stretch">
             <!-- 1. Sisa Uang Belum Dibayar (Piutang Klien) -->
             <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 p-3 p-md-4 border-start border-4 border-danger shadow-sm bg-white position-relative overflow-hidden cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <div>
-                            <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.72rem; letter-spacing: 0.5px;">Sisa Uang Belum Dibayar ke Saya</small>
-                            <h3 class="fw-bold text-danger my-1" id="statRemainingBalance">Rp 0</h3>
-                        </div>
-                        <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 44px; height: 44px;">
-                            <i class="fa-solid fa-hand-holding-dollar fs-5"></i>
+                <div class="card h-100 p-3 p-md-3 border-start border-4 border-danger shadow-sm bg-white position-relative overflow-hidden cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <div>
+                                <small class="text-muted fw-bold text-uppercase d-block" style="font-size: 0.68rem; letter-spacing: 0.5px;">Sisa Uang Belum Dibayar ke Saya</small>
+                                <h3 class="fw-bold text-danger my-1" id="statRemainingBalance">Rp 0</h3>
+                            </div>
+                            <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center p-2 flex-shrink-0" style="width: 40px; height: 40px;">
+                                <i class="fa-solid fa-hand-holding-dollar fs-5"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top">
-                        <small class="text-muted" id="statUnpaidProjectsCount"><i class="fa-solid fa-circle-exclamation text-danger me-1"></i> 0 project belum lunas</small>
-                        <span class="badge bg-danger-subtle text-danger" style="font-size: 0.72rem;">Sisa Piutang</span>
+                    <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top border-light-subtle">
+                        <small class="text-muted" id="statUnpaidProjectsCount" style="font-size: 0.72rem;"><i class="fa-solid fa-circle-exclamation text-danger me-1"></i> 0 project belum lunas</small>
+                        <span class="badge bg-danger-subtle text-danger" style="font-size: 0.7rem;">Sisa Piutang</span>
                     </div>
                 </div>
             </div>
 
             <!-- 2. Status Proyek: Selesai vs Belum Selesai -->
             <div class="col-6 col-md-3 col-xl-2">
-                <div class="card h-100 p-3 border-start border-4 border-success shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('selesai')" title="Klik untuk filter project selesai">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Selesai</small>
-                        <i class="fa-solid fa-circle-check text-success fs-6"></i>
+                <div class="card h-100 p-3 border-start border-4 border-success shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('selesai')" title="Klik untuk filter project selesai">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Selesai</small>
+                            <i class="fa-solid fa-circle-check text-success fs-6"></i>
+                        </div>
+                        <h3 class="fw-bold text-success mb-0" id="statProjectsCompleted">0</h3>
                     </div>
-                    <h3 class="fw-bold text-success mb-0" id="statProjectsCompleted">0</h3>
-                    <small class="text-muted" style="font-size: 0.72rem;">Project tuntas</small>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Project tuntas</small>
+                    </div>
                 </div>
             </div>
 
             <div class="col-6 col-md-3 col-xl-2">
-                <div class="card h-100 p-3 border-start border-4 border-warning shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_selesai')" title="Klik untuk filter project belum selesai">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Selesai</small>
-                        <i class="fa-solid fa-spinner fa-spin-pulse text-warning fs-6"></i>
+                <div class="card h-100 p-3 border-start border-4 border-warning shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_selesai')" title="Klik untuk filter project belum selesai">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Selesai</small>
+                            <i class="fa-solid fa-spinner fa-spin-pulse text-warning fs-6"></i>
+                        </div>
+                        <h3 class="fw-bold text-warning mb-0" id="statProjectsInProgress">0</h3>
                     </div>
-                    <h3 class="fw-bold text-warning mb-0" id="statProjectsInProgress">0</h3>
-                    <small class="text-muted" style="font-size: 0.72rem;">Dev, Test, On Hold</small>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Dev, Test, On Hold</small>
+                    </div>
                 </div>
             </div>
 
             <!-- 3. Status Pembayaran: Lunas vs Belum Lunas -->
             <div class="col-6 col-md-3 col-xl-2">
-                <div class="card h-100 p-3 border-start border-4 border-primary shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('lunas')" title="Klik untuk filter project lunas">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Lunas</small>
-                        <i class="fa-solid fa-badge-check text-primary fs-6"></i>
+                <div class="card h-100 p-3 border-start border-4 border-primary shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('lunas')" title="Klik untuk filter project lunas">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Sudah Lunas</small>
+                            <i class="fa-solid fa-badge-check text-primary fs-6"></i>
+                        </div>
+                        <h3 class="fw-bold text-primary mb-0" id="statPaymentsPaid">0</h3>
                     </div>
-                    <h3 class="fw-bold text-primary mb-0" id="statPaymentsPaid">0</h3>
-                    <small class="text-muted" style="font-size: 0.72rem;">Pembayaran tuntas</small>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">Pembayaran tuntas</small>
+                    </div>
                 </div>
             </div>
 
             <div class="col-6 col-md-3 col-xl-2">
-                <div class="card h-100 p-3 border-start border-4 border-secondary shadow-sm bg-white cursor-pointer hover-shadow" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Lunas</small>
-                        <i class="fa-solid fa-clock-rotate-left text-danger fs-6"></i>
+                <div class="card h-100 p-3 border-start border-4 border-secondary shadow-sm bg-white cursor-pointer hover-shadow d-flex flex-column justify-content-between" onclick="filterProjectsBy('belum_lunas')" title="Klik untuk filter project belum lunas">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <small class="text-muted fw-bold text-uppercase" style="font-size: 0.68rem;">Belum Lunas</small>
+                            <i class="fa-solid fa-clock-rotate-left text-danger fs-6"></i>
+                        </div>
+                        <h3 class="fw-bold text-navy mb-0" id="statPaymentsUnpaid">0</h3>
                     </div>
-                    <h3 class="fw-bold text-navy mb-0" id="statPaymentsUnpaid">0</h3>
-                    <small class="text-muted" style="font-size: 0.72rem;">DP / Belum bayar</small>
+                    <div class="pt-2 mt-2 border-top border-light-subtle">
+                        <small class="text-muted" style="font-size: 0.72rem;">DP / Belum bayar</small>
+                    </div>
                 </div>
             </div>
         </div>
