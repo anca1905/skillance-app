@@ -19,6 +19,24 @@
         <changefreq>daily</changefreq>
         <priority>0.95</priority>
     </url>
+    <url>
+        <loc>https://skillance.my.id/job.php?id=3</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://skillance.my.id/job.php?id=2</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://skillance.my.id/job.php?id=1</loc>
+        <lastmod>2026-11-02</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.85</priority>
+    </url>
 
     <!-- Layanan Software House & IT Consultant -->
     <url>

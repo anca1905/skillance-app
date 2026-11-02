@@ -250,11 +250,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-top">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-gold fw-bold px-4" id="btnTakeJobAction">
-                        <i class="fa-solid fa-handshake me-1"></i> Ambil Pekerjaan Ini
-                    </button>
+                <div class="modal-footer border-top d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3" id="btnModalShareWA">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Bagikan ke WA
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" id="btnModalCopyLink">
+                            <i class="fa-regular fa-copy me-1"></i> Salin Link
+                        </button>
+                    </div>
+                    <div class="d-flex gap-2 ms-auto">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-gold fw-bold px-4" id="btnTakeJobAction">
+                            <i class="fa-solid fa-handshake me-1"></i> Ambil Pekerjaan Ini
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -429,9 +439,17 @@
                                     </div>
                                 </div>
 
-                                <button class="btn btn-gold btn-sm fw-bold w-100 rounded-pill py-2" onclick="openJobModal(${j.id})">
-                                    <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil Tugas
-                                </button>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-gold btn-sm fw-bold flex-grow-1 rounded-pill py-2" onclick="openJobModal(${j.id})">
+                                        <i class="fa-solid fa-handshake me-1"></i> Lihat & Ambil
+                                    </button>
+                                    <button class="btn btn-outline-success btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Bagikan ke WhatsApp" onclick="shareJobWhatsApp(${j.id}, event)">
+                                        <i class="fa-brands fa-whatsapp fs-6"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; flex-shrink: 0;" title="Salin Tautan" onclick="copyJobShareLink(${j.id}, event)">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -439,6 +457,38 @@
             });
             html += '</div>';
             container.innerHTML = html;
+        }
+
+        function getJobShareUrl(jobId) {
+            const origin = window.location.origin;
+            const path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+            return `${origin}${path}/job.php?id=${jobId}`;
+        }
+
+        function shareJobWhatsApp(jobId, event) {
+            if (event) event.stopPropagation();
+            const job = allFreelanceJobs.find(item => item.id == jobId);
+            if (!job) return;
+            const url = getJobShareUrl(jobId);
+            const text = encodeURIComponent(`Halo! Ada info lowongan freelance di Skillance:\n\n📌 *${job.title}*\n💰 Fee: *${formatRupiah(job.reward_amount)}*\n🎯 Kategori: ${job.category} (${job.target_audience})\n⏰ Batas: ${job.deadline} (${job.days_left} hari lagi)\n\nCek detail tugas & ambil pekerjaan ini langsung di:\n${url}`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function copyJobShareLink(jobId, event) {
+            if (event) event.stopPropagation();
+            const url = getJobShareUrl(jobId);
+            navigator.clipboard.writeText(url).then(() => {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Tautan lowongan berhasil disalin!',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            }).catch(() => {
+                prompt('Salin tautan lowongan:', url);
+            });
         }
 
         function openJobModal(jobId) {
@@ -452,6 +502,14 @@
             document.getElementById('jobModalDeadline').innerText = 'Batas: ' + job.deadline + ` (${job.days_left} hari lagi)`;
             document.getElementById('jobModalReward').innerText = formatRupiah(job.reward_amount);
             document.getElementById('jobModalDesc').innerText = job.description;
+
+            // Bind modal share buttons
+            document.getElementById('btnModalShareWA').onclick = function() {
+                shareJobWhatsApp(job.id);
+            };
+            document.getElementById('btnModalCopyLink').onclick = function() {
+                copyJobShareLink(job.id);
+            };
 
             if (job.requirements && job.requirements.trim().length > 0) {
                 document.getElementById('jobModalReqsWrapper').style.display = 'block';
@@ -490,9 +548,9 @@
                     denyButtonColor: '#fca311'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'auth/google_login.php';
+                        window.location.href = 'auth/google_login.php?redirect=job.php?id=' + job.id;
                     } else if (result.isDenied) {
-                        window.location.href = 'auth/index.php';
+                        window.location.href = 'auth/index.php?redirect=job.php?id=' + job.id;
                     }
                 });
                 return;

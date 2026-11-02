@@ -18,6 +18,10 @@ if (empty($clientId)) {
     die("Kredensial GOOGLE_CLIENT_ID belum diatur pada file .env!");
 }
 
+if (!empty($_GET['redirect'])) {
+    $_SESSION['auth_redirect'] = $_GET['redirect'];
+}
+
 $state = bin2hex(random_bytes(16));
 $_SESSION['oauth_state'] = $state;
 

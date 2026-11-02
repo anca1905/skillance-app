@@ -138,6 +138,16 @@ $_SESSION['user_role']  = $role;
 $_SESSION['user_photo'] = $photo;
 $_SESSION['user_type']  = $userType;
 
+// Redirect khusus jika sebelumnya diarahkan dari link tugas/job tertentu
+if (!empty($_SESSION['auth_redirect'])) {
+    $redirectUrl = $_SESSION['auth_redirect'];
+    unset($_SESSION['auth_redirect']);
+    if (strpos($redirectUrl, '://') === false || strpos($redirectUrl, 'skillance.my.id') !== false) {
+        header("Location: ../" . ltrim($redirectUrl, '/'));
+        exit();
+    }
+}
+
 // Redirect berdasarkan role
 if ($role === 'freelancer') {
     if ($isNewUser) {
