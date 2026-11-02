@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="text-muted small lh-lg">
-                    <strong>CV. SKILLANCE DIGITAL INDONESIA</strong><br>
+                    <strong>SKILLANCE DIGITAL INDONESIA</strong><br>
                     Desa pabiring dusun taruseng<br>
                     Kecamatan poleang barat kabupaten bombana, 93772<br>
                     skillance.id@gmail.com | 082291700778
@@ -220,7 +220,7 @@
         </div>
 
         <div class="text-center mt-5 pt-4">
-            <p class="text-muted small fst-italic">Tanda terima ini merupakan bukti sah penagihan dari CV. SKILLANCE DIGITAL INDONESIA.<br>Terima kasih atas kerja sama Anda.</p>
+            <p class="text-muted small fst-italic">Tanda terima ini merupakan bukti sah penagihan dari SKILLANCE DIGITAL INDONESIA.<br>Terima kasih atas kerja sama Anda.</p>
         </div>
     </div>
 

@@ -121,7 +121,7 @@
                     style="width: 70px; height: 70px; object-fit: contain;">
             </div>
             <div style="flex: 1; text-align: center;">
-                <h3 style="margin: 0; font-weight: bold; font-family: sans-serif; letter-spacing: 2px;">CV. SKILLANCE
+                <h3 style="margin: 0; font-weight: bold; font-family: sans-serif; letter-spacing: 2px;">SKILLANCE
                     DIGITAL INDONESIA</h3>
                 <p style="margin: 5px 0 0 0; font-size: 0.9rem;">IT Consultant & Software Development</p>
                 <p style="margin: 0; font-size: 0.85rem;">Desa Pabiring Dusun Taruseng, Kecamatan Poleang Barat,
@@ -160,12 +160,12 @@
                 <td></td>
                 <td>Instansi</td>
                 <td>:</td>
-                <td>CV. SKILLANCE DIGITAL INDONESIA</td>
+                <td>SKILLANCE DIGITAL INDONESIA</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="3" style="text-align: justify; padding-top: 10px;">
-                    Dalam hal ini bertindak untuk dan atas nama CV. SKILLANCE DIGITAL INDONESIA, yang selanjutnya disebut
+                    Dalam hal ini bertindak untuk dan atas nama SKILLANCE DIGITAL INDONESIA, yang selanjutnya disebut
                     sebagai <strong>PIHAK PERTAMA</strong>.
                 </td>
             </tr>
@@ -251,7 +251,7 @@
             </div>
             <div class="signature-item">
                 <div><strong>PIHAK PERTAMA</strong></div>
-                <div style="margin-top: 5px;">CV. SKILLANCE DIGITAL INDONESIA</div>
+                <div style="margin-top: 5px;">SKILLANCE DIGITAL INDONESIA</div>
                 <div class="signature-line">Muh Arsyad Ramsi</div>
             </div>
         </div>

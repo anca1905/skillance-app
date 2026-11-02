@@ -67,8 +67,8 @@ if ($jobFound) {
     <!-- SEO Meta Tags -->
     <title><?= htmlspecialchars($pageTitle) ?></title>
     <meta name="description" content="<?= htmlspecialchars($ogDesc) ?>">
-    <meta name="keywords" content="lowongan freelance, <?= htmlspecialchars($job['category'] ?? 'pekerjaan') ?>, freelance mahasiswa, freelance sultra, cv skillance digital indonesia">
-    <meta name="author" content="CV Skillance Digital Indonesia">
+    <meta name="keywords" content="lowongan freelance, <?= htmlspecialchars($job['category'] ?? 'pekerjaan') ?>, freelance mahasiswa, freelance sultra, skillance digital indonesia">
+    <meta name="author" content="Skillance Digital Indonesia">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <link rel="canonical" href="<?= htmlspecialchars($pageUrl) ?>">
 
@@ -103,7 +103,7 @@ if ($jobFound) {
       "employmentType": "CONTRACTOR",
       "hiringOrganization": {
         "@type": "Organization",
-        "name": "CV Skillance Digital Indonesia",
+        "name": "Skillance Digital Indonesia",
         "sameAs": "https://skillance.my.id",
         "logo": "https://skillance.my.id/assets/img/favicon.png"
       },
@@ -360,7 +360,7 @@ if ($jobFound) {
                                 <i class="fa-solid fa-circle-check text-success me-2"></i> Jaminan Skillance
                             </h6>
                             <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-0">
-                                <li><i class="fa-solid fa-check text-gold me-2"></i> <strong>Pemberi Kerja Terverifikasi:</strong> Tugas dikelola langsung oleh tim CV Skillance Digital Indonesia.</li>
+                                <li><i class="fa-solid fa-check text-gold me-2"></i> <strong>Pemberi Kerja Terverifikasi:</strong> Tugas dikelola langsung oleh tim Skillance Digital Indonesia.</li>
                                 <li><i class="fa-solid fa-check text-gold me-2"></i> <strong>Pencairan Pasti:</strong> Fee ditransfer langsung ke rekening bank atau dompet digital Anda setelah hasil kerja diverifikasi.</li>
                                 <li><i class="fa-solid fa-check text-gold me-2"></i> <strong>Sertifikat & Portofolio:</strong> Hasil kerja dapat dicantumkan sebagai portofolio resmi Anda.</li>
                             </ul>
@@ -393,7 +393,7 @@ if ($jobFound) {
                         <span class="fw-bold fs-4 font-heading text-white">SKILLANCE</span>
                     </div>
                     <p class="text-white-50 small mb-4">
-                        CV Skillance Digital Indonesia adalah perusahaan penyedia solusi IT, Software House, dan Konsultan Sistem Informasi terpercaya di Sulawesi Tenggara.
+                        Skillance Digital Indonesia adalah perusahaan penyedia solusi IT, Software House, dan Konsultan Sistem Informasi terpercaya di Sulawesi Tenggara.
                     </p>
                 </div>
                 <div class="col-lg-2 col-md-6 col-6">
@@ -415,7 +415,7 @@ if ($jobFound) {
                 </div>
             </div>
             <div class="border-top border-secondary pt-3 text-center small text-white-50">
-                &copy; 2026 CV Skillance Digital Indonesia. All rights reserved.
+                &copy; 2026 Skillance Digital Indonesia. All rights reserved.
             </div>
         </div>
     </footer>

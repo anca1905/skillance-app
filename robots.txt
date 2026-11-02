@@ -1,5 +1,5 @@
 # robots.txt for https://skillance.my.id
-# CV Skillance Digital Indonesia - Software House & Bursa Freelance
+# Skillance Digital Indonesia - Software House & Bursa Freelance
 
 User-agent: *
 Allow: /
