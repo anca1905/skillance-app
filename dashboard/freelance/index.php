@@ -471,30 +471,7 @@ $userName = $_SESSION['user_name'] ?? 'Admin';
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Sidebar Mobile Toggle & Overlay
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const toggleBtn = document.getElementById('sidebarToggle');
-            const closeBtn = document.getElementById('btnCloseSidebar');
-
-            if (toggleBtn && sidebar) {
-                toggleBtn.addEventListener('click', () => {
-                    sidebar.classList.toggle('active');
-                    if (overlay) overlay.classList.toggle('active');
-                });
-            }
-            if (closeBtn && sidebar) {
-                closeBtn.addEventListener('click', () => {
-                    sidebar.classList.remove('active');
-                    if (overlay) overlay.classList.remove('active');
-                });
-            }
-            if (overlay && sidebar) {
-                overlay.addEventListener('click', () => {
-                    sidebar.classList.remove('active');
-                    overlay.classList.remove('active');
-                });
-            }
+            // Sidebar mobile toggle handled centrally by includes/sidebar.php
 
             loadAdminStats();
             loadSubmissions();

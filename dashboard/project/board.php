@@ -234,7 +234,7 @@ $project = $result->fetch_assoc();
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <button class="btn btn-navy btn-sm d-md-none me-2" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button type="button" class="btn btn-navy btn-sm d-md-none me-2 sidebar-toggle-btn" id="sidebarToggle" title="Buka Menu"><i class="fa-solid fa-bars"></i></button>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-1">
                         <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none text-muted">Project</a></li>
@@ -405,13 +405,6 @@ $project = $result->fetch_assoc();
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     
     <script src="../../assets/js/board.js"></script>
-    <script>
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function logout() {
-            Swal.fire({ title: 'Logout?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#0d2e5c' }).then(r => {
-                if (r.isConfirmed) { localStorage.clear(); window.location.href = '../../auth/index.html'; }
-            });
-        }
-    </script>
+
 </body>
 </html>

@@ -35,7 +35,7 @@ $activeMenu = $activeMenu ?? '';
                 <small class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">OFFICE SYSTEM</small>
             </div>
         </a>
-        <button class="btn btn-sm btn-light d-md-none rounded-circle" id="btnCloseSidebar" onclick="toggleSidebar()" title="Tutup Menu">
+        <button type="button" class="btn btn-sm btn-light d-md-none rounded-circle sidebar-close-btn" id="btnCloseSidebar" title="Tutup Menu">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -96,12 +96,69 @@ $activeMenu = $activeMenu ?? '';
 </nav>
 
 <script>
-// Universal Sidebar Mobile Toggle Helper
-function toggleSidebar() {
+// Universal Sidebar Functions (Guaranteed Single Source of Truth)
+window.toggleSidebar = function(forceState) {
     const sb = document.getElementById('sidebar');
     const ov = document.getElementById('sidebarOverlay');
-    if (sb) sb.classList.toggle('active');
-    if (ov) ov.classList.toggle('active');
+    if (!sb) return;
+
+    const isActive = sb.classList.contains('active');
+    const targetState = (typeof forceState === 'boolean') ? forceState : !isActive;
+
+    if (targetState) {
+        sb.classList.add('active');
+        if (ov) ov.classList.add('active');
+        document.body.classList.add('sidebar-open');
+    } else {
+        sb.classList.remove('active');
+        if (ov) ov.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+    }
+};
+
+window.openSidebar = function() { window.toggleSidebar(true); };
+window.closeSidebar = function() { window.toggleSidebar(false); };
+
+// Prevent multiple event listener registrations across dashboard sub-pages
+if (!window._sidebarEventsBound) {
+    window._sidebarEventsBound = true;
+
+    // Global Delegated Click Handler for all sidebar mobile controls
+    document.addEventListener('click', function(e) {
+        // Toggle Trigger
+        const toggleBtn = e.target.closest('#sidebarToggle, .sidebar-toggle-btn, [data-action="toggle-sidebar"]');
+        if (toggleBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.toggleSidebar();
+            return;
+        }
+
+        // Close Trigger (inside sidebar)
+        const closeBtn = e.target.closest('#btnCloseSidebar, .sidebar-close-btn, [data-action="close-sidebar"]');
+        if (closeBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.closeSidebar();
+            return;
+        }
+
+        // Backdrop Overlay Click
+        const overlay = e.target.closest('#sidebarOverlay');
+        if (overlay) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.closeSidebar();
+            return;
+        }
+    });
+
+    // Close on Escape Key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            window.closeSidebar();
+        }
+    });
 }
 
 // Universal Logout Helper with SweetAlert2
@@ -134,31 +191,4 @@ function confirmLogout(e) {
     }
 }
 function logout() { confirmLogout(); }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const closeBtn = document.getElementById('btnCloseSidebar');
-
-    if (toggleBtn && sidebar) {
-        toggleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            toggleSidebar();
-        });
-    }
-    if (closeBtn && sidebar) {
-        closeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            sidebar.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-        });
-    }
-    if (overlay && sidebar) {
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-    }
-});
 </script>

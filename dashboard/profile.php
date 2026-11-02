@@ -204,13 +204,7 @@ $photoUrl = !empty($myProfile['photo']) ? "../assets/img/profile/" . $myProfile[
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Toggle sidebar mobile
-            const toggleBtn = document.getElementById('sidebarToggle');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', function() {
-                    document.getElementById('sidebar').classList.toggle('active');
-                });
-            }
+            // Sidebar mobile toggle handled centrally by includes/sidebar.php
 
             // Image Preview
             const photoInput = document.getElementById('photo');

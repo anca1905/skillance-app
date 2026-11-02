@@ -96,8 +96,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <button class="btn btn-navy btn-sm d-md-none me-2" onclick="toggleSidebar()"><i
-                        class="fa-solid fa-bars"></i></button>
+                <button type="button" class="btn btn-navy btn-sm d-md-none me-2 sidebar-toggle-btn" id="sidebarToggle" title="Buka Menu"><i class="fa-solid fa-bars"></i></button>
                 <h4 class="fw-bold text-navy mb-0 d-inline-block">Keuangan & Cashflow</h4>
             </div>
             <div>
@@ -209,15 +208,7 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/finance.js"></script>
-    <script>
-        // Helper Sidebar & Logout (Sama utk semua halaman)
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function logout() {
-            Swal.fire({ title: 'Logout?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#0d2e5c' }).then(r => {
-                if (r.isConfirmed) { localStorage.clear(); window.location.href = '../../auth/index.html'; }
-            });
-        }
-    </script>
+
 </body>
 
 </html>

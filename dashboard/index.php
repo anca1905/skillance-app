@@ -85,7 +85,7 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
             height: 100vh;
             background: rgba(13, 46, 92, 0.45);
             backdrop-filter: blur(3px);
-            z-index: 999;
+            z-index: 1040;
             transition: opacity 0.3s ease;
         }
 
@@ -96,6 +96,11 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
         @media (max-width: 768px) {
             .sidebar {
                 margin-left: -260px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 1050;
                 box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25);
             }
 
@@ -147,7 +152,7 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
 
         <div class="d-flex justify-content-between align-items-center mb-4 d-md-none">
             <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-navy btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 38px; height: 38px;" id="sidebarToggle" title="Buka Menu">
+                <button type="button" class="btn btn-navy btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm sidebar-toggle-btn" style="width: 38px; height: 38px;" id="sidebarToggle" title="Buka Menu">
                     <i class="fa-solid fa-bars fs-6"></i>
                 </button>
                 <span class="fw-bold text-navy fs-5">Dashboard</span>

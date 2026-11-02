@@ -1,11 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 1. CEK AUTH (Proteksi Tampilan JS)
-    // Walaupun PHP Session sudah dijalankan, ini membantu UX
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (!isLoggedIn) {
-        window.location.href = '../auth/index.php';
-        return;
+    // 1. Sinkronisasi Sesi Auth
+    if (!localStorage.getItem('isLoggedIn')) {
+        localStorage.setItem('isLoggedIn', 'true');
     }
 
     // Tampilkan Nama User
@@ -71,30 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         agendaForm.reset();
     });
 
-    // 5. TOGGLE SIDEBAR MOBILE & OVERLAY
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const closeBtn = document.getElementById('btnCloseSidebar');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-
-    if (toggleBtn && sidebar) {
-        toggleBtn.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-            if (overlay) overlay.classList.toggle('active');
-        });
-    }
-    if (closeBtn && sidebar) {
-        closeBtn.addEventListener('click', function () {
-            sidebar.classList.remove('active');
-            if (overlay) overlay.classList.remove('active');
-        });
-    }
-    if (overlay && sidebar) {
-        overlay.addEventListener('click', function () {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-    }
+    // 5. Sidebar mobile handled by shared includes/sidebar.php
 
     // 6. EVENT: DOWNLOAD REPORT (Chart)
     const btnDownloadReport = document.getElementById('btnDownloadReport');

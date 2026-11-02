@@ -178,10 +178,7 @@ if (!isset($_SESSION['user_id'])) {
         let quill;
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Sidebar mobile
-            document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-                document.getElementById('sidebar').classList.toggle('active');
-            });
+            // Sidebar mobile toggle handled centrally by includes/sidebar.php
 
             // Set Header user name & photo
             document.getElementById('userNameDisplay').innerText = localStorage.getItem('userName') || 'Admin';
