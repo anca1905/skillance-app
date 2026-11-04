@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillance Academy: Platform Belajar Pemrograman & Koding Interaktif Indonesia</title>
+    <meta name="description" content="Platform belajar koding interaktif ala W3Schools & Dicoding di Indonesia. Pelajari Web Development, Backend, Mobile Flutter, dan Desain UI/UX dengan latihan langsung di browser.">
+    <meta name="keywords" content="belajar coding online, tutorial html css php javascript laravel flutter figma, w3schools indonesia, dicoding sultra, skillance academy, academy.skillance.cloud">
+    <meta name="author" content="Skillance Digital Indonesia">
+    <link rel="canonical" href="https://academy.skillance.cloud">
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Skillance Academy Indonesia: Platform Belajar Koding Interaktif">
+    <meta property="og:description" content="Platform edukasi pemrograman praktis ala W3Schools & Dicoding. Coba koding langsung di browser dan ikuti jalur belajar terstruktur.">
+    <meta property="og:url" content="https://academy.skillance.cloud">
+    <meta property="og:image" content="https://skillance.my.id/assets/img/og-preview.png">
+
+    <link rel="icon" type="image/png" href="https://skillance.my.id/assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://skillance.my.id/assets/css/style.css">
+
+    <style>
+        :root {
+            --code-bg: #0b192c;
+            --code-header: #061221;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        .playground-editor {
+            background-color: var(--code-bg);
+            color: #f8fafc;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 240px;
+            padding: 16px;
+            width: 100%;
+        }
+        .playground-editor:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.25);
+        }
+        .preview-iframe {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: 100%;
+            min-height: 240px;
+            height: 100%;
+        }
+        .track-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border-radius: 14px;
+        }
+        .track-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(13, 46, 92, 0.1) !important;
+        }
+        .top-hub-bar {
+            background: #061a35;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body style="background-color: #f8fafc;">
+
+    <!-- TOP HUB NAVIGATION: Menghubungkan antara Academy & Website Utama Skillance -->
+    <div class="top-hub-bar py-2 px-3 text-white">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-gold text-navy fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Portal Belajar</span>
+                <span class="small d-none d-md-inline" id="topHubUser" style="color: #cbd5e1;">Skillance Academy Indonesia (academy.skillance.cloud)</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <a href="https://skillance.my.id" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Website Utama (skillance.my.id)
+                </a>
+                <a href="https://skillance.my.id/freelance.html" class="btn btn-sm btn-gold rounded-pill px-3 py-1 fw-bold" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Academy Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-graduation-cap text-gold fs-3"></i>
+                <div class="d-flex flex-column">
+                    <span class="fw-bold text-navy lh-1 ls-2" style="font-size: 1.15rem;">SKILLANCE ACADEMY</span>
+                    <small class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">KODING & MULTIMEDIA INDONESIA</small>
+                </div>
+            </a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#academyNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="academyNav">
+                <ul class="navbar-nav mx-auto align-items-lg-center gap-lg-2 my-3 my-lg-0">
+                    <li class="nav-item"><a class="nav-link fw-semibold active text-navy" href="#tracks">Jalur Belajar</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#playground">Code Playground</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#fitur">Fitur Interaktif</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#kemitraan">Mitra Kampus (MSC USN)</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2" id="navAuthArea">
+                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-navy btn-sm rounded-pill px-3 fw-bold">
+                        <i class="fa-solid fa-user me-1"></i> Akun Belajar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: W3Schools & Dicoding Concept -->
+    <header class="py-5 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%);">
+        <div class="container py-4 text-center">
+            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-3 text-uppercase shadow-sm" style="font-size: 0.75rem; letter-spacing: 1px;">
+                <i class="fa-solid fa-terminal text-navy me-1"></i> Interactive Coding Platform
+            </span>
+            <h1 class="display-5 fw-bold font-heading mb-3 text-white">Belajar Koding Praktis dari Nol Hingga Jadi Software Engineer</h1>
+            <p class="lead mx-auto mb-4" style="max-width: 760px; color: #cbd5e1; line-height: 1.8;">
+                Kurikulum bertahap ala <strong>Dicoding</strong> dan latihan kode langsung di browser ala <strong>W3Schools</strong>. Kuasai Web Development, Backend, Flutter Mobile Apps, dan UI/UX Design berstandar industri.
+            </p>
+
+            <!-- Search Quick Code Topics -->
+            <div class="mx-auto mb-4" style="max-width: 580px;">
+                <div class="input-group shadow-lg rounded-pill overflow-hidden bg-white p-1">
+                    <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Cari materi koding: HTML, CSS, JavaScript, PHP, Laravel, Flutter, Figma..." onkeyup="filterTracks()">
+                    <button class="btn btn-gold fw-bold px-4 rounded-pill" type="button">Cari Materi</button>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center gap-2 text-white-50 small">
+                <span>Topik Populer:</span>
+                <a href="#playground" onclick="loadTemplate('html')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">HTML5</a>
+                <a href="#playground" onclick="loadTemplate('css')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">CSS Flexbox</a>
+                <a href="#playground" onclick="loadTemplate('js')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">JavaScript DOM</a>
+                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">PHP & MySQL</a>
+                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">Laravel 11</a>
+                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">Flutter Mobile</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: INTERACTIVE CODE PLAYGROUND (ALA W3SCHOOLS "TRY IT YOURSELF") -->
+    <section class="py-5 bg-white border-bottom" id="playground">
+        <div class="container py-3">
+            <div class="text-center mb-4 mx-auto" style="max-width: 650px;">
+                <span class="badge bg-gold-subtle text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="font-size: 0.72rem;">
+                    <i class="fa-solid fa-code text-gold me-1"></i> Interactive Lab
+                </span>
+                <h3 class="fw-bold text-navy font-heading">Code Playground ("Try It Yourself")</h3>
+                <p class="text-muted small">Coba ubah kode di bawah ini dan klik tombol <strong>Jalankan Kode</strong> untuk melihat hasil rendering langsung di browser.</p>
+            </div>
+
+            <!-- Editor Container -->
+            <div class="card border-0 rounded-4 shadow-lg overflow-hidden" style="background-color: var(--code-bg);">
+                <!-- Editor Top Bar -->
+                <div class="card-header border-bottom border-dark py-3 px-4 d-flex flex-wrap justify-content-between align-items-center gap-2" style="background-color: var(--code-header);">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="rounded-circle d-inline-block" style="width: 12px; height: 12px; background-color: #ff5f56;"></span>
+                        <span class="rounded-circle d-inline-block" style="width: 12px; height: 12px; background-color: #ffbd2e;"></span>
+                        <span class="rounded-circle d-inline-block" style="width: 12px; height: 12px; background-color: #27c93f;"></span>
+                        <span class="text-white-50 ms-2 small code-font" id="editorFilename">index.html (HTML + CSS + JS)</span>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-light btn-sm" onclick="loadTemplate('html')">Template HTML</button>
+                            <button type="button" class="btn btn-outline-light btn-sm" onclick="loadTemplate('css')">Template Button CSS</button>
+                            <button type="button" class="btn btn-outline-light btn-sm" onclick="loadTemplate('js')">Template Counter JS</button>
+                        </div>
+                        <button type="button" class="btn btn-gold btn-sm fw-bold px-3 rounded-pill" onclick="runCode()">
+                            <i class="fa-solid fa-play me-1"></i> Jalankan Kode
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Code Input & Preview Split Screen -->
+                <div class="card-body p-3">
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-between align-items-center text-white-50 small mb-2 px-1">
+                                <span><i class="fa-solid fa-pen-to-square me-1"></i> Editor Kode</span>
+                                <span class="badge bg-secondary" style="font-size:0.7rem;">Live Edit</span>
+                            </div>
+                            <textarea id="codeEditor" class="playground-editor" spellcheck="false" placeholder="Tuliskan kode HTML/CSS/JavaScript di sini...">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 30px 15px;
+            background: linear-gradient(135deg, #eef2f7 0%, #ffffff 100%);
+            color: #0d2e5c;
+        }
+        .card-demo {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 380px;
+            margin: auto;
+            border-top: 4px solid #fca311;
+        }
+        h2 { margin-bottom: 8px; font-weight: bold; }
+        p { color: #555; font-size: 14px; line-height: 1.6; }
+        button {
+            background: #0d2e5c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #fca311; color: #0d2e5c; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card-demo"&gt;
+        &lt;h2&gt;Halo, Skillance Academy!&lt;/h2&gt;
+        &lt;p&gt;Selamat datang di Code Playground. Kamu bisa langsung mengedit teks dan kode ini!&lt;/p&gt;
+        &lt;button onclick="salam()"&gt;Klik Saya!&lt;/button&gt;
+        &lt;p id="pesan" style="margin-top:15px; color:#27c93f; font-weight:bold;"&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        function salam() {
+            document.getElementById('pesan').innerText = '🎉 Keren! Kode JavaScript berhasil dieksekusi!';
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-between align-items-center text-white-50 small mb-2 px-1">
+                                <span><i class="fa-solid fa-desktop me-1"></i> Hasil Tampilan (Live Preview)</span>
+                                <span class="badge bg-success" style="font-size:0.7rem;">Browser Output</span>
+                            </div>
+                            <iframe id="codePreview" class="preview-iframe" title="Code Preview"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: JALUR BELAJAR (TRACKS ALA DICODING) -->
+    <section class="py-5" style="background-color: #f8fafc;" id="tracks">
+        <div class="container py-4">
+            <div class="text-center mb-5 mx-auto" style="max-width: 700px;">
+                <span class="badge bg-navy-subtle text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="font-size: 0.72rem;">Jalur Belajar Lengkap</span>
+                <h2 class="fw-bold font-heading text-navy">Pilih Jalur Spesialisasi Koding Anda</h2>
+                <p class="text-muted">Kurikulum terstruktur berbasis proyek nyata, dari pemula tanpa background IT hingga siap berkarir.</p>
+            </div>
+
+            <div class="row g-4" id="tracksContainer">
+                <!-- Track 1: Frontend Web -->
+                <div class="col-md-6 col-lg-3 track-item" data-keywords="html css javascript frontend web react bootstrap">
+                    <div class="card h-100 border-0 shadow-sm p-4 bg-white border-top border-4 border-gold track-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-gold-subtle d-inline-flex p-3 rounded-circle text-gold mb-3" style="width: 55px; height: 55px; align-items: center; justify-content: center;">
+                                <i class="fa-brands fa-html5 fa-2x"></i>
+                            </div>
+                            <span class="badge bg-light text-navy border mb-2 d-inline-block" style="font-size: 0.68rem;">Tingkat Pemula &rarr; Mahir</span>
+                            <h5 class="fw-bold text-navy mb-2">Frontend Web Developer</h5>
+                            <p class="text-muted small mb-3" style="line-height: 1.6;">
+                                Kuasai pembuatan antarmuka website modern, responsif di HP & Laptop, dan interaktif.
+                            </p>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-4" style="font-size: 0.8rem;">
+                                <li><i class="fa-solid fa-check text-gold me-2"></i> HTML5 Semantik & Struktur</li>
+                                <li><i class="fa-solid fa-check text-gold me-2"></i> CSS3, Flexbox & Grid</li>
+                                <li><i class="fa-solid fa-check text-gold me-2"></i> Bootstrap 5 & Responsive</li>
+                                <li><i class="fa-solid fa-check text-gold me-2"></i> JavaScript DOM & Async API</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 small text-muted">
+                                <span><i class="fa-regular fa-clock me-1"></i> 8 Modul</span>
+                                <span class="badge bg-success-subtle text-success">Praktik 100%</span>
+                            </div>
+                            <button class="btn btn-navy btn-sm fw-bold w-100 rounded-pill" onclick="loadTemplate('html'); document.getElementById('playground').scrollIntoView({behavior: 'smooth'});">
+                                Buka Lab Koding &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 2: Backend & RESTful API -->
+                <div class="col-md-6 col-lg-3 track-item" data-keywords="php mysql laravel backend api database sql server">
+                    <div class="card h-100 border-0 shadow-sm p-4 bg-white border-top border-4 border-navy track-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-navy-subtle d-inline-flex p-3 rounded-circle text-navy mb-3" style="width: 55px; height: 55px; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-server fa-2x"></i>
+                            </div>
+                            <span class="badge bg-light text-navy border mb-2 d-inline-block" style="font-size: 0.68rem;">Tingkat Menengah &rarr; Mahir</span>
+                            <h5 class="fw-bold text-navy mb-2">Backend & API Engineer</h5>
+                            <p class="text-muted small mb-3" style="line-height: 1.6;">
+                                Membangun logika server, manajemen database relasional SQL, dan arsitektur RESTful API komersial.
+                            </p>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-4" style="font-size: 0.8rem;">
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> PHP 8+ Modern & OOP</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Database MySQL & Optimasi Query</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Framework Laravel 11</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Autentikasi & Security API</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 small text-muted">
+                                <span><i class="fa-regular fa-clock me-1"></i> 10 Modul</span>
+                                <span class="badge bg-primary-subtle text-primary">Proyek Industri</span>
+                            </div>
+                            <button class="btn btn-navy btn-sm fw-bold w-100 rounded-pill" onclick="alert('Modul Backend & Laravel tersedia lengkap di portal academy.skillance.cloud!');">
+                                Buka Modul Backend &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 3: Mobile App Development -->
+                <div class="col-md-6 col-lg-3 track-item" data-keywords="flutter dart mobile android ios app aplikasi hp">
+                    <div class="card h-100 border-0 shadow-sm p-4 bg-white border-top border-4 border-primary track-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-primary-subtle d-inline-flex p-3 rounded-circle text-primary mb-3" style="width: 55px; height: 55px; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-mobile-screen-button fa-2x"></i>
+                            </div>
+                            <span class="badge bg-light text-navy border mb-2 d-inline-block" style="font-size: 0.68rem;">Tingkat Menengah &rarr; Mahir</span>
+                            <h5 class="fw-bold text-navy mb-2">Mobile App Developer</h5>
+                            <p class="text-muted small mb-3" style="line-height: 1.6;">
+                                Membuat aplikasi mobile lintas platform untuk Android & iOS menggunakan framework Flutter dan bahasa Dart.
+                            </p>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-4" style="font-size: 0.8rem;">
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Bahasa Pemrograman Dart</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Widget Flutter & Responsive Layout</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> State Management & REST API</li>
+                                <li><i class="fa-solid fa-check text-primary me-2"></i> Rilis APK ke Google Play Store</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 small text-muted">
+                                <span><i class="fa-regular fa-clock me-1"></i> 9 Modul</span>
+                                <span class="badge bg-info-subtle text-info">Cross Platform</span>
+                            </div>
+                            <button class="btn btn-navy btn-sm fw-bold w-100 rounded-pill" onclick="alert('Modul Flutter Mobile Apps tersedia lengkap di portal academy.skillance.cloud!');">
+                                Buka Modul Mobile &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 4: UI/UX & Desain Multimedia -->
+                <div class="col-md-6 col-lg-3 track-item" data-keywords="figma ui ux desain multimedia grafis prototyping wireframe">
+                    <div class="card h-100 border-0 shadow-sm p-4 bg-white border-top border-4 border-success track-card d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-success-subtle d-inline-flex p-3 rounded-circle text-success mb-3" style="width: 55px; height: 55px; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-bezier-curve fa-2x"></i>
+                            </div>
+                            <span class="badge bg-light text-navy border mb-2 d-inline-block" style="font-size: 0.68rem;">Tingkat Pemula &rarr; Mahir</span>
+                            <h5 class="fw-bold text-navy mb-2">UI/UX & Multimedia</h5>
+                            <p class="text-muted small mb-3" style="line-height: 1.6;">
+                                Riset antarmuka pengguna, prototyping interaktif Figma, dan produksi aset visual digital komersial.
+                            </p>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-4" style="font-size: 0.8rem;">
+                                <li><i class="fa-solid fa-check text-success me-2"></i> Riset Pengguna & User Journey</li>
+                                <li><i class="fa-solid fa-check text-success me-2"></i> Figma Auto-Layout & Design System</li>
+                                <li><i class="fa-solid fa-check text-success me-2"></i> Prototyping Interaktif & Handoff</li>
+                                <li><i class="fa-solid fa-check text-success me-2"></i> Produksi Grafis & Media Digital</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 small text-muted">
+                                <span><i class="fa-regular fa-clock me-1"></i> 7 Modul</span>
+                                <span class="badge bg-success-subtle text-success">Desain & Aset</span>
+                            </div>
+                            <button class="btn btn-navy btn-sm fw-bold w-100 rounded-pill" onclick="alert('Modul UI/UX & Figma tersedia lengkap di portal academy.skillance.cloud!');">
+                                Buka Modul UI/UX &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FITUR UNGGULAN PLATFORM ALA W3SCHOOLS & DICODING -->
+    <section class="py-5 bg-white" id="fitur">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill mb-2">METODOLOGI KAMI</span>
+                    <h2 class="fw-bold text-navy font-heading mb-3">Ekosistem Belajar Koding Berkelanjutan</h2>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        Kami menggabungkan kemudahan dokumentasi to-the-point ala <strong>W3Schools</strong> dengan standar submission tugas riil ala <strong>Dicoding</strong>, lalu menghubungkannya langsung ke <strong>Bursa Freelance Skillance</strong>.
+                    </p>
+                    <div class="d-flex flex-column gap-3 mt-4">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-gold-subtle p-2 rounded-circle text-gold">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Code Along & Interactive Test</h6>
+                                <p class="text-muted small mb-0">Praktikkan setiap baris kode dengan validasi instan di browser.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-navy-subtle p-2 rounded-circle text-navy">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Project Review oleh Mentor</h6>
+                                <p class="text-muted small mb-0">Tugas akhir Anda diperiksa dan diberi masukan langsung oleh software engineer profesional.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="bg-success-subtle p-2 rounded-circle text-success">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-navy mb-1">Penyaluran Proyek Berbayar</h6>
+                                <p class="text-muted small mb-0">Lulusan terbaik langsung dipromosikan untuk mengambil tugas di Bursa Freelance Skillance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 shadow-sm border bg-light h-100">
+                                <i class="fa-solid fa-graduation-cap fs-2 text-gold mb-3"></i>
+                                <h5 class="fw-bold text-navy mb-2">Sertifikat Kelulusan</h5>
+                                <p class="text-muted small mb-0">Dapatkan sertifikat digital kompetensi yang dapat diverifikasi online untuk melengkapi CV dan portofolio kerja Anda.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 shadow-sm border bg-light h-100">
+                                <i class="fa-solid fa-users-line fs-2 text-primary mb-3"></i>
+                                <h5 class="fw-bold text-navy mb-2">Komunitas Diskusi Aktif</h5>
+                                <p class="text-muted small mb-0">Bergabung dengan grup diskusi sesama pembelajar dan praktisi IT untuk bertanya seputar error, bug, dan arsitektur kode.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 shadow-sm border bg-light h-100">
+                                <i class="fa-solid fa-laptop-code fs-2 text-success mb-3"></i>
+                                <h5 class="fw-bold text-navy mb-2">100% Studi Kasus Nyata</h5>
+                                <p class="text-muted small mb-0">Bukan sekadar tutorial "Hello World", Anda akan membangun aplikasi kasir, sistem presensi, SIMS sekolah, hingga portal berita.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-4 rounded-4 shadow-sm border bg-light h-100">
+                                <i class="fa-solid fa-shield-halved fs-2 text-danger mb-3"></i>
+                                <h5 class="fw-bold text-navy mb-2">Standar Clean Code</h5>
+                                <p class="text-muted small mb-0">Mempelajari kebiasaan penulisan kode yang rapi, berstruktur, aman dari SQL Injection & XSS, serta mudah dikembangkan tim.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: KEMITRAAN KAMPUS (MSC USN KOLAKA) & SPONSOR -->
+    <section class="py-5" style="background-color: #f8fafc;" id="kemitraan">
+        <div class="container py-4">
+            <div class="text-center mb-5 mx-auto" style="max-width: 760px;">
+                <span class="badge bg-gold-subtle text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">
+                    <i class="fa-solid fa-handshake-angle text-gold me-1"></i> Kolaborasi Komunitas
+                </span>
+                <h2 class="fw-bold font-heading text-navy mb-3">Sinergi Bersama Komunitas Kampus & Sponsor Industri</h2>
+                <p class="text-muted">
+                    Skillance Academy Indonesia membuka kolaborasi dengan UKM kampus seperti <strong>Multimedia Study Club (MSC) USN Kolaka</strong> dan sponsor industri untuk mencetak programmer dan desainer multimedia handal.
+                </p>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <!-- Card 1: Kolaborasi Kampus & Multimedia Study Club (MSC) USN Kolaka -->
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 p-lg-5 bg-white border-start border-4 border-gold">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-primary text-white px-3 py-2 rounded-pill" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-graduation-cap me-1"></i> Mitra Kampus: USN Kolaka
+                            </span>
+                            <div class="bg-gold-subtle p-2 rounded-circle text-gold">
+                                <i class="fa-solid fa-photo-film fs-5"></i>
+                            </div>
+                        </div>
+
+                        <h4 class="fw-bold text-navy mb-2">Multimedia Study Club (MSC) - USN Kolaka</h4>
+                        <p class="text-muted small mb-3" style="line-height: 1.7;">
+                            Kolaborasi edukatif dan pembinaan talenta antara <strong>Skillance Academy Indonesia</strong> dengan UKM / Study Club mahasiswa di <strong>Universitas Sembilanbelas November (USN) Kolaka</strong>, mencakup keahlian <strong>Pemrograman (Coding Web/Mobile)</strong> dan <strong>Kreativitas Multimedia</strong>.
+                        </p>
+
+                        <div class="bg-light p-3 rounded-3 mb-3 border">
+                            <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-layer-group text-gold me-1"></i> Ruang Lingkup Kolaborasi:</h6>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-0">
+                                <li><i class="fa-solid fa-laptop-code text-primary me-2"></i> <strong>Bootcamp Pemrograman:</strong> Pendampingan intensif coding Web & Mobile Apps, database MySQL, dan framework modern.</li>
+                                <li><i class="fa-solid fa-palette text-primary me-2"></i> <strong>Desain Multimedia & UI/UX:</strong> Standardisasi aset visual grafis, motion design, dan prototipe aplikasi.</li>
+                                <li><i class="fa-solid fa-briefcase text-success me-2"></i> <strong>Prioritas Masuk Bursa Freelance:</strong> Anggota berprestasi diprioritaskan mengambil proyek nyata di Skillance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Program Sponsorship & CSR Korporasi -->
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 p-lg-5 bg-white border-start border-4 border-navy">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-success text-white px-3 py-2 rounded-pill" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-bullhorn me-1"></i> Peluang Sponsorship & CSR
+                            </span>
+                            <div class="bg-navy-subtle p-2 rounded-circle text-navy">
+                                <i class="fa-solid fa-handshake-simple fs-5"></i>
+                            </div>
+                        </div>
+
+                        <h4 class="fw-bold text-navy mb-2">Dukungan Sponsor Industri & Program CSR</h4>
+                        <p class="text-muted small mb-3" style="line-height: 1.7;">
+                            Kami mengundang instansi pemerintah, BUMN, lembaga perbankan, dan perusahaan teknologi untuk menjadi <strong>Sponsor Resmi</strong> dalam program beasiswa pelatihan koding bagi pemuda dan mahasiswa daerah.
+                        </p>
+
+                        <div class="bg-light p-3 rounded-3 mb-3 border">
+                            <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-award text-gold me-1"></i> Keuntungan Sponsor:</h6>
+                            <ul class="list-unstyled text-muted small d-flex flex-column gap-2 mb-0">
+                                <li><i class="fa-solid fa-medal text-gold me-2"></i> <strong>Beasiswa Koding:</strong> Mendanai kuota belajar intensif bagi talenta muda potensial berprestasi.</li>
+                                <li><i class="fa-solid fa-bullhorn text-gold me-2"></i> <strong>Branding Prestisius:</strong> Penempatan logo sponsor di modul, sertifikat, dan media resmi Skillance.</li>
+                                <li><i class="fa-solid fa-user-check text-gold me-2"></i> <strong>Akses Talent Pool:</strong> Akses langsung merekrut talenta programmer & desainer lulusan terbaik.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action Banner Kemitraan & Akses Subdomain -->
+            <div class="card border-0 rounded-4 shadow-sm text-white p-4 p-md-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%);">
+                <div class="row align-items-center g-4 position-relative z-2">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill" style="font-size: 0.72rem;">PORTAL RESMI ACADEMY</span>
+                        </div>
+                        <h3 class="fw-bold font-heading text-white mb-2">Kunjungi Portal Mandiri di academy.skillance.cloud</h3>
+                        <p class="text-white-50 small mb-0" style="line-height: 1.7; max-width: 650px;">
+                            Akses materi coding interaktif, modul lengkap, dan latihan praktis langsung di subdomain resmi Skillance Academy. Anda juga dapat kembali ke website utama kapan saja melalui tombol navigasi.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
+                            <a href="https://skillance.my.id" class="btn btn-outline-light fw-bold px-4 py-2 rounded-pill">
+                                <i class="fa-solid fa-arrow-left me-1"></i> Ke Skillance.my.id
+                            </a>
+                            <a href="https://skillance.my.id/freelance.html" class="btn btn-gold fw-bold px-4 py-2 rounded-pill shadow-sm">
+                                <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy text-white pt-5 pb-4 border-top border-dark">
+        <div class="container">
+            <div class="row g-4 justify-content-between mb-5">
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="fa-solid fa-code text-gold fs-3"></i>
+                        <span class="fw-bold fs-4 font-heading text-white">SKILLANCE</span>
+                    </div>
+                    <p class="text-white-50 small mb-4">
+                        Skillance Digital Indonesia adalah perusahaan penyedia solusi IT, Software House, dan Konsultan Sistem Informasi terpercaya di Sulawesi Tenggara.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="https://skillance.my.id" class="btn btn-sm btn-outline-light rounded-circle" style="width:36px;height:36px;padding:6px;" title="Website Utama"><i class="fa-solid fa-globe"></i></a>
+                        <a href="https://skillance.my.id/freelance.html" class="btn btn-sm btn-outline-light rounded-circle" style="width:36px;height:36px;padding:6px;" title="Bursa Freelance"><i class="fa-solid fa-briefcase"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=6282291700778" target="_blank" class="btn btn-sm btn-outline-light rounded-circle" style="width:36px;height:36px;padding:6px;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Navigasi Utama</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li><a href="https://skillance.my.id" class="text-white-50 text-decoration-none hover-gold">Beranda Skillance</a></li>
+                        <li><a href="https://skillance.my.id/about.html" class="text-white-50 text-decoration-none hover-gold">Tentang Kami</a></li>
+                        <li><a href="https://skillance.my.id/services.html" class="text-white-50 text-decoration-none hover-gold">Layanan</a></li>
+                        <li><a href="https://skillance.my.id/portfolio.html" class="text-white-50 text-decoration-none hover-gold">Karya Kami</a></li>
+                        <li><a href="https://skillance.my.id/freelance.html" class="text-white-50 text-decoration-none hover-gold">Bursa Freelance</a></li>
+                        <li><a href="https://skillance.my.id/blog.html" class="text-white-50 text-decoration-none hover-gold">Blog</a></li>
+                        <li><a href="https://skillance.my.id/contact.html" class="text-white-50 text-decoration-none hover-gold">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Jalur Belajar Koding</h6>
+                    <ul class="list-unstyled small text-white-50 d-flex flex-column gap-2 mb-0">
+                        <li>Frontend Web (HTML/CSS/JS)</li>
+                        <li>Backend API & Database MySQL</li>
+                        <li>Framework Laravel 11</li>
+                        <li>Flutter Android & iOS</li>
+                        <li>UI/UX Design Prototyping Figma</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold text-gold text-uppercase mb-3">Kontak Kantor</h6>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-location-dot text-gold me-2"></i> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra</p>
+                    <p class="text-white-50 small mb-2"><i class="fa-solid fa-phone text-gold me-2"></i> +62 822-9170-0778</p>
+                    <p class="text-white-50 small mb-0"><i class="fa-solid fa-envelope text-gold me-2"></i> official@skillance.my.id</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-3 text-center small text-white-50">
+                &copy; 2026 Skillance Digital Indonesia & Skillance Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Interactive Code Playground Engine (Ala W3Schools / Dicoding)
+        const templates = {
+            html: `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 25px; background: #f0fdf4; color: #166534; }
+        .box { background: white; padding: 20px; border-radius: 12px; border: 2px solid #86efac; max-width: 350px; margin: auto; }
+        h3 { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h3>🌱 Belajar HTML & CSS</h3>
+        <p>Ubah teks di editor koding sebelah kiri, lalu klik <strong>Jalankan Kode</strong>!</p>
+        <button style="background:#16a34a; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;" onclick="alert('Tombol berfungsi normal!')">Klik Saya</button>
+    </div>
+</body>
+</html>`,
+            css: `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 200px; margin: 0; background: #f8fafc; }
+        .btn-modern {
+            background: linear-gradient(135deg, #0d2e5c 0%, #1e3a8a 100%);
+            color: #ffffff;
+            border: 2px solid #fca311;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 46, 92, 0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-modern:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(252, 163, 17, 0.4);
+            background: #fca311;
+            color: #0d2e5c;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-modern" onclick="this.innerText = '⚡ Tombol Aktif!'">Efek Tombol Skillance</button>
+</body>
+</html>`,
+            js: `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 20px; background: #fffbeb; color: #78350f; }
+        .counter-box { background: white; padding: 20px; border-radius: 12px; max-width: 300px; margin: auto; border: 1px solid #fde68a; }
+        .number { font-size: 42px; font-weight: bold; color: #0d2e5c; margin: 10px 0; }
+        .btn { padding: 8px 16px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin: 0 4px; }
+        .btn-add { background: #0d2e5c; color: white; }
+        .btn-reset { background: #e2e8f0; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="counter-box">
+        <h4 style="margin:0;">Interactive Counter</h4>
+        <div class="number" id="num">0</div>
+        <button class="btn btn-add" onclick="tambah()">+ Tambah</button>
+        <button class="btn btn-reset" onclick="reset()">Reset</button>
+    </div>
+    <script>
+        let count = 0;
+        function tambah() {
+            count++;
+            document.getElementById('num').innerText = count;
+        }
+        function reset() {
+            count = 0;
+            document.getElementById('num').innerText = count;
+        }
+    </script>
+</body>
+</html>`
+        };
+
+        function runCode() {
+            const code = document.getElementById('codeEditor').value;
+            const iframe = document.getElementById('codePreview');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(code);
+            doc.close();
+        }
+
+        function loadTemplate(type) {
+            if (templates[type]) {
+                document.getElementById('codeEditor').value = templates[type];
+                document.getElementById('editorFilename').innerText = `example_${type}.html`;
+                runCode();
+            }
+        }
+
+        function filterTracks() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.track-item');
+            items.forEach(el => {
+                const keywords = (el.getAttribute('data-keywords') || '') + ' ' + el.innerText.toLowerCase();
+                if (query === '' || keywords.includes(query)) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+
+        // Run default template on load
+        document.addEventListener('DOMContentLoaded', function() {
+            runCode();
+
+            // Check Unified User Session (Option A - Single Sign-On)
+            fetch('api/user.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.logged_in && data.user) {
+                        const u = data.user;
+                        const avatar = u.photo || ('https://ui-avatars.com/api/?name=' + encodeURIComponent(u.name) + '&background=0d2e5c&color=fff');
+                        
+                        // Update Top Hub Bar
+                        const topHubUser = document.getElementById('topHubUser');
+                        if (topHubUser) {
+                            topHubUser.innerHTML = `<span class="badge bg-success-subtle text-success me-2 px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i> Terhubung Akun Terpadu</span> Halo, <strong>${escapeHtml(u.name)}</strong>`;
+                        }
+
+                        // Update Main Navbar Auth Area
+                        const authArea = document.getElementById('navAuthArea');
+                        if (authArea) {
+                            authArea.innerHTML = `
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-navy rounded-pill px-3 py-1 fw-bold dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                                        <img src="${escapeHtml(avatar)}" class="rounded-circle shadow-sm" style="width: 26px; height: 26px; object-fit: cover;">
+                                        <span class="d-none d-md-inline text-truncate" style="max-width: 120px;">${escapeHtml(u.name)}</span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2" style="font-size: 0.85rem; min-width: 220px;">
+                                        <li class="px-3 py-2 border-bottom">
+                                            <div class="fw-bold text-navy text-truncate">${escapeHtml(u.name)}</div>
+                                            <small class="text-muted text-uppercase" style="font-size: 0.68rem;"><i class="fa-solid fa-graduation-cap text-gold me-1"></i> Siswa Aktif (${escapeHtml(u.type)})</small>
+                                        </li>
+                                        <li><a class="dropdown-item py-2 fw-semibold" href="https://skillance.my.id/dashboard/freelancer/"><i class="fa-solid fa-briefcase text-gold me-2"></i> Mode Freelance & Tugas</a></li>
+                                        <li><hr class="dropdown-divider my-1"></li>
+                                        <li><a class="dropdown-item py-2 text-danger fw-semibold" href="auth/logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar</a></li>
+                                    </ul>
+                                </div>
+                            `;
+                        }
+                    }
+                })
+                .catch(() => {});
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                return text.replace(/[&<>"']/g, function(m) {
+                    return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+                });
+            }
+        });
+    </script>
+</body>
+</html>

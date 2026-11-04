@@ -241,6 +241,13 @@ $pageTitle = $pageTitle ?? "Dashboard Freelancer";
                         <span>Profil & Rekening</span>
                     </a>
                 </li>
+                <li class="nav-item mt-2 pt-2 border-top">
+                    <a href="../../auth/sso_jump.php?target=academy" class="nav-item-link text-navy fw-bold" target="_blank" style="background: rgba(252, 163, 17, 0.08); border-radius: 8px; margin: 0 12px; padding: 10px 16px;">
+                        <i class="fa-solid fa-graduation-cap text-gold"></i>
+                        <span>Skillance Academy</span>
+                        <span class="badge bg-gold text-navy fw-bold ms-auto" style="font-size: 0.65rem;">BELAJAR</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 

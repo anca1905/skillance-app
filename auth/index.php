@@ -1,6 +1,17 @@
 <?php
 session_start();
+
+$ref = $_GET['ref'] ?? '';
+if ($ref === 'academy' || strpos($_GET['redirect'] ?? '', 'academy') !== false) {
+    $_SESSION['auth_redirect'] = 'academy';
+}
+
 if (isset($_SESSION['user_id'])) {
+    if ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'academy') {
+        unset($_SESSION['auth_redirect']);
+        header("Location: sso_jump.php?target=academy");
+        exit();
+    }
     if ($_SESSION['user_role'] === 'investor') {
         header("Location: ../dashboard/investor.php");
     } elseif ($_SESSION['user_role'] === 'freelancer') {
@@ -16,6 +27,7 @@ $clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GO
 
 $loginError = $_SESSION['login_error'] ?? null;
 unset($_SESSION['login_error']);
+$isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'academy');
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -154,6 +166,13 @@ unset($_SESSION['login_error']);
 
         <div class="card-body px-4 pb-4 pt-1">
             
+            <?php if ($isAcademyRef): ?>
+                <div class="alert alert-warning py-2 px-3 small border-0 mb-3 rounded-3" style="background-color: #fff9ed; color: #b45309; border-left: 4px solid #fca311 !important;">
+                    <i class="fa-solid fa-graduation-cap me-1"></i>
+                    <strong>Akun Terpadu Skillance:</strong> Masuk untuk mengakses kelas di <strong>Skillance Academy</strong> dan terhubung langsung ke <strong>Bursa Freelance</strong>.
+                </div>
+            <?php endif; ?>
+
             <div id="alertContainer">
                 <?php if ($loginError): ?>
                     <div class="alert alert-danger py-2 small fade show" role="alert">
@@ -164,7 +183,7 @@ unset($_SESSION['login_error']);
 
             <!-- Tombol Login Google Utama -->
             <div class="mb-2">
-                <a href="google_login.php" class="btn-google w-100" id="btnGoogleDirect">
+                <a href="google_login.php<?= $isAcademyRef ? '?redirect=academy' : '' ?>" class="btn-google w-100" id="btnGoogleDirect">
                     <svg width="20" height="20" viewBox="0 0 48 48">
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
                         <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>

@@ -138,10 +138,23 @@ $_SESSION['user_role']  = $role;
 $_SESSION['user_photo'] = $photo;
 $_SESSION['user_type']  = $userType;
 
-// Redirect khusus jika sebelumnya diarahkan dari link tugas/job tertentu
+// Redirect khusus jika sebelumnya diarahkan dari link tugas/job tertentu atau dari Academy
 if (!empty($_SESSION['auth_redirect'])) {
     $redirectUrl = $_SESSION['auth_redirect'];
     unset($_SESSION['auth_redirect']);
+
+    // SSO ke Skillance Academy
+    if ($redirectUrl === 'academy' || strpos($redirectUrl, 'academy.skillance.cloud') !== false) {
+        $token = bin2hex(random_bytes(32));
+        $expiresAt = date('Y-m-d H:i:s', time() + 300);
+        $ssoStmt = $conn->prepare("INSERT INTO `sso_tokens` (`token`, `user_id`, `expires_at`) VALUES (?, ?, ?)");
+        $ssoStmt->bind_param("sis", $token, $userId, $expiresAt);
+        $ssoStmt->execute();
+        $ssoStmt->close();
+        header("Location: https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token));
+        exit();
+    }
+
     if (strpos($redirectUrl, '://') === false || strpos($redirectUrl, 'skillance.my.id') !== false) {
         header("Location: ../" . ltrim($redirectUrl, '/'));
         exit();

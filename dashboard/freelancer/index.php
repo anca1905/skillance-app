@@ -166,6 +166,28 @@ $isBankEmpty = empty($currentUser['bank_account_number']);
             </div>
         </div>
 
+        <!-- Sinergi Skillance Academy (Akun Terpadu) -->
+        <div class="card card-custom p-4 mb-4" style="background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%); color: #ffffff;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="bg-gold p-2 rounded-circle text-navy d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                        <i class="fa-solid fa-graduation-cap fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-white">Skillance Academy</h6>
+                        <small class="text-white-50" style="font-size: 0.72rem;">Platform Belajar Koding Interaktif</small>
+                    </div>
+                </div>
+                <span class="badge bg-gold text-navy fw-bold px-2 py-1" style="font-size: 0.65rem;">AKUN TERPADU</span>
+            </div>
+            <p class="small text-white-50 mb-3" style="line-height: 1.6;">
+                Tingkatkan skill coding Anda (Web, Backend API, Flutter Mobile, UI/UX) untuk mendapatkan verifikasi keahlian dan prioritas tugas freelance.
+            </p>
+            <a href="../../auth/sso_jump.php?target=academy" target="_blank" class="btn btn-gold btn-sm w-100 fw-bold rounded-pill shadow-sm">
+                <i class="fa-solid fa-laptop-code me-1"></i> Buka Portal Belajar (academy.skillance.cloud)
+            </a>
+        </div>
+
         <!-- Panduan Singkat -->
         <div class="card card-custom p-4" style="background: #fffdf5; border: 1px solid #fef3c7;">
             <h6 class="fw-bold text-navy mb-3"><i class="fa-solid fa-lightbulb text-gold me-2"></i> Cara Kerja Freelance</h6>

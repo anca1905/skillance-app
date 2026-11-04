@@ -90,7 +90,16 @@ $_SESSION['user_photo'] = $photo;
 $_SESSION['user_type']  = $userType;
 
 $redirectUrl = "../dashboard/freelancer/index.php";
-if ($role === 'freelancer') {
+if (!empty($_SESSION['auth_redirect']) && ($_SESSION['auth_redirect'] === 'academy' || strpos($_SESSION['auth_redirect'], 'academy.skillance.cloud') !== false)) {
+    unset($_SESSION['auth_redirect']);
+    $token = bin2hex(random_bytes(32));
+    $expiresAt = date('Y-m-d H:i:s', time() + 300);
+    $ssoStmt = $conn->prepare("INSERT INTO `sso_tokens` (`token`, `user_id`, `expires_at`) VALUES (?, ?, ?)");
+    $ssoStmt->bind_param("sis", $token, $userId, $expiresAt);
+    $ssoStmt->execute();
+    $ssoStmt->close();
+    $redirectUrl = "https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token);
+} elseif ($role === 'freelancer') {
     $redirectUrl = $isNewUser ? "../dashboard/freelancer/profile.php?welcome=1" : "../dashboard/freelancer/index.php";
 } elseif ($role === 'admin') {
     $redirectUrl = "../dashboard/index.php";
