@@ -12,7 +12,7 @@ $basePath = (strpos($host, 'localhost') !== false || strpos($_SERVER['REQUEST_UR
 $defaultCallback = "$protocol://$host$basePath/auth/google_callback.php";
 
 // Gunakan callback yang cocok dengan request
-if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false || strpos($redirectUri, 'laskar_wonua') !== false) {
+if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false) {
     $redirectUri = $defaultCallback;
 }
 

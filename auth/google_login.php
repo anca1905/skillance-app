@@ -5,8 +5,8 @@ require_once __DIR__ . '/../config/config.php';
 $clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
 $redirectUri = $_ENV['GOOGLE_REDIRECT_URI'] ?? (function_exists('getenv') ? getenv('GOOGLE_REDIRECT_URI') : '');
 
-// Jika redirect URI tidak diset atau mengarah ke localhost/laskar_wonua, kita gunakan callback auth default
-if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false || strpos($redirectUri, 'laskar_wonua') !== false) {
+// Jika redirect URI tidak diset atau mengarah ke localhost, kita gunakan callback auth default
+if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false) {
     // Deteksi host otomatis
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
     $host = $_SERVER['HTTP_HOST'];
