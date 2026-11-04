@@ -1710,7 +1710,7 @@ $avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($use
             runCode();
 
             // Scroll to editor
-            const labEl = document.getElementById('codePlayground');
+            const labEl = document.getElementById('playground');
             if (labEl) {
                 labEl.scrollIntoView({ behavior: 'smooth' });
             }
@@ -1722,7 +1722,7 @@ $avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($use
             document.getElementById('editorFilename').innerText = `materi_${mod.id}.html`;
             runCode();
 
-            const labEl = document.getElementById('codePlayground');
+            const labEl = document.getElementById('playground');
             if (labEl) {
                 labEl.scrollIntoView({ behavior: 'smooth' });
             }
