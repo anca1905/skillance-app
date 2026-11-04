@@ -147,7 +147,7 @@ $avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($use
             </button>
             <div class="collapse navbar-collapse" id="academyNav">
                 <ul class="navbar-nav mx-auto align-items-lg-center gap-lg-2 my-3 my-lg-0">
-                    <li class="nav-item"><a class="nav-link fw-semibold active text-navy" href="#tracks">Jalur Belajar</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold active text-navy" href="#tracks"><i class="fa-solid fa-book-open text-gold me-1"></i> Materi & Kurikulum</a></li>
                     <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#playground">Code Playground</a></li>
                     <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#fitur">Fitur Interaktif</a></li>
                     <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#kemitraan">Mitra Kampus (MSC USN)</a></li>
@@ -190,25 +190,35 @@ $avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($use
                 Kurikulum bertahap ala <strong>Dicoding</strong> dan latihan kode langsung di browser ala <strong>W3Schools</strong>. Kuasai Web Development, Backend, Flutter Mobile Apps, dan UI/UX Design berstandar industri.
             </p>
 
+            <!-- Tombol CTA Utama: Buka Materi & Code Lab -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                <a href="#tracks" class="btn btn-gold btn-lg px-4 py-3 rounded-pill fw-bold text-navy shadow-lg transition-hover">
+                    <i class="fa-solid fa-graduation-cap me-2"></i> Buka Kurikulum & Materi Belajar
+                </a>
+                <a href="#playground" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold">
+                    <i class="fa-solid fa-code me-2"></i> Coba Code Playground
+                </a>
+            </div>
+
             <!-- Search Quick Code Topics -->
-            <div class="mx-auto mb-4" style="max-width: 580px;">
+            <div class="mx-auto mb-4" style="max-width: 620px;">
                 <div class="input-group shadow-lg rounded-pill overflow-hidden bg-white p-1">
                     <span class="input-group-text bg-transparent border-0 text-muted ps-3">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-solid fa-magnifying-glass text-gold"></i>
                     </span>
-                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Cari materi koding: HTML, CSS, JavaScript, PHP, Laravel, Flutter, Figma..." onkeyup="filterTracks()">
-                    <button class="btn btn-gold fw-bold px-4 rounded-pill" type="button">Cari Materi</button>
+                    <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Ketik topik materi: HTML, CSS, JavaScript, PHP, Flutter, UI/UX..." onkeyup="filterModules()" onkeydown="if(event.key==='Enter') scrollToTracks()">
+                    <button class="btn btn-gold fw-bold px-4 rounded-pill" type="button" onclick="scrollToTracks()">
+                        <i class="fa-solid fa-arrow-down me-1"></i> Lihat Materi
+                    </button>
                 </div>
             </div>
 
-            <div class="d-flex flex-wrap justify-content-center gap-2 text-white-50 small">
-                <span>Topik Populer:</span>
-                <a href="#playground" onclick="loadTemplate('html')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">HTML5</a>
-                <a href="#playground" onclick="loadTemplate('css')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">CSS Flexbox</a>
-                <a href="#playground" onclick="loadTemplate('js')" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">JavaScript DOM</a>
-                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">PHP & MySQL</a>
-                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">Laravel 11</a>
-                <a href="#tracks" class="badge bg-white bg-opacity-10 text-white text-decoration-none px-2 py-1">Flutter Mobile</a>
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 text-white-50 small">
+                <span class="fw-semibold text-white"><i class="fa-solid fa-fire text-gold me-1"></i> Jalur Cepat Materi:</span>
+                <a href="#tracks" onclick="switchTrack('web_frontend'); scrollToTracks();" class="badge bg-white bg-opacity-15 text-white text-decoration-none px-3 py-2 rounded-pill"><i class="fa-brands fa-html5 text-gold me-1"></i> Frontend Web</a>
+                <a href="#tracks" onclick="switchTrack('backend_api'); scrollToTracks();" class="badge bg-white bg-opacity-15 text-white text-decoration-none px-3 py-2 rounded-pill"><i class="fa-solid fa-server text-info me-1"></i> Backend & API</a>
+                <a href="#tracks" onclick="switchTrack('mobile_flutter'); scrollToTracks();" class="badge bg-white bg-opacity-15 text-white text-decoration-none px-3 py-2 rounded-pill"><i class="fa-solid fa-mobile-screen-button text-warning me-1"></i> Mobile Flutter</a>
+                <a href="#tracks" onclick="switchTrack('uiux_design'); scrollToTracks();" class="badge bg-white bg-opacity-15 text-white text-decoration-none px-3 py-2 rounded-pill"><i class="fa-solid fa-bezier-curve text-pink me-1"></i> UI/UX Design</a>
             </div>
         </div>
     </header>
@@ -684,6 +694,41 @@ $avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($use
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Global Utility: HTML Escape
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            return String(text).replace(/[&<>"']/g, function(m) {
+                return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+            });
+        }
+
+        function scrollToTracks() {
+            const el = document.getElementById('tracks');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterModules() {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+            if (!query) {
+                renderCurrentTrack();
+                return;
+            }
+
+            // Check if query matches any track or module across tracks
+            const track = COURSES_DATA[activeTrackKey];
+            if (!track) return;
+
+            const cards = document.querySelectorAll('#stagesContainer .col-lg-6');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
         // Interactive Code Playground Engine (Ala W3Schools / Dicoding)
         const templates = {
             html: `<!DOCTYPE html>
