@@ -140,12 +140,6 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
             background: rgba(13, 46, 92, 0.08);
             color: var(--navy);
         }
-        .demo-box {
-            background: #fff9ed;
-            border: 1px dashed #fca311;
-            border-radius: 8px;
-            padding: 10px 14px;
-        }
     </style>
 </head>
 
@@ -239,22 +233,6 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
                     <i class="fa-solid fa-right-to-bracket me-2"></i> MASUK SISTEM
                 </button>
             </form>
-
-            <!-- Box Demo Cepat di Localhost -->
-            <div class="demo-box mt-4">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <small class="fw-bold text-dark"><i class="fa-solid fa-flask text-gold me-1"></i> Demo Login Cepat Freelancer:</small>
-                    <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">Local Mode</span>
-                </div>
-                <div class="d-flex gap-2">
-                    <a href="../api/demo_google_login.php?type=mahasiswa" class="btn btn-sm btn-outline-primary flex-fill" style="font-size: 0.72rem;">
-                        <i class="fa-solid fa-graduation-cap me-1"></i> Demo Mahasiswa
-                    </a>
-                    <a href="../api/demo_google_login.php?type=umum" class="btn btn-sm btn-outline-secondary flex-fill" style="font-size: 0.72rem;">
-                        <i class="fa-solid fa-user me-1"></i> Demo Umum
-                    </a>
-                </div>
-            </div>
 
         </div>
         <div class="card-footer bg-light text-center py-3 border-top-0">
