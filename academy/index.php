@@ -1,3 +1,12 @@
+<?php
+session_start();
+$isLoggedIn = !empty($_SESSION['user_id']);
+$userName = $_SESSION['user_name'] ?? '';
+$userPhoto = $_SESSION['user_photo'] ?? null;
+$userType = $_SESSION['user_type'] ?? 'umum';
+$userEmail = $_SESSION['user_email'] ?? '';
+$avatarUrl = $userPhoto ?: ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -79,14 +88,21 @@
         <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center gap-2">
                 <span class="badge bg-gold text-navy fw-bold text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.5px;">Portal Belajar</span>
-                <span class="small d-none d-md-inline" id="topHubUser" style="color: #cbd5e1;">Skillance Academy Indonesia (academy.skillance.cloud)</span>
+                <?php if ($isLoggedIn): ?>
+                    <span class="small" style="color: #cbd5e1;">
+                        <span class="badge bg-success text-white me-1 px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i> Akun Terpadu</span>
+                        Halo, <strong class="text-white"><?= htmlspecialchars($userName) ?></strong>
+                    </span>
+                <?php else: ?>
+                    <span class="small d-none d-md-inline" style="color: #cbd5e1;">Skillance Academy Indonesia (academy.skillance.cloud)</span>
+                <?php endif; ?>
             </div>
             <div class="d-flex align-items-center gap-2 ms-auto">
                 <a href="https://skillance.my.id" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" style="font-size: 0.78rem;">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Website Utama (skillance.my.id)
+                    <i class="fa-solid fa-arrow-left me-1"></i> Website Utama
                 </a>
-                <a href="https://skillance.my.id/freelance.html" class="btn btn-sm btn-gold rounded-pill px-3 py-1 fw-bold" style="font-size: 0.78rem;">
-                    <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-gold rounded-pill px-3 py-1 fw-bold" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-briefcase me-1"></i> Mode Freelance
                 </a>
             </div>
         </div>
@@ -102,7 +118,31 @@
                     <small class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">KODING & MULTIMEDIA INDONESIA</small>
                 </div>
             </a>
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#academyNav">
+            <!-- Mobile Profile Avatar (tampak di HP) -->
+            <div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
+                <?php if ($isLoggedIn): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-light rounded-circle p-1 dropdown-toggle shadow-none border-0" type="button" data-bs-toggle="dropdown">
+                            <img src="<?= htmlspecialchars($avatarUrl) ?>" class="rounded-circle shadow-sm" style="width: 32px; height: 32px; object-fit: cover;">
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="font-size: 0.85rem; min-width: 220px;">
+                            <li class="px-3 py-2 border-bottom">
+                                <div class="fw-bold text-navy text-truncate"><?= htmlspecialchars($userName) ?></div>
+                                <small class="text-muted text-uppercase" style="font-size: 0.68rem;"><i class="fa-solid fa-graduation-cap text-gold me-1"></i> Siswa Aktif (<?= htmlspecialchars($userType) ?>)</small>
+                            </li>
+                            <li><a class="dropdown-item py-2 fw-semibold" href="https://skillance.my.id/dashboard/freelancer/"><i class="fa-solid fa-briefcase text-gold me-2"></i> Mode Freelance</a></li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li><a class="dropdown-item py-2 text-danger fw-semibold" href="auth/logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-navy rounded-pill px-3 py-1 fw-bold" style="font-size: 0.78rem;">
+                        <i class="fa-solid fa-user me-1"></i> Masuk
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <button class="navbar-toggler border-0 shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="academyNav">
@@ -112,10 +152,28 @@
                     <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#fitur">Fitur Interaktif</a></li>
                     <li class="nav-item"><a class="nav-link fw-semibold text-navy" href="#kemitraan">Mitra Kampus (MSC USN)</a></li>
                 </ul>
-                <div class="d-flex align-items-center gap-2" id="navAuthArea">
-                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-navy btn-sm rounded-pill px-3 fw-bold">
-                        <i class="fa-solid fa-user me-1"></i> Akun Belajar
-                    </a>
+                <div class="d-none d-lg-flex align-items-center gap-2" id="navAuthArea">
+                    <?php if ($isLoggedIn): ?>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-navy rounded-pill px-3 py-1 fw-bold dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown">
+                                <img src="<?= htmlspecialchars($avatarUrl) ?>" class="rounded-circle shadow-sm" style="width: 26px; height: 26px; object-fit: cover;">
+                                <span class="text-truncate" style="max-width: 130px;"><?= htmlspecialchars($userName) ?></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2" style="font-size: 0.85rem; min-width: 230px;">
+                                <li class="px-3 py-2 border-bottom">
+                                    <div class="fw-bold text-navy text-truncate"><?= htmlspecialchars($userName) ?></div>
+                                    <small class="text-muted text-uppercase" style="font-size: 0.68rem;"><i class="fa-solid fa-graduation-cap text-gold me-1"></i> Siswa Aktif (<?= htmlspecialchars($userType) ?>)</small>
+                                </li>
+                                <li><a class="dropdown-item py-2 fw-semibold" href="https://skillance.my.id/dashboard/freelancer/"><i class="fa-solid fa-briefcase text-gold me-2"></i> Mode Freelance & Tugas</a></li>
+                                <li><hr class="dropdown-divider my-1"></li>
+                                <li><a class="dropdown-item py-2 text-danger fw-semibold" href="auth/logout.php"><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-navy btn-sm rounded-pill px-3 fw-bold">
+                            <i class="fa-solid fa-user me-1"></i> Akun Belajar
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -706,7 +764,7 @@
             count = 0;
             document.getElementById('num').innerText = count;
         }
-    </script>
+    <\/script>
 </body>
 </html>`
         };
@@ -792,5 +850,23 @@
             }
         });
     </script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php if (isset($_GET['logged_in']) && $isLoggedIn): ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Masuk!',
+                text: 'Selamat datang, <?= htmlspecialchars($userName) ?>! Akun belajar Anda telah terhubung dengan Bursa Freelance Skillance.',
+                timer: 2500,
+                showConfirmButton: false
+            });
+        }
+    });
+    </script>
+    <?php endif; ?>
 </body>
 </html>
