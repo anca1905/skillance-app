@@ -368,6 +368,9 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             </button>
 
             <div class="ms-auto d-flex align-items-center gap-2">
+                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 fw-bold">
+                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+                </a>
                 <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
                     <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
                 </a>
@@ -386,6 +389,9 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                     <i class="<?= $c['icon'] ?> me-1"></i> <?= htmlspecialchars($c['short_name']) ?>
                 </a>
             <?php endforeach; ?>
+            <a href="roadmap.php" class="course-nav-link text-gold ms-auto">
+                <i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP
+            </a>
         </div>
     </div>
 

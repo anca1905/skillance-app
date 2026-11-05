@@ -210,6 +210,9 @@ $isLoggedIn = !empty($userId);
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
+                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold">
+                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+                </a>
                 <a href="tryit.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold">
                     <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
                 </a>
@@ -237,7 +240,8 @@ $isLoggedIn = !empty($userId);
             <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
-            <a href="tryit.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-bolt me-1"></i> TRY IT YOURSELF</a>
+            <a href="roadmap.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP BELAJAR</a>
+            <a href="tryit.php" class="course-nav-item text-gold"><i class="fa-solid fa-bolt me-1"></i> TRY IT YOURSELF</a>
         </div>
     </div>
 
@@ -253,11 +257,14 @@ $isLoggedIn = !empty($userId);
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="learn.php?c=html" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
-                    <i class="fa-solid fa-play me-2"></i> Mulai Belajar HTML &raquo;
+                <a href="roadmap.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
+                    <i class="fa-solid fa-map-location-dot me-2"></i> Lihat Roadmap Belajar &raquo;
+                </a>
+                <a href="learn.php?c=html" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-play me-2"></i> Mulai dari HTML
                 </a>
                 <a href="tryit.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                    <i class="fa-solid fa-code me-2"></i> Buka Try It Yourself Editor
+                    <i class="fa-solid fa-code me-2"></i> Code Lab Editor
                 </a>
             </div>
         </div>
@@ -473,6 +480,100 @@ $isLoggedIn = !empty($userId);
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION: JALUR BELAJAR & ROADMAP TERSTRUKTUR -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container py-2">
+            <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+                <div>
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase shadow-sm" style="font-size: 0.75rem;">
+                        <i class="fa-solid fa-compass me-1"></i> Jalur Belajar Terstruktur
+                    </span>
+                    <h2 class="fw-bold text-navy font-heading mb-1">Roadmap Karier & Keahlian Digital</h2>
+                    <p class="text-muted mb-0">Panduan bertahap dari pemula, menengah, hingga mahir untuk mempersiapkan Anda siap berkarier.</p>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a href="roadmap.php" class="btn btn-navy rounded-pill px-4 py-2 fw-bold shadow-sm">
+                        <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Buka Roadmap Lengkap &raquo;
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- CARD 1: FRONTEND -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #fca311 !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Frontend Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~12 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Frontend Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai pembuatan antarmuka web modern dari dasar struktur, desain responsif, hingga animasi interaktif tingkat lanjut.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">HTML5</span>
+                            <span class="badge bg-light text-secondary border">CSS3</span>
+                            <span class="badge bg-light text-secondary border">JavaScript</span>
+                            <span class="badge bg-light text-secondary border">jQuery</span>
+                            <span class="badge bg-light text-secondary border">Bootstrap 5</span>
+                        </div>
+                        <a href="roadmap.php?path=frontend" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Frontend &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: BACKEND -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #00758f !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Backend Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~14 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Backend Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Bangun logika server-side, manajemen basis data relasional SQL berkinerja tinggi, dan arsitektur RESTful API yang aman.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">PHP 8</span>
+                            <span class="badge bg-light text-secondary border">SQL / MySQL</span>
+                            <span class="badge bg-light text-secondary border">PDO Security</span>
+                            <span class="badge bg-light text-secondary border">REST API</span>
+                            <span class="badge bg-light text-secondary border">Linux VPS</span>
+                        </div>
+                        <a href="roadmap.php?path=backend" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Backend &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 3: FULLSTACK -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #04AA6D !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-success-subtle text-success-emphasis fw-bold">Fullstack Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~20 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Fullstack Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Alur komprehensif end-to-end: merancang tampilan web, mengelola basis data, membangun backend, hingga rilis ke Cloud VPS.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">Client Layer</span>
+                            <span class="badge bg-light text-secondary border">Server Layer</span>
+                            <span class="badge bg-light text-secondary border">Database</span>
+                            <span class="badge bg-light text-secondary border">Cloud Nginx</span>
+                        </div>
+                        <a href="roadmap.php?path=fullstack" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Fullstack &raquo;
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -185,6 +185,9 @@ if (empty($initialCode)) {
             <a href="<?= htmlspecialchars($backUrl) ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold" style="font-size: 0.8rem;">
                 <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Materi
             </a>
+            <a href="roadmap.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold" style="font-size: 0.8rem;">
+                <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+            </a>
             <span class="d-none d-md-inline text-navy fw-bold ms-2" style="font-size: 0.95rem;">
                 <i class="fa-solid fa-graduation-cap text-gold me-1"></i> Skillance Code Lab
             </span>
