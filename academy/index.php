@@ -354,7 +354,7 @@ $isLoggedIn = !empty($userId);
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-indigo-subtle text-indigo fw-bold" style="background:#e0e7ff; color:#4338ca;">Server & DB</span>
-                            <small class="text-muted">Backend</small>
+                            <small class="text-muted">117 Topik Lengkap (10 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">PHP & MySQL Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">

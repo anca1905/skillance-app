@@ -28,6 +28,15 @@ foreach ($jsCategories as $catName => $catTopics) {
     }
 }
 
+$phpData = require __DIR__ . '/data/php_tutorial.php';
+$phpCategories = $phpData['categories'] ?? [];
+$phpFlattenedTopics = [];
+foreach ($phpCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $phpFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -60,109 +69,14 @@ $tutorials = [
         'topics' => $jsFlattenedTopics
     ],
     'php' => [
-        'name' => 'PHP Tutorial',
-        'short_name' => 'PHP',
-        'badge' => 'Backend & Server',
+        'name' => 'PHP & MySQL Tutorial',
+        'short_name' => 'PHP & MySQL',
+        'badge' => 'Pemula ke Mahir',
         'icon' => 'fa-brands fa-php',
         'color' => '#777bb4',
-        'desc' => 'PHP adalah bahasa pemrograman sisi server (server-side) yang sangat populer untuk web dan database.',
-        'topics' => [
-            'intro' => [
-                'title' => 'PHP Pengenalan & Sintaks Dasar',
-                'summary' => 'Pelajari bagaimana PHP dieksekusi di server dan bagaimana kode PHP menghasilkan keluaran HTML ke browser.',
-                'content' => '
-                    <p class="lead">PHP adalah singkatan dari <strong>PHP: Hypertext Preprocessor</strong>. Berbeda dengan JavaScript yang berjalan di browser pengguna, PHP berjalan di server web (seperti Apache atau Nginx).</p>
-
-                    <p>Ketika pengguna meminta halaman berekstensi <code>.php</code>, server web akan mengeksekusi kode PHP di server, lalu hanya mengirimkan hasil akhirnya (biasanya berupa HTML murni atau JSON) ke browser pengguna. Pengguna tidak dapat melihat kode sumber PHP asli Anda!</p>
-                ',
-                'example_title' => 'Contoh Sintaks Dasar PHP',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: monospace; background: #0f172a; color: #38bdf8; padding: 25px; }
-        .box { background: #1e293b; padding: 20px; border-radius: 8px; border-left: 4px solid #38bdf8; }
-    </style>
-</head>
-<body>
-
-    <div class="box">
-        <h3>// Simulasi Output Server PHP</h3>
-        <p>&lt;?php<br>
-        $nama = "Siswa Skillance";<br>
-        $jam = date("H:i");<br>
-        echo "Halo, $nama! Server time: $jam";<br>
-        ?&gt;</p>
-        <button style="background:#38bdf8; color:#0f172a; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="alert(\'Hasil Output Server:\nHalo, Siswa Skillance! Server time aktif.\')">Jalankan Simulasi</button>
-    </div>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Aturan Dasar Sintaks PHP:</h5>
-                    <ul class="ps-3">
-                        <li>Skrip PHP selalu diawali dengan <code>&lt;?php</code> dan diakhiri dengan <code>?&gt;</code>.</li>
-                        <li>Setiap variabel di PHP diawali dengan tanda dollar (<code>$nama_variabel</code>).</li>
-                        <li>Setiap pernyataan perintah PHP harus selalu diakhiri dengan tanda titik koma (<code>;</code>).</li>
-                    </ul>
-                ',
-                'quiz' => [
-                    'q' => 'Karakter apa yang wajib diletakkan di depan nama variabel di bahasa pemrograman PHP?',
-                    'options' => ['@', '#', '$', '&'],
-                    'answer' => 2,
-                    'explanation' => 'Di PHP, semua variabel harus diawali dengan simbol dollar ($), contohnya $nama, $umur, $total.'
-                ]
-            ],
-            'mysql_crud' => [
-                'title' => 'PHP & MySQL (Prepared Statements)',
-                'summary' => 'Menghubungkan PHP ke database MySQL dan melakukan query aman terhadap celah SQL Injection.',
-                'content' => '
-                    <p class="lead">Kombinasi PHP dan database relasional MySQL adalah pilar utama web modern (WordPress, Wikipedia, platform e-commerce, dll). Kunci terpenting dalam menangani database adalah <strong>keamanan kueri</strong>.</p>
-
-                    <h4>Bahaya SQL Injection</h4>
-                    <p>Jangan pernah memasukkan variabel input pengguna langsung ke string SQL seperti <code>SELECT * FROM users WHERE email = \'$email\'</code>. Peretas dapat memasukkan tanda kutip untuk membobol database. Selalu gunakan <strong>Prepared Statements</strong>!</p>
-                ',
-                'example_title' => 'Contoh Prepared Statement PHP MySQL',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: monospace; background: #1e1e2e; color: #a6adc8; padding: 20px; }
-        .code-snippet { background: #181825; padding: 15px; border-radius: 8px; font-size: 0.85rem; }
-        .hl-key { color: #89b4fa; }
-        .hl-str { color: #a6e3a1; }
-    </style>
-</head>
-<body>
-
-    <div class="code-snippet">
-        <span style="color:#6c7086;">// Menjalankan Query Aman dengan Prepared Statement</span><br><br>
-        <span class="hl-key">$stmt</span> = $conn->prepare(<span class="hl-str">"SELECT id, name FROM users WHERE email = ?"</span>);<br>
-        <span class="hl-key">$stmt</span>->bind_param(<span class="hl-str">"s"</span>, $userEmail);<br>
-        <span class="hl-key">$stmt</span>->execute();<br>
-        <span class="hl-key">$result</span> = $stmt->get_result();<br>
-        <span class="hl-key">$user</span> = $result->fetch_assoc();
-    </div>
-    <p style="font-size:0.85rem; color:#f38ba8; margin-top:10px;">🛡️ Data diikat terpisah melalui tanda tanya (?) sehingga aman 100% dari SQL Injection.</p>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Alur Kerja Prepared Statement:</h5>
-                    <ol class="ps-3">
-                        <li><strong>Prepare</strong>: Template kueri SQL dikirim ke server database untuk dikompilasi terlebih dahulu.</li>
-                        <li><strong>Bind Parameters</strong>: Nilai data input pengguna diikat (bound) ke parameter placeholder (?).</li>
-                        <li><strong>Execute</strong>: Server mengeksekusi query dengan aman tanpa risiko eksekusi perintah berbahaya.</li>
-                    </ol>
-                ',
-                'quiz' => [
-                    'q' => 'Metode manakah yang paling aman dan direkomendasikan untuk mencegah serangan SQL Injection di PHP?',
-                    'options' => ['Menggunakan Prepared Statements dengan parameter binding', 'Menggunakan addslashes()', 'Mengabaikan input pengguna', 'Menyembunyikan database'],
-                    'answer' => 0,
-                    'explanation' => 'Prepared Statements adalah standar industri wajib untuk mengamankan komunikasi database dari SQL Injection.'
-                ]
-            ]
-        ]
+        'desc' => 'PHP adalah bahasa pemrograman server-side dan database MySQL yang menjadi fondasi 75%+ website di internet.',
+        'categories' => $phpCategories,
+        'topics' => $phpFlattenedTopics
     ],
     'flutter' => [
         'name' => 'Flutter Mobile Tutorial',
