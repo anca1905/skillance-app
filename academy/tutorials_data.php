@@ -19,6 +19,15 @@ foreach ($cssCategories as $catName => $catTopics) {
     }
 }
 
+$jsData = require __DIR__ . '/data/js_tutorial.php';
+$jsCategories = $jsData['categories'] ?? [];
+$jsFlattenedTopics = [];
+foreach ($jsCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $jsFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -43,122 +52,12 @@ $tutorials = [
     'javascript' => [
         'name' => 'JavaScript Tutorial',
         'short_name' => 'JavaScript',
-        'badge' => 'Menengah',
+        'badge' => 'Pemula ke Mahir',
         'icon' => 'fa-brands fa-js',
-        'color' => '#f7df1e',
-        'desc' => 'JavaScript adalah bahasa pemrograman yang membuat halaman web menjadi interaktif dan dinamis.',
-        'topics' => [
-            'intro' => [
-                'title' => 'JavaScript Pengenalan (Introduction)',
-                'summary' => 'Apa itu JavaScript, bagaimana cara menjalankannya di browser, dan apa saja fungsinya.',
-                'content' => '
-                    <p class="lead">JavaScript adalah bahasa pemrograman paling populer di dunia. JavaScript membuat halaman web dapat bereaksi terhadap interaksi pengguna, mengubah konten HTML secara langsung, dan berkomunikasi dengan server di latar belakang.</p>
-
-                    <h4>Apa yang Bisa Dilakukan JavaScript di Browser?</h4>
-                    <ul>
-                        <li>Mengubah konten dan teks HTML (<code>document.getElementById(...).innerHTML = ...</code>).</li>
-                        <li>Mengubah atribut dan gaya CSS (misalnya menyembunyikan atau menampilkan popup).</li>
-                        <li>Memvalidasi data formulir sebelum dikirim ke server.</li>
-                        <li>Mengambil data terbaru tanpa harus memuat ulang seluruh halaman (Fetch API).</li>
-                    </ul>
-                ',
-                'example_title' => 'JavaScript Mengubah Konten HTML',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 30px; background: #fffbeb; }
-        .box { background: white; padding: 25px; border-radius: 12px; border: 2px solid #fde68a; max-width: 350px; margin: auto; }
-        .btn { background: #0d2e5c; color: white; padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <div class="box">
-        <h3 id="demoText">Belum Ada Aksi</h3>
-        <p>Klik tombol di bawah untuk melihat keajaiban JavaScript:</p>
-        <button class="btn" onclick="ubahTeks()">Ubah Konten</button>
-    </div>
-
-    <script>
-        function ubahTeks() {
-            document.getElementById("demoText").innerText = "Halo Talenta Skillance Academy! 🚀";
-            document.getElementById("demoText").style.color = "#04AA6D";
-        }
-    </script>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Cara Kerja Kode di Atas:</h5>
-                    <p>Saat tombol diklik (event <code>onclick</code>), fungsi JavaScript bernama <code>ubahTeks()</code> dijalankan. Fungsi tersebut mencari elemen dengan id <code>demoText</code>, lalu mengganti teks dan warnanya secara langsung.</p>
-                ',
-                'quiz' => [
-                    'q' => 'Tag HTML apa yang digunakan untuk menuliskan kode JavaScript di dalam halaman web?',
-                    'options' => ['<javascript>', '<script>', '<js>', '<code-js>'],
-                    'answer' => 1,
-                    'explanation' => 'Kode JavaScript diletakkan di dalam tag <script>...</script>.'
-                ]
-            ],
-            'dom' => [
-                'title' => 'JavaScript DOM & Event Listener',
-                'summary' => 'Memanipulasi struktur pohon dokumen (DOM) dan merespons aksi klik, ketik, dan gerakan mouse pengguna.',
-                'content' => '
-                    <p class="lead"><strong>DOM (Document Object Model)</strong> adalah representasi standar yang dibuat oleh browser ketika halaman web dimuat. Melalui DOM, JavaScript mendapatkan kekuatan penuh untuk membaca, mengubah, dan menghapus elemen web apa pun.</p>
-
-                    <p>Metode modern yang paling disarankan untuk merespons interaksi pengguna adalah menggunakan <code>addEventListener()</code>.</p>
-                ',
-                'example_title' => 'Interaksi Counter dengan addEventListener',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 20px; background: #f0fdf4; }
-        .card { background: white; padding: 20px; border-radius: 10px; max-width: 280px; margin: auto; border: 1px solid #86efac; }
-        .angka { font-size: 42px; font-weight: bold; color: #166534; margin: 10px 0; }
-        button { padding: 8px 16px; margin: 0 4px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
-        .btn-plus { background: #16a34a; color: white; }
-        .btn-reset { background: #e2e8f0; color: #334155; }
-    </style>
-</head>
-<body>
-
-    <div class="card">
-        <h4>Penghitung Angka (Counter)</h4>
-        <div class="angka" id="counterVal">0</div>
-        <button class="btn-plus" id="btnPlus">+ Tambah</button>
-        <button class="btn-reset" id="btnReset">Reset</button>
-    </div>
-
-    <script>
-        let count = 0;
-        const valEl = document.getElementById("counterVal");
-
-        document.getElementById("btnPlus").addEventListener("click", function() {
-            count++;
-            valEl.innerText = count;
-        });
-
-        document.getElementById("btnReset").addEventListener("click", function() {
-            count = 0;
-            valEl.innerText = count;
-        });
-    </script>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Mengapa Menggunakan addEventListener?</h5>
-                    <p><code>addEventListener</code> memisahkan logika JavaScript dari markup HTML, memungkinkan kita memasang banyak listener pada satu elemen, dan membuat kode lebih bersih serta mudah dites.</p>
-                ',
-                'quiz' => [
-                    'q' => 'Method JavaScript mana yang digunakan untuk memasang pendengar aksi event (misal klik) pada elemen tanpa menggunakan atribut HTML inline?',
-                    'options' => ['element.attach()', 'element.addEventListener()', 'element.onClickHandler()', 'element.listen()'],
-                    'answer' => 1,
-                    'explanation' => 'addEventListener adalah standar web resmi untuk mendaftarkan event handler ke suatu objek event target.'
-                ]
-            ]
-        ]
+        'color' => '#ca8a04',
+        'desc' => 'JavaScript adalah bahasa pemrograman resmi web yang membuat halaman interaktif, dinamis, dan hidup.',
+        'categories' => $jsCategories,
+        'topics' => $jsFlattenedTopics
     ],
     'php' => [
         'name' => 'PHP Tutorial',
