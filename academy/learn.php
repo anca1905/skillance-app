@@ -1,0 +1,632 @@
+<?php
+session_start();
+require_once __DIR__ . '/tutorials_data.php';
+
+$userId = $_SESSION['user_id'] ?? null;
+$userName = $_SESSION['user_name'] ?? 'Tamu Mahasiswa';
+$userEmail = $_SESSION['user_email'] ?? '';
+$userType = $_SESSION['user_type'] ?? 'student';
+$avatarUrl = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
+$isLoggedIn = !empty($userId);
+
+// Get current course & topic
+$currentCourse = $_GET['c'] ?? 'html';
+if (!isset($tutorials[$currentCourse])) {
+    $currentCourse = 'html';
+}
+
+$courseData = $tutorials[$currentCourse];
+$topics = $courseData['topics'];
+$topicKeys = array_keys($topics);
+
+$currentTopicKey = $_GET['p'] ?? $topicKeys[0];
+if (!isset($topics[$currentTopicKey])) {
+    $currentTopicKey = $topicKeys[0];
+}
+
+$currentTopic = $topics[$currentTopicKey];
+
+// Determine Previous and Next topics
+$currentIndex = array_search($currentTopicKey, $topicKeys);
+$prevTopicKey = ($currentIndex > 0) ? $topicKeys[$currentIndex - 1] : null;
+$nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentIndex + 1] : null;
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($currentTopic['title']) ?> - Skillance Academy</title>
+    
+    <!-- Google Fonts & Bootstrap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --navy: #0d2e5c;
+            --navy-dark: #071a35;
+            --gold: #fca311;
+            --w3-green: #04AA6D;
+            --w3-green-hover: #038d5a;
+            --sidebar-bg: #f8fafc;
+            --content-max-w: 880px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Bar */
+        .top-hub-bar {
+            background-color: var(--navy-dark);
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Main Navbar */
+        .academy-navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+
+        /* Course Sub-Navbar (W3Schools Style) */
+        .course-subnav {
+            background-color: var(--navy);
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: thin;
+        }
+        .course-subnav::-webkit-scrollbar {
+            height: 4px;
+        }
+        .course-subnav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .course-nav-link {
+            display: inline-block;
+            padding: 10px 18px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+        .course-nav-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .course-nav-link.active {
+            color: var(--navy);
+            background-color: var(--gold);
+        }
+
+        /* Layout Container */
+        .learn-container {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Left Sidebar (Topics Menu) */
+        .learn-sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid #e2e8f0;
+            flex-shrink: 0;
+            height: calc(100vh - 120px);
+            position: sticky;
+            top: 102px;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .sidebar-header {
+            padding: 0 20px 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 8px;
+        }
+        .topic-link {
+            display: block;
+            padding: 8px 20px;
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.15s;
+            border-left: 4px solid transparent;
+        }
+        .topic-link:hover {
+            background-color: #e2e8f0;
+            color: var(--navy);
+        }
+        .topic-link.active {
+            background-color: #e0f2fe;
+            color: var(--navy);
+            border-left-color: var(--w3-green);
+            font-weight: 700;
+        }
+
+        /* Main Content Area */
+        .learn-content {
+            flex-grow: 1;
+            padding: 35px 40px;
+            max-width: var(--content-max-w);
+        }
+        @media (max-width: 991px) {
+            .learn-sidebar {
+                display: none;
+            }
+            .learn-content {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Nav Buttons Bar */
+        .nav-buttons-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 30px 0;
+        }
+        .btn-w3-nav {
+            background-color: var(--w3-green);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            transition: background 0.2s;
+        }
+        .btn-w3-nav:hover {
+            background-color: var(--w3-green-hover);
+            color: white;
+        }
+        .btn-w3-nav.disabled {
+            background-color: #cbd5e1;
+            pointer-events: none;
+        }
+
+        /* Typography & Headings */
+        .topic-heading {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+        .learn-content p {
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .learn-content h4 {
+            font-weight: 700;
+            color: var(--navy);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        /* W3Schools Example Box */
+        .w3-example-box {
+            background-color: #f1f5f9;
+            border-left: 5px solid var(--w3-green);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .w3-example-header {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+        .w3-code-wrapper {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            color: #0f172a;
+        }
+        .btn-tryit {
+            background-color: var(--w3-green);
+            color: white;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(4, 170, 109, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-tryit:hover {
+            background-color: var(--w3-green-hover);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Quiz Box */
+        .w3-quiz-box {
+            background-color: #fffdf5;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 22px;
+            margin: 30px 0;
+        }
+        .quiz-title {
+            font-weight: 800;
+            color: #78350f;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Completion Bar */
+        .completion-bar {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 35px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HUB BAR -->
+    <div class="top-hub-bar">
+        <div class="container-fluid px-lg-4 d-flex justify-content-between align-items-center">
+            <div>
+                <a href="https://skillance.my.id" class="text-decoration-none text-white-50 hover-white me-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke <strong>skillance.my.id</strong>
+                </a>
+                <a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-gold me-2 d-none d-md-inline">
+                    <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="small d-none d-md-inline" style="color: #cbd5e1;">Skillance Academy (Materi Belajar W3Schools)</span>
+                <?php if ($isLoggedIn): ?>
+                    <span class="badge bg-success-subtle text-success"><i class="fa-solid fa-circle-check me-1"></i> <?= htmlspecialchars($userName) ?></span>
+                <?php else: ?>
+                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="text-gold text-decoration-none fw-semibold">
+                        <i class="fa-solid fa-user me-1"></i> Masuk Akun
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg academy-navbar py-2">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
+                <div class="bg-navy text-gold p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                    <i class="fa-solid fa-graduation-cap fs-5"></i>
+                </div>
+                <div>
+                    <span class="fw-bold text-navy font-heading" style="font-size: 1.15rem; letter-spacing: -0.5px;">SKILLANCE ACADEMY</span>
+                    <small class="d-block text-muted" style="font-size: 0.65rem; margin-top: -3px;">Modul Belajar Standar W3Schools</small>
+                </div>
+            </a>
+
+            <!-- Mobile Offcanvas Toggle for Topics -->
+            <button class="btn btn-sm btn-outline-navy d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
+                <i class="fa-solid fa-bars me-1"></i> Daftar Topik
+            </button>
+
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
+                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
+                </a>
+                <a href="index.php" class="btn btn-sm btn-light rounded-pill px-3 fw-semibold text-secondary">
+                    <i class="fa-solid fa-house me-1"></i> Portal
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- COURSE SUB-NAVBAR (W3SCHOOLS COURSE TABS) -->
+    <div class="course-subnav">
+        <div class="container-fluid px-lg-4 d-flex">
+            <?php foreach ($tutorials as $cKey => $c): ?>
+                <a href="learn.php?c=<?= urlencode($cKey) ?>" class="course-nav-link <?= ($cKey === $currentCourse) ? 'active' : '' ?>">
+                    <i class="<?= $c['icon'] ?> me-1"></i> <?= htmlspecialchars($c['short_name']) ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="learn-container">
+        
+        <!-- LEFT SIDEBAR: TOPIC LIST -->
+        <aside class="learn-sidebar">
+            <div class="sidebar-header">
+                <i class="<?= $courseData['icon'] ?> me-2" style="color: <?= $courseData['color'] ?>;"></i>
+                <?= htmlspecialchars($courseData['name']) ?>
+            </div>
+            <nav>
+                <?php foreach ($topics as $tKey => $top): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                       class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>"
+                       id="topic-link-<?= htmlspecialchars($tKey) ?>">
+                        <span class="module-check-icon me-1 text-success d-none" id="check-<?= htmlspecialchars($tKey) ?>"><i class="fa-solid fa-check"></i></span>
+                        <?= htmlspecialchars($top['title']) ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        </aside>
+
+        <!-- MAIN READING CONTENT -->
+        <main class="learn-content">
+            
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-2">
+                <ol class="breadcrumb small text-muted">
+                    <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none text-muted">Akademi</a></li>
+                    <li class="breadcrumb-item"><a href="learn.php?c=<?= urlencode($currentCourse) ?>" class="text-decoration-none text-navy fw-semibold"><?= htmlspecialchars($courseData['name']) ?></a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($currentTopic['title']) ?></li>
+                </ol>
+            </nav>
+
+            <h1 class="topic-heading"><?= htmlspecialchars($currentTopic['title']) ?></h1>
+
+            <!-- Top Nav Buttons -->
+            <div class="nav-buttons-bar">
+                <?php if ($prevTopicKey): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($prevTopicKey) ?>" class="btn-w3-nav">
+                        &laquo; Sebelumnya
+                    </a>
+                <?php else: ?>
+                    <span class="btn-w3-nav disabled">&laquo; Sebelumnya</span>
+                <?php endif; ?>
+
+                <?php if ($nextTopicKey): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($nextTopicKey) ?>" class="btn-w3-nav">
+                        Berikutnya &raquo;
+                    </a>
+                <?php else: ?>
+                    <span class="btn-w3-nav disabled">Berikutnya &raquo;</span>
+                <?php endif; ?>
+            </div>
+
+            <hr class="text-muted my-3">
+
+            <!-- Explanation Content -->
+            <div class="article-body">
+                <?= $currentTopic['content'] ?>
+            </div>
+
+            <!-- Classic W3Schools Example Card -->
+            <?php if (!empty($currentTopic['example_code'])): ?>
+                <div class="w3-example-box">
+                    <div class="w3-example-header">
+                        <i class="fa-solid fa-code text-success me-2"></i><?= htmlspecialchars($currentTopic['example_title']) ?>:
+                    </div>
+                    <div class="w3-code-wrapper">
+                        <pre class="m-0"><code><?= htmlspecialchars($currentTopic['example_code']) ?></code></pre>
+                    </div>
+                    <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" target="_blank" class="btn-tryit">
+                        <i class="fa-solid fa-bolt"></i> Coba Sendiri (Try it Yourself) &raquo;
+                    </a>
+                </div>
+
+                <?php if (!empty($currentTopic['explanation'])): ?>
+                    <div class="mt-3">
+                        <?= $currentTopic['explanation'] ?>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <!-- Interactive Knowledge Check (Quiz) -->
+            <?php if (!empty($currentTopic['quiz'])): ?>
+                <div class="w3-quiz-box">
+                    <div class="quiz-title">
+                        <i class="fa-solid fa-circle-question text-warning fs-5"></i>
+                        <span>Uji Pemahaman Singkat (Test Yourself):</span>
+                    </div>
+                    <p class="fw-semibold text-dark mb-3"><?= htmlspecialchars($currentTopic['quiz']['q']) ?></p>
+                    
+                    <div class="d-flex flex-column gap-2 mb-3" id="quizOptionGroup">
+                        <?php foreach ($currentTopic['quiz']['options'] as $oIdx => $opt): ?>
+                            <button type="button" class="btn btn-outline-secondary text-start p-2 rounded-2 quiz-btn" onclick="checkAnswer(<?= $oIdx ?>, <?= (int)$currentTopic['quiz']['answer'] ?>, '<?= htmlspecialchars(addslashes($currentTopic['quiz']['explanation'])) ?>', this)">
+                                <strong><?= chr(65 + $oIdx) ?>.</strong> <?= htmlspecialchars($opt) ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <div id="quizResultMsg" class="small p-2 rounded-2" style="display:none;"></div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Complete Module Check Bar -->
+            <div class="completion-bar">
+                <div>
+                    <h6 class="fw-bold text-navy mb-1"><i class="fa-solid fa-circle-check text-success me-1"></i> Selesaikan Topik Ini</h6>
+                    <small class="text-muted">Tandai modul selesai untuk mencatat progres akun Anda.</small>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-success fw-bold px-4 py-2 rounded-pill" id="btnMarkComplete" onclick="toggleProgress()">
+                    <i class="fa-regular fa-square-check me-1"></i> Tandai Selesai
+                </button>
+            </div>
+
+            <!-- Bottom Nav Buttons -->
+            <div class="nav-buttons-bar border-top pt-4">
+                <?php if ($prevTopicKey): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($prevTopicKey) ?>" class="btn-w3-nav">
+                        &laquo; Sebelumnya
+                    </a>
+                <?php else: ?>
+                    <span class="btn-w3-nav disabled">&laquo; Sebelumnya</span>
+                <?php endif; ?>
+
+                <?php if ($nextTopicKey): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($nextTopicKey) ?>" class="btn-w3-nav">
+                        Berikutnya &raquo;
+                    </a>
+                <?php else: ?>
+                    <span class="btn-w3-nav disabled">Berikutnya &raquo;</span>
+                <?php endif; ?>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MOBILE OFFCANVAS FOR TOPIC LIST -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+        <div class="offcanvas-header bg-navy text-white">
+            <h5 class="offcanvas-title fw-bold" id="sidebarOffcanvasLabel"><?= htmlspecialchars($courseData['name']) ?></h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0 bg-light">
+            <nav class="py-2">
+                <?php foreach ($topics as $tKey => $top): ?>
+                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                       class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>">
+                        <?= htmlspecialchars($top['title']) ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const COURSE_KEY = <?= json_encode($currentCourse) ?>;
+        const TOPIC_KEY = <?= json_encode($currentTopicKey) ?>;
+        const IS_LOGGED_IN = <?= $isLoggedIn ? 'true' : 'false' ?>;
+
+        let isCompleted = false;
+
+        // Check local or remote progress
+        function checkProgress() {
+            const storageKey = `done_${COURSE_KEY}_${TOPIC_KEY}`;
+            if (localStorage.getItem(storageKey) === '1') {
+                setCompletedUI(true);
+            }
+
+            if (IS_LOGGED_IN) {
+                fetch('api/progress.php')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success' && data.completed_modules) {
+                            const found = data.completed_modules.some(m => m.track_id === COURSE_KEY && m.module_id === TOPIC_KEY);
+                            if (found) {
+                                setCompletedUI(true);
+                            }
+                        }
+                    })
+                    .catch(() => {});
+            }
+        }
+
+        function setCompletedUI(completed) {
+            isCompleted = completed;
+            const btn = document.getElementById('btnMarkComplete');
+            if (completed) {
+                btn.className = 'btn btn-sm btn-success fw-bold px-4 py-2 rounded-pill shadow-sm';
+                btn.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Topik Selesai';
+            } else {
+                btn.className = 'btn btn-sm btn-outline-success fw-bold px-4 py-2 rounded-pill';
+                btn.innerHTML = '<i class="fa-regular fa-square-check me-1"></i> Tandai Selesai';
+            }
+        }
+
+        function toggleProgress() {
+            const newState = !isCompleted;
+            setCompletedUI(newState);
+            const storageKey = `done_${COURSE_KEY}_${TOPIC_KEY}`;
+            if (newState) {
+                localStorage.setItem(storageKey, '1');
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Topik Diselesaikan!',
+                        text: 'Hebat! Anda telah menyelesaikan materi ini. Lanjutkan ke topik berikutnya.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            } else {
+                localStorage.removeItem(storageKey);
+            }
+
+            if (IS_LOGGED_IN) {
+                fetch('api/progress.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        track_id: COURSE_KEY,
+                        module_id: TOPIC_KEY,
+                        completed: newState
+                    })
+                }).catch(() => {});
+            }
+        }
+
+        function checkAnswer(selectedIdx, correctIdx, explanation, btnEl) {
+            const allBtns = document.querySelectorAll('.quiz-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            const resultEl = document.getElementById('quizResultMsg');
+            resultEl.style.display = 'block';
+
+            if (selectedIdx === correctIdx) {
+                btnEl.classList.remove('btn-outline-secondary');
+                btnEl.classList.add('btn-success', 'text-white');
+                resultEl.className = 'small p-2 rounded-2 bg-success-subtle text-success fw-semibold mt-2';
+                resultEl.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> <strong>Benar!</strong> ' + explanation;
+            } else {
+                btnEl.classList.remove('btn-outline-secondary');
+                btnEl.classList.add('btn-danger', 'text-white');
+                if (allBtns[correctIdx]) {
+                    allBtns[correctIdx].classList.remove('btn-outline-secondary');
+                    allBtns[correctIdx].classList.add('btn-success', 'text-white');
+                }
+                resultEl.className = 'small p-2 rounded-2 bg-danger-subtle text-danger fw-semibold mt-2';
+                resultEl.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> <strong>Kurang Tepat.</strong> ' + explanation;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkProgress);
+    </script>
+</body>
+</html>
