@@ -186,12 +186,142 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             padding: 35px 40px;
             max-width: var(--content-max-w);
         }
+        /* Mobile Topic Bar & Drawer */
+        .mobile-topics-bar {
+            background-color: var(--navy-dark);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: sticky;
+            top: 56px;
+            z-index: 1015;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .btn-toggle-sidebar {
+            background: #0d2e5c;
+            color: #ffffff;
+            border: 1px solid rgba(252, 163, 17, 0.5);
+            border-radius: 8px;
+            padding: 7px 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .btn-toggle-sidebar:hover {
+            background: #1e3a8a;
+            border-color: var(--gold);
+        }
+        .mobile-active-topic {
+            color: #cbd5e1;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .active-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #4ade80;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(3px);
+            z-index: 2040;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .sidebar-backdrop.show {
+            display: block;
+            opacity: 1;
+        }
+        .sidebar-mobile-header {
+            display: none;
+        }
+
+        /* Mobile & Tablet Optimizations */
         @media (max-width: 991px) {
-            .learn-sidebar {
+            .course-subnav {
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .course-subnav::-webkit-scrollbar {
                 display: none;
             }
+            .learn-sidebar {
+                display: block !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: -320px !important;
+                width: 300px !important;
+                max-width: 85vw !important;
+                height: 100vh !important;
+                z-index: 2050 !important;
+                background: #ffffff !important;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25) !important;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                padding-top: 0 !important;
+                overflow-y: auto !important;
+            }
+            .learn-sidebar.open {
+                left: 0 !important;
+            }
+            .sidebar-mobile-header {
+                display: flex !important;
+                background-color: #f8fafc;
+            }
             .learn-content {
-                padding: 20px 15px;
+                padding: 20px 16px;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            .topic-heading {
+                font-size: 1.55rem;
+                line-height: 1.3;
+            }
+            .nav-buttons-bar {
+                gap: 8px;
+            }
+            .btn-w3-nav {
+                flex: 1;
+                justify-content: center;
+                padding: 10px 14px;
+                font-size: 0.82rem;
+            }
+            .skillance-code-box {
+                padding: 14px;
+                border-radius: 8px;
+            }
+            .btn-tryit {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 18px;
+            }
+            .completion-bar {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch !important;
+                text-align: center;
+            }
+            .completion-bar button {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -395,11 +525,33 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
         </div>
     </div>
 
+    <!-- MOBILE TOPIC TOGGLE BAR -->
+    <div class="mobile-topics-bar d-lg-none">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar(true)">
+            <i class="fa-solid fa-bars me-2 text-warning"></i>
+            <span>Daftar Materi (<?= count($topics) ?>)</span>
+        </button>
+        <div class="mobile-active-topic text-truncate">
+            <span class="active-dot"></span>
+            <span><?= htmlspecialchars($currentTopic['title']) ?></span>
+        </div>
+    </div>
+
+    <!-- BACKDROP FOR MOBILE SIDEBAR -->
+    <div id="sidebarBackdrop" class="sidebar-backdrop d-lg-none" onclick="toggleSidebar(false)"></div>
+
     <!-- MAIN LAYOUT -->
     <div class="learn-container">
         
         <!-- LEFT SIDEBAR: TOPIC LIST -->
-        <aside class="learn-sidebar">
+        <aside id="learnSidebar" class="learn-sidebar">
+            <div class="sidebar-mobile-header d-flex justify-content-between align-items-center p-3 border-bottom">
+                <span class="fw-bold text-navy" style="font-size: 0.92rem;">
+                    <i class="<?= $courseData['icon'] ?> me-2" style="color: <?= $courseData['color'] ?>;"></i>
+                    <?= htmlspecialchars($courseData['name']) ?>
+                </span>
+                <button type="button" class="btn-close text-reset" onclick="toggleSidebar(false)" aria-label="Tutup"></button>
+            </div>
             <div class="sidebar-header">
                 <i class="<?= $courseData['icon'] ?> me-2" style="color: <?= $courseData['color'] ?>;"></i>
                 <?= htmlspecialchars($courseData['name']) ?>
@@ -670,6 +822,24 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 }
                 resultEl.className = 'small p-2 rounded-2 bg-danger-subtle text-danger fw-semibold mt-2';
                 resultEl.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> <strong>Kurang Tepat.</strong> ' + explanation;
+            }
+        }
+
+        function toggleSidebar(open) {
+            const sb = document.getElementById('learnSidebar');
+            const bd = document.getElementById('sidebarBackdrop');
+            if (open) {
+                sb.classList.add('open');
+                bd.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                const activeLink = document.querySelector('.learn-sidebar .topic-link.active');
+                if (activeLink) {
+                    activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                }
+            } else {
+                sb.classList.remove('open');
+                bd.classList.remove('show');
+                document.body.style.overflow = '';
             }
         }
 

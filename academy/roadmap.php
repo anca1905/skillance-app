@@ -281,6 +281,122 @@ if (!in_array($activePath, $validPaths)) {
             margin-top: 15px;
         }
 
+
+        /* Mobile & Touch Ergonomics */
+        .course-subnav {
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .course-subnav::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            .path-nav-container {
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 8px 10px;
+                margin-top: -20px;
+                border-radius: 14px;
+                gap: 8px !important;
+            }
+            .path-nav-container::-webkit-scrollbar {
+                display: none;
+            }
+            .path-tab-btn {
+                flex: 0 0 auto !important;
+                white-space: nowrap;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                border-radius: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-hero {
+                padding: 40px 0 50px !important;
+            }
+            .roadmap-hero h1 {
+                font-size: 1.65rem !important;
+                line-height: 1.3;
+            }
+            .roadmap-hero p.lead {
+                font-size: 0.95rem !important;
+            }
+            .timeline-container {
+                padding-left: 36px;
+            }
+            .timeline-container::before {
+                left: 14px;
+                top: 10px;
+                width: 3px;
+            }
+            .timeline-node {
+                left: -36px;
+                top: 14px;
+                width: 32px;
+                height: 32px;
+                font-size: 0.82rem;
+                border-width: 3px;
+                box-shadow: 0 0 0 4px rgba(4, 170, 109, 0.15);
+            }
+            .step-card {
+                padding: 16px 14px;
+                border-radius: 12px;
+            }
+            .step-card h3 {
+                font-size: 1.15rem;
+            }
+            .step-badge {
+                font-size: 0.68rem;
+                padding: 3px 8px;
+            }
+            .skill-item {
+                font-size: 0.82rem;
+                padding: 7px 10px;
+                gap: 8px;
+            }
+            .skill-checkbox {
+                width: 16px;
+                height: 16px;
+                margin-top: 2px;
+            }
+            .btn-course-action {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+                padding: 10px 16px;
+            }
+            .progress-box {
+                padding: 16px 14px;
+                border-radius: 12px;
+            }
+            .project-highlight {
+                padding: 12px 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .academy-navbar {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+            .navbar-brand span {
+                font-size: 1.05rem !important;
+            }
+            .navbar-brand small {
+                display: none !important;
+            }
+            .top-hub-bar {
+                font-size: 0.72rem;
+            }
+            .roadmap-hero .badge {
+                font-size: 0.75rem;
+            }
+        }
+
         @media print {
             .academy-navbar, .top-hub-bar, .course-subnav, .path-nav-container, .btn-print-hide {
                 display: none !important;
@@ -2026,6 +2142,7 @@ if (!in_array($activePath, $validPaths)) {
             // Update tabs
             document.querySelectorAll('.path-tab-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
+            try { event.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch(e){}
 
             // Hide all sections, show active
             document.querySelectorAll('.roadmap-path-section').forEach(sec => sec.style.display = 'none');

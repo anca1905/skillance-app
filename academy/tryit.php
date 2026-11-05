@@ -166,13 +166,95 @@ if (empty($initialCode)) {
             background-color: #ffffff;
         }
 
+        .tryit-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tryit-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tryit-mobile-tabs {
+            display: none;
+        }
+
+        /* Mobile & Tablet Responsive Code Lab */
         @media (max-width: 768px) {
+            .tryit-header {
+                height: auto;
+                padding: 10px 12px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .tryit-header-left {
+                flex: 1;
+                gap: 6px;
+            }
+            .btn-run {
+                padding: 7px 18px;
+                font-size: 0.85rem;
+            }
+            .tryit-mobile-tabs {
+                display: flex !important;
+                background: #e2e8f0;
+                padding: 4px;
+                border-radius: 8px;
+                width: 100%;
+                gap: 4px;
+                margin-top: 2px;
+            }
+            .tryit-mobile-tab-btn {
+                flex: 1;
+                border: none;
+                background: transparent;
+                padding: 6px 10px;
+                border-radius: 6px;
+                font-size: 0.78rem;
+                font-weight: 700;
+                color: #475569;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .tryit-mobile-tab-btn.active {
+                background: #ffffff;
+                color: var(--navy);
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            }
             .tryit-workspace {
+                height: calc(100vh - 105px);
                 flex-direction: column;
             }
-            .tryit-pane-left, .tryit-pane-right {
-                width: 100%;
-                height: 50%;
+            /* View Modes for Touch Devices */
+            .tryit-workspace.view-editor .tryit-pane-left {
+                display: flex !important;
+                width: 100% !important;
+                height: 100% !important;
+                border-right: none;
+            }
+            .tryit-workspace.view-editor .tryit-pane-right {
+                display: none !important;
+            }
+            .tryit-workspace.view-preview .tryit-pane-left {
+                display: none !important;
+            }
+            .tryit-workspace.view-preview .tryit-pane-right {
+                display: flex !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            .tryit-workspace.view-split .tryit-pane-left,
+            .tryit-workspace.view-split .tryit-pane-right {
+                display: flex !important;
+                width: 100% !important;
+                height: 50% !important;
+                border-right: none;
+                border-bottom: 2px solid #cbd5e1;
             }
         }
     </style>
@@ -181,33 +263,46 @@ if (empty($initialCode)) {
 
     <!-- TOP HEADER -->
     <header class="tryit-header">
-        <div class="d-flex align-items-center gap-2">
-            <a href="<?= htmlspecialchars($backUrl) ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold" style="font-size: 0.8rem;">
-                <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Materi
+        <div class="tryit-header-left">
+            <a href="<?= htmlspecialchars($backUrl) ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-2 px-sm-3 fw-bold" style="font-size: 0.78rem;">
+                <i class="fa-solid fa-arrow-left me-1"></i> <span class="d-none d-sm-inline">Materi</span>
             </a>
-            <a href="roadmap.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold" style="font-size: 0.8rem;">
-                <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+            <a href="roadmap.php" class="btn btn-sm btn-outline-navy rounded-pill px-2 px-sm-3 fw-bold" style="font-size: 0.78rem;">
+                <i class="fa-solid fa-map-location-dot text-gold me-1"></i> <span class="d-none d-sm-inline">Roadmap</span>
             </a>
-            <span class="d-none d-md-inline text-navy fw-bold ms-2" style="font-size: 0.95rem;">
+            <span class="d-none d-lg-inline text-navy fw-bold ms-2" style="font-size: 0.92rem;">
                 <i class="fa-solid fa-graduation-cap text-gold me-1"></i> Skillance Code Lab
             </span>
         </div>
 
-        <div class="d-flex align-items-center gap-2">
-            <button class="btn-run" onclick="runCode()" title="Jalankan Kode (Ctrl + Enter)">
+        <div class="tryit-header-right">
+            <button class="btn-run" onclick="runCode(true)" title="Jalankan Kode (Ctrl + Enter)">
                 <i class="fa-solid fa-play"></i> Jalankan &raquo;
             </button>
         </div>
 
-        <div>
+        <div class="d-none d-md-block">
             <span class="badge bg-navy-subtle text-navy px-3 py-2 rounded-pill small fw-bold">
                 <i class="fa-solid fa-laptop-code me-1 text-gold"></i> Skillance Code Lab Editor
             </span>
         </div>
+
+        <!-- Mobile View Switcher Tabs -->
+        <div class="tryit-mobile-tabs">
+            <button id="tabBtnEditor" class="tryit-mobile-tab-btn active" onclick="switchMobileView('editor')">
+                <i class="fa-solid fa-code"></i> Editor
+            </button>
+            <button id="tabBtnPreview" class="tryit-mobile-tab-btn" onclick="switchMobileView('preview')">
+                <i class="fa-solid fa-desktop"></i> Hasil
+            </button>
+            <button id="tabBtnSplit" class="tryit-mobile-tab-btn" onclick="switchMobileView('split')">
+                <i class="fa-solid fa-columns"></i> Split
+            </button>
+        </div>
     </header>
 
     <!-- WORKSPACE -->
-    <main class="tryit-workspace">
+    <main id="tryitWorkspace" class="tryit-workspace view-editor">
         <!-- LEFT: CODE EDITOR -->
         <section class="tryit-pane-left">
             <div class="pane-bar">
@@ -230,13 +325,31 @@ if (empty($initialCode)) {
     </main>
 
     <script>
-        function runCode() {
+        let currentMobileView = 'editor';
+        function switchMobileView(view) {
+            currentMobileView = view;
+            const ws = document.getElementById('tryitWorkspace');
+            ws.classList.remove('view-editor', 'view-preview', 'view-split');
+            ws.classList.add('view-' + view);
+            
+            document.querySelectorAll('.tryit-mobile-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (view === 'editor') document.getElementById('tabBtnEditor')?.classList.add('active');
+            if (view === 'preview') document.getElementById('tabBtnPreview')?.classList.add('active');
+            if (view === 'split') document.getElementById('tabBtnSplit')?.classList.add('active');
+        }
+
+        function runCode(fromButton = false) {
             const code = document.getElementById('codeEditor').value;
             const iframe = document.getElementById('codePreview');
             const doc = iframe.contentDocument || iframe.contentWindow.document;
             doc.open();
             doc.write(code);
             doc.close();
+
+            // On mobile, if Run is triggered from button while in Editor view, auto-switch to Preview
+            if (fromButton && window.innerWidth <= 768 && currentMobileView === 'editor') {
+                switchMobileView('preview');
+            }
         }
 
         // Keyboard Shortcut: Ctrl + Enter / Cmd + Enter to Run

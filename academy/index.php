@@ -167,6 +167,75 @@ $isLoggedIn = !empty($userId);
             border: 1px solid #e2e8f0;
             padding: 24px;
         }
+
+        /* Mobile & Touch Ergonomics */
+        .course-subnav {
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .course-subnav::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 45px 15px 40px;
+            }
+            .hero-banner h1 {
+                font-size: 1.85rem;
+                line-height: 1.3;
+            }
+            .hero-banner p.lead {
+                font-size: 0.95rem;
+            }
+            .course-card {
+                padding: 22px 18px;
+                border-radius: 14px;
+            }
+            .course-icon-badge {
+                width: 46px;
+                height: 46px;
+                font-size: 22px;
+                margin-bottom: 14px;
+            }
+            .feature-box {
+                padding: 18px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .academy-navbar {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+            .navbar-brand span {
+                font-size: 1.05rem !important;
+            }
+            .navbar-brand small {
+                display: none !important;
+            }
+            .top-hub-bar {
+                font-size: 0.74rem;
+            }
+            .hero-banner {
+                padding: 38px 12px 32px;
+            }
+            .hero-banner h1 {
+                font-size: 1.65rem;
+            }
+            .hero-banner .btn-lg {
+                width: 100%;
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+            .course-card {
+                padding: 18px 15px;
+            }
+            .course-nav-item {
+                padding: 8px 14px;
+                font-size: 0.82rem;
+            }
+        }
     </style>
 </head>
 <body>
