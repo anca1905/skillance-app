@@ -132,6 +132,23 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             overflow-y: auto;
             padding: 20px 0;
         }
+        .sidebar-category-heading {
+            padding: 12px 20px 6px 20px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            background-color: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-top: 10px;
+            margin-bottom: 4px;
+        }
+        .sidebar-category-heading:first-of-type {
+            border-top: none;
+            margin-top: 0;
+        }
         .sidebar-header {
             padding: 0 20px 12px 20px;
             font-size: 0.95rem;
@@ -382,14 +399,26 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 <?= htmlspecialchars($courseData['name']) ?>
             </div>
             <nav>
-                <?php foreach ($topics as $tKey => $top): ?>
-                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
-                       class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>"
-                       id="topic-link-<?= htmlspecialchars($tKey) ?>">
-                        <span class="module-check-icon me-1 text-success d-none" id="check-<?= htmlspecialchars($tKey) ?>"><i class="fa-solid fa-check"></i></span>
-                        <?= htmlspecialchars($top['title']) ?>
-                    </a>
-                <?php endforeach; ?>
+                <?php if (!empty($courseData['categories'])): ?>
+                    <?php foreach ($courseData['categories'] as $catName => $catTopics): ?>
+                        <div class="sidebar-category-heading"><?= htmlspecialchars($catName) ?></div>
+                        <?php foreach ($catTopics as $tKey => $top): ?>
+                            <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                               class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>"
+                               id="topic-link-<?= htmlspecialchars($tKey) ?>">
+                                <?= htmlspecialchars($top['title']) ?>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($topics as $tKey => $top): ?>
+                        <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                           class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>"
+                           id="topic-link-<?= htmlspecialchars($tKey) ?>">
+                            <?= htmlspecialchars($top['title']) ?>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </nav>
         </aside>
 
@@ -515,12 +544,24 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
         </div>
         <div class="offcanvas-body p-0 bg-light">
             <nav class="py-2">
-                <?php foreach ($topics as $tKey => $top): ?>
-                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
-                       class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>">
-                        <?= htmlspecialchars($top['title']) ?>
-                    </a>
-                <?php endforeach; ?>
+                <?php if (!empty($courseData['categories'])): ?>
+                    <?php foreach ($courseData['categories'] as $catName => $catTopics): ?>
+                        <div class="sidebar-category-heading"><?= htmlspecialchars($catName) ?></div>
+                        <?php foreach ($catTopics as $tKey => $top): ?>
+                            <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                               class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>">
+                                <?= htmlspecialchars($top['title']) ?>
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($topics as $tKey => $top): ?>
+                        <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($tKey) ?>" 
+                           class="topic-link <?= ($tKey === $currentTopicKey) ? 'active' : '' ?>">
+                            <?= htmlspecialchars($top['title']) ?>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </nav>
         </div>
     </div>
@@ -626,7 +667,13 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             }
         }
 
-        document.addEventListener('DOMContentLoaded', checkProgress);
+        document.addEventListener('DOMContentLoaded', function() {
+            checkProgress();
+            const activeLink = document.querySelector('.learn-sidebar .topic-link.active');
+            if (activeLink) {
+                activeLink.scrollIntoView({ block: 'center', behavior: 'instant' });
+            }
+        });
     </script>
 </body>
 </html>
