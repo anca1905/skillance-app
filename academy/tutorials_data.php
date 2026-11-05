@@ -55,6 +55,15 @@ foreach ($jqueryCategories as $catName => $catTopics) {
     }
 }
 
+$pythonData = require __DIR__ . '/data/python_tutorial.php';
+$pythonCategories = $pythonData['categories'] ?? [];
+$pythonFlattenedTopics = [];
+foreach ($pythonCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $pythonFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -115,6 +124,16 @@ $tutorials = [
         'desc' => 'jQuery adalah pustaka JavaScript ringkas yang menyederhanakan manipulasi HTML, event, animasi, dan penanganan AJAX.',
         'categories' => $jqueryCategories,
         'topics' => $jqueryFlattenedTopics
+    ],
+    'python' => [
+        'name' => 'Python Tutorial',
+        'short_name' => 'Python',
+        'badge' => 'Pemula ke Mahir & AI',
+        'icon' => 'fa-brands fa-python',
+        'color' => '#3776ab',
+        'desc' => 'Python adalah bahasa pemrograman serbaguna berorientasi objek yang populer untuk Web, AI, Data Science, dan Otomasi.',
+        'categories' => $pythonCategories,
+        'topics' => $pythonFlattenedTopics
     ],
     'flutter' => [
         'name' => 'Flutter Mobile Tutorial',

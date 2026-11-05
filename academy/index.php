@@ -238,6 +238,7 @@ $isLoggedIn = !empty($userId);
             <a href="learn.php?c=jquery" class="course-nav-item"><i class="fa-solid fa-bolt me-1 text-primary"></i> JQUERY</a>
             <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP</a>
             <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
+            <a href="learn.php?c=python" class="course-nav-item"><i class="fa-brands fa-python me-1 text-warning"></i> PYTHON</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP BELAJAR</a>
@@ -430,6 +431,31 @@ $isLoggedIn = !empty($userId);
                     </div>
                 </div>
 
+                <!-- CARD: PYTHON -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #eff6ff; color: #3776ab;">
+                            <i class="fa-brands fa-python"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">AI, Data & Web</span>
+                            <small class="text-muted">166 Topik (14 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Python Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa pemrograman serbaguna untuk Artificial Intelligence, Machine Learning, Data Science, Matplotlib, Algoritma DSA, dan Database.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=python" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=python" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- CARD 5: FLUTTER -->
                 <div class="col-md-6 col-lg-4">
                     <div class="course-card">
@@ -571,6 +597,30 @@ $isLoggedIn = !empty($userId);
                         </div>
                         <a href="roadmap.php?path=fullstack" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
                             Lihat Jalur Fullstack &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 4: PYTHON & AI -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #3776ab !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">AI & Data Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~14 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Python, Data & AI Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai bahasa pemrograman terpopuler untuk Machine Learning, manipulasi data Pandas/NumPy, visualisasi grafik, dan algoritma DSA.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">Python 3.12</span>
+                            <span class="badge bg-light text-secondary border">OOP & DSA</span>
+                            <span class="badge bg-light text-secondary border">NumPy & Pandas</span>
+                            <span class="badge bg-light text-secondary border">Matplotlib</span>
+                            <span class="badge bg-light text-secondary border">Machine Learning</span>
+                        </div>
+                        <a href="roadmap.php?path=python" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Python &raquo;
                         </a>
                     </div>
                 </div>

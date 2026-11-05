@@ -10,7 +10,7 @@ $avatarUrl = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . u
 $isLoggedIn = !empty($userId);
 
 // Get initial active path from query string or default to 'frontend'
-$validPaths = ['frontend', 'backend', 'fullstack', 'mobile', 'uiux'];
+$validPaths = ['frontend', 'backend', 'fullstack', 'python', 'mobile', 'uiux'];
 $activePath = $_GET['path'] ?? 'frontend';
 if (!in_array($activePath, $validPaths)) {
     $activePath = 'frontend';
@@ -361,6 +361,7 @@ if (!in_array($activePath, $validPaths)) {
             <a href="learn.php?c=jquery" class="course-nav-item"><i class="fa-solid fa-bolt me-1 text-primary"></i> JQUERY</a>
             <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP</a>
             <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
+            <a href="learn.php?c=python" class="course-nav-item"><i class="fa-brands fa-python me-1 text-warning"></i> PYTHON</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold active ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP</a>
@@ -412,6 +413,13 @@ if (!in_array($activePath, $validPaths)) {
                 <div class="text-start">
                     <div class="fw-bold" style="font-size: 0.95rem;">Fullstack Developer</div>
                     <small class="d-none d-md-block opacity-75" style="font-size: 0.75rem;">End-to-End Web App</small>
+                </div>
+            </button>
+            <button class="path-tab-btn <?= ($activePath === 'python') ? 'active' : '' ?>" onclick="switchPath('python')">
+                <i class="fa-brands fa-python fs-5 path-icon text-warning"></i>
+                <div class="text-start">
+                    <div class="fw-bold" style="font-size: 0.95rem;">Python & AI Developer</div>
+                    <small class="d-none d-md-block opacity-75" style="font-size: 0.75rem;">Python, Data, ML & AI</small>
                 </div>
             </button>
             <button class="path-tab-btn <?= ($activePath === 'mobile') ? 'active' : '' ?>" onclick="switchPath('mobile')">
@@ -956,6 +964,320 @@ if (!in_array($activePath, $validPaths)) {
             </div>
         </section>
 
+
+        <!-- PATH: PYTHON, DATA SCIENCE & AI DEVELOPER -->
+        <section id="path-python" class="roadmap-path-section" style="<?= ($activePath === 'python') ? '' : 'display:none;' ?>">
+            <div class="timeline-container">
+
+                <!-- Step 1: Python Core -->
+                <div class="timeline-step">
+                    <div class="timeline-node">1</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 1: Fondasi Bahasa</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python" class="btn-course-action">
+                                <i class="fa-brands fa-python"></i> Buka Materi Python (166 Topik) &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Python 3.12: Sintaks, Kontrol Alur & Struktur Data</h4>
+                        <p class="text-muted small mb-3">
+                            Mempelajari fondasi bahasa pemrograman terpopuler di dunia. Dari variabel, operator, percabangan if/match, looping, fungsi modular, hingga struktur data built-in (List, Tuple, Set, Dict).
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_core_syntax">
+                                    <span>Sintaks Indentasi, Variabel, Tipe Data Primitif, Casting, F-Strings</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_core_collections">
+                                    <span>Koleksi Data: List, Tuple, Set, Dictionary, Slicing & Comprehension</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_core_functions">
+                                    <span>Fungsi `def`, Parameter Default, `*args`, `**kwargs`, Lambda & Scope</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_core_modules">
+                                    <span>Modul Standar: `math`, `datetime`, `json`, `re`, `random`, PIP & VirtualEnv</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Aplikasi Command Line Interface (CLI) Manajemen Kontak & Keuangan Pribadi dengan penyimpanan file JSON.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: OOP & File Handling -->
+                <div class="timeline-step">
+                    <div class="timeline-node">2</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-info-subtle text-info-emphasis me-2">Tahap 2: OOP & Files</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 2 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python&p=py_oop" class="btn-course-action">
+                                <i class="fa-solid fa-cube"></i> Buka Materi OOP &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Pemrograman Berorientasi Objek & Penanganan File</h4>
+                        <p class="text-muted small mb-3">
+                            Menulis kode berstandar enterprise dengan prinsip Class, Objek, Enkapsulasi, Pewarisan (Inheritance), Magic Dunder Methods, Exception Handling, dan manipulasi berkas (I/O).
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_oop_classes">
+                                    <span>Class, Objek, `__init__()`, `self`, `@property`, dan `@staticmethod`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_oop_inheritance">
+                                    <span>Pewarisan Class (Inheritance), fungsi `super()`, dan Polimorfisme</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_oop_files">
+                                    <span>Operasi File I/O: blok `with open()`, mode `'r'`, `'w'`, `'a'`, penanganan CSV</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_oop_exceptions">
+                                    <span>Manajemen Error: `try`, `except`, `else`, `finally`, Custom Exceptions</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Sistem Perbankan OOP dengan rekening nasabah, transfer dana terenkripsi, dan pencatatan mutasi transaksi otomatis ke file log.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: DSA -->
+                <div class="timeline-step">
+                    <div class="timeline-node">3</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-warning-subtle text-warning-emphasis me-2">Tahap 3: Algoritma & DSA</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python&p=py_dsa_intro" class="btn-course-action">
+                                <i class="fa-solid fa-network-wired"></i> Buka Materi DSA (20 Topik) &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Struktur Data & Algoritma (DSA)</h4>
+                        <p class="text-muted small mb-3">
+                            Memahami efisiensi memori dan waktu eksekusi (Big-O Notation) serta implementasi struktur data fundamental untuk menyelesaikan tantangan koding teknis wawancara kerja.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_dsa_linear">
+                                    <span>Struktur Linear: Stacks (LIFO), Queues (FIFO), Singly & Doubly Linked Lists</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_dsa_trees">
+                                    <span>Pohon & Graf: Binary Trees, Binary Search Trees (BST), AVL Trees, Graphs</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_dsa_searching">
+                                    <span>Algoritma Pencarian: Linear Search O(n) vs Binary Search O(log n)</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_dsa_sorting">
+                                    <span>Algoritma Pengurutan: Bubble, Insertion, Merge Sort, Quick Sort O(n log n)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Mesin Pencari Kamus Cepat berbasis Hash Table dan Binary Search Tree dengan benchmark waktu eksekusi.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Data Analysis & Visualization -->
+                <div class="timeline-step">
+                    <div class="timeline-node">4</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 4: Data & Visualisasi</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python&p=py_mod_numpy" class="btn-course-action">
+                                <i class="fa-solid fa-chart-line"></i> Buka NumPy & Matplotlib &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Manipulasi Data & Visualisasi Grafik 2D</h4>
+                        <p class="text-muted small mb-3">
+                            Menganalisis kumpulan data besar dengan pustaka komputasi numerik NumPy dan Pandas, lalu memvisualisasikan wawasan tren bisnis melalui diagram Matplotlib.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_data_numpy">
+                                    <span>NumPy: Komputasi Array N-Dimensi, Operasi Matriks, Vektorisasi</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_data_pandas">
+                                    <span>Pandas: DataFrame, Series, Data Cleaning, Filter Kondisi, Agregasi GroupBy</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_data_matplotlib">
+                                    <span>Matplotlib: Plot Garis, Scatter Plot, Bar Chart, Histogram, Pie Chart</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_data_styling">
+                                    <span>Kustomisasi Visual: Subplot grid, Legend, Grid line, Marker warna</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Exploratory Data Analysis (EDA) Data Transaksi E-Commerce dengan visualisasi grafik demografi pelanggan.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Machine Learning -->
+                <div class="timeline-step">
+                    <div class="timeline-node">5</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-success-subtle text-success-emphasis me-2">Tahap 5: AI & Machine Learning</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 4 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python&p=py_ml_getstarted" class="btn-course-action">
+                                <i class="fa-solid fa-brain"></i> Buka Machine Learning (23 Topik) &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Machine Learning & Pemodelan Prediktif</h4>
+                        <p class="text-muted small mb-3">
+                            Mengajarkan komputer menemukan pola tersembunyi dari data historis untuk memprediksi hasil masa depan menggunakan Scikit-Learn dan algoritma kecerdasan buatan.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_ml_preprocessing">
+                                    <span>Pra-pemrosesan Data: Train/Test Split (80/20), Feature Scaling, Encoding</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_ml_regression">
+                                    <span>Algoritma Regresi: Linear Regression, Polynomial Regression, Multi-Regression</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_ml_classification">
+                                    <span>Klasifikasi: Logistic Regression, Decision Tree, Random Forest, KNN</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_ml_evaluation">
+                                    <span>Evaluasi Model: Confusion Matrix, K-Fold Cross Validation, Kurva AUC-ROC</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-trophy me-1"></i> Proyek Portofolio Utama:</small>
+                            <span class="small text-secondary">Model Prediksi Harga Rumah atau Deteksi Risiko Kredit Nasabah dengan skor akurasi di atas 85%.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Database & Web Integration -->
+                <div class="timeline-step">
+                    <div class="timeline-node">6</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 6: Basis Data & Web</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=python&p=py_mysql_getstarted" class="btn-course-action">
+                                <i class="fa-solid fa-database"></i> Buka MySQL & MongoDB &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Integrasi Basis Data (MySQL/MongoDB) & REST API</h4>
+                        <p class="text-muted small mb-3">
+                            Menghubungkan model Python ke basis data SQL relasional dan NoSQL dokumen, serta membungkusnya menjadi layanan REST API menggunakan Django atau FastAPI.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_db_mysql">
+                                    <span>MySQL Connector: CRUD, Prepared Statements, Foreign Key Joins</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_db_mongodb">
+                                    <span>PyMongo NoSQL: Koleksi BSON, Query Operators, Aggregation Pipeline</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_web_django">
+                                    <span>Framework Web Django: MTV Architecture, ORM Models, Admin Panel</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="py_cert_complete">
+                                    <span>Mengikuti Evaluasi Ujian Sertifikasi Kompetensi Python Skillance</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-certificate me-1"></i> Portofolio Akhir Python & AI:</small>
+                            <span class="small text-secondary">Aplikasi Web SaaS Dashboard Analitik Prediktif AI lengkap dengan endpoint REST API dan integrasi database aktif.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- PATH 4: MOBILE APP DEVELOPER -->
         <section id="path-mobile" class="roadmap-path-section" style="<?= ($activePath === 'mobile') ? '' : 'display:none;' ?>">
             <div class="timeline-container">
@@ -1092,6 +1414,10 @@ if (!in_array($activePath, $validPaths)) {
             fullstack: {
                 title: "Jalur Fullstack Web Developer",
                 desc: "Mengintegrasikan antarmuka frontend, logika backend, database, hingga live cloud deployment."
+            },
+            python: {
+                title: "Jalur Python, Data Science & AI Developer",
+                desc: "Menguasai fondasi Python 3.12, OOP, Algoritma DSA, Manipulasi Data, Matplotlib, hingga Machine Learning prediktif."
             },
             mobile: {
                 title: "Jalur Mobile App Developer (Flutter & Dart)",
