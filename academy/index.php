@@ -279,7 +279,7 @@ $isLoggedIn = !empty($userId);
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-danger-subtle text-danger fw-bold">Dasar Web</span>
-                            <small class="text-muted">6 Topik Lengkap</small>
+                            <small class="text-muted">90 Topik Lengkap (8 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">HTML Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
@@ -304,7 +304,7 @@ $isLoggedIn = !empty($userId);
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-primary-subtle text-primary fw-bold">Styling & Desain</span>
-                            <small class="text-muted">3 Topik Inti</small>
+                            <small class="text-muted">125 Topik Lengkap (9 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">CSS Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">

@@ -10,6 +10,15 @@ foreach ($htmlCategories as $catName => $catTopics) {
     }
 }
 
+$cssData = require __DIR__ . '/data/css_tutorial.php';
+$cssCategories = $cssData['categories'] ?? [];
+$cssFlattenedTopics = [];
+foreach ($cssCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $cssFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -24,203 +33,12 @@ $tutorials = [
     'css' => [
         'name' => 'CSS Tutorial',
         'short_name' => 'CSS',
-        'badge' => 'Pemula ke Menengah',
+        'badge' => 'Pemula ke Mahir',
         'icon' => 'fa-brands fa-css3-alt',
         'color' => '#264de4',
         'desc' => 'CSS adalah bahasa yang digunakan untuk menata tampilan, warna, tipografi, dan tata letak halaman web.',
-        'topics' => [
-            'intro' => [
-                'title' => 'CSS Pengenalan (Introduction)',
-                'summary' => 'Pelajari apa itu CSS, fungsinya dalam mempercantik HTML, dan 3 cara menghubungkan CSS.',
-                'content' => '
-                    <p class="lead">CSS adalah singkatan dari <strong>Cascading Style Sheets</strong>. Jika HTML adalah kerangka tulang sebuah website, maka CSS adalah kulit, pakaian, dan warna yang membuatnya menarik dilihat.</p>
-
-                    <h4>Tiga Cara Memasukkan CSS ke Dokumen HTML:</h4>
-                    <ol class="ps-3">
-                        <li><strong>External CSS</strong>: Ditulis di file terpisah (misal: <code>style.css</code>) dan dihubungkan via tag <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> di dalam <code>&lt;head&gt;</code>. (Metode standar industri yang paling direkomendasikan).</li>
-                        <li><strong>Internal CSS</strong>: Ditulis di dalam tag <code>&lt;style&gt;</code> pada bagian <code>&lt;head&gt;</code> dokumen HTML.</li>
-                        <li><strong>Inline CSS</strong>: Ditulis langsung pada elemen HTML menggunakan atribut <code>style="..."</code>.</li>
-                    </ol>
-                ',
-                'example_title' => 'Contoh Penulisan CSS Sederhana',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            background-color: #f8fafc;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #0d2e5c;
-        }
-        p {
-            color: #475569;
-            font-size: 16px;
-        }
-        .btn-modern {
-            background-color: #04AA6D;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Selamat Datang di Belajar CSS</h1>
-    <p>Halaman ini ditata dengan aturan gaya CSS modern.</p>
-    <button class="btn-modern" onclick="alert(\'Tombol CSS Berfungsi!\')">Coba Tombol Ini</button>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Anatomi Aturan CSS (CSS Rule-set):</h5>
-                    <p>Aturan CSS terdiri dari <strong>Selector</strong> (menunjuk elemen yang ingin ditata, misal <code>h1</code>) dan <strong>Declaration Block</strong> di dalam kurung kurawal <code>{ property: value; }</code>.</p>
-                ',
-                'quiz' => [
-                    'q' => 'Di manakah tempat penulisan yang benar untuk menautkan stylesheet eksternal (External CSS) pada halaman HTML?',
-                    'options' => ['Di dalam bagian <head>', 'Di dalam bagian <body>', 'Di akhir dokumen setelah </html>', 'Di dalam tag <p>'],
-                    'answer' => 0,
-                    'explanation' => 'Tag <link rel="stylesheet" ...> selalu diletakkan di dalam bagian <head> agar browser memuat gaya sebelum merender halaman.'
-                ]
-            ],
-            'boxmodel' => [
-                'title' => 'CSS Box Model',
-                'summary' => 'Memahami bagaimana browser menghitung dimensi elemen: Margin, Border, Padding, dan Content.',
-                'content' => '
-                    <p class="lead">Semua elemen HTML dihitung oleh browser sebagai sebuah kotak. Dalam CSS, istilah <strong>Box Model</strong> digunakan saat berbicara tentang desain dan tata letak.</p>
-
-                    <div class="card p-3 bg-light rounded-3 mb-3 text-center">
-                        <div style="border: 2px dashed #94a3b8; padding: 15px; background:#f1f5f9;">
-                            <strong>Margin</strong> (Ruang kosong di luar batas)
-                            <div style="border: 2px solid #0d2e5c; padding: 15px; margin: 10px; background:#e0f2fe;">
-                                <strong>Border</strong> (Garis tepi)
-                                <div style="border: 2px dashed #0284c7; padding: 15px; margin: 10px; background:#f0fdf4;">
-                                    <strong>Padding</strong> (Ruang antara konten dan batas)
-                                    <div style="background:#ffffff; padding:10px; border:1px solid #16a34a;">
-                                        <strong>Content</strong> (Teks atau Gambar Anda)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p>Aturan <code>box-sizing: border-box;</code> sangat penting agar padding dan border tidak menambah ukuran total lebar elemen!</p>
-                ',
-                'example_title' => 'Penerapan CSS Box Model',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: sans-serif; padding: 20px; background: #faf5ff; }
-        .kotak {
-            background-color: white;
-            width: 300px;
-            padding: 25px;
-            border: 4px solid #7c3aed;
-            margin: 20px auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="kotak">
-        <h3 style="color:#6d28d9; margin-top:0;">Kotak Berisi Padding</h3>
-        <p>Kotak ini memiliki <code>padding: 25px</code> dan <code>border: 4px</code>. Karena ada <code>box-sizing: border-box</code>, lebarnya tetap tepat 300px!</p>
-    </div>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Perbedaan Padding vs Margin:</h5>
-                    <ul class="ps-3">
-                        <li><strong>Padding</strong>: Ruang di <em>dalam</em> kotak (antara teks dan garis border). Jika Anda memberi warna background, warna itu akan mewarnai area padding.</li>
-                        <li><strong>Margin</strong>: Ruang di <em>luar</em> kotak (membuat jarak antar kotak yang satu dengan kotak lainnya). Margin selalu transparan.</li>
-                    </ul>
-                ',
-                'quiz' => [
-                    'q' => 'Properti CSS apa yang digunakan untuk membuat jarak ruang kosong di sebelah LUAR dari garis tepi (border) suatu elemen?',
-                    'options' => ['padding', 'margin', 'spacing', 'outline'],
-                    'answer' => 1,
-                    'explanation' => 'Margin mengatur ruang kosong di luar border elemen, sedangkan padding mengatur ruang di dalam border.'
-                ]
-            ],
-            'flexbox' => [
-                'title' => 'CSS Flexbox (Tata Letak Responsif)',
-                'summary' => 'Membuat tata letak kartu, navigasi, dan perataan elemen secara fleksibel tanpa float.',
-                'content' => '
-                    <p class="lead">CSS Flexbox (Flexible Box Layout) dirancang untuk mempermudah penataan elemen dalam satu dimensi (baris atau kolom), bahkan ketika ukuran layarnya berbeda-beda.</p>
-
-                    <h4>Properti Penting Flexbox:</h4>
-                    <ul>
-                        <li><code>display: flex;</code> : Mengaktifkan mode flex pada kontainer induk.</li>
-                        <li><code>justify-content</code> : Mengatur posisi elemen anak pada sumbu horizontal (center, space-between, space-around, flex-start, flex-end).</li>
-                        <li><code>align-items</code> : Mengatur perataan vertikal elemen anak (center, stretch, flex-start, flex-end).</li>
-                        <li><code>gap</code> : Memberikan jarak pemisah antar elemen anak secara otomatis.</li>
-                    </ul>
-                ',
-                'example_title' => 'Contoh Kartu Responsif dengan Flexbox',
-                'example_code' => '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background: #f8fafc; }
-        .flex-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 20px;
-            width: 140px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #04AA6D;
-        }
-    </style>
-</head>
-<body>
-
-    <h3 style="text-align:center; color:#0d2e5c;">Jalur Belajar Skillance</h3>
-    <div class="flex-container">
-        <div class="card"><div style="font-size:28px;">💻</div><strong>Web Dev</strong></div>
-        <div class="card"><div style="font-size:28px;">⚙️</div><strong>Backend</strong></div>
-        <div class="card"><div style="font-size:28px;">📱</div><strong>Flutter</strong></div>
-        <div class="card"><div style="font-size:28px;">🎨</div><strong>UI/UX</strong></div>
-    </div>
-
-</body>
-</html>',
-                'explanation' => '
-                    <h5 class="fw-bold mt-3">Keunggulan Flexbox:</h5>
-                    <p>Dengan <code>flex-wrap: wrap;</code>, jika layar smartphone terlalu sempit, kartu-kartu tersebut secara otomatis turun ke baris berikutnya secara rapi tanpa merusak tata letak.</p>
-                ',
-                'quiz' => [
-                    'q' => 'Properti Flexbox manakah yang digunakan untuk memusatkan elemen anak secara horizontal pada sumbu utama?',
-                    'options' => ['align-items: center;', 'justify-content: center;', 'text-align: center;', 'flex-center: true;'],
-                    'answer' => 1,
-                    'explanation' => 'justify-content mengatur perataan pada sumbu utama (main axis / horizontal secara default).'
-                ]
-            ]
-        ]
+        'categories' => $cssCategories,
+        'topics' => $cssFlattenedTopics
     ],
     'javascript' => [
         'name' => 'JavaScript Tutorial',
