@@ -232,7 +232,8 @@ $isLoggedIn = !empty($userId);
             <a href="learn.php?c=html" class="course-nav-item"><i class="fa-brands fa-html5 me-1 text-warning"></i> HTML</a>
             <a href="learn.php?c=css" class="course-nav-item"><i class="fa-brands fa-css3-alt me-1 text-info"></i> CSS</a>
             <a href="learn.php?c=javascript" class="course-nav-item"><i class="fa-brands fa-js me-1 text-warning"></i> JAVASCRIPT</a>
-            <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP & MYSQL</a>
+            <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP</a>
+            <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="tryit.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-bolt me-1"></i> TRY IT YOURSELF</a>
@@ -365,6 +366,31 @@ $isLoggedIn = !empty($userId);
                                 Mulai Belajar &raquo;
                             </a>
                             <a href="tryit.php?c=php" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: SQL -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #ecfeff; color: #00758f;">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-info-subtle text-info fw-bold" style="background:#cffafe; color:#0e7490;">Database Relasional</span>
+                            <small class="text-muted">82 Topik Lengkap (5 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">SQL Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa standar internasional untuk mengelola database relasional, query SELECT, JOIN, agregasi, subquery, dan indexing.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=sql" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=sql" class="btn-tryit-outline" title="Coba Kode Langsung">
                                 <i class="fa-solid fa-code"></i>
                             </a>
                         </div>

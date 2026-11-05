@@ -37,6 +37,15 @@ foreach ($phpCategories as $catName => $catTopics) {
     }
 }
 
+$sqlData = require __DIR__ . '/data/sql_tutorial.php';
+$sqlCategories = $sqlData['categories'] ?? [];
+$sqlFlattenedTopics = [];
+foreach ($sqlCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $sqlFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -77,6 +86,16 @@ $tutorials = [
         'desc' => 'PHP adalah bahasa pemrograman server-side dan database MySQL yang menjadi fondasi 75%+ website di internet.',
         'categories' => $phpCategories,
         'topics' => $phpFlattenedTopics
+    ],
+    'sql' => [
+        'name' => 'SQL Database Tutorial',
+        'short_name' => 'SQL',
+        'badge' => 'Pemula ke Mahir',
+        'icon' => 'fa-solid fa-database',
+        'color' => '#00758f',
+        'desc' => 'SQL adalah bahasa standar internasional untuk mengakses, merancang, dan mengelola database relasional.',
+        'categories' => $sqlCategories,
+        'topics' => $sqlFlattenedTopics
     ],
     'flutter' => [
         'name' => 'Flutter Mobile Tutorial',
