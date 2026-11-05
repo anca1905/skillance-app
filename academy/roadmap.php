@@ -10,7 +10,7 @@ $avatarUrl = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . u
 $isLoggedIn = !empty($userId);
 
 // Get initial active path from query string or default to 'frontend'
-$validPaths = ['frontend', 'backend', 'fullstack', 'python', 'mobile', 'uiux'];
+$validPaths = ['frontend', 'backend', 'fullstack', 'python', 'java', 'mobile', 'uiux'];
 $activePath = $_GET['path'] ?? 'frontend';
 if (!in_array($activePath, $validPaths)) {
     $activePath = 'frontend';
@@ -362,6 +362,7 @@ if (!in_array($activePath, $validPaths)) {
             <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP</a>
             <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
             <a href="learn.php?c=python" class="course-nav-item"><i class="fa-brands fa-python me-1 text-warning"></i> PYTHON</a>
+            <a href="learn.php?c=java" class="course-nav-item"><i class="fa-brands fa-java me-1 text-danger"></i> JAVA</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold active ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP</a>
@@ -420,6 +421,13 @@ if (!in_array($activePath, $validPaths)) {
                 <div class="text-start">
                     <div class="fw-bold" style="font-size: 0.95rem;">Python & AI Developer</div>
                     <small class="d-none d-md-block opacity-75" style="font-size: 0.75rem;">Python, Data, ML & AI</small>
+                </div>
+            </button>
+            <button class="path-tab-btn <?= ($activePath === 'java') ? 'active' : '' ?>" onclick="switchPath('java')">
+                <i class="fa-brands fa-java fs-5 path-icon text-danger"></i>
+                <div class="text-start">
+                    <div class="fw-bold" style="font-size: 0.95rem;">Java Enterprise Developer</div>
+                    <small class="d-none d-md-block opacity-75" style="font-size: 0.75rem;">Java 21, OOP, Spring Boot</small>
                 </div>
             </button>
             <button class="path-tab-btn <?= ($activePath === 'mobile') ? 'active' : '' ?>" onclick="switchPath('mobile')">
@@ -1278,6 +1286,320 @@ if (!in_array($activePath, $validPaths)) {
             </div>
         </section>
 
+
+        <!-- PATH: JAVA ENTERPRISE DEVELOPER -->
+        <section id="path-java" class="roadmap-path-section" style="<?= ($activePath === 'java') ? '' : 'display:none;' ?>">
+            <div class="timeline-container">
+
+                <!-- Step 1: Java Core -->
+                <div class="timeline-step">
+                    <div class="timeline-node">1</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 1: Sintaks & Fondasi</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java" class="btn-course-action">
+                                <i class="fa-brands fa-java"></i> Buka Materi Java (118 Topik) &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java 21 LTS: Tipe Data, Kontrol Alur & Array</h4>
+                        <p class="text-muted small mb-3">
+                            Mempelajari fondasi bahasa pemrograman berorientasi objek yang tangguh dan bertipe statis kuat (Strongly-Typed). Memahami kompilasi bytecode JVM, tipe data primitif, percabangan if/switch modern, perulangan, dan manipulasi array.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_core_syntax">
+                                    <span>Struktur Class Java, method main(), Tipe Data Primitif, Casting</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_core_strings">
+                                    <span>Manipulasi String, Immutability, StringBuilder, Math API</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_core_control">
+                                    <span>Logika Percabangan: if-else, Switch Expressions Java 14+, Ternary</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_core_arrays">
+                                    <span>Perulangan for, while, for-each, Array 1D & Multidimensi</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Aplikasi Konsol Java Manajemen Nilai Akademik Mahasiswa lengkap dengan kalkulasi IPK dan predikat kelulusan.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: OOP Murni -->
+                <div class="timeline-step">
+                    <div class="timeline-node">2</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-info-subtle text-info-emphasis me-2">Tahap 2: OOP & Desain Objek</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java&p=java_oop" class="btn-course-action">
+                                <i class="fa-solid fa-cube"></i> Buka Materi OOP &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Pemrograman Berorientasi Objek Murni (OOP)</h4>
+                        <p class="text-muted small mb-3">
+                            Java adalah bahasa OOP sejati. Kuasai pembuatan Class, Objek, Konstruktor, Enkapsulasi data dengan private fields & getters/setters, Pewarisan (Inheritance), Polimorfisme Overriding, Abstract Classes, dan Interfaces.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_oop_encapsulation">
+                                    <span>Enkapsulasi: Access Modifiers, Constructor Overloading, `this`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_oop_inheritance">
+                                    <span>Pewarisan: kata kunci `extends`, method overriding, kata kunci `super`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_oop_abstraction">
+                                    <span>Abstraksi: Abstract Class vs Interface, kata kunci `implements`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_oop_advanced">
+                                    <span>Polimorfisme Dinamis, Inner Classes, Anonymous Classes, dan Enum</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Sistem Reservasi Kamar Hotel Berbasis OOP dengan hierarki tipe kamar, penghitungan tarif diskon, dan faktur cetak.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Exception & I/O -->
+                <div class="timeline-step">
+                    <div class="timeline-node">3</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-warning-subtle text-warning-emphasis me-2">Tahap 3: Error & Berkas</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 2 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java&p=java_errors" class="btn-course-action">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Buka Exception & I/O &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Penanganan Error & Java I/O Streams</h4>
+                        <p class="text-muted small mb-3">
+                            Membangun aplikasi enterprise yang tahan banting (resilient) dengan penanganan perkecualian checked vs unchecked, try-with-resources otomatis, dan membaca/menulis berkas teks dan biner melalui Stream buffer.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_io_exceptions">
+                                    <span>Try-Catch-Finally, Throw/Throws, Custom Exception Class</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_io_resources">
+                                    <span>Manajemen Resource Otomatis: Blok `try-with-resources`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_io_streams">
+                                    <span>Character Streams: BufferedReader & BufferedWriter untuk file teks</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_io_binary">
+                                    <span>Byte Streams: FileInputStream & FileOutputStream untuk berkas biner</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Aplikasi Pengolah File Log Server: Membaca jutaan baris log dan menyaring error secara otomatis ke file rekapitulasi.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Collections Framework -->
+                <div class="timeline-step">
+                    <div class="timeline-node">4</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 4: Collections Framework</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java&p=java_data_structures" class="btn-course-action">
+                                <i class="fa-solid fa-database"></i> Buka Java Collections &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java Collections Framework (JCF)</h4>
+                        <p class="text-muted small mb-3">
+                            Standar struktur data industri Java: Memahami kapan menggunakan ArrayList vs LinkedList, HashSet vs TreeSet untuk keunikan, dan HashMap vs TreeMap untuk pemetaan kunci-nilai berefisiensi tinggi.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_jcf_lists">
+                                    <span>List Hierarchy: ArrayList, LinkedList, Operasi CRUD & Sorting</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_jcf_sets">
+                                    <span>Set Hierarchy: HashSet O(1), TreeSet O(log n), LinkedHashSet</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_jcf_maps">
+                                    <span>Map Hierarchy: HashMap, TreeMap, LinkedHashMap, Iterator</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_jcf_generics">
+                                    <span>Java Generics `<T>`, Comparable, dan Comparator Kustom</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Sistem Manajemen Inventaris Barang Toko dengan pencarian instan berbasis HashMap dan pengurutan harga stok.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Advanced Java -->
+                <div class="timeline-step">
+                    <div class="timeline-node">5</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-success-subtle text-success-emphasis me-2">Tahap 5: Fitur Modern & Konkurensi</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 3 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java&p=java_wrapper_classes" class="btn-course-action">
+                                <i class="fa-solid fa-bolt"></i> Buka Java Advanced &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java Advanced: Lambda, Stream API & Multithreading</h4>
+                        <p class="text-muted small mb-3">
+                            Memodernisasi gaya koding dengan pemrograman fungsional: Ekspresi Lambda, method reference `::`, pipeline pengolahan data Stream API (`filter`, `map`, `reduce`), kelas `Optional<T>`, dan eksekusi paralel Thread & Concurrency.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_adv_lambda">
+                                    <span>Ekspresi Lambda `() -> {}` dan Functional Interfaces</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_adv_streams">
+                                    <span>Stream API: Operasi deklaratif filter, map, collect, reduce</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_adv_optional">
+                                    <span>Pencegahan Null: Penggunaan `Optional<T>` dan Anotasi Java</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_adv_threads">
+                                    <span>Multithreading: Thread class, Runnable, ExecutorService dasar</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-diagram-project me-1"></i> Proyek Praktik Milestone:</small>
+                            <span class="small text-secondary">Aplikasi Pengunduh Data Multithread Asinkron dengan rekapitulasi data menggunakan Stream API.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Enterprise & Spring Boot -->
+                <div class="timeline-step">
+                    <div class="timeline-node">6</div>
+                    <div class="step-card">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="step-badge bg-primary-subtle text-primary-emphasis me-2">Tahap 6: Enterprise Backend</span>
+                                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> Estimasi: 4 Minggu</span>
+                            </div>
+                            <a href="learn.php?c=java&p=java_server" class="btn-course-action">
+                                <i class="fa-solid fa-server"></i> Buka Java Server & Projects &raquo;
+                            </a>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java Enterprise: Spring Boot & RESTful Microservices</h4>
+                        <p class="text-muted small mb-3">
+                            Standar tertinggi backend enterprise global: Membangun RESTful API dengan Spring Boot, Dependency Injection (Inversion of Control), koneksi database relasional melalui Spring Data JPA / Hibernate, dan rilis ke Cloud.
+                        </p>
+                        <h6 class="fw-bold text-navy small mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Target Kompetensi & Checklist:</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_ent_springboot">
+                                    <span>Spring Boot: `@RestController`, `@GetMapping`, `@PostMapping`</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_ent_jpa">
+                                    <span>Spring Data JPA: Entitas `@Entity`, Repository CRUD, Relasi MySQL</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_ent_security">
+                                    <span>Autentikasi & Keamanan: Spring Security & JWT Token Auth</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="skill-item">
+                                    <input type="checkbox" class="skill-checkbox" data-skill="java_cert_complete">
+                                    <span>Ujian Evaluasi Sertifikasi Kompetensi Java Developer Skillance</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="project-highlight">
+                            <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-trophy me-1"></i> Portofolio Akhir Java Enterprise:</small>
+                            <span class="small text-secondary">RESTful API E-Commerce Microservices berbasis Spring Boot, MySQL Database, dan autentikasi token JWT yang siap deploy ke VPS Cloud.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- PATH 4: MOBILE APP DEVELOPER -->
         <section id="path-mobile" class="roadmap-path-section" style="<?= ($activePath === 'mobile') ? '' : 'display:none;' ?>">
             <div class="timeline-container">
@@ -1418,6 +1740,10 @@ if (!in_array($activePath, $validPaths)) {
             python: {
                 title: "Jalur Python, Data Science & AI Developer",
                 desc: "Menguasai fondasi Python 3.12, OOP, Algoritma DSA, Manipulasi Data, Matplotlib, hingga Machine Learning prediktif."
+            },
+            java: {
+                title: "Jalur Java Enterprise & Backend Developer",
+                desc: "Menguasai Java 21 LTS, OOP murni, Collections Framework, I/O Streams, Multithreading, hingga arsitektur Spring Boot."
             },
             mobile: {
                 title: "Jalur Mobile App Developer (Flutter & Dart)",

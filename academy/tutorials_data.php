@@ -64,6 +64,15 @@ foreach ($pythonCategories as $catName => $catTopics) {
     }
 }
 
+$javaData = require __DIR__ . '/data/java_tutorial.php';
+$javaCategories = $javaData['categories'] ?? [];
+$javaFlattenedTopics = [];
+foreach ($javaCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $javaFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
     'html' => [
         'name' => 'HTML Tutorial',
@@ -134,6 +143,16 @@ $tutorials = [
         'desc' => 'Python adalah bahasa pemrograman serbaguna berorientasi objek yang populer untuk Web, AI, Data Science, dan Otomasi.',
         'categories' => $pythonCategories,
         'topics' => $pythonFlattenedTopics
+    ],
+    'java' => [
+        'name' => 'Java Tutorial',
+        'short_name' => 'Java',
+        'badge' => 'Pemula ke Enterprise',
+        'icon' => 'fa-brands fa-java',
+        'color' => '#ea580c',
+        'desc' => 'Java adalah bahasa pemrograman berorientasi objek tangguh yang digunakan oleh miliaran perangkat dan backend enterprise dunia.',
+        'categories' => $javaCategories,
+        'topics' => $javaFlattenedTopics
     ],
     'flutter' => [
         'name' => 'Flutter Mobile Tutorial',
