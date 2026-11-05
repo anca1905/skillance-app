@@ -1,5 +1,5 @@
 <?php
-// Data Silabus Lengkap HTML W3Schools untuk Skillance Academy
+// Data Silabus Lengkap HTML Skillance Academy untuk Skillance Academy
 
 return [
     'categories' => [
@@ -8,7 +8,7 @@ return [
                 'title' => 'HTML HOME',
                 'summary' => 'Selamat Datang di Tutorial HTML Skillance Academy. HTML adalah bahasa markah standar untuk membuat halaman web.',
                 'content' => <<<'HTML_CONTENT'
-<p class="lead">Selamat datang di <strong>Tutorial HTML Lengkap</strong> Skillance Academy berstandar W3Schools. HTML adalah bahasa markah standar yang digunakan oleh seluruh website di dunia.</p>
+<p class="lead">Selamat datang di <strong>Tutorial HTML Lengkap</strong> Skillance Academy resmi dari Skillance Academy Indonesia. HTML adalah bahasa markah standar yang digunakan oleh seluruh website di dunia.</p>
         <p>Dengan HTML, Anda dapat membuat website Anda sendiri dari nol. Tutorial ini dirancang sangat mudah dipahami baik untuk mahasiswa, pemula, maupun masyarakat umum yang ingin terjun ke industri teknologi.</p>
         <div class="card bg-light border-0 p-3 mb-4 rounded-3">
             <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-graduation-cap text-gold me-2"></i>Mengapa Belajar HTML di Sini?</h6>
@@ -499,7 +499,7 @@ HTML_CONTENT,
 
     <div class="box" style="background-color: Tomato;">Tomato (Color Name)</div>
     <div class="box" style="background-color: #0d2e5c;">#0d2e5c (HEX Navy Skillance)</div>
-    <div class="box" style="background-color: rgb(4, 170, 109);">rgb(4, 170, 109) (RGB W3Schools Green)</div>
+    <div class="box" style="background-color: rgb(4, 170, 109);">rgb(4, 170, 109) (RGB Skillance Emerald)</div>
     <div class="box" style="background-color: rgba(13, 46, 92, 0.5); color: #0d2e5c;">rgba(13, 46, 92, 0.5) (Transparan 50%)</div>
 
 </body>
@@ -708,7 +708,7 @@ HTML_CONTENT,
 <head>
     <title>Halaman dengan Favicon</title>
     <!-- Tag memasang Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://www.w3schools.com/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
 </head>
 <body>
 
@@ -1193,7 +1193,7 @@ HTML_CONTENT,
 <body>
 
     <!-- Jalur Absolut dari Internet -->
-    <img src="https://www.w3schools.com/html/img_chania.jpg" alt="Chania" width="250">
+    <img src="https://picsum.photos/400/250" alt="Chania" width="250">
 
 </body>
 </html>
@@ -1389,7 +1389,7 @@ HTML_CONTENT,
             <h2>Skillance Academy Luncurkan Materi Baru</h2>
             <p style="color:#64748b; font-size:0.85rem;">Dipublikasikan pada 5 November 2026</p>
         </header>
-        <p>Seluruh materi HTML kini disusun lengkap berstandar W3Schools untuk mahasiswa.</p>
+        <p>Seluruh materi HTML kini disusun lengkap resmi dari Skillance Academy Indonesia untuk mahasiswa.</p>
         <footer>
             <small>Kategori: Edukasi Teknologi</small>
         </footer>
@@ -1613,9 +1613,9 @@ HTML_CONTENT,
 <body>
 
     <h3>Contoh URL Encode Query</h3>
-    <p>Pencarian: "belajar html w3schools"</p>
+    <p>Pencarian: "belajar html skillance"</p>
     <p>URL Ter-encode:<br>
-    <code>https://academy.skillance.cloud/cari.php?q=belajar%20html%20w3schools</code></p>
+    <code>https://academy.skillance.cloud/cari.php?q=belajar%20html%20skillance</code></p>
 
 </body>
 </html>
@@ -2059,7 +2059,7 @@ HTML_CONTENT,
 
     <h3>Pemutar Video HTML5 Bawaan</h3>
     <video width="320" height="180" controls poster="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=320">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         Browser Anda tidak mendukung tag video.
     </video>
 
@@ -2091,7 +2091,7 @@ HTML_CONTENT,
 
     <h3>Pemutar Audio HTML5</h3>
     <audio controls>
-        <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+        <source src="https://www.skillance.com/html/horse.mp3" type="audio/mpeg">
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
@@ -2645,7 +2645,7 @@ HTML_EXPLANATION,
                 'title' => 'HTML Syllabus',
                 'summary' => 'Silabus lengkap kurikulum pembelajaran HTML dari tingkat dasar hingga standar industri.',
                 'content' => <<<'HTML_CONTENT'
-<p class="lead">Silabus pembelajaran HTML di Skillance Academy dirancang berdasarkan standar kurikulum W3Schools dan kebutuhan industri perangkat lunak modern.</p>
+<p class="lead">Silabus pembelajaran HTML di Skillance Academy dirancang berdasarkan standar kurikulum Skillance Academy dan kebutuhan industri perangkat lunak modern.</p>
         <ol class="ps-3" style="line-height: 1.8;">
             <li><strong>Tahap 1:</strong> Fundamental HTML, Headings, Paragraf, Link, Gambar, dan Format Teks.</li>
             <li><strong>Tahap 2:</strong> Tabel Data, List, Elemen Block vs Inline, Class, dan ID.</li>
@@ -2722,7 +2722,7 @@ HTML_EXPLANATION,
                 'title' => 'HTML Summary',
                 'summary' => 'Rangkuman intisari seluruh materi HTML yang telah dipelajari sebagai contekan cepat (cheat sheet).',
                 'content' => <<<'HTML_CONTENT'
-<p class="lead">Selamat! Anda telah mempelajari seluruh materi HTML berstandar W3Schools di Skillance Academy.</p>
+<p class="lead">Selamat! Anda telah mempelajari seluruh materi HTML resmi dari Skillance Academy Indonesia di Skillance Academy.</p>
         <h4>Rangkuman Singkat:</h4>
         <ul style="line-height: 1.8;">
             <li>HTML adalah kerangka struktur setiap halaman web di dunia.</li>
@@ -2987,7 +2987,7 @@ HTML_CONTENT,
 <!DOCTYPE html>
 <html>
 <body>
-    <video id="vid" width="240" src="https://www.w3schools.com/html/mov_bbb.mp4"></video><br>
+    <video id="vid" width="240" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video><br>
     <button onclick="document.getElementById(\'vid\').play()">Play</button>
     <button onclick="document.getElementById(\'vid\').pause()">Pause</button>
 </body>

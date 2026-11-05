@@ -1,5 +1,5 @@
 <?php
-// Skillance Academy - Data Materi Tutorial Berstandar W3Schools
+// Skillance Academy - Data Materi Tutorial Skillance Academy Indonesia
 
 $htmlData = require __DIR__ . '/data/html_tutorial.php';
 $htmlCategories = $htmlData['categories'] ?? [];
@@ -43,6 +43,15 @@ $sqlFlattenedTopics = [];
 foreach ($sqlCategories as $catName => $catTopics) {
     foreach ($catTopics as $tKey => $tData) {
         $sqlFlattenedTopics[$tKey] = $tData;
+    }
+}
+
+$jqueryData = require __DIR__ . '/data/jquery_tutorial.php';
+$jqueryCategories = $jqueryData['categories'] ?? [];
+$jqueryFlattenedTopics = [];
+foreach ($jqueryCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $jqueryFlattenedTopics[$tKey] = $tData;
     }
 }
 
@@ -96,6 +105,16 @@ $tutorials = [
         'desc' => 'SQL adalah bahasa standar internasional untuk mengakses, merancang, dan mengelola database relasional.',
         'categories' => $sqlCategories,
         'topics' => $sqlFlattenedTopics
+    ],
+    'jquery' => [
+        'name' => 'jQuery Tutorial',
+        'short_name' => 'jQuery',
+        'badge' => 'Pemula ke Mahir',
+        'icon' => 'fa-solid fa-bolt',
+        'color' => '#0769ad',
+        'desc' => 'jQuery adalah pustaka JavaScript ringkas yang menyederhanakan manipulasi HTML, event, animasi, dan penanganan AJAX.',
+        'categories' => $jqueryCategories,
+        'topics' => $jqueryFlattenedTopics
     ],
     'flutter' => [
         'name' => 'Flutter Mobile Tutorial',

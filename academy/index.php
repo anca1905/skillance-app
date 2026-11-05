@@ -14,10 +14,10 @@ $isLoggedIn = !empty($userId);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillance Academy Indonesia - Belajar Koding Standar W3Schools</title>
+    <title>Skillance Academy Indonesia - Platform Belajar Koding Praktis & Mandiri</title>
     
     <!-- Meta SEO -->
-    <meta name="description" content="Portal belajar koding mandiri dan interaktif berstandar W3Schools untuk mahasiswa dan umum. Kuasai HTML, CSS, JavaScript, PHP, MySQL, dan Flutter.">
+    <meta name="description" content="Portal belajar koding mandiri dan interaktif resmi dari Skillance Academy Indonesia untuk mahasiswa dan umum. Kuasai HTML, CSS, JavaScript, PHP, MySQL, dan Flutter.">
     
     <!-- Google Fonts & Bootstrap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@ $isLoggedIn = !empty($userId);
             z-index: 1020;
         }
 
-        /* Course Quick Nav (W3Schools Style) */
+        /* Course Quick Nav (Skillance Modern Style) */
         .course-subnav {
             background-color: var(--navy);
             overflow-x: auto;
@@ -205,7 +205,7 @@ $isLoggedIn = !empty($userId);
                 </div>
                 <div>
                     <span class="fw-bold text-navy font-heading" style="font-size: 1.25rem; letter-spacing: -0.5px;">SKILLANCE ACADEMY</span>
-                    <small class="d-block text-muted" style="font-size: 0.7rem; margin-top: -3px;">Pusat Belajar Koding Berstandar W3Schools</small>
+                    <small class="d-block text-muted" style="font-size: 0.7rem; margin-top: -3px;">Pusat Belajar Koding Skillance Academy Indonesia</small>
                 </div>
             </a>
 
@@ -226,12 +226,13 @@ $isLoggedIn = !empty($userId);
         </div>
     </nav>
 
-    <!-- COURSE SUBNAV BAR (W3Schools Top Bar) -->
+    <!-- COURSE SUBNAV BAR (Skillance Quick Nav Bar) -->
     <div class="course-subnav">
         <div class="container d-flex">
             <a href="learn.php?c=html" class="course-nav-item"><i class="fa-brands fa-html5 me-1 text-warning"></i> HTML</a>
             <a href="learn.php?c=css" class="course-nav-item"><i class="fa-brands fa-css3-alt me-1 text-info"></i> CSS</a>
             <a href="learn.php?c=javascript" class="course-nav-item"><i class="fa-brands fa-js me-1 text-warning"></i> JAVASCRIPT</a>
+            <a href="learn.php?c=jquery" class="course-nav-item"><i class="fa-solid fa-bolt me-1 text-primary"></i> JQUERY</a>
             <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP</a>
             <a href="learn.php?c=sql" class="course-nav-item"><i class="fa-solid fa-database me-1 text-info"></i> SQL</a>
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
@@ -248,7 +249,7 @@ $isLoggedIn = !empty($userId);
             </span>
             <h1 class="display-5 fw-bold font-heading mb-3 text-white">Belajar Koding Praktis & Terarah</h1>
             <p class="lead mx-auto mb-4" style="max-width: 720px; color: #cbd5e1; line-height: 1.8; font-size: 1.05rem;">
-                Setiap materi disusun secara terpisah, rapi, dan mudah dipahami berdasarkan standar <strong>W3Schools</strong>. Disertai contoh kode yang dapat Anda coba dan jalankan langsung di browser!
+                Setiap materi disusun secara terpisah, rapi, dan mudah dipahami berdasarkan standar <strong>Skillance Academy</strong>. Disertai contoh kode yang dapat Anda coba dan jalankan langsung di browser!
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -397,6 +398,31 @@ $isLoggedIn = !empty($userId);
                     </div>
                 </div>
 
+                <!-- CARD: JQUERY -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #f0f9ff; color: #0769ad;">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">Pustaka JavaScript</span>
+                            <small class="text-muted">46 Topik Lengkap (9 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">jQuery Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Pustaka JavaScript legendaris berprinsip 'Write Less, Do More'. Mempermudah manipulasi DOM, animasi efek, dan komunikasi AJAX.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=jquery" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=jquery" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- CARD 5: FLUTTER -->
                 <div class="col-md-6 col-lg-4">
                     <div class="course-card">
@@ -451,7 +477,7 @@ $isLoggedIn = !empty($userId);
         </div>
     </section>
 
-    <!-- SECTION: FITUR W3SCHOOLS & KEMITRAAN KAMPUS -->
+    <!-- SECTION: FITUR UNGGULAN & KEMITRAAN KAMPUS -->
     <section class="py-5 bg-white border-top border-bottom">
         <div class="container">
             <div class="row align-items-center g-4">

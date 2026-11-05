@@ -82,7 +82,7 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             z-index: 1020;
         }
 
-        /* Course Sub-Navbar (W3Schools Style) */
+        /* Course Sub-Navbar (Skillance Modern Style) */
         .course-subnav {
             background-color: var(--navy);
             overflow-x: auto;
@@ -245,8 +245,8 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             font-size: 1.25rem;
         }
 
-        /* W3Schools Example Box */
-        .w3-example-box {
+        /* Skillance Code Example Box */
+        .skillance-code-box {
             background-color: #f1f5f9;
             border-left: 5px solid var(--w3-green);
             padding: 20px;
@@ -254,13 +254,13 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             border-radius: 0 10px 10px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .w3-example-header {
+        .skillance-code-header {
             font-weight: 700;
             font-size: 1.05rem;
             color: var(--navy);
             margin-bottom: 12px;
         }
-        .w3-code-wrapper {
+        .skillance-code-wrapper {
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
@@ -337,7 +337,7 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 </a>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <span class="small d-none d-md-inline" style="color: #cbd5e1;">Skillance Academy (Materi Belajar W3Schools)</span>
+                <span class="small d-none d-md-inline" style="color: #cbd5e1;">Skillance Academy (Materi Belajar Skillance Academy)</span>
                 <?php if ($isLoggedIn): ?>
                     <span class="badge bg-success-subtle text-success"><i class="fa-solid fa-circle-check me-1"></i> <?= htmlspecialchars($userName) ?></span>
                 <?php else: ?>
@@ -358,7 +358,7 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 </div>
                 <div>
                     <span class="fw-bold text-navy font-heading" style="font-size: 1.15rem; letter-spacing: -0.5px;">SKILLANCE ACADEMY</span>
-                    <small class="d-block text-muted" style="font-size: 0.65rem; margin-top: -3px;">Modul Belajar Standar W3Schools</small>
+                    <small class="d-block text-muted" style="font-size: 0.65rem; margin-top: -3px;">Modul Belajar Skillance Academy Indonesia</small>
                 </div>
             </a>
 
@@ -378,7 +378,7 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
         </div>
     </nav>
 
-    <!-- COURSE SUB-NAVBAR (W3SCHOOLS COURSE TABS) -->
+    <!-- COURSE SUB-NAVBAR (SKILLANCE COURSE TABS) -->
     <div class="course-subnav">
         <div class="container-fluid px-lg-4 d-flex">
             <?php foreach ($tutorials as $cKey => $c): ?>
@@ -462,13 +462,13 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 <?= $currentTopic['content'] ?>
             </div>
 
-            <!-- Classic W3Schools Example Card -->
+            <!-- Skillance Interactive Code Example -->
             <?php if (!empty($currentTopic['example_code'])): ?>
-                <div class="w3-example-box">
-                    <div class="w3-example-header">
+                <div class="skillance-code-box">
+                    <div class="skillance-code-header">
                         <i class="fa-solid fa-code text-success me-2"></i><?= htmlspecialchars($currentTopic['example_title']) ?>:
                     </div>
-                    <div class="w3-code-wrapper">
+                    <div class="skillance-code-wrapper">
                         <pre class="m-0"><code><?= htmlspecialchars($currentTopic['example_code']) ?></code></pre>
                     </div>
                     <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" target="_blank" class="btn-tryit">

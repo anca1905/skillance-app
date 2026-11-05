@@ -198,7 +198,7 @@ if (empty($initialCode)) {
 
         <div>
             <span class="badge bg-navy-subtle text-navy px-3 py-2 rounded-pill small fw-bold">
-                <i class="fa-solid fa-laptop-code me-1 text-gold"></i> W3Schools Tryit Editor
+                <i class="fa-solid fa-laptop-code me-1 text-gold"></i> Skillance Code Lab Editor
             </span>
         </div>
     </header>
