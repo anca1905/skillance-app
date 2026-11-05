@@ -455,11 +455,17 @@ if (!in_array($activePath, $validPaths)) {
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
-                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold active">
-                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+                <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 py-2 d-none d-sm-inline">
+                    <i class="fa-solid fa-book-bookmark text-warning me-1"></i> E-Book & Proyek
                 </a>
-                <a href="tryit.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold">
-                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
+                <a href="partner.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold text-navy d-none d-md-inline">
+                    <i class="fa-solid fa-handshake me-1"></i> Kemitraan Kampus
+                </a>
+                <a href="verify.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-bold d-none d-lg-inline">
+                    <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Sertifikat
+                </a>
+                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold active text-white" style="background: #0d2e5c;">
+                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap
                 </a>
                 <a href="index.php" class="btn btn-sm btn-light rounded-pill px-3 py-2 fw-semibold text-secondary">
                     <i class="fa-solid fa-house me-1"></i> Beranda
@@ -484,6 +490,9 @@ if (!in_array($activePath, $validPaths)) {
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold active ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP</a>
+            <a href="projects.php" class="course-nav-item text-gold"><i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK</a>
+            <a href="partner.php" class="course-nav-item text-gold"><i class="fa-solid fa-building-columns me-1"></i> KEMITRAAN KAMPUS</a>
+            <a href="verify.php" class="course-nav-item text-gold"><i class="fa-solid fa-certificate me-1"></i> CEK SERTIFIKAT</a>
         </div>
     </div>
 

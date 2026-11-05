@@ -498,14 +498,20 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             </button>
 
             <div class="ms-auto d-flex align-items-center gap-2">
-                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 fw-bold">
-                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+                <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 d-none d-sm-inline">
+                    <i class="fa-solid fa-book-bookmark text-warning me-1"></i> E-Book & Proyek
+                </a>
+                <a href="partner.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold text-navy d-none d-md-inline">
+                    <i class="fa-solid fa-handshake me-1"></i> Kemitraan
+                </a>
+                <a href="verify.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold d-none d-lg-inline">
+                    <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Sertifikat
+                </a>
+                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 fw-bold text-white" style="background: #0d2e5c;">
+                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap
                 </a>
                 <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" class="btn btn-sm btn-outline-navy rounded-pill px-3 fw-bold">
-                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
-                </a>
-                <a href="index.php" class="btn btn-sm btn-light rounded-pill px-3 fw-semibold text-secondary">
-                    <i class="fa-solid fa-house me-1"></i> Portal
+                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab
                 </a>
             </div>
         </div>
@@ -521,6 +527,15 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             <?php endforeach; ?>
             <a href="roadmap.php" class="course-nav-link text-gold ms-auto">
                 <i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP
+            </a>
+            <a href="projects.php" class="course-nav-link text-gold">
+                <i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK
+            </a>
+            <a href="partner.php" class="course-nav-link text-gold">
+                <i class="fa-solid fa-building-columns me-1"></i> KEMITRAAN KAMPUS
+            </a>
+            <a href="verify.php" class="course-nav-link text-gold">
+                <i class="fa-solid fa-certificate me-1"></i> CEK SERTIFIKAT
             </a>
         </div>
     </div>

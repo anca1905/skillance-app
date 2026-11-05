@@ -279,23 +279,31 @@ $isLoggedIn = !empty($userId);
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
-                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold">
-                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap Belajar
+                <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 py-2 d-none d-sm-inline">
+                    <i class="fa-solid fa-book-bookmark text-warning me-1"></i> E-Book & Proyek
                 </a>
-                <a href="tryit.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold">
-                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
+                <a href="partner.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold text-navy d-none d-md-inline">
+                    <i class="fa-solid fa-handshake me-1"></i> Kemitraan Kampus
+                </a>
+                <a href="verify.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-bold d-none d-lg-inline">
+                    <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Sertifikat
+                </a>
+                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white" style="background: #0d2e5c;">
+                    <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Roadmap
+                </a>
+                <a href="tryit.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-none d-xl-inline">
+                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab
                 </a>
                 <?php if ($isLoggedIn): ?>
-                    <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold">
-                        <i class="fa-solid fa-briefcase me-1"></i> Dashboard Freelance
+                    <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white" style="background: #0d2e5c;">
+                        <i class="fa-solid fa-briefcase me-1"></i> Dashboard
                     </a>
                 <?php else: ?>
-                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold">
+                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white" style="background: #0d2e5c;">
                         <i class="fa-solid fa-user me-1"></i> Masuk
                     </a>
                 <?php endif; ?>
             </div>
-        </div>
     </nav>
 
     <!-- COURSE SUBNAV BAR (Skillance Quick Nav Bar) -->
@@ -330,14 +338,17 @@ $isLoggedIn = !empty($userId);
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="roadmap.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
-                    <i class="fa-solid fa-map-location-dot me-2"></i> Lihat Roadmap Belajar &raquo;
+                <a href="projects.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
+                    <i class="fa-solid fa-laptop-code me-2"></i> E-Book & Kit Proyek Industri &raquo;
                 </a>
-                <a href="learn.php?c=html" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                    <i class="fa-solid fa-play me-2"></i> Mulai dari HTML
+                <a href="roadmap.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-map-location-dot me-2 text-warning"></i> Roadmap Belajar
                 </a>
-                <a href="tryit.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                    <i class="fa-solid fa-code me-2"></i> Code Lab Editor
+                <a href="partner.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-building-columns me-2 text-info"></i> Kemitraan Kampus / UKM
+                </a>
+                <a href="verify.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-shield-halved me-2 text-success"></i> Cek Sertifikat
                 </a>
             </div>
         </div>
@@ -865,6 +876,61 @@ $isLoggedIn = !empty($userId);
                         </p>
                         <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-navy btn-sm rounded-pill px-4 py-2 fw-bold align-self-start">
                             <i class="fa-solid fa-briefcase me-1"></i> Buka Bursa Freelance &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ECOSYSTEM HIGHLIGHT (PROJECT KITS, CAMPUS PARTNERSHIP, CERTIFICATION) -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container py-2">
+            <div class="row g-4 align-items-stretch">
+                <!-- BOX 1: PROJECT KITS -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold mb-3">Project-Based Learning</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">E-Book & Full Source Code Siap Pakai</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Pelajari studi kasus nyata: <strong>Website Desa Modern</strong> (Laravel + Vue), <strong>Aplikasi Kasir POS Thermal</strong>, dan <strong>E-Commerce Midtrans</strong>. Lengkap dengan lisensi komersial untuk skripsi atau dijual ke klien!
+                            </p>
+                        </div>
+                        <a href="projects.php" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold align-self-start" style="background: #0d2e5c;">
+                            <i class="fa-solid fa-book-bookmark text-warning me-1"></i> Buka Katalog E-Book &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BOX 2: CAMPUS & UKM PARTNERSHIP -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-primary text-white px-3 py-1 rounded-pill small fw-bold mb-3">Kolaborasi Organisasi</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">Kemitraan BEM & UKM Mahasiswa</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Ingin mengadakan workshop koding di kampus? Skillance Academy menyediakan pemateri, modul, dan sertifikat SKPI dengan sistem <strong>Bagi Hasil Kas UKM 40%–50%</strong> tanpa biaya kerjasama awal.
+                            </p>
+                        </div>
+                        <a href="partner.php" class="btn btn-outline-navy btn-sm rounded-pill px-4 py-2 fw-bold align-self-start text-navy" style="border-color: #0d2e5c;">
+                            <i class="fa-solid fa-handshake me-1"></i> Ajukan Kolaborasi Kampus &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BOX 3: DIGITAL CERTIFICATION -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-success text-white px-3 py-1 rounded-pill small fw-bold mb-3">Resmi & Terverifikasi</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">Verifikasi Sertifikat Digital SKPI</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Setiap kelulusan jalur belajar diterbitkan sertifikat resmi dengan QR Code dan nomor registrasi unik yang dapat divalidasi langsung oleh pihak kampus dan HRD perusahaan secara realtime.
+                            </p>
+                        </div>
+                        <a href="verify.php" class="btn btn-outline-secondary btn-sm rounded-pill px-4 py-2 fw-bold align-self-start">
+                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Keaslian Sertifikat &raquo;
                         </a>
                     </div>
                 </div>

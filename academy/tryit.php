@@ -270,6 +270,12 @@ if (empty($initialCode)) {
             <a href="roadmap.php" class="btn btn-sm btn-outline-navy rounded-pill px-2 px-sm-3 fw-bold" style="font-size: 0.78rem;">
                 <i class="fa-solid fa-map-location-dot text-gold me-1"></i> <span class="d-none d-sm-inline">Roadmap</span>
             </a>
+            <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-2 px-sm-3 fw-bold d-none d-md-inline" style="font-size: 0.78rem;">
+                <i class="fa-solid fa-book-bookmark text-warning me-1"></i> <span class="d-none d-sm-inline">Proyek</span>
+            </a>
+            <a href="verify.php" class="btn btn-sm btn-outline-secondary rounded-pill px-2 px-sm-3 fw-bold d-none d-lg-inline" style="font-size: 0.78rem;">
+                <i class="fa-solid fa-shield-halved text-success me-1"></i> <span class="d-none d-sm-inline">Sertifikat</span>
+            </a>
             <span class="d-none d-lg-inline text-navy fw-bold ms-2" style="font-size: 0.92rem;">
                 <i class="fa-solid fa-graduation-cap text-gold me-1"></i> Skillance Code Lab
             </span>
