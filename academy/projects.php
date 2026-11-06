@@ -339,6 +339,30 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
             color: var(--navy);
         }
 
+        .btn-sample-pdf {
+            background-color: #fff1f2;
+            border: 1px dashed #f43f5e;
+            color: #e11d48;
+            font-weight: 700;
+            font-size: 0.84rem;
+            padding: 9px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .btn-sample-pdf:hover {
+            background-color: #ffe4e6;
+            border-color: #e11d48;
+            color: #be123c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
+        }
+
         /* Filter Tabs */
         .filter-btn {
             border: 1px solid #cbd5e1;
@@ -561,6 +585,11 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                     </div>
                                 </div>
 
+                                <!-- BUTTON SAMPLE BAB 1 GRATIS (PDF) -->
+                                <button type="button" class="btn btn-sample-pdf mb-2" data-bs-toggle="modal" data-bs-target="#sampleModal-<?= $p['id'] ?>">
+                                    <i class="fa-solid fa-file-pdf fs-6 text-danger me-1"></i> Download Sample Bab 1 & Daftar Isi Gratis
+                                </button>
+
                                 <div class="row g-2">
                                     <div class="col-sm-5 col-12">
                                         <button class="btn btn-detail-action w-100" data-bs-toggle="modal" data-bs-target="#modal-<?= $p['id'] ?>">
@@ -612,7 +641,7 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                     </ol>
                                 </div>
 
-                                <div class="p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50 small">
+                                <div class="p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50 small mb-3">
                                     <strong><i class="fa-solid fa-box-open me-1 text-warning"></i> Apa Saja yang Anda Dapatkan?</strong>
                                     <ul class="mb-0 mt-1 ps-3">
                                         <li>File E-Book PDF Lengkap (<?= $p['pages'] ?>) beresolusi tinggi dan siap cetak.</li>
@@ -621,6 +650,17 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                         <li>Lisensi penggunaan komersial tanpa batas untuk skripsi atau dijual ke klien.</li>
                                         <li>Konsultasi jika mengalami kendala instalasi di komputer lokal.</li>
                                     </ul>
+                                </div>
+
+                                <!-- SAMPLE CALLOUT IN DETAIL MODAL -->
+                                <div class="p-3 rounded-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                    <div>
+                                        <h6 class="fw-bold text-danger mb-1" style="font-size: 0.88rem;"><i class="fa-solid fa-file-pdf me-1"></i> Ingin Baca Contohnya Dulu?</h6>
+                                        <p class="text-muted small mb-0" style="font-size: 0.78rem;">Dapatkan Sampel Gratis Bab 1 & Daftar Isi Lengkap berformat PDF siap cetak.</p>
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#sampleModal-<?= $p['id'] ?>">
+                                        Buka Sampel Gratis &raquo;
+                                    </button>
                                 </div>
                             </div>
                             <div class="modal-footer bg-light justify-content-between p-3">
@@ -634,6 +674,87 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                         <i class="fa-brands fa-whatsapp fs-5"></i> Beli Sekarang via WA
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAMPLE DOWNLOAD & LEAD CAPTURE MODAL -->
+                <div class="modal fade" id="sampleModal-<?= $p['id'] ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+                            <div class="modal-header text-white" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%);">
+                                <div>
+                                    <span class="badge bg-danger text-white px-2 py-1 rounded-pill small mb-1">
+                                        <i class="fa-solid fa-file-pdf me-1"></i> FREE PREVIEW PDF
+                                    </span>
+                                    <h5 class="modal-title fw-bold font-heading text-white fs-6">Unduh Sampel Bab 1 & Daftar Isi Gratis</h5>
+                                </div>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4">
+                                <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-light border mb-3">
+                                    <div class="bg-danger bg-opacity-10 text-danger rounded-3 p-2 fs-3 text-center d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                        <i class="fa-solid fa-book-open"></i>
+                                    </div>
+                                    <div>
+                                        <strong class="d-block text-navy small fw-bold"><?= htmlspecialchars($p['title']) ?></strong>
+                                        <span class="text-muted small" style="font-size: 0.75rem;">Bab 1 Lengkap, Analisis Kebutuhan, & Skema Database ERD</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-muted small mb-3" style="line-height: 1.6;">
+                                    Silakan isi data berikut untuk menerima sampel bab gratis (PDF). Dokumen dapat Anda baca langsung di browser dan di-download/dicetak:
+                                </p>
+
+                                <form onsubmit="handleLeadSubmit(event, '<?= $p['id'] ?>', '<?= addslashes($p['title']) ?>')">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-navy">Nama Lengkap Anda <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white"><i class="fa-regular fa-user text-muted"></i></span>
+                                            <input type="text" name="full_name" class="form-control" placeholder="Contoh: Muhammad Farhan" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-navy">Nomor WhatsApp Aktif <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white"><i class="fa-brands fa-whatsapp text-success"></i></span>
+                                            <input type="tel" name="whatsapp" class="form-control" placeholder="Contoh: 081234567890" required>
+                                        </div>
+                                        <small class="text-muted" style="font-size: 0.72rem;">Untuk pengiriman link update dan voucher diskon khusus mahasiswa.</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-navy">Alamat Email <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white"><i class="fa-regular fa-envelope text-muted"></i></span>
+                                            <input type="email" name="email" class="form-control" placeholder="nama@email.com" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-navy">Status / Profesi</label>
+                                        <select name="profession" class="form-select small">
+                                            <option value="Mahasiswa Tingkat Akhir (Skripsi)">Mahasiswa Tingkat Akhir (Sedang Skripsi/TA)</option>
+                                            <option value="Mahasiswa Baru / Menengah">Mahasiswa Semester 1 - 6</option>
+                                            <option value="Freelancer Web Developer">Freelancer Web Developer</option>
+                                            <option value="Programmer / Junior Engineer">Programmer / Junior Engineer</option>
+                                            <option value="Dosen / Pengajar">Dosen / Tenaga Pendidik</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="checkbox" id="agree-<?= $p['id'] ?>" checked required>
+                                        <label class="form-check-label small text-muted" for="agree-<?= $p['id'] ?>" style="font-size: 0.76rem;">
+                                            Saya setuju menerima sampel bab gratis dan informasi diskon modul Skillance Academy.
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-danger w-100 fw-bold py-2 rounded-pill shadow-sm" id="btn-submit-<?= $p['id'] ?>">
+                                        <i class="fa-solid fa-file-pdf me-1"></i> Buka & Download Sampel Bab 1 (PDF) &raquo;
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -693,6 +814,44 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                 } else {
                     it.style.display = 'none';
                 }
+            });
+        }
+
+        function handleLeadSubmit(event, productId, productTitle) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = document.getElementById('btn-submit-' + productId);
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Menyiapkan Dokumen Sampel...';
+
+            const formData = new FormData(form);
+            formData.append('product_id', productId);
+            formData.append('product_title', productTitle);
+
+            fetch('api/save_lead.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.preview_url) {
+                    const modalEl = document.getElementById('sampleModal-' + productId);
+                    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+                    window.location.href = data.preview_url;
+                } else {
+                    alert(data.message || 'Terjadi kendala saat menyiapkan sampel.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                window.location.href = 'sample_preview.php?pid=' + encodeURIComponent(productId);
             });
         }
     </script>
