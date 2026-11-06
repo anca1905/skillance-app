@@ -216,35 +216,46 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
             position: relative;
         }
 
-        /* Project Cards */
+        /* Project Cards UI/UX Redesign */
         .project-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100%;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
         }
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(13, 46, 92, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(13, 46, 92, 0.12);
             border-color: #cbd5e1;
         }
 
         .project-header-cover {
-            background: linear-gradient(135deg, #0d2e5c 0%, #061a35 100%);
-            padding: 24px 20px;
+            background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%);
+            padding: 24px 26px;
             color: white;
             position: relative;
+            border-bottom: 3px solid #fca311;
+        }
+
+        .suitable-box {
+            background: #fffdf5;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
         }
 
         .tech-pill {
             background: #f1f5f9;
             color: #1e293b;
-            font-size: 0.74rem;
+            font-size: 0.76rem;
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 6px;
@@ -252,50 +263,68 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
             display: inline-block;
         }
 
-        .price-badge {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 1.15rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .feature-list {
+            margin: 0;
+            padding: 0;
         }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .feature-item i {
+            margin-top: 3px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
         .price-old {
             text-decoration: line-through;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             color: #94a3b8;
             font-weight: 600;
+        }
+        .price-current {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.1;
         }
 
         .btn-order-wa {
             background-color: #25D366;
             color: #ffffff;
-            font-weight: 800;
-            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 10px 18px;
             border-radius: 10px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s;
             border: none;
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
         }
         .btn-order-wa:hover {
             background-color: #1ebe5d;
             color: #ffffff;
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
         }
 
-        .btn-detail {
+        .btn-detail-action {
             background-color: #ffffff;
             color: var(--navy);
             border: 1px solid #cbd5e1;
             font-weight: 700;
-            padding: 9px 16px;
+            font-size: 0.88rem;
+            padding: 10px 14px;
             border-radius: 10px;
             text-decoration: none;
             display: inline-flex;
@@ -304,8 +333,8 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
             gap: 6px;
             transition: all 0.2s;
         }
-        .btn-detail:hover {
-            background-color: #f8fafc;
+        .btn-detail-action:hover {
+            background-color: #f1f5f9;
             border-color: var(--navy);
             color: var(--navy);
         }
@@ -337,6 +366,21 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
             }
             .project-card {
                 margin-bottom: 20px;
+            }
+        }
+        @media (max-width: 576px) {
+            .project-header-cover {
+                padding: 18px 16px;
+            }
+            .project-card .p-4 {
+                padding: 18px 16px !important;
+            }
+            .price-current {
+                font-size: 1.35rem;
+            }
+            .btn-order-wa, .btn-detail-action {
+                font-size: 0.82rem;
+                padding: 8px 12px;
             }
         }
     </style>
@@ -445,10 +489,12 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                         <!-- COVER HEADER -->
                         <div class="project-header-cover">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge <?= $p['badge_color'] ?> px-3 py-2 rounded-pill fw-bold" style="font-size: 0.75rem;">
+                                <span class="badge <?= $p['badge_color'] ?> px-3 py-1 rounded-pill fw-bold" style="font-size: 0.75rem;">
                                     <i class="fa-solid fa-star me-1"></i> <?= $p['badge'] ?>
                                 </span>
-                                <span class="small" style="color: #cbd5e1;"><i class="fa-solid fa-file-pdf text-danger me-1"></i> <?= $p['pages'] ?></span>
+                                <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-25 px-3 py-1 rounded-pill" style="font-size: 0.74rem;">
+                                    <i class="fa-solid fa-file-pdf text-danger me-1"></i> <?= $p['pages'] ?>
+                                </span>
                             </div>
                             <h4 class="fw-bold text-white font-heading mb-2" style="font-size: 1.25rem; line-height: 1.4;">
                                 <?= htmlspecialchars($p['title']) ?>
@@ -458,12 +504,21 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                             </p>
                         </div>
 
-                        <!-- CARD BODY -->
-                        <div class="p-4 flex-grow-1 d-flex flex-direction-column justify-content-between">
+                        <!-- CARD BODY (STRICT VERTICAL STACK WITH FLEX-COLUMN) -->
+                        <div class="p-4 d-flex flex-column flex-grow-1 justify-content-between">
                             <div>
+                                <!-- SUITABLE FOR ALERT BOX -->
+                                <div class="suitable-box mb-3">
+                                    <i class="fa-solid fa-bullseye text-warning fs-5 mt-1"></i>
+                                    <div>
+                                        <strong class="d-block text-dark" style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;">Rekomendasi Terbaik Untuk:</strong>
+                                        <span class="text-secondary" style="font-size: 0.85rem; line-height: 1.5;"><?= htmlspecialchars($p['suitable_for']) ?></span>
+                                    </div>
+                                </div>
+
                                 <!-- TECH STACK PILLS -->
                                 <div class="mb-3">
-                                    <span class="small text-muted fw-bold d-block mb-1">Teknologi Utama:</span>
+                                    <span class="text-uppercase text-muted fw-bold d-block mb-2" style="font-size: 0.72rem; letter-spacing: 0.6px;">Tech Stack Utama:</span>
                                     <div class="d-flex flex-wrap gap-1">
                                         <?php foreach ($p['tech'] as $t): ?>
                                             <span class="tech-pill"><?= htmlspecialchars($t) ?></span>
@@ -471,18 +526,13 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                     </div>
                                 </div>
 
-                                <!-- SUITABLE FOR -->
-                                <div class="p-2 rounded-2 bg-light border mb-3 small">
-                                    <i class="fa-solid fa-bullseye text-warning me-1"></i> <strong>Sangat Cocok Untuk:</strong> <?= htmlspecialchars($p['suitable_for']) ?>
-                                </div>
-
-                                <!-- TOP FEATURES -->
-                                <div class="mb-3">
-                                    <span class="small text-muted fw-bold d-block mb-2">Fitur Unggulan Sistem:</span>
-                                    <ul class="list-unstyled small mb-0">
+                                <!-- TOP FEATURES CHECKLIST -->
+                                <div class="mb-2">
+                                    <span class="text-uppercase text-muted fw-bold d-block mb-2" style="font-size: 0.72rem; letter-spacing: 0.6px;">Fitur Unggulan Sistem:</span>
+                                    <ul class="feature-list list-unstyled mb-0">
                                         <?php foreach (array_slice($p['features'], 0, 4) as $ft): ?>
-                                            <li class="mb-1 text-secondary d-flex align-items-start gap-2">
-                                                <i class="fa-solid fa-circle-check text-success mt-1"></i>
+                                            <li class="feature-item">
+                                                <i class="fa-solid fa-circle-check text-success"></i>
                                                 <span><?= htmlspecialchars($ft) ?></span>
                                             </li>
                                         <?php endforeach; ?>
@@ -491,27 +541,36 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                             </div>
 
                             <!-- CARD FOOTER & PRICING -->
-                            <div class="pt-3 border-top mt-3">
+                            <div class="pt-3 mt-3 border-top">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
-                                        <span class="price-old d-block"><?= $p['price_old'] ?></span>
-                                        <div class="price-badge">
-                                            <span><?= $p['price_now'] ?></span>
-                                            <span class="badge bg-danger text-white rounded-pill" style="font-size: 0.65rem;">HEMAT 60%</span>
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="price-old"><?= $p['price_old'] ?></span>
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle fw-bold rounded-pill px-2 py-0" style="font-size: 0.7rem;">HEMAT 60%</span>
+                                        </div>
+                                        <div class="price-current font-heading text-navy">
+                                            <?= $p['price_now'] ?>
                                         </div>
                                     </div>
-                                    <div class="text-end small text-muted">
-                                        <i class="fa-solid fa-infinity text-primary me-1"></i> Akses Selamanya
+                                    <div class="text-end">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 fw-bold small">
+                                            <i class="fa-solid fa-infinity me-1"></i> Akses Selamanya
+                                        </span>
+                                        <small class="d-block text-muted mt-1" style="font-size: 0.72rem;">Full Source Code + PDF</small>
                                     </div>
                                 </div>
 
-                                <div class="d-flex gap-2">
-                                    <button class="btn-detail flex-fill" data-bs-toggle="modal" data-bs-target="#modal-<?= $p['id'] ?>">
-                                        <i class="fa-solid fa-list-ul"></i> Lihat Bab & Fitur
-                                    </button>
-                                    <a href="<?= $waUrl ?>" target="_blank" class="btn-order-wa flex-fill">
-                                        <i class="fa-brands fa-whatsapp fs-5"></i> Dapatkan Kit
-                                    </a>
+                                <div class="row g-2">
+                                    <div class="col-sm-5 col-12">
+                                        <button class="btn btn-detail-action w-100" data-bs-toggle="modal" data-bs-target="#modal-<?= $p['id'] ?>">
+                                            <i class="fa-solid fa-list-ul"></i> Detail & Bab
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-7 col-12">
+                                        <a href="<?= $waUrl ?>" target="_blank" class="btn btn-order-wa w-100">
+                                            <i class="fa-brands fa-whatsapp fs-5"></i> Dapatkan Kit & Code
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -522,8 +581,8 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                 <!-- DETAIL MODAL FOR THIS PROJECT -->
                 <div class="modal fade" id="modal-<?= $p['id'] ?>" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-navy text-white" style="background: #0d2e5c;">
+                        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+                            <div class="modal-header text-white" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%);">
                                 <div>
                                     <span class="badge <?= $p['badge_color'] ?> px-2 py-1 rounded-pill small mb-1"><?= $p['badge'] ?></span>
                                     <h5 class="modal-title fw-bold font-heading text-white"><?= htmlspecialchars($p['title']) ?></h5>
@@ -563,14 +622,14 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
                                     </ul>
                                 </div>
                             </div>
-                            <div class="modal-footer bg-light justify-content-between">
+                            <div class="modal-footer bg-light justify-content-between p-3">
                                 <div>
-                                    <span class="price-old d-block"><?= $p['price_old'] ?></span>
-                                    <strong class="text-navy fs-5"><?= $p['price_now'] ?></strong>
+                                    <span class="price-old d-block" style="font-size: 0.8rem;"><?= $p['price_old'] ?></span>
+                                    <strong class="text-navy fs-5 font-heading"><?= $p['price_now'] ?></strong>
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button type="button" class="btn btn-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">Tutup</button>
-                                    <a href="<?= $waUrl ?>" target="_blank" class="btn-order-wa btn-sm px-4">
+                                    <a href="<?= $waUrl ?>" target="_blank" class="btn btn-order-wa btn-sm px-4">
                                         <i class="fa-brands fa-whatsapp fs-5"></i> Beli Sekarang via WA
                                     </a>
                                 </div>
@@ -581,7 +640,6 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsun
 
             <?php endforeach; ?>
         </div>
-
         <!-- SPECIAL BUNDLE PROMO BANNER -->
         <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #0d2e5c 0%, #071a35 70%, #04AA6D 100%);">
             <div class="row align-items-center">

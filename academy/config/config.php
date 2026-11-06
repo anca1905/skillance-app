@@ -37,8 +37,13 @@ $user = $_ENV['DB_USERNAME'] ?? (function_exists('getenv') && getenv('DB_USERNAM
 $pass = $_ENV['DB_PASSWORD'] ?? (function_exists('getenv') && getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : "");
 $db   = $_ENV['DB_DATABASE'] ?? (function_exists('getenv') && getenv('DB_DATABASE') ? getenv('DB_DATABASE') : "skillance");
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die(json_encode(["status" => "error", "message" => "Database connection error: " . $conn->connect_error]));
+$conn = null;
+try {
+    mysqli_report(MYSQLI_REPORT_OFF);
+    $conn = @new mysqli($host, $user, $pass, $db);
+    if ($conn->connect_error) {
+        $conn = null;
+    }
+} catch (Throwable $e) {
+    $conn = null;
 }

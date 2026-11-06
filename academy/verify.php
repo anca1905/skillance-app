@@ -8,17 +8,21 @@ $errorMsg = '';
 
 if (!empty($certNo)) {
     $searched = true;
-    $stmt = $conn->prepare("SELECT * FROM `academy_certificates` WHERE `certificate_no` = ? LIMIT 1");
-    if ($stmt) {
-        $stmt->bind_param('s', $certNo);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if ($res && $res->num_rows > 0) {
-            $certificate = $res->fetch_assoc();
-        } else {
-            $errorMsg = "Nomor sertifikat <strong>" . htmlspecialchars($certNo) . "</strong> tidak ditemukan dalam basis data resmi Skillance Academy.";
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT * FROM `academy_certificates` WHERE `certificate_no` = ? LIMIT 1");
+        if ($stmt) {
+            $stmt->bind_param('s', $certNo);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($res && $res->num_rows > 0) {
+                $certificate = $res->fetch_assoc();
+            } else {
+                $errorMsg = "Nomor sertifikat <strong>" . htmlspecialchars($certNo) . "</strong> tidak ditemukan dalam basis data resmi Skillance Academy.";
+            }
+            $stmt->close();
         }
-        $stmt->close();
+    } else {
+        $errorMsg = "Sistem basis data verifikasi sedang dalam pemeliharaan. Silakan coba kembali beberapa saat lagi.";
     }
 }
 
