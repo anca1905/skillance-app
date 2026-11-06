@@ -819,19 +819,24 @@ $isLoggedIn = !empty($userId);
                     <div class="card border-0 rounded-4 p-4 shadow-sm" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-left: 4px solid var(--gold) !important;">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="bg-navy text-gold p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                                <i class="fa-solid fa-handshake fs-4"></i>
+                                <i class="fa-solid fa-graduation-cap fs-4 text-warning"></i>
                             </div>
                             <div>
-                                <h5 class="fw-bold text-navy mb-0">Mitra Komunitas & Kampus</h5>
-                                <small class="text-muted">Multimedia Study Club (MSC) USN Kolaka</small>
+                                <h5 class="fw-bold text-navy mb-0">Rencana Kemitraan Kampus & Fakultas</h5>
+                                <small class="text-muted">Workshop Koding & Sertifikasi SKPI Mahasiswa</small>
                             </div>
                         </div>
                         <p class="text-secondary small mb-3" style="line-height: 1.7;">
-                            Skillance Academy berkolaborasi aktif dengan organisasi mahasiswa dan komunitas riset teknologi di kampus lokal untuk mencetak talenta programmer dan desainer siap industri dari daerah.
+                            Skillance Academy membuka program kemitraan bagi perguruan tinggi, fakultas, dan organisasi mahasiswa untuk menyelenggarakan workshop teknologi terapan, pembekalan skripsi, serta penerbitan sertifikat kompetensi SKPI resmi.
                         </p>
-                        <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-navy btn-sm rounded-pill px-4 py-2 fw-bold align-self-start">
-                            <i class="fa-solid fa-briefcase me-1"></i> Buka Bursa Freelance &raquo;
-                        </a>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="partner.php" class="btn btn-navy btn-sm rounded-pill px-3 py-2 fw-bold" style="background: #0d2e5c;">
+                                <i class="fa-solid fa-file-pdf text-warning me-1"></i> Pelajari Proposal Kerjasama &raquo;
+                            </a>
+                            <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
