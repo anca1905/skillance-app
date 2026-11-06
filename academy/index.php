@@ -327,6 +327,7 @@ $isLoggedIn = !empty($userId);
             <a href="roadmap.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP BELAJAR</a>
             <a href="projects.php" class="course-nav-item text-gold"><i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK</a>
             <a href="exam.php" class="course-nav-item text-gold"><i class="fa-solid fa-award me-1"></i> UJIAN SKPI</a>
+            <a href="my-learning.php" class="course-nav-item"><i class="fa-solid fa-user-graduate me-1"></i> Dasbor Siswa</a>
             <a href="partner.php" class="course-nav-item text-gold"><i class="fa-solid fa-building-columns me-1"></i> MITRA KAMPUS</a>
             <a href="verify.php" class="course-nav-item text-gold"><i class="fa-solid fa-certificate me-1"></i> CEK SERTIFIKAT</a>
         </div>

@@ -362,6 +362,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
             <a href="roadmap.php" class="course-nav-item"><i class="fa-solid fa-route me-1"></i> Roadmap Karier</a>
             <a href="projects.php" class="course-nav-item"><i class="fa-solid fa-laptop-code me-1"></i> Kit Studi Kasus Riil</a>
             <a href="exam.php" class="course-nav-item active"><i class="fa-solid fa-award me-1 text-gold"></i> Ujian Sertifikasi SKPI</a>
+            <a href="my-learning.php" class="course-nav-item"><i class="fa-solid fa-user-graduate me-1"></i> Dasbor Siswa</a>
             <a href="verify.php" class="course-nav-item"><i class="fa-solid fa-certificate me-1"></i> Cek Keaslian Sertifikat</a>
         </div>
     </div>
