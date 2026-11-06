@@ -229,8 +229,11 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk kemitraan kampus
                 <a href="#formKemitraan" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
                     <i class="fa-solid fa-paper-plane me-2"></i> Ajukan Kolaborasi Sekarang &raquo;
                 </a>
+                <a href="proposal.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-file-pdf me-2 text-warning"></i> Download Proposal Resmi (PDF)
+                </a>
                 <a href="https://wa.me/<?= $adminWa ?>?text=Halo%20Admin%20Skillance,%20saya%20pengurus%20UKM/Himpunan%20ingin%20konsultasi%20kerja%20sama%20event%20koding." target="_blank" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                    <i class="fa-brands fa-whatsapp me-2 fs-5"></i> Konsultasi via WhatsApp
+                    <i class="fa-brands fa-whatsapp me-2 fs-5 text-success"></i> Konsultasi via WhatsApp
                 </a>
             </div>
         </div>
@@ -389,6 +392,33 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk kemitraan kampus
 
         </div>
 
+        <!-- SECTION: PROPOSAL & SURAT PENGANTAR RESMI (DOWNLOAD / CETAK) -->
+        <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 65%, #04AA6D 100%);">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase">
+                        <i class="fa-solid fa-file-contract me-1"></i> Berkas Resmi Siap Bawa
+                    </span>
+                    <h2 class="display-6 fw-bold font-heading mb-2 text-white">Butuh Proposal untuk Rapat BEM / Dosen Pembina?</h2>
+                    <p class="text-white-50 mb-3" style="font-size: 0.98rem; line-height: 1.8;">
+                        Pengurus ormawa tidak perlu repot menyusun dokumen proposal dari nol. Kami telah menyiapkan <strong>Surat Pengantar Resmi ber-Kop Surat Skillance Digital Indonesia</strong>, rincian silabus workshop siap pakai, dan simulasi pembagian hasil kas ormawa 50:50 yang dapat langsung Anda cetak atau simpan sebagai PDF!
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 text-white-50 small mb-4 mb-lg-0">
+                        <span class="badge bg-white bg-opacity-10 border border-white border-opacity-25 rounded-pill px-3 py-1"><i class="fa-solid fa-stamp text-warning me-1"></i> Kop & Stempel Resmi</span>
+                        <span class="badge bg-white bg-opacity-10 border border-white border-opacity-25 rounded-pill px-3 py-1"><i class="fa-solid fa-list-check text-info me-1"></i> Silabus 4 Topik Unggulan</span>
+                        <span class="badge bg-white bg-opacity-10 border border-white border-opacity-25 rounded-pill px-3 py-1"><i class="fa-solid fa-calculator text-success me-1"></i> Simulasi Bagi Hasil 50%</span>
+                        <span class="badge bg-white bg-opacity-10 border border-white border-opacity-25 rounded-pill px-3 py-1"><i class="fa-solid fa-print text-white me-1"></i> Format Standar Cetak A4</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="proposal.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow w-100 mb-2">
+                        <i class="fa-solid fa-file-pdf fs-5 me-1 text-danger"></i> Buka Proposal Resmi (PDF) &raquo;
+                    </a>
+                    <small class="d-block text-white-50 text-center" style="font-size: 0.75rem;">*Bisa disesuaikan dengan nama kampus & ormawa Anda</small>
+                </div>
+            </div>
+        </div>
+
         <!-- FORM INTERAKTIF PENGAJUAN KEMITRAAN -->
         <div id="formKemitraan" class="form-card mt-5">
             <div class="row g-4 align-items-center">
@@ -489,6 +519,13 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk kemitraan kampus
             
             const targetUrl = `https://wa.me/<?= $adminWa ?>?text=` + encodeURIComponent(text);
             window.open(targetUrl, '_blank');
+
+            const propUrl = `proposal.php?campus=` + encodeURIComponent(campus) + `&org=` + encodeURIComponent(org) + `&pic=` + encodeURIComponent(name);
+            setTimeout(() => {
+                if (confirm("Pesan WhatsApp telah disiapkan! Apakah Anda ingin langsung membuka Surat Pengantar & Proposal Resmi bertuliskan nama kampus/organisasi Anda?")) {
+                    window.location.href = propUrl;
+                }
+            }, 600);
         }
     </script>
 </body>
