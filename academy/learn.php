@@ -531,6 +531,9 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             <a href="projects.php" class="course-nav-link text-gold">
                 <i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK
             </a>
+            <a href="exam.php" class="course-nav-link text-gold">
+                <i class="fa-solid fa-award me-1"></i> UJIAN SKPI
+            </a>
             <a href="partner.php" class="course-nav-link text-gold">
                 <i class="fa-solid fa-building-columns me-1"></i> KEMITRAAN KAMPUS
             </a>

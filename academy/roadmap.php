@@ -517,6 +517,7 @@ if (!in_array($activePath, $validPaths)) {
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold active ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP</a>
             <a href="projects.php" class="course-nav-item text-gold"><i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK</a>
+            <a href="exam.php" class="course-nav-item text-gold"><i class="fa-solid fa-award me-1"></i> UJIAN SKPI</a>
             <a href="partner.php" class="course-nav-item text-gold"><i class="fa-solid fa-building-columns me-1"></i> KEMITRAAN KAMPUS</a>
             <a href="verify.php" class="course-nav-item text-gold"><i class="fa-solid fa-certificate me-1"></i> CEK SERTIFIKAT</a>
         </div>

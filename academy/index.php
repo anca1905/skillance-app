@@ -279,6 +279,9 @@ $isLoggedIn = !empty($userId);
             </a>
 
             <div class="d-flex align-items-center gap-2 ms-auto">
+                <a href="exam.php" class="btn btn-sm btn-success rounded-pill px-3 py-2 fw-bold text-white d-none d-lg-inline">
+                    <i class="fa-solid fa-award me-1"></i> Ujian SKPI
+                </a>
                 <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 py-2 d-none d-sm-inline">
                     <i class="fa-solid fa-book-bookmark text-warning me-1"></i> E-Book & Proyek
                 </a>
@@ -322,7 +325,10 @@ $isLoggedIn = !empty($userId);
             <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
             <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
             <a href="roadmap.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-map-location-dot me-1"></i> ROADMAP BELAJAR</a>
-            <a href="tryit.php" class="course-nav-item text-gold"><i class="fa-solid fa-bolt me-1"></i> TRY IT YOURSELF</a>
+            <a href="projects.php" class="course-nav-item text-gold"><i class="fa-solid fa-laptop-code me-1"></i> KIT PROYEK</a>
+            <a href="exam.php" class="course-nav-item text-gold"><i class="fa-solid fa-award me-1"></i> UJIAN SKPI</a>
+            <a href="partner.php" class="course-nav-item text-gold"><i class="fa-solid fa-building-columns me-1"></i> MITRA KAMPUS</a>
+            <a href="verify.php" class="course-nav-item text-gold"><i class="fa-solid fa-certificate me-1"></i> CEK SERTIFIKAT</a>
         </div>
     </div>
 
@@ -338,6 +344,9 @@ $isLoggedIn = !empty($userId);
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="exam.php" class="btn btn-success btn-lg fw-bold px-4 py-3 rounded-pill shadow">
+                    <i class="fa-solid fa-award me-2"></i> Ikuti Ujian Sertifikasi SKPI &raquo;
+                </a>
                 <a href="projects.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
                     <i class="fa-solid fa-laptop-code me-2"></i> E-Book & Kit Proyek Industri &raquo;
                 </a>
@@ -929,9 +938,14 @@ $isLoggedIn = !empty($userId);
                                 Setiap kelulusan jalur belajar diterbitkan sertifikat resmi dengan QR Code dan nomor registrasi unik yang dapat divalidasi langsung oleh pihak kampus dan HRD perusahaan secara realtime.
                             </p>
                         </div>
-                        <a href="verify.php" class="btn btn-outline-secondary btn-sm rounded-pill px-4 py-2 fw-bold align-self-start">
-                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Keaslian Sertifikat &raquo;
-                        </a>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="exam.php" class="btn btn-success btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-award me-1"></i> Ikuti Ujian Sertifikasi &raquo;
+                            </a>
+                            <a href="verify.php" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Keaslian &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
