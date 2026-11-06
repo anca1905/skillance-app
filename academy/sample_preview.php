@@ -314,7 +314,7 @@ HTML
 ];
 
 $book = $samples[$productId] ?? $samples['sidesa-laravel'];
-$adminWa = "62895325697419";
+$adminWa = "6282291700778";
 $waOrderMsg = urlencode("Halo Admin Skillance Academy, saya sudah membaca sampel Bab 1 & Daftar Isi e-book *{$book['title']}* atas nama *{$leadName}*. Saya berminat memesan Full Source Code & E-Book Lengkapnya!");
 $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
 ?>

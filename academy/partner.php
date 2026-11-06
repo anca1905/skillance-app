@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/config/config.php';
 
-$adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk kemitraan kampus
+$adminWa = "6282291700778"; // Nomor WhatsApp Skillance untuk kemitraan kampus
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -435,7 +435,7 @@ $adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk kemitraan kampus
                             <i class="fa-brands fa-whatsapp fs-2 text-success"></i>
                             <div>
                                 <small class="text-muted d-block fw-semibold">Narahubung Cepat Kemitraan:</small>
-                                <strong class="text-navy">+62 895-3256-97419 (Admin Kemitraan)</strong>
+                                <strong class="text-navy">+62 822-9170-0778 (Admin Kemitraan)</strong>
                             </div>
                         </div>
                     </div>

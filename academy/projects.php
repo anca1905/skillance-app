@@ -125,7 +125,7 @@ $projects = [
     ]
 ];
 
-$adminWa = "62895325697419"; // Nomor WhatsApp Skillance untuk pemesanan langsung
+$adminWa = "6282291700778"; // Nomor WhatsApp Skillance untuk pemesanan langsung
 ?>
 <!DOCTYPE html>
 <html lang="id">

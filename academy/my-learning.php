@@ -130,7 +130,7 @@ if (!empty($certificates)) {
     $avgScore = 92;
 }
 
-$adminWa = "62895325697419";
+$adminWa = "6282291700778";
 ?>
 <!DOCTYPE html>
 <html lang="id">

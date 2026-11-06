@@ -12,7 +12,7 @@ $recipientPic = $pic ?: 'Ketua / PIC Kemahasiswaan';
 $refNumber = 'SKL/EXT-KAMPUS/' . date('Y') . '/' . date('m') . '/' . rand(100, 999);
 $letterDate = date('d F Y');
 
-$adminWa = "62895325697419";
+$adminWa = "6282291700778";
 $waMsg = urlencode("Halo Admin Kemitraan Skillance Academy, kami dari {$recipientOrg} ({$recipientCampus}) ingin mendiskusikan proposal workshop koding & sertifikasi SKPI.");
 $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
 ?>
@@ -225,7 +225,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
                     <div class="kop-company-title">SKILLANCE DIGITAL INDONESIA</div>
                     <div class="fw-bold text-navy" style="font-size: 0.85rem; letter-spacing: 0.5px;">SKILLANCE ACADEMY — PUSAT PENGEMBANGAN TALENTA DIGITAL</div>
                     <div class="kop-sub mt-1">
-                        Jl. H. Supu Yusuf No. 18, Kendari, Sulawesi Tenggara &bull; WhatsApp: +62 895-3256-97419<br>
+                        Jl. H. Supu Yusuf No. 18, Kendari, Sulawesi Tenggara &bull; WhatsApp: +62 822-9170-0778<br>
                         Portal Resmi: <strong>academy.skillance.cloud</strong> &bull; Website: <strong>skillance.my.id</strong>
                     </div>
                 </div>
@@ -325,7 +325,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
                     Muh Arsyad Ramsi
                 </div>
                 <small class="d-block text-muted" style="font-size: 0.78rem;">Head of Technology & Academy Partnership</small>
-                <small class="d-block text-muted" style="font-size: 0.72rem;">Narahubung: +62 895-3256-97419</small>
+                <small class="d-block text-muted" style="font-size: 0.72rem;">Narahubung: +62 822-9170-0778</small>
             </div>
         </div>
 
@@ -542,7 +542,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
 
         <!-- FOOTER CONTACT -->
         <div class="mt-4 pt-3 border-top text-center text-muted small" style="font-size: 0.75rem;">
-            Kontak Konfirmasi & Pengiriman Berkas: <strong>Admin Kemitraan Skillance Academy (+62 895-3256-97419)</strong> &bull; Email: <strong>partnership@skillance.my.id</strong>
+            Kontak Konfirmasi & Pengiriman Berkas: <strong>Admin Kemitraan Skillance Academy (+62 822-9170-0778)</strong> &bull; Email: <strong>partnership@skillance.my.id</strong>
         </div>
 
     </article>
