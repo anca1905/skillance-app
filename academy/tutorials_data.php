@@ -131,18 +131,13 @@ foreach ($javaCategories as $catName => $catTopics) {
 }
 
 $cppData = require __DIR__ . '/data/cpp_tutorial.php';
-
 $cppCategories = $cppData['categories'] ?? [];
-
 $cppFlattenedTopics = [];
-
 foreach ($cppCategories as $catName => $catTopics) {
-
     foreach ($catTopics as $tKey => $tData) {
-
         $cppFlattenedTopics[$tKey] = $tData;
-
     }
+}
 
 $vueData = require __DIR__ . '/data/vue_tutorial.php';
 $vueCategories = $vueData['categories'] ?? [];
@@ -153,6 +148,13 @@ foreach ($vueCategories as $catName => $catTopics) {
     }
 }
 
+$flutterData = require __DIR__ . '/data/flutter_tutorial.php';
+$flutterCategories = $flutterData['categories'] ?? [];
+$flutterFlattenedTopics = [];
+foreach ($flutterCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $flutterFlattenedTopics[$tKey] = $tData;
+    }
 }
 
 $tutorials = [
@@ -348,115 +350,14 @@ $tutorials = [
     ],
 
     'flutter' => [
-
-        'name' => 'Flutter Mobile Tutorial',
-
+        'name' => 'Flutter & Dart Mobile Tutorial',
         'short_name' => 'Flutter',
-
-        'badge' => 'Multiplatform App',
-
+        'badge' => 'Cross-Platform Mobile & AI',
         'icon' => 'fa-solid fa-mobile-screen-button',
-
         'color' => '#0284c7',
-
-        'desc' => 'Flutter adalah toolkit UI dari Google untuk membangun aplikasi mobile native Android & iOS dari satu basis kode.',
-
-        'topics' => [
-
-            'intro' => [
-
-                'title' => 'Flutter Pengenalan & Bahasa Dart',
-
-                'summary' => 'Memahami ekosistem Flutter, keunggulan single codebase Android & iOS, dan dasar bahasa Dart.',
-
-                'content' => '
-
-                    <p class="lead">Flutter dikembangkan oleh Google untuk memungkinkan programmer membuat aplikasi Android, iOS, web, dan desktop hanya dengan satu basis kode (single codebase) menggunakan bahasa pemrograman <strong>Dart</strong>.</p>
-
-                    <h4>Keunggulan Utama Flutter:</h4>
-
-                    <ul>
-
-                        <li><strong>Hot Reload</strong>: Perubahan kode langsung tampil di layar emulator/HP dalam hitungan milidetik tanpa merestart aplikasi.</li>
-
-                        <li><strong>Performa Native</strong>: Flutter dikompilasi langsung ke kode mesin ARM native melalui engine grafis Skia / Impeller.</li>
-
-                        <li><strong>Sound Null Safety</strong>: Mencegah error crash null pointer exception saat aplikasi dijalankan.</li>
-
-                    </ul>
-
-                ',
-
-                'example_title' => 'Simulasi Tampilan Widget Flutter',
-
-                'example_code' => '<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    <style>
-
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 250px; background: #e0f2fe; margin: 0; }
-
-        .phone { width: 220px; height: 260px; background: white; border-radius: 24px; border: 4px solid #0284c7; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
-
-        .appbar { background: #0284c7; color: white; padding: 12px; font-weight: bold; text-align: center; font-size: 0.8rem; }
-
-        .body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; }
-
-        .btn-fab { background: #0284c7; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; margin-top: 10px; }
-
-    </style>
-
-</head>
-
-<body>
-
-    <div class="phone">
-
-        <div class="appbar">Aplikasi Flutter Pertama</div>
-
-        <div class="body">
-
-            <span style="font-size:0.75rem; color:#64748b;">Tombol Ditekan:</span>
-
-            <h2 id="angkaCounter" style="margin:5px 0; color:#0284c7;">0</h2>
-
-            <button class="btn-fab" onclick="let el=document.getElementById(\'angkaCounter\'); el.innerText=parseInt(el.innerText)+1;">+</button>
-
-        </div>
-
-    </div>
-
-</body>
-
-</html>',
-
-                'explanation' => '
-
-                    <h5 class="fw-bold mt-3">Konsep "Everything is a Widget":</h5>
-
-                    <p>Di Flutter, hampir seluruh elemen tampilan adalah Widget: teks adalah Text widget, tombol adalah ElevatedButton, tata letak adalah Row atau Column, dan layar dasar adalah Scaffold.</p>
-
-                ',
-
-                'quiz' => [
-
-                    'q' => 'Bahasa pemrograman apa yang digunakan untuk membuat aplikasi mobile dengan framework Flutter?',
-
-                    'options' => ['Java', 'Kotlin', 'Dart', 'Swift'],
-
-                    'answer' => 2,
-
-                    'explanation' => 'Flutter menggunakan bahasa pemrograman Dart yang dikembangkan oleh Google.'
-
-                ]
-
-            ]
-
-        ]
-
+        'desc' => 'Flutter adalah toolkit UI multiplatform dari Google untuk membangun aplikasi native Android, iOS, Web & Desktop dari satu basis kode Dart.',
+        'categories' => $flutterCategories,
+        'topics' => $flutterFlattenedTopics
     ],
 
     'uiux' => [

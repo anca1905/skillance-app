@@ -2100,43 +2100,79 @@ if (!in_array($activePath, $validPaths)) {
                 <div class="timeline-step">
                     <div class="timeline-node">1</div>
                     <div class="step-card">
-                        <span class="step-badge bg-info-subtle text-info-emphasis mb-2 d-inline-block">Tahap 1: Bahasa Dasar</span>
-                        <h4 class="fw-bold text-navy mb-2">Pemrograman Dart</h4>
-                        <p class="text-muted small mb-3">Bahasa pemrograman modern bertipe kuat (strongly-typed) yang dioptimalkan untuk performa aplikasi mobile yang cepat.</p>
+                        <span class="step-badge bg-info-subtle text-info-emphasis mb-2 d-inline-block">Tahap 1: Fondasi Bahasa & Setup</span>
+                        <h4 class="fw-bold text-navy mb-2">Instalasi Flutter & Pemrograman Dart 3</h4>
+                        <p class="text-muted small mb-3">Setup Flutter SDK, Flutter Doctor, Android Studio Emulator, serta penguasaan bahasa Dart berorientasi objek dengan Sound Null Safety.</p>
                         <label class="skill-item">
                             <input type="checkbox" class="skill-checkbox" data-skill="mob_dart_oop">
-                            <span>Sintaks Dart, Null Safety, Koleksi (List, Map), Pemrograman Berorientasi Objek (OOP)</span>
+                            <span>Sintaks Dart, Sound Null Safety, Koleksi (List, Map), OOP Virtual, Asynchronous Future/Streams</span>
                         </label>
+                        <div class="mt-2">
+                            <a href="learn.php?c=flutter&p=flutter_install" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-graduation-cap me-1 text-warning"></i> Pelajari Modul Dart & Setup &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="timeline-step">
                     <div class="timeline-node">2</div>
                     <div class="step-card">
-                        <span class="step-badge bg-primary-subtle text-primary-emphasis mb-2 d-inline-block">Tahap 2: UI Framework</span>
-                        <h4 class="fw-bold text-navy mb-2">Flutter UI & Widget Architecture</h4>
-                        <p class="text-muted small mb-3">Membangun antarmuka cross-platform (Android & iOS) dengan prinsip "Everything is a Widget".</p>
+                        <span class="step-badge bg-primary-subtle text-primary-emphasis mb-2 d-inline-block">Tahap 2: Antarmuka & Desain Modern</span>
+                        <h4 class="fw-bold text-navy mb-2">Widget Catalog, Material 3 & Layout Responsif</h4>
+                        <p class="text-muted small mb-3">Membangun antarmuka cross-platform dengan prinsip "Everything is a Widget", aturan box constraints, animasi halus, dan dark mode Material 3.</p>
                         <label class="skill-item">
                             <input type="checkbox" class="skill-checkbox" data-skill="mob_flutter_widgets">
-                            <span>StatelessWidget, StatefulWidget, Scaffold, Container, Column, Row, ListView, GridView</span>
+                            <span>StatelessWidget, StatefulWidget, Scaffold, Column, Row, Stack, ListView.builder, Form Validation, Animasi Hero</span>
                         </label>
+                        <div class="mt-2">
+                            <a href="learn.php?c=flutter&p=flutter_ui_intro" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-cube me-1 text-primary"></i> Pelajari Widget & UI Design &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="timeline-step">
                     <div class="timeline-node">3</div>
                     <div class="step-card">
-                        <span class="step-badge bg-success-subtle text-success-emphasis mb-2 d-inline-block">Tahap 3: State & API</span>
-                        <h4 class="fw-bold text-navy mb-2">State Management & Integrasi Backend API</h4>
-                        <p class="text-muted small mb-3">Mengelola alur data aplikasi secara rapi menggunakan Provider/BLoC dan mengonsumsi REST API dari server.</p>
+                        <span class="step-badge bg-success-subtle text-success-emphasis mb-2 d-inline-block">Tahap 3: State & Data Backend</span>
+                        <h4 class="fw-bold text-navy mb-2">BLoC / Riverpod, REST API & Offline SQLite</h4>
+                        <p class="text-muted small mb-3">Mengelola alur data aplikasi skala enterprise dengan BLoC/Riverpod, konsumsi HTTP RESTful API via Dio, dan arsitektur data lokal Offline-First.</p>
+                        <label class="skill-item">
+                            <input type="checkbox" class="skill-checkbox" data-skill="mob_state_api">
+                            <span>BLoC Architecture, Riverpod, Dio HTTP Client, SharedPreferences, SQLite & Hive Local Storage</span>
+                        </label>
+                        <div class="mt-2">
+                            <a href="learn.php?c=flutter&p=flutter_app_architecture" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-sitemap me-1 text-success"></i> Pelajari BLoC & REST API &raquo;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-node">4</div>
+                    <div class="step-card">
+                        <span class="step-badge bg-warning-subtle text-warning-emphasis mb-2 d-inline-block">Tahap 4: AI & Rilis Produksi</span>
+                        <h4 class="fw-bold text-navy mb-2">Integrasi Gemini AI & Google Play Deployment</h4>
+                        <p class="text-muted small mb-3">Membangun fitur aplikasi cerdas dengan Google Generative AI (Gemini SDK), performa tinggi dengan Impeller Engine, dan perilisan Android App Bundle (.aab) ke Google Play Store.</p>
                         <div class="project-highlight">
                             <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-trophy me-1"></i> Portofolio Akhir Mobile:</small>
-                            <span class="small text-secondary">Aplikasi Mobile E-Commerce lengkap dengan keranjang belanja, integrasi REST API produk, dan login token.</span>
+                            <span class="small text-secondary">Aplikasi Mobile AI E-Commerce lengkap dengan asisten belanja Gemini multimodal, autentikasi biometrik, dan sinkronisasi offline-first.</span>
                         </div>
                         <label class="skill-item mt-2">
                             <input type="checkbox" class="skill-checkbox" data-skill="mob_project_complete">
-                            <span>Menghasilkan file APK/AAB yang siap diunggah ke Google Play Store</span>
+                            <span>Kompilasi berkas Android App Bundle (.aab) & sertifikat release signing JKS</span>
                         </label>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <a href="learn.php?c=flutter&p=flutter_ai_apps" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-brain me-1 text-warning"></i> Pelajari AI Flutter &raquo;
+                            </a>
+                            <a href="exam.php?track=mobile" class="btn btn-sm btn-warning rounded-pill fw-bold text-navy" style="font-size: 0.8rem;">
+                                <i class="fa-solid fa-award me-1"></i> Ambil Ujian Sertifikasi SKPI &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 

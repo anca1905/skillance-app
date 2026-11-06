@@ -812,6 +812,163 @@ return [
                 'exp' => 'Modul re adalah modul bawaan standar Python untuk pemrosesan regular expression (re.search, re.findall, dll).'
             ]
         ]
-    ]
+    ],
 
+    'mobile' => [
+        'title' => 'Jalur Mobile Developer (Flutter & Dart Cross-Platform)',
+        'code' => 'MOB',
+        'competencies' => 'Dart 3 Sound Null Safety, Flutter Widget Tree Architecture, Material 3 Design, GoRouter Navigation, BLoC/Riverpod State Management, REST API & Offline SQLite, Impeller Engine, Google Play AAB Deployment',
+        'questions' => [
+            [
+                'q' => 'Fitur bahasa Dart apa yang menjamin variabel tidak dapat bernilai null kecuali secara eksplisit dideklarasikan dengan tanda tanya (?)?',
+                'options' => ['Dynamic Typing', 'Sound Null Safety', 'Late Initialization', 'Nullable Inference'],
+                'ans' => 1,
+                'exp' => 'Sound Null Safety mencegah runtime NullPointerExceptions dengan mewajibkan tanda tanya (?) untuk tipe yang boleh bernilai null.'
+            ],
+            [
+                'q' => 'Fungsi apakah yang bertugas mengikat Widget akar aplikasi Flutter ke jendela tampilan perangkat fisik?',
+                'options' => ['main()', 'startFlutter()', 'runApp()', 'renderWidget()'],
+                'ans' => 2,
+                'exp' => 'runApp() menginstansiasi widget akar dan menempelkannya ke layar perangkat.'
+            ],
+            [
+                'q' => 'Apa perbedaan utama antara StatelessWidget dan StatefulWidget di Flutter?',
+                'options' => ['StatelessWidget lebih lambat', 'StatefulWidget memiliki objek State internal yang dapat berubah selama runtime via setState()', 'StatelessWidget hanya untuk teks', 'StatefulWidget tidak dapat menerima parameter'],
+                'ans' => 1,
+                'exp' => 'StatefulWidget mengelola state yang dapat bermutasi dan memicu rebuild UI saat setState() dipanggil.'
+            ],
+            [
+                'q' => 'Widget apa yang menyediakan struktur dasar visual layar aplikasi seperti AppBar, FloatingActionButton, dan Drawer?',
+                'options' => ['MaterialApp', 'Scaffold', 'Container', 'Card'],
+                'ans' => 1,
+                'exp' => 'Scaffold mengimplementasikan layout dasar visual arsitektur Material Design.'
+            ],
+            [
+                'q' => 'Bagaimanakah bunyi 3 aturan emas penentuan tata letak (constraints) pada Flutter?',
+                'options' => ['Widgets go left, sizes go right, parent sets color', 'Constraints go down, sizes go up, parents set position', 'Sizes go down, constraints go up, screen sets position', 'Layout goes deep, children set constraints, root renders'],
+                'ans' => 1,
+                'exp' => 'Aturan resmi Flutter: Constraints go down, sizes go up, parents set position.'
+            ],
+            [
+                'q' => 'Widget apakah yang digunakan di dalam Row atau Column untuk mengambil seluruh sisa ruang kosong yang tersedia?',
+                'options' => ['SizedBox', 'Padding', 'Expanded', 'SpacerBox'],
+                'ans' => 2,
+                'exp' => 'Expanded membagi dan mengisi seluruh sisa ruang kosong pada sumbu utama flex.'
+            ],
+            [
+                'q' => 'Error garis loreng kuning-hitam pada Flutter (RenderFlex overflowed by X pixels) biasanya diatasi dengan membungkus anak Row/Column dengan widget?',
+                'options' => ['Expanded atau SingleChildScrollView', 'Material', 'Card', 'Center'],
+                'ans' => 0,
+                'exp' => 'Expanded membatasi ukuran anak pada sumbu flex, atau SingleChildScrollView memungkinkan konten digulir jika melampaui layar.'
+            ],
+            [
+                'q' => 'Widget apa yang digunakan untuk menumpuk elemen visual secara berlapis di atas sumbu Z (seperti meletakkan badge di atas foto)?',
+                'options' => ['Column', 'Row', 'Stack', 'Wrap'],
+                'ans' => 2,
+                'exp' => 'Stack menumpuk elemen secara bertingkat di atas sumbu kedalaman Z menggunakan Positioned.'
+            ],
+            [
+                'q' => 'Properti apa pada MaterialApp yang wajib diatur bernilai true untuk mengaktifkan spesifikasi Material Design 3 terbaru?',
+                'options' => ['materialDesign: 3', 'useMaterial3: true', 'enableM3: true', 'version: 3'],
+                'ans' => 1,
+                'exp' => 'useMaterial3: true mengaktifkan spesifikasi desain Material 3 terbaru.'
+            ],
+            [
+                'q' => 'Metode apa di dalam State yang digunakan untuk memberi tahu framework bahwa data telah berubah dan UI perlu di-render ulang?',
+                'options' => ['update()', 'notify()', 'setState()', 'rebuild()'],
+                'ans' => 2,
+                'exp' => 'setState() menandai elemen kotor dan menjadwalkan metode build() untuk dieksekusi ulang.'
+            ],
+            [
+                'q' => 'Apa perbedaan utama antara GestureDetector dan InkWell?',
+                'options' => ['GestureDetector lebih cepat', 'InkWell memberikan efek riak air (splash ripple effect) khas Material Design saat disentuh', 'InkWell hanya untuk teks', 'GestureDetector tidak mendukung sentuhan'],
+                'ans' => 1,
+                'exp' => 'InkWell membungkus aksi sentuhan dengan animasi riak visual (ripple).'
+            ],
+            [
+                'q' => 'Berkas konfigurasi apakah pada proyek Flutter yang digunakan untuk mendaftarkan aset gambar, file font, dan paket dependensi eksternal?',
+                'options' => ['build.gradle', 'AndroidManifest.xml', 'pubspec.yaml', 'flutter.json'],
+                'ans' => 2,
+                'exp' => 'pubspec.yaml adalah berkas konfigurasi utama proyek Flutter dan Dart.'
+            ],
+            [
+                'q' => 'Package routing resmi yang sangat direkomendasikan untuk navigasi deklaratif dan dukungan deep linking di Flutter adalah?',
+                'options' => ['go_router', 'flutter_route', 'easy_nav', 'router_kit'],
+                'ans' => 0,
+                'exp' => 'go_router adalah solusi routing deklaratif standar industri yang didukung resmi oleh tim Flutter.'
+            ],
+            [
+                'q' => 'Widget animasi implisit apa yang dapat menganimasikan transisi ukuran, warna, dan border radius secara otomatis hanya dengan mengubah nilainya?',
+                'options' => ['SmoothContainer', 'AnimatedContainer', 'DynamicBox', 'MorphCard'],
+                'ans' => 1,
+                'exp' => 'AnimatedContainer secara otomatis menginterpolasi properti geometris dan visualnya selama durasi tertentu.'
+            ],
+            [
+                'q' => 'Widget apa yang digunakan untuk menyediakan label verbal dan informasi ramah aksesibilitas bagi aplikasi pembaca layar (TalkBack / VoiceOver)?',
+                'options' => ['Accessible', 'ScreenReader', 'Semantics', 'VoiceTag'],
+                'ans' => 2,
+                'exp' => 'Semantics membungkus elemen dan memberikan informasi deskriptif untuk Screen Reader.'
+            ],
+            [
+                'q' => 'Format berkas standar lokalisasi multi-bahasa resmi yang digunakan pada Flutter adalah?',
+                'options' => ['.json', '.arb', '.xml', '.po'],
+                'ans' => 1,
+                'exp' => '.arb (Application Resource Bundle) adalah format JSON standar Google untuk lokalisasi Flutter.'
+            ],
+            [
+                'q' => 'Package HTTP client di Dart yang sangat populer dan mendukung fitur canggih seperti Interceptors, Global Configuration, dan FormData adalah?',
+                'options' => ['dio', 'axios_dart', 'fetch', 'network_io'],
+                'ans' => 0,
+                'exp' => 'Dio adalah HTTP client tingkat lanjut yang sangat kuat di Dart.'
+            ],
+            [
+                'q' => 'Pola State Management apa yang memisahkan logika bisnis menggunakan konsep Events dan States berbasis Reactive Streams?',
+                'options' => ['BLoC (Business Logic Component)', 'MVC Murni', 'SharedPreferences', 'Singleton Pattern'],
+                'ans' => 0,
+                'exp' => 'BLoC menerima Event dari UI dan memancarkan State baru secara reaktif.'
+            ],
+            [
+                'q' => 'Mekanisme apa di Flutter yang digunakan untuk berkomunikasi dua arah antara kode Dart dan kode native Android (Kotlin) / iOS (Swift)?',
+                'options' => ['Platform Channels (MethodChannel)', 'JNI Bridge', 'WebSocket Local', 'Bluetooth Channel'],
+                'ans' => 0,
+                'exp' => 'MethodChannel memfasilitasi pertukaran pesan dan pemanggilan metode antara Dart dan kode native host.'
+            ],
+            [
+                'q' => 'Plugin resmi apa yang digunakan untuk mengimplementasikan otentikasi biometrik sidik jari (Fingerprint) dan Face ID di Flutter?',
+                'options' => ['local_auth', 'fingerprint_scanner', 'biometric_flutter', 'device_security'],
+                'ans' => 0,
+                'exp' => 'local_auth adalah plugin resmi Flutter untuk autentikasi biometrik lokal di Android dan iOS.'
+            ],
+            [
+                'q' => 'Jenis pengujian otomatis di Flutter yang memverifikasi antarmuka visual dan respons simulasi klik tombol secara terisolasi tanpa emulator fisik disebut?',
+                'options' => ['Unit Test', 'Widget Test', 'Integration Test', 'Stress Test'],
+                'ans' => 1,
+                'exp' => 'Widget Test menguji komponen UI secara terisolasi dengan kecepatan tinggi menggunakan WidgetTester.'
+            ],
+            [
+                'q' => 'Nama rendering engine grafis generasi baru di Flutter 3.x yang membasmi shader compilation jank adalah?',
+                'options' => ['Impeller', 'Skia', 'VulkanCore', 'DirectFlutter'],
+                'ans' => 0,
+                'exp' => 'Impeller adalah mesin rendering grafis generasi terbaru di Flutter yang menggantikan Skia.'
+            ],
+            [
+                'q' => 'Format biner rilis apakah yang diwajibkan oleh Google Play Store saat mempublikasikan aplikasi Android produksi?',
+                'options' => ['APK Debug', 'AAB (Android App Bundle)', 'JAR', 'DEX'],
+                'ans' => 1,
+                'exp' => 'Google Play mewajibkan format Android App Bundle (AAB) untuk pengiriman unduhan aplikasi teroptimasi.'
+            ],
+            [
+                'q' => 'Arsitektur apakah yang memungkinkan modul Flutter ditanamkan ke dalam aplikasi native Android/iOS yang sudah ada di perusahaan?',
+                'options' => ['Add-to-App', 'Flutter Plugin', 'Hybrid Webview', 'Micro-Frontend'],
+                'ans' => 0,
+                'exp' => 'Add-to-App adalah fitur resmi untuk menanamkan modul Flutter ke dalam host native app yang telah berjalan.'
+            ],
+            [
+                'q' => 'Pohon manakah pada arsitektur internal Flutter yang bertanggung jawab langsung menghitung tata letak geometris dan menggambar piksel ke layar?',
+                'options' => ['Widget Tree', 'Element Tree', 'RenderObject Tree', 'State Tree'],
+                'ans' => 2,
+                'exp' => 'RenderObject Tree bertugas menghitung ukuran dan menggambar piksel langsung ke GPU perangkat.'
+            ]
+        ]
+    ],
 ];

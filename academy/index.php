@@ -691,12 +691,12 @@ $isLoggedIn = !empty($userId);
                             <i class="fa-solid fa-mobile-screen-button"></i>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Mobile Native</span>
-                            <small class="text-muted">Android & iOS</small>
+                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Cross-Platform & AI</span>
+                            <small class="text-muted"><i class="fa-solid fa-book-open me-1"></i> 29 Topik</small>
                         </div>
-                        <h4 class="fw-bold text-navy mb-2">Flutter Mobile</h4>
+                        <h4 class="fw-bold text-navy mb-2">Flutter & Dart Mobile</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
-                            Toolkit UI dari Google untuk membangun aplikasi smartphone Android & iOS berperforma tinggi dengan satu basis kode Dart.
+                            Kuasai ekosistem Flutter resmi dari Google: Widget Tree, Material 3, BLoC/Riverpod, REST API, Gemini AI Mobile, dan rilis Google Play Store.
                         </p>
                         <div class="d-flex gap-2 pt-3 border-top">
                             <a href="learn.php?c=flutter" class="btn-learn flex-grow-1">
