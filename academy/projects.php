@@ -126,13 +126,26 @@ $projects = [
 ];
 
 $adminWa = "6282291700778"; // Nomor WhatsApp Skillance untuk pemesanan langsung
+
+// Master SEO Configuration
+$seoTitle = 'Katalog E-Book & Project Kit Siap Pakai - Skillance Academy';
+$seoDesc = 'Koleksi source code sistem informasi dan e-book panduan implementasi aplikasi siap pakai (SIDESA, Point of Sale Kasir, Toko Online) untuk tugas akhir/skripsi dan portofolio profesional.';
+$seoKeywords = 'project kit laravel, ebook skripsi koding, source code sistem informasi desa, source code pos kasir, toko online midtrans, skillance academy';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-projects.png';
+$seoCanonical = 'https://academy.skillance.cloud/projects.php';
+$seoType = 'product';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'E-Book & Proyek', 'url' => 'https://academy.skillance.cloud/projects.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog E-Book & Project Kit Siap Pakai - Skillance Academy</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

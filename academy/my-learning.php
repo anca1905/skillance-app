@@ -131,13 +131,26 @@ if (!empty($certificates)) {
 }
 
 $adminWa = "6282291700778";
+
+// Master SEO Configuration
+$seoTitle = 'Dasbor Belajar Siswa & Portofolio SKPI - Skillance Academy';
+$seoDesc = 'Pantau progres modul pembelajaran koding, unduh sertifikat kelulusan, dan kelola portofolio keterampilan Anda di Skillance Academy Indonesia.';
+$seoKeywords = 'dasbor belajar koding, profil siswa skillance, progres belajar pemrograman';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-academy.png';
+$seoCanonical = 'https://academy.skillance.cloud/my-learning.php';
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'Dasbor Siswa', 'url' => 'https://academy.skillance.cloud/my-learning.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Belajar & Profil Siswa - Skillance Academy</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

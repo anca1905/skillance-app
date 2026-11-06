@@ -109,13 +109,26 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
         'breakdown' => $breakdown
     ];
 }
+
+// Master SEO Configuration
+$seoTitle = 'Ujian Sertifikasi Kompetensi & Portofolio SKPI - Skillance Academy';
+$seoDesc = 'Uji kompetensi pemrograman Anda dengan ujian interaktif berstandar industri. Dapatkan sertifikat kelulusan resmi ber-QR Code untuk portofolio SKPI mahasiswa dan pencari kerja.';
+$seoKeywords = 'ujian koding online, sertifikat skpi koding, tes kompetensi web developer, sertifikasi flutter, skillance academy exam';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-exam.png';
+$seoCanonical = 'https://academy.skillance.cloud/exam.php';
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'Ujian SKPI', 'url' => 'https://academy.skillance.cloud/exam.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Sertifikasi Kompetensi Resmi - Skillance Academy</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

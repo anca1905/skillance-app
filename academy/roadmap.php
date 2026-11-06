@@ -15,17 +15,26 @@ $activePath = $_GET['path'] ?? 'frontend';
 if (!in_array($activePath, $validPaths)) {
     $activePath = 'frontend';
 }
+
+// Master SEO Configuration
+$seoTitle = 'Roadmap Belajar Koding & Jalur Karir Developer 2026 - Skillance Academy';
+$seoDesc = 'Alur dan panduan kurikulum belajar (learning path) terstruktur dari pemula hingga siap kerja: Frontend, Backend, Fullstack, Mobile App Flutter, Python, dan UI/UX Design.';
+$seoKeywords = 'roadmap belajar koding, roadmap web developer, belajar frontend, belajar backend, fullstack developer indonesia, roadmap flutter, skillance academy';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-roadmap.png';
+$seoCanonical = 'https://academy.skillance.cloud/roadmap.php';
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'Roadmap Belajar', 'url' => 'https://academy.skillance.cloud/roadmap.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roadmap Belajar Terstruktur - Skillance Academy Indonesia</title>
-    
-    <!-- Meta SEO -->
-    <meta name="description" content="Alur dan panduan belajar (learning path) terstruktur dari pemula hingga siap kerja. Kuasai Frontend, Backend, Fullstack, Mobile App Flutter, dan UI/UX Design secara bertahap.">
-    <meta name="keywords" content="roadmap belajar koding, roadmap web developer, belajar frontend, belajar backend, fullstack developer indonesia, roadmap flutter, skillance academy">
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <!-- Google Fonts & Bootstrap 5 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

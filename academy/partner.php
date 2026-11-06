@@ -2,13 +2,26 @@
 require_once __DIR__ . '/config/config.php';
 
 $adminWa = "6282291700778"; // Nomor WhatsApp Skillance untuk kemitraan kampus
+
+// Master SEO Configuration
+$seoTitle = 'Kemitraan Kampus, Fakultas & UKM Mahasiswa - Skillance Academy';
+$seoDesc = 'Inisiatif kolaborasi edukasi pemrograman antara Skillance Academy dengan institusi pendidikan tinggi, fakultas teknologi, dan komunitas mahasiswa di seluruh Indonesia.';
+$seoKeywords = 'kemitraan kampus it, kerjasama fakultas ilmu komputer, ukm pemrograman, skpi kampus, skillance academy partner';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-partner.png';
+$seoCanonical = 'https://academy.skillance.cloud/partner.php';
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'Kemitraan Kampus', 'url' => 'https://academy.skillance.cloud/partner.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kemitraan Kampus & UKM Mahasiswa - Skillance Academy</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

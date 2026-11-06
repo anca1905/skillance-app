@@ -8,16 +8,25 @@ $userEmail = $_SESSION['user_email'] ?? '';
 $userType = $_SESSION['user_type'] ?? 'student';
 $avatarUrl = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
 $isLoggedIn = !empty($userId);
+
+// Master SEO Configuration
+$seoTitle = 'Skillance Academy Indonesia - Platform Belajar Koding Praktis & Portofolio SKPI';
+$seoDesc = 'Portal belajar koding mandiri dan interaktif resmi dari Skillance Academy Indonesia. Kuasai HTML, CSS, JavaScript, PHP, MySQL, Flutter, dan UI/UX dengan sertifikasi kelulusan digital SKPI.';
+$seoKeywords = 'skillance academy, belajar koding indonesia, tutorial pemrograman, ujian koding online, sertifikat skpi, flutter indonesia, ui ux figma, belajar php mysql';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-academy.png';
+$seoCanonical = 'https://academy.skillance.cloud/index.php';
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillance Academy Indonesia - Platform Belajar Koding Praktis & Mandiri</title>
-    
-    <!-- Meta SEO -->
-    <meta name="description" content="Portal belajar koding mandiri dan interaktif resmi dari Skillance Academy Indonesia untuk mahasiswa dan umum. Kuasai HTML, CSS, JavaScript, PHP, MySQL, dan Flutter.">
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <!-- Google Fonts & Bootstrap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

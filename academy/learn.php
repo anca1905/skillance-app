@@ -30,13 +30,60 @@ $currentTopic = $topics[$currentTopicKey];
 $currentIndex = array_search($currentTopicKey, $topicKeys);
 $prevTopicKey = ($currentIndex > 0) ? $topicKeys[$currentIndex - 1] : null;
 $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentIndex + 1] : null;
+
+// SEO Metadata Configuration
+$ogMap = [
+    'flutter' => 'https://academy.skillance.cloud/assets/img/og-flutter.png',
+    'uiux'    => 'https://academy.skillance.cloud/assets/img/og-uiux.png',
+];
+$seoOgImage = $ogMap[$currentCourse] ?? 'https://academy.skillance.cloud/assets/img/og-learn.png';
+$seoTitle = $currentTopic['title'] . ' - Tutorial ' . $courseData['name'] . ' | Skillance Academy';
+$cleanSummary = !empty($currentTopic['summary']) ? strip_tags($currentTopic['summary']) : ('Pelajari materi ' . $currentTopic['title'] . ' pada kursus ' . $courseData['name'] . ' di Skillance Academy Indonesia.');
+$seoDesc = mb_substr($cleanSummary, 0, 160);
+$seoCanonical = 'https://academy.skillance.cloud/learn.php?c=' . urlencode($currentCourse) . '&p=' . urlencode($currentTopicKey);
+$seoKeywords = 'tutorial ' . strtolower($courseData['name']) . ', belajar ' . strtolower($currentTopic['title']) . ', koding indonesia, modul skpi, skillance academy';
+$seoType = 'article';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => $courseData['name'], 'url' => 'https://academy.skillance.cloud/learn.php?c=' . urlencode($currentCourse)],
+    ['name' => $currentTopic['title'], 'url' => $seoCanonical]
+];
+$seoCustomSchemaJson = json_encode([
+    '@type' => 'TechArticle',
+    '@id' => $seoCanonical . '#article',
+    'headline' => $currentTopic['title'] . ' - ' . $courseData['name'],
+    'description' => $seoDesc,
+    'url' => $seoCanonical,
+    'image' => $seoOgImage,
+    'datePublished' => '2026-01-01',
+    'dateModified' => '2026-11-07',
+    'author' => [
+        '@type' => 'Person',
+        'name' => 'Muh Arsyad Ramsi',
+        'jobTitle' => 'Head of Curriculum & Technology'
+    ],
+    'publisher' => [
+        '@id' => 'https://academy.skillance.cloud/#organization'
+    ],
+    'mainEntityOfPage' => [
+        '@type' => 'WebPage',
+        '@id' => $seoCanonical
+    ],
+    'about' => [
+        '@type' => 'Course',
+        'name' => $courseData['name'],
+        'description' => 'Silabus dan kurikulum terstruktur ' . $courseData['name'] . ' Skillance Academy Indonesia'
+    ]
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($currentTopic['title']) ?> - Skillance Academy</title>
+
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <!-- Google Fonts & Bootstrap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -483,6 +530,61 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
             align-items: center;
             margin: 35px 0;
         }
+
+        /* Social Share Widget */
+        .share-lesson-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 25px 0 35px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-whatsapp:hover {
+            background-color: #1eb857;
+            color: #ffffff;
+        }
+        .btn-telegram {
+            background-color: #229ED9;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-telegram:hover {
+            background-color: #1b85b8;
+            color: #ffffff;
+        }
+        .btn-linkedin {
+            background-color: #0A66C2;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-linkedin:hover {
+            background-color: #084e96;
+            color: #ffffff;
+        }
+        .btn-x-twitter {
+            background-color: #0f1419;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-x-twitter:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .btn-copy-link {
+            background-color: #ffffff;
+            color: #0d2e5c;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-copy-link:hover {
+            background-color: #f1f5f9;
+            color: #071a35;
+        }
     </style>
 </head>
 <body>
@@ -639,6 +741,48 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 <button type="button" class="btn btn-sm btn-outline-success fw-bold px-4 py-2 rounded-pill" id="btnMarkComplete" onclick="toggleProgress()">
                     <i class="fa-regular fa-square-check me-1"></i> Tandai Selesai
                 </button>
+            </div>
+
+            <!-- Bagikan Materi Pembelajaran Ini -->
+            <div class="share-lesson-box">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-primary-subtle text-primary fw-bold px-2 py-1"><i class="fa-solid fa-share-nodes me-1"></i> Bagikan Materi</span>
+                            <span class="badge bg-light text-muted border"><?= htmlspecialchars($courseData['name']) ?></span>
+                        </div>
+                        <h6 class="fw-bold text-navy mb-1"><?= htmlspecialchars($currentTopic['title']) ?></h6>
+                        <p class="text-muted small mb-0">Bagikan modul pembelajaran ini kepada teman kampus, grup belajar, atau media sosial Anda.</p>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <a href="https://api.whatsapp.com/send?text=<?= urlencode("Halo! Yuk belajar modul *" . $currentTopic['title'] . "* di " . $courseData['name'] . " - Skillance Academy:
+
+" . $seoCanonical) ?>" 
+                           target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-sm btn-whatsapp fw-semibold px-3 py-2 rounded-3 shadow-xs" title="Bagikan ke WhatsApp">
+                            <i class="fa-brands fa-whatsapp fa-lg me-1"></i> WhatsApp
+                        </a>
+                        <a href="https://t.me/share/url?url=<?= urlencode($seoCanonical) ?>&text=<?= urlencode("Belajar " . $currentTopic['title'] . " di Skillance Academy") ?>" 
+                           target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-sm btn-telegram fw-semibold px-3 py-2 rounded-3 shadow-xs" title="Bagikan ke Telegram">
+                            <i class="fa-brands fa-telegram fa-lg me-1"></i> Telegram
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($seoCanonical) ?>" 
+                           target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-sm btn-linkedin fw-semibold px-3 py-2 rounded-3 shadow-xs" title="Bagikan ke LinkedIn">
+                            <i class="fa-brands fa-linkedin-in fa-lg me-1"></i> LinkedIn
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?text=<?= urlencode("Belajar " . $currentTopic['title'] . " di Skillance Academy:") ?>&url=<?= urlencode($seoCanonical) ?>&hashtags=SkillanceAcademy,Koding" 
+                           target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-sm btn-x-twitter fw-semibold px-3 py-2 rounded-3 shadow-xs" title="Bagikan ke X">
+                            <i class="fa-brands fa-x-twitter fa-lg me-1"></i> X
+                        </a>
+                        <button type="button" class="btn btn-sm btn-copy-link fw-semibold px-3 py-2 rounded-3" 
+                                onclick="copyLessonShareLink('<?= $seoCanonical ?>')" title="Salin Tautan">
+                            <i class="fa-solid fa-link me-1"></i> <span id="copyLessonBtnText">Salin Tautan</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Bottom Nav Buttons -->
@@ -822,6 +966,52 @@ $nextTopicKey = ($currentIndex < count($topicKeys) - 1) ? $topicKeys[$currentInd
                 sidebar.scrollTop = Math.max(0, linkTop - (sidebarHeight / 2));
             }
         });
+
+        function copyLessonShareLink(url) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showCopySuccess();
+                }).catch(() => {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showCopySuccess();
+            } catch(e) {
+                prompt('Salin tautan berikut:', text);
+            }
+            document.body.removeChild(ta);
+        }
+        function showCopySuccess() {
+            const btn = document.getElementById('copyLessonBtnText');
+            if (btn) {
+                const orig = btn.innerText;
+                btn.innerText = 'Tersalin!';
+                setTimeout(() => { btn.innerText = orig; }, 2500);
+            }
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Tautan materi berhasil disalin!',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }
+        }
     </script>
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>

@@ -31,13 +31,26 @@ $sampleCerts = [
     ['no' => 'SKL-2026-FE-8821', 'name' => 'Ahmad Faisal Pratama', 'track' => 'Frontend Web Developer'],
     ['no' => 'SKL-2026-FS-9102', 'name' => 'Siti Nurhaliza', 'track' => 'Fullstack Web Developer']
 ];
+
+// Master SEO Configuration
+$seoTitle = ($certificate ? 'Verifikasi Sertifikat: ' . $certificate['recipient_name'] : 'Verifikasi Keaslian Sertifikat Digital SKPI') . ' - Skillance Academy';
+$seoDesc = 'Layanan validasi keaslian sertifikat kompetensi digital resmi Skillance Academy Indonesia. Cek nomor seri sertifikat, nama penerima, skor ujian, dan tanggal kelulusan.';
+$seoKeywords = 'verifikasi sertifikat skpi, cek keaslian sertifikat skillance, sertifikat digital koding, validasi sertifikat online';
+$seoOgImage = 'https://academy.skillance.cloud/assets/img/og-verify.png';
+$seoCanonical = 'https://academy.skillance.cloud/verify.php' . (!empty($certNo) ? '?cert=' . urlencode($certNo) : '');
+$seoType = 'website';
+$seoBreadcrumbs = [
+    ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
+    ['name' => 'Verifikasi Sertifikat', 'url' => 'https://academy.skillance.cloud/verify.php']
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $certificate ? 'Sertifikat Resmi: ' . htmlspecialchars($certificate['recipient_name']) . ' - ' : 'Verifikasi Sertifikat Digital - ' ?>Skillance Academy</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
+    <?php include __DIR__ . '/includes/seo_meta.php'; ?>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
