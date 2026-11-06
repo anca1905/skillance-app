@@ -112,31 +112,54 @@ if (!in_array($activePath, $validPaths)) {
             pointer-events: none;
         }
 
-        /* Path Switcher Tabs */
+        /* Path Switcher Tabs (Always Single Row with Horizontal Scroll) */
         .path-nav-container {
             background: #ffffff;
             border-radius: 16px;
-            padding: 8px;
+            padding: 8px 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             border: 1px solid #e2e8f0;
             margin-top: -30px;
             position: relative;
             z-index: 10;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+            gap: 10px !important;
         }
+        .path-nav-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .path-nav-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .path-nav-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 6px;
+        }
+        .path-nav-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
         .path-tab-btn {
             border: none;
             background: transparent;
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             color: #475569;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-grow: 1;
+            flex: 0 0 auto !important;
+            white-space: nowrap;
             justify-content: center;
+            cursor: pointer;
         }
         .path-tab-btn:hover {
             color: var(--navy);
@@ -149,6 +172,9 @@ if (!in_array($activePath, $validPaths)) {
         }
         .path-tab-btn.active .path-icon {
             color: var(--gold);
+        }
+        .path-tab-btn.active small {
+            color: #cbd5e1 !important;
         }
 
         /* Progress Card */
@@ -521,7 +547,7 @@ if (!in_array($activePath, $validPaths)) {
     <main class="container py-4">
         
         <!-- PATH SWITCHER TABS -->
-        <div class="path-nav-container d-flex flex-wrap gap-2 mb-4">
+        <div class="path-nav-container d-flex flex-nowrap gap-2 mb-4">
             <button class="path-tab-btn <?= ($activePath === 'frontend') ? 'active' : '' ?>" onclick="switchPath('frontend')">
                 <i class="fa-brands fa-html5 fs-5 path-icon text-warning"></i>
                 <div class="text-start">
@@ -2224,9 +2250,26 @@ if (!in_array($activePath, $validPaths)) {
             }
         }
 
-        // Initial progress calculation on page load
+        // Horizontal mouse wheel scrolling for path-nav-container on desktop
+        const pathNav = document.querySelector('.path-nav-container');
+        if (pathNav) {
+            pathNav.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0) {
+                    e.preventDefault();
+                    pathNav.scrollLeft += e.deltaY;
+                }
+            }, { passive: false });
+        }
+
+        // Initial progress calculation on page load & center active tab
         document.addEventListener('DOMContentLoaded', () => {
             updatePathProgress();
+            const activeTab = document.querySelector('.path-tab-btn.active');
+            if (activeTab && pathNav) {
+                try {
+                    activeTab.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+                } catch(e) {}
+            }
         });
     </script>
 </body>
