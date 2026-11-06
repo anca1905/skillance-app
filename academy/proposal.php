@@ -317,12 +317,12 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
                 <div class="small text-muted mb-1">Hormat kami,</div>
                 <div class="fw-bold text-navy" style="font-size: 0.85rem;">Skillance Digital Indonesia</div>
                 
-                <div class="font-signature my-2" style="font-size: 2.2rem; color: #0d2e5c; padding-right: 15px;">
-                    Anca Rusmana
+                <div class="d-flex align-items-center justify-content-end my-2" style="height: 65px;">
+                    <img src="assets/img/ttd-muh-arsyad-ramsi.png" alt="Tanda Tangan Muh Arsyad Ramsi" style="max-height: 65px; max-width: 150px; object-fit: contain;">
                 </div>
 
                 <div class="fw-bold text-dark" style="font-size: 0.92rem; border-top: 1px solid #94a3b8; display: inline-block; padding-top: 3px; min-width: 220px;">
-                    Anca Rusmana, S.Kom.
+                    Muh Arsyad Ramsi
                 </div>
                 <small class="d-block text-muted" style="font-size: 0.78rem;">Head of Technology & Academy Partnership</small>
                 <small class="d-block text-muted" style="font-size: 0.72rem;">Narahubung: +62 895-3256-97419</small>
@@ -520,9 +520,11 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
             <div class="col-6">
                 <div class="text-muted small mb-1">Pihak Pertama (Penyedia Program):</div>
                 <strong class="text-navy">Skillance Digital Indonesia</strong>
-                <div class="font-signature my-2" style="font-size: 2.1rem; color: #0d2e5c;">Anca R.</div>
+                <div class="d-flex align-items-center justify-content-center my-2" style="height: 55px;">
+                    <img src="assets/img/ttd-muh-arsyad-ramsi.png" alt="Tanda Tangan Muh Arsyad Ramsi" style="max-height: 55px; max-width: 130px; object-fit: contain;">
+                </div>
                 <div class="fw-bold text-dark pt-1" style="border-top: 1px solid #94a3b8; display: inline-block; min-width: 180px;">
-                    Anca Rusmana, S.Kom.
+                    Muh Arsyad Ramsi
                 </div>
                 <small class="d-block text-muted" style="font-size: 0.72rem;">Head of Partnership</small>
             </div>

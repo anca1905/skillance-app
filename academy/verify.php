@@ -493,8 +493,10 @@ $sampleCerts = [
                     <!-- SIGNATURES & QR CODE -->
                     <div class="row align-items-end mt-4 pt-3 border-top g-3">
                         <div class="col-4 text-center">
-                            <div class="font-signature text-navy" style="font-size: 2.1rem; line-height: 1; color: #0d2e5c;">Anca R.</div>
-                            <div class="fw-bold text-dark small" style="border-top: 1px solid #94a3b8; padding-top: 4px;">Anca Rusmana, S.Kom.</div>
+                            <div class="d-flex align-items-center justify-content-center mb-1" style="height: 55px;">
+                                <img src="assets/img/ttd-muh-arsyad-ramsi.png" alt="Tanda Tangan Muh Arsyad Ramsi" style="max-height: 55px; max-width: 140px; object-fit: contain;">
+                            </div>
+                            <div class="fw-bold text-dark small" style="border-top: 1px solid #94a3b8; padding-top: 4px;">Muh Arsyad Ramsi</div>
                             <small class="text-muted d-block" style="font-size: 0.7rem;">Head of Curriculum & Technology</small>
                             <small class="text-muted d-block" style="font-size: 0.68rem;">Skillance Academy Indonesia</small>
                         </div>
