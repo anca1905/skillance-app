@@ -453,109 +453,11 @@ $adminWa = "6282291700778"; // Nomor WhatsApp Skillance untuk pemesanan langsung
 </head>
 <body>
 
-    <!-- TOP HUB BAR -->
-    <div class="top-hub-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <a href="https://skillance.my.id" class="text-decoration-none text-white-50 hover-white me-3">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke <strong>skillance.my.id</strong>
-                </a>
-                <a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-gold me-2 d-none d-md-inline">
-                    <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
-                </a>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span class="small" style="color: #cbd5e1;"><i class="fa-solid fa-book-open text-warning me-1"></i> E-Book & Full Source Code Proyek Industri</span>
-            </div>
-        </div>
-    </div>
-
-        <!-- MAIN NAVBAR (Modern & Clean) -->
-    <nav class="navbar navbar-expand-xl academy-navbar py-2 py-lg-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
-                <div class="bg-navy text-gold p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #0d2e5c;">
-                    <i class="fa-solid fa-graduation-cap fs-5 text-warning"></i>
-                </div>
-                <div>
-                    <span class="fw-bold text-navy font-heading" style="font-size: 1.18rem; letter-spacing: -0.5px; color: #0d2e5c;">
-                        SKILLANCE <span class="text-gold" style="color: #fca311;">ACADEMY</span>
-                    </span>
-                    <small class="d-block text-muted" style="font-size: 0.68rem; margin-top: -3px;">Pusat Belajar Koding & Portofolio SKPI</small>
-                </div>
-            </a>
-
-            <!-- Search Trigger & Mobile Toggler -->
-            <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-sm btn-light border rounded-circle d-xl-none me-2 d-flex align-items-center justify-content-center" onclick="openSpotlightSearch()" style="width: 36px; height: 36px;" title="Cari Materi (Ctrl+K)">
-                    <i class="fa-solid fa-magnifying-glass text-navy"></i>
-                </button>
-                <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars fs-4 text-navy"></i>
-                </button>
-            </div>
-
-            <!-- Navbar Links & Actions -->
-            <div class="collapse navbar-collapse" id="academyNavMenu">
-                <ul class="navbar-nav mx-auto my-3 my-xl-0 gap-1 align-items-xl-center">
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-menu-link ">
-                            <i class="fa-solid fa-house small text-muted"></i> Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="roadmap.php" class="nav-menu-link ">
-                            <i class="fa-solid fa-route small text-muted"></i> Roadmap
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="projects.php" class="nav-menu-link active">
-                            <i class="fa-solid fa-laptop-code small text-muted"></i> Kit Proyek & E-Book
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="exam.php" class="nav-menu-link ">
-                            <i class="fa-solid fa-award small text-muted"></i> Ujian SKPI
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="partner.php" class="nav-menu-link ">
-                            <i class="fa-solid fa-handshake small text-muted"></i> Kemitraan Kampus
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="verify.php" class="nav-menu-link ">
-                            <i class="fa-solid fa-shield-halved small text-muted"></i> Cek Sertifikat
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="d-flex align-items-center gap-2 pt-3 pt-xl-0 border-top border-xl-0">
-                    <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 py-2 text-muted d-none d-xl-inline-flex align-items-center gap-2 me-1" onclick="openSpotlightSearch()" style="background: #f8fafc; font-size: 0.82rem; border-color: #e2e8f0 !important;" title="Pencarian Materi Cepat">
-                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
-                        <span>Cari materi...</span>
-                        <kbd class="bg-white border text-secondary px-1 py-0 rounded" style="font-size: 0.68rem; font-family: inherit;">Ctrl K</kbd>
-                    </button>
-                    <?php if (!empty($isLoggedIn)): ?>
-                        <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-2 " style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.85rem;">
-                            <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="22" height="22" alt="Avatar">
-                            <span>Dasbor Siswa</span>
-                        </a>
-                    <?php else: ?>
-                        <a href="my-learning.php" class="nav-menu-link me-1 " style="font-size: 0.85rem;">
-                            <i class="fa-solid fa-user-graduate small text-warning"></i> Dasbor Siswa
-                        </a>
-                        <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold" style="border-color: #cbd5e1; color: #0d2e5c; font-size: 0.85rem;">
-                            <i class="fa-solid fa-user me-1"></i> Masuk
-                        </a>
-                    <?php endif; ?>
-                    <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white shadow-sm" style="background: #0d2e5c; font-size: 0.85rem;">
-                        <i class="fa-solid fa-briefcase text-warning me-1"></i> Bursa Freelance
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php
+    $activeNav = 'projects';
+    $showSubnav = false;
+    include __DIR__ . '/includes/navbar.php';
+    ?>
 
     <!-- PROJECTS HERO -->
     <header class="projects-hero">
