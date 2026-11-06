@@ -9,14 +9,13 @@
  *   include __DIR__ . '/includes/navbar.php';
  */
 
-if (!isset($isLoggedIn)) {
-    if (session_status() === PHP_SESSION_NONE) {
-        @session_start();
-    }
-    $isLoggedIn = !empty($_SESSION['user_id']);
-    $userName = $_SESSION['user_name'] ?? 'Siswa Skillance';
-    $avatarUrl = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
+if (session_status() === PHP_SESSION_NONE) {
+    @session_start();
 }
+
+$isLoggedIn = !empty($_SESSION['user_id']) || (!empty($isLoggedIn) && $isLoggedIn);
+$userName = !empty($userName) ? $userName : ($_SESSION['user_name'] ?? 'Siswa Skillance');
+$avatarUrl = !empty($avatarUrl) ? $avatarUrl : ($_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff'));
 
 $activeNav = $activeNav ?? 'home';
 $currentCourse = $currentCourse ?? '';
@@ -140,7 +139,7 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
         <div class="d-flex align-items-center gap-3">
             <span class="small d-none d-lg-inline" style="color: #94a3b8;">Skillance Academy Indonesia</span>
             <?php if ($isLoggedIn): ?>
-                <span class="badge bg-success-subtle text-success py-1 px-2"><i class="fa-solid fa-circle-check me-1"></i> <?= htmlspecialchars($userName) ?></span>
+                <span class="badge bg-success-subtle text-success py-1 px-2"><i class="fa-solid fa-circle-check me-1"></i> <?= htmlspecialchars($userName ?? 'Siswa Skillance') ?></span>
                 <a href="https://skillance.my.id/auth/logout.php" class="text-white-50 text-decoration-none small"><i class="fa-solid fa-right-from-bracket me-1"></i> Keluar</a>
             <?php else: ?>
                 <a href="https://skillance.my.id/auth/index.php?ref=academy" class="text-warning text-decoration-none fw-semibold small">
