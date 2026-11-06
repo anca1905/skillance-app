@@ -86,6 +86,48 @@ $sampleCerts = [
         }
 
         /* Navbar */
+        
+        /* Modern Clean Academy Navbar */
+        .academy-navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+
+        .nav-menu-link {
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-menu-link:hover {
+            color: #0d2e5c;
+            background-color: #f1f5f9;
+        }
+
+        .nav-menu-link.active {
+            color: #0d2e5c;
+            font-weight: 700;
+            background-color: #f1f5f9;
+        }
+
+        @media (max-width: 1199.98px) {
+            .nav-menu-link {
+                display: flex;
+                padding: 10px 14px;
+                border-radius: 8px;
+            }
+        }
+
         .academy-navbar {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -307,45 +349,82 @@ $sampleCerts = [
         </div>
     </div>
 
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg academy-navbar py-3">
+        <!-- MAIN NAVBAR (Modern & Clean) -->
+    <nav class="navbar navbar-expand-xl academy-navbar py-2 py-lg-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
                 <div class="bg-navy text-gold p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; background: #0d2e5c;">
                     <i class="fa-solid fa-graduation-cap fs-5 text-warning"></i>
                 </div>
                 <div>
-                    <span class="fw-bold text-navy font-heading" style="font-size: 1.25rem; letter-spacing: -0.5px; color: #0d2e5c;">SKILLANCE ACADEMY</span>
-                    <small class="d-block text-muted" style="font-size: 0.7rem; margin-top: -3px;">Pusat Belajar & Sertifikasi Koding Skillance Academy Indonesia</small>
+                    <span class="fw-bold text-navy font-heading" style="font-size: 1.18rem; letter-spacing: -0.5px; color: #0d2e5c;">
+                        SKILLANCE <span class="text-gold" style="color: #fca311;">ACADEMY</span>
+                    </span>
+                    <small class="d-block text-muted" style="font-size: 0.68rem; margin-top: -3px;">Pusat Belajar Koding & Portofolio SKPI</small>
                 </div>
             </a>
 
-            <div class="d-flex align-items-center gap-2 ms-auto">
-                <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 py-2 d-none d-sm-inline">
-                    <i class="fa-solid fa-book-bookmark text-warning me-1"></i> E-Book & Proyek
-                </a>
-                <a href="partner.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold text-navy d-none d-md-inline">
-                    <i class="fa-solid fa-handshake me-1"></i> Kemitraan Kampus
-                </a>
-                <a href="roadmap.php" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white" style="background: #0d2e5c;">
-                    <i class="fa-solid fa-map me-1"></i> Roadmap
-                </a>
+            <!-- Mobile Toggler -->
+            <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars fs-4 text-navy"></i>
+            </button>
+
+            <!-- Navbar Links & Actions -->
+            <div class="collapse navbar-collapse" id="academyNavMenu">
+                <ul class="navbar-nav mx-auto my-3 my-xl-0 gap-1 align-items-xl-center">
+                    <li class="nav-item">
+                        <a href="index.php" class="nav-menu-link ">
+                            <i class="fa-solid fa-house small text-muted"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="roadmap.php" class="nav-menu-link ">
+                            <i class="fa-solid fa-route small text-muted"></i> Roadmap
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="projects.php" class="nav-menu-link ">
+                            <i class="fa-solid fa-laptop-code small text-muted"></i> Kit Proyek & E-Book
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="exam.php" class="nav-menu-link ">
+                            <i class="fa-solid fa-award small text-muted"></i> Ujian SKPI
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="partner.php" class="nav-menu-link ">
+                            <i class="fa-solid fa-handshake small text-muted"></i> Kemitraan Kampus
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="verify.php" class="nav-menu-link active">
+                            <i class="fa-solid fa-shield-halved small text-muted"></i> Cek Sertifikat
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2 pt-3 pt-xl-0 border-top border-xl-0">
+                    <?php if (!empty($isLoggedIn)): ?>
+                        <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-2 " style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.85rem;">
+                            <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="22" height="22" alt="Avatar">
+                            <span>Dasbor Siswa</span>
+                        </a>
+                    <?php else: ?>
+                        <a href="my-learning.php" class="nav-menu-link me-1 " style="font-size: 0.85rem;">
+                            <i class="fa-solid fa-user-graduate small text-warning"></i> Dasbor Siswa
+                        </a>
+                        <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold" style="border-color: #cbd5e1; color: #0d2e5c; font-size: 0.85rem;">
+                            <i class="fa-solid fa-user me-1"></i> Masuk
+                        </a>
+                    <?php endif; ?>
+                    <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold text-white shadow-sm" style="background: #0d2e5c; font-size: 0.85rem;">
+                        <i class="fa-solid fa-briefcase text-warning me-1"></i> Bursa Freelance
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
-
-    <!-- QUICK SUBNAV -->
-    <div class="course-subnav">
-        <div class="container d-flex align-items-center">
-            <a href="index.php" class="course-nav-item"><i class="fa-solid fa-house me-1"></i> Beranda</a>
-            <a href="roadmap.php" class="course-nav-item"><i class="fa-solid fa-route me-1"></i> Roadmap Karier</a>
-            <a href="projects.php" class="course-nav-item"><i class="fa-solid fa-laptop-code me-1"></i> Kit Studi Kasus Riil</a>
-            <a href="exam.php" class="course-nav-item"><i class="fa-solid fa-award me-1"></i> Ujian Sertifikasi SKPI</a>
-            <a href="my-learning.php" class="course-nav-item"><i class="fa-solid fa-user-graduate me-1"></i> Dasbor Siswa</a>
-            <a href="partner.php" class="course-nav-item"><i class="fa-solid fa-building-columns me-1"></i> Kolaborasi UKM / Kampus</a>
-            <a href="verify.php" class="course-nav-item active"><i class="fa-solid fa-certificate me-1 text-gold"></i> Cek Keaslian Sertifikat</a>
-        </div>
-    </div>
 
     <!-- VERIFICATION HERO -->
     <header class="verify-hero">
