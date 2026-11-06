@@ -312,10 +312,15 @@ $isLoggedIn = !empty($userId);
                 </div>
             </a>
 
-            <!-- Mobile Toggler -->
-            <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars fs-4 text-navy"></i>
-            </button>
+            <!-- Search Trigger & Mobile Toggler -->
+            <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-sm btn-light border rounded-circle d-xl-none me-2 d-flex align-items-center justify-content-center" onclick="openSpotlightSearch()" style="width: 36px; height: 36px;" title="Cari Materi (Ctrl+K)">
+                    <i class="fa-solid fa-magnifying-glass text-navy"></i>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars fs-4 text-navy"></i>
+                </button>
+            </div>
 
             <!-- Navbar Links & Actions -->
             <div class="collapse navbar-collapse" id="academyNavMenu">
@@ -353,6 +358,11 @@ $isLoggedIn = !empty($userId);
                 </ul>
 
                 <div class="d-flex align-items-center gap-2 pt-3 pt-xl-0 border-top border-xl-0">
+                    <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 py-2 text-muted d-none d-xl-inline-flex align-items-center gap-2 me-1" onclick="openSpotlightSearch()" style="background: #f8fafc; font-size: 0.82rem; border-color: #e2e8f0 !important;" title="Pencarian Materi Cepat">
+                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                        <span>Cari materi...</span>
+                        <kbd class="bg-white border text-secondary px-1 py-0 rounded" style="font-size: 0.68rem; font-family: inherit;">Ctrl K</kbd>
+                    </button>
                     <?php if (!empty($isLoggedIn)): ?>
                         <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-2" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.85rem;">
                             <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="22" height="22" alt="Avatar">
@@ -716,12 +726,12 @@ $isLoggedIn = !empty($userId);
                             <i class="fa-solid fa-bezier-curve"></i>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-pink-subtle text-pink fw-bold" style="background:#fce7f3; color:#be185d;">Desain Produk</span>
-                            <small class="text-muted">Figma & UX</small>
+                            <span class="badge bg-pink-subtle text-pink fw-bold" style="background:#fce7f3; color:#be185d;">Desain Produk & Riset</span>
+                            <small class="text-muted"><i class="fa-solid fa-book-open me-1"></i> 18 Topik</small>
                         </div>
-                        <h4 class="fw-bold text-navy mb-2">UI/UX Design</h4>
+                        <h4 class="fw-bold text-navy mb-2">UI/UX Design & Figma</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
-                            Metodologi Design Thinking, riset pengguna, wireframing, Auto-Layout responsif di Figma, dan penyerahan desain ke developer.
+                            Kuasai metodologi Design Thinking, riset pengguna, Auto-Layout responsif Figma, Design Tokens, prototyping interaktif, dan handoff developer.
                         </p>
                         <div class="d-flex gap-2 pt-3 border-top">
                             <a href="learn.php?c=uiux" class="btn-learn flex-grow-1">
@@ -1027,5 +1037,7 @@ $isLoggedIn = !empty($userId);
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
+<script src="assets/js/spotlight.js"></script>
 </body>
 </html>

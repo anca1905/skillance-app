@@ -388,10 +388,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
                 </div>
             </a>
 
-            <!-- Mobile Toggler -->
-            <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars fs-4 text-navy"></i>
-            </button>
+            <!-- Search Trigger & Mobile Toggler -->
+            <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-sm btn-light border rounded-circle d-xl-none me-2 d-flex align-items-center justify-content-center" onclick="openSpotlightSearch()" style="width: 36px; height: 36px;" title="Cari Materi (Ctrl+K)">
+                    <i class="fa-solid fa-magnifying-glass text-navy"></i>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars fs-4 text-navy"></i>
+                </button>
+            </div>
 
             <!-- Navbar Links & Actions -->
             <div class="collapse navbar-collapse" id="academyNavMenu">
@@ -429,6 +434,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
                 </ul>
 
                 <div class="d-flex align-items-center gap-2 pt-3 pt-xl-0 border-top border-xl-0">
+                    <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 py-2 text-muted d-none d-xl-inline-flex align-items-center gap-2 me-1" onclick="openSpotlightSearch()" style="background: #f8fafc; font-size: 0.82rem; border-color: #e2e8f0 !important;" title="Pencarian Materi Cepat">
+                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                        <span>Cari materi...</span>
+                        <kbd class="bg-white border text-secondary px-1 py-0 rounded" style="font-size: 0.68rem; font-family: inherit;">Ctrl K</kbd>
+                    </button>
                     <?php if (!empty($isLoggedIn)): ?>
                         <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-2 " style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.85rem;">
                             <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="22" height="22" alt="Avatar">
@@ -837,5 +847,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
         </div>
     </footer>
 
+<?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
+<script src="assets/js/spotlight.js"></script>
 </body>
 </html>

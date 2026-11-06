@@ -971,4 +971,162 @@ return [
             ]
         ]
     ],
+
+    'uiux' => [
+        'title' => 'Jalur UI/UX & Product Designer (Figma)',
+        'code' => 'UX',
+        'competencies' => 'Design Thinking Process, User Persona & Journey Mapping, Information Architecture, 8-Point Grid Layout, Figma Auto-Layout Mastery, Design Systems & Variables, Interactive Smart Animate Prototyping, Usability Testing (SUS), Figma Dev Mode Handoff',
+        'questions' => [
+            [
+                'q' => 'Tahapan pertama dalam proses Design Thinking yang berfokus pada memahami kendala dan motivasi pengguna adalah?',
+                'options' => ['Define', 'Empathize', 'Ideate', 'Prototype'],
+                'ans' => 1,
+                'exp' => 'Empathize adalah langkah awal untuk menggali empati terhadap pengguna melalui wawancara dan observasi.'
+            ],
+            [
+                'q' => 'Profil fiktif namun realistis yang mewakili target pengguna utama berdasarkan data riset kualitatif/kuantitatif disebut?',
+                'options' => ['User Persona', 'System Actor', 'Stakeholder Blueprint', 'Target Profile'],
+                'ans' => 0,
+                'exp' => 'User Persona adalah profil representatif dari pengguna sasaran produk digital.'
+            ],
+            [
+                'q' => 'Bentuk simbol apakah yang digunakan dalam diagram User Flow standar untuk melambangkan titik percabangan logika atau keputusan (Decision Point)?',
+                'options' => ['Lingkaran', 'Persegi Panjang', 'Belah Ketupat (Diamond)', 'Jajar Genjang'],
+                'ans' => 2,
+                'exp' => 'Belah ketupat (diamond) melambangkan titik keputusan dengan dua atau lebih cabang aksi (Ya/Tidak).'
+            ],
+            [
+                'q' => 'Metode riset apakah di mana pengguna mengelompokkan label topik untuk membantu menyusun struktur menu navigasi yang intuitif?',
+                'options' => ['Tree Testing', 'Card Sorting', 'A/B Testing', 'Eye Tracking'],
+                'ans' => 1,
+                'exp' => 'Card Sorting adalah metode andalan dalam Information Architecture untuk mengungkap model mental pengguna.'
+            ],
+            [
+                'q' => 'Mengapa wireframe awal (Low-Fidelity) sengaja dirancang hitam-putih dan tanpa gambar dekoratif?',
+                'options' => ['Agar menghemat kuota internet', 'Agar diskusi fokus pada fungsionalitas dan tata letak struktur tanpa terdistraksi warna', 'Karena Figma tidak mendukung warna di wireframe', 'Sebagai syarat sertifikasi'],
+                'ans' => 1,
+                'exp' => 'Tampilan hitam-putih menjaga fokus tim pada fungsionalitas, alur navigasi, dan letak tombol aksi.'
+            ],
+            [
+                'q' => 'Nilai padding manakah yang sesuai dengan standar 8-Point Grid System?',
+                'options' => ['14px', '21px', '24px', '19px'],
+                'ans' => 2,
+                'exp' => '24px adalah kelipatan 8 (8 x 3 = 24), menjadikannya nilai yang valid dalam 8-point grid system.'
+            ],
+            [
+                'q' => 'Kombinasi apakah yang paling efektif untuk menciptakan hierarki visual (Visual Hierarchy) yang tegas antara judul dan teks tubuh?',
+                'options' => ['Menggunakan font yang sama tanpa beda ukuran', 'Membedakan ukuran font lebih besar dan bobot lebih tebal pada judul serta kontras warna yang tepat', 'Memberikan huruf kapital pada seluruh teks', 'Membuat warna teks menjadi merah semua'],
+                'ans' => 1,
+                'exp' => 'Perbedaan skala ukuran, ketebalan (weight), dan kontras warna secara instan memandu alur pandang pengguna.'
+            ],
+            [
+                'q' => 'Berapakah rasio kontras minimum antara teks normal dan warna latarnya menurut standar aksesibilitas WCAG 2.1 Level AA?',
+                'options' => ['2.0 : 1', '3.0 : 1', '4.5 : 1', '7.0 : 1'],
+                'ans' => 2,
+                'exp' => 'Pedoman WCAG 2.1 Level AA mewajibkan rasio kontras minimal 4.5:1 untuk teks normal agar mudah dibaca.'
+            ],
+            [
+                'q' => 'Dalam aturan proporsi warna 60-30-10, warna apakah yang menempati proporsi 10%?',
+                'options' => ['Warna latar belakang putih', 'Warna sekunder kartu konten', 'Warna aksen khusus tombol aksi utama (Call-to-Action)', 'Warna border garis'],
+                'ans' => 2,
+                'exp' => '10% dialokasikan khusus untuk warna aksen yang kontras dan menarik perhatian ke tombol CTA penting.'
+            ],
+            [
+                'q' => 'Mengapa desainer profesional selalu menggunakan Frame (F) alih-alih Rectangle (R) untuk membuat kontainer layar di Figma?',
+                'options' => ['Karena Frame lebih ringan', 'Karena Frame mendukung Auto-Layout, layout grid, dan penataan komponen anak responsif', 'Karena Rectangle tidak bisa diberi warna', 'Karena Frame otomatis mengompilasi CSS'],
+                'ans' => 1,
+                'exp' => 'Frame memiliki kemampuan layouting dinamis seperti Auto-Layout dan constraints responsif.'
+            ],
+            [
+                'q' => 'Pintasan keyboard (shortcut) apa di Figma yang digunakan untuk mengaktifkan Auto-Layout pada elemen terpilih?',
+                'options' => ['Ctrl + G', 'Shift + A', 'Alt + L', 'Ctrl + B'],
+                'ans' => 1,
+                'exp' => 'Shift + A adalah shortcut resmi Figma untuk membungkus elemen ke dalam Auto-Layout Frame.'
+            ],
+            [
+                'q' => 'Perilaku resizing Auto-Layout apakah yang membuat ukuran bingkai otomatis menyusut pas mengikuti panjang teks di dalamnya?',
+                'options' => ['Fixed Width', 'Fill Container', 'Hug Contents', 'Scale Fit'],
+                'ans' => 2,
+                'exp' => 'Hug Contents menyesuaikan ukuran kontainer secara dinamis mengikuti dimensi konten di dalamnya.'
+            ],
+            [
+                'q' => 'Simbol apakah di panel lapisan Figma yang menandakan sebuah elemen adalah Master Component?',
+                'options' => ['Belah ketupat tunggal berongga (◇)', 'Empat belah ketupat padat ungu (❖)', 'Lingkaran bertitik', 'Segitiga emas'],
+                'ans' => 1,
+                'exp' => 'Simbol ❖ (empat belah ketupat ungu) menandai Master Component di Figma.'
+            ],
+            [
+                'q' => 'Apakah fungsi dari fitur Component Variants di Figma?',
+                'options' => ['Mengubah format file', 'Mengelompokkan variasi komponen serupa (tipe, ukuran, state) dalam satu wadah komponen tunggal', 'Menghapus lapisan yang tidak terpakai', 'Mengatur resolusi layar'],
+                'ans' => 1,
+                'exp' => 'Variants mengorganisir berbagai kondisi (state/size) dari komponen yang sama ke dalam satu Component Set.'
+            ],
+            [
+                'q' => 'Apakah manfaat utama penggunaan Design Tokens dalam kolaborasi tim desainer dan programmer?',
+                'options' => ['Mengganti kode program', 'Menyeragamkan penamaan variabel gaya (warna, radius, jarak) di Figma dan kode aplikasi', 'Menghapus kebutuhan pengujian aplikasi', 'Membuat ukuran aplikasi lebih kecil'],
+                'ans' => 1,
+                'exp' => 'Design Tokens menjembatani komunikasi sehingga penamaan variabel di desain dan kode persis sama.'
+            ],
+            [
+                'q' => 'Syarat mutlak apakah yang harus dipenuhi agar fitur Smart Animate di Figma dapat menganimasikan transisi antar frame secara otomatis?',
+                'options' => ['Kedua frame harus berwarna sama', 'Nama layer dan hierarki elemen pada frame asal dan tujuan harus sama persis', 'Elemen harus bertipe gambar SVG', 'Durasi animasi harus di atas 1 detik'],
+                'ans' => 1,
+                'exp' => 'Figma melacak objek antar frame berdasarkan kecocokan nama layer identik untuk menginterpolasi animasinya.'
+            ],
+            [
+                'q' => 'Contoh dari micro-interaction pada antarmuka aplikasi adalah?',
+                'options' => ['Membaca artikel 500 kata', 'Tombol yang menampilkan animasi spinner loading dan berubah menjadi centang hijau saat data tersimpan', 'Menutup browser', 'Mengunduh sistem operasi'],
+                'ans' => 1,
+                'exp' => 'Micro-interaction adalah detail animasi mikro yang memberikan umpan balik langsung atas aksi pengguna.'
+            ],
+            [
+                'q' => 'Apakah tujuan psikologis penggunaan animasi shimmer skeleton loading saat data sedang dimuat?',
+                'options' => ['Menghemat kuota pengguna', 'Memberikan gambaran struktur konten yang akan datang sehingga mengurangi persepsi waktu tunggu pengguna', 'Mematikan prosesor HP', 'Mencegah virus'],
+                'ans' => 1,
+                'exp' => 'Skeleton loading memberi ilusi kecepatan proses dan kepastian bentuk konten yang sedang diunduh.'
+            ],
+            [
+                'q' => 'Mengapa pola antarmuka mobile modern cenderung meletakkan menu penting di bagian bawah layar (Bottom Navigation / Bottom Sheet)?',
+                'options' => ['Aturan resmi toko aplikasi', 'Agar mudah dijangkau oleh ibu jari tangan satu pengguna (Thumb Zone)', 'Karena bagian atas layar tidak merespons sentuhan', 'Agar layar terlihat lebih penuh'],
+                'ans' => 1,
+                'exp' => 'Prinsip Thumb Zone menuntut kontrol penting berada dalam jangkauan alami ibu jari pengguna smartphone satu tangan.'
+            ],
+            [
+                'q' => 'Berapa skor minimum pada skala System Usability Scale (SUS) untuk dikategorikan sebagai produk yang memiliki tingkat kegunaan di atas rata-rata industri?',
+                'options' => ['50.0', '68.0', '85.0', '95.0'],
+                'ans' => 1,
+                'exp' => 'Skor SUS rata-rata industri adalah 68. Skor di atas 68 menunjukkan tingkat usability yang baik.'
+            ],
+            [
+                'q' => 'Menurut riset Jakob Nielsen, berapa jumlah partisipan uji coba minimum yang optimal untuk menemukan mayoritas (~85%) masalah kegunaan produk?',
+                'options' => ['5 pengguna', '50 pengguna', '100 pengguna', '1 pengguna'],
+                'ans' => 0,
+                'exp' => 'Riset Nielsen Norman Group membuktikan bahwa 5 pengguna sudah cukup untuk menemukan 85% masalah usability utama.'
+            ],
+            [
+                'q' => 'Fitur ruang kerja khusus di Figma yang membantu programmer menginspeksi nilai padding, menyalin kode CSS/Flutter, dan mengunduh aset disebut?',
+                'options' => ['Figma Dev Mode', 'Presentation Mode', 'Vector Trace', 'Style Guide Mirror'],
+                'ans' => 0,
+                'exp' => 'Figma Dev Mode menyediakan fitur inspeksi kode, token, dan ekspor aset presisi untuk developer.'
+            ],
+            [
+                'q' => 'Format file vektor apakah yang paling direkomendasikan untuk diekspor dari Figma untuk ikon antarmuka web karena skalabilitas tanpa pecah?',
+                'options' => ['JPG', 'SVG', 'GIF', 'BMP'],
+                'ans' => 1,
+                'exp' => 'SVG (Scalable Vector Graphics) berbasis vektor XML sehingga tidak pecah di resolusi layar berapapun dan berukuran sangat kecil.'
+            ],
+            [
+                'q' => 'Bagian manakah dalam studi kasus portofolio UI/UX yang paling krusial untuk membuktikan kompetensi seorang Product Designer kepada rekruter?',
+                'options' => ['Jumlah layer yang ada di file Figma', 'Penjelasan proses pemecahan masalah (Problem-Solving) berbasis riset pengguna dan dampak bisnis nyata', 'Daftar plugin favorit', 'Tangkapan layar wallpaper laptop'],
+                'ans' => 1,
+                'exp' => 'Rekruter mencari kemampuan desainer dalam menghubungkan kebutuhan pengguna dengan sasaran bisnis melalui data.'
+            ],
+            [
+                'q' => 'Heuristik Usability Nielsen ke-1 "Visibility of system status" menekankan bahwa sistem harus?',
+                'options' => ['Menyembunyikan informasi teknis', 'Selalu memberi tahu pengguna tentang apa yang sedang terjadi melalui umpan balik tepat waktu', 'Mengabaikan error pengguna', 'Membuat tampilan selalu berwarna hijau'],
+                'ans' => 1,
+                'exp' => 'Visibility of system status mewajibkan sistem memberi feedback yang jelas atas proses yang sedang berlangsung (misal: progress bar atau status tersimpan).'
+            ]
+        ]
+    ],
 ];

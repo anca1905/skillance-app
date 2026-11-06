@@ -157,6 +157,15 @@ foreach ($flutterCategories as $catName => $catTopics) {
     }
 }
 
+$uiuxData = require __DIR__ . '/data/uiux_tutorial.php';
+$uiuxCategories = $uiuxData['categories'] ?? [];
+$uiuxFlattenedTopics = [];
+foreach ($uiuxCategories as $catName => $catTopics) {
+    foreach ($catTopics as $tKey => $tData) {
+        $uiuxFlattenedTopics[$tKey] = $tData;
+    }
+}
+
 $tutorials = [
 
     'html' => [
@@ -361,142 +370,14 @@ $tutorials = [
     ],
 
     'uiux' => [
-
-        'name' => 'UI/UX Design Tutorial',
-
+        'name' => 'UI/UX Design & Figma Tutorial',
         'short_name' => 'UI/UX',
-
-        'badge' => 'Desain Produk',
-
+        'badge' => 'Desain Produk & Riset',
         'icon' => 'fa-solid fa-bezier-curve',
-
         'color' => '#d946ef',
-
-        'desc' => 'Desain pengalaman pengguna (UX) dan antarmuka visual (UI) modern menggunakan prinsip Design Thinking dan Figma.',
-
-        'topics' => [
-
-            'intro' => [
-
-                'title' => 'UI/UX Pengenalan & Design Thinking',
-
-                'summary' => 'Perbedaan UI vs UX, 5 tahapan Design Thinking, dan bagaimana merancang produk digital yang disukai pengguna.',
-
-                'content' => '
-
-                    <p class="lead"><strong>UI (User Interface)</strong> berfokus pada keindahan visual, warna, tipografi, dan tata letak layar. Sedangkan <strong>UX (User Experience)</strong> berfokus pada kemudahan alur, navigasi, dan kenyamanan pengguna dalam menyelesaikan tujuannya.</p>
-
-                    <h4>5 Tahapan Standar Design Thinking:</h4>
-
-                    <ol class="ps-3">
-
-                        <li><strong>Empathize</strong>: Memahami kebutuhan dan keluhan pengguna melalui riset atau wawancara.</li>
-
-                        <li><strong>Define</strong>: Merumuskan masalah spesifik yang dihadapi pengguna (Problem Statement).</li>
-
-                        <li><strong>Ideate</strong>: Melakukan brainstorming beragam alternatif solusi kreatif.</li>
-
-                        <li><strong>Prototype</strong>: Membuat rancangan interaktif (wireframe & mockup di Figma).</li>
-
-                        <li><strong>Test</strong>: Menguji coba prototipe ke calon pengguna untuk mendapatkan feedback nyata.</li>
-
-                    </ol>
-
-                ',
-
-                'example_title' => 'Contoh Komponen UI Responsif (Figma Auto-Layout)',
-
-                'example_code' => '<!DOCTYPE html>
-
-<html>
-
-<head>
-
-    <style>
-
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 200px; background: #fdf4ff; }
-
-        .pill-btn {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            background: #a21caf;
-
-            color: white;
-
-            padding: 10px 20px;
-
-            border-radius: 30px;
-
-            font-weight: bold;
-
-            font-size: 0.85rem;
-
-            cursor: pointer;
-
-            box-shadow: 0 4px 10px rgba(162, 28, 175, 0.2);
-
-            border: none;
-
-            transition: transform 0.2s;
-
-        }
-
-        .pill-btn:hover {
-
-            transform: scale(1.05);
-
-            background: #86198f;
-
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-    <button class="pill-btn" onclick="alert(\'Tombol UI/UX dirancang dengan prinsip Auto-Layout & Feedback Hover!\')">
-
-        <span>✨</span>
-
-        <span>Tombol Auto-Layout Figma</span>
-
-    </button>
-
-</body>
-
-</html>',
-
-                'explanation' => '
-
-                    <h5 class="fw-bold mt-3">Kolaborasi UI/UX dan Developer:</h5>
-
-                    <p>Desain yang baik selalu memperhitungkan kemampuan implementasi kode CSS. Figma Auto Layout memudahkan developer menerjemahkan desain ke dalam kode Flexbox secara presisi.</p>
-
-                ',
-
-                'quiz' => [
-
-                    'q' => 'Manakah tahapan pertama dalam proses Design Thinking yang berfokus pada memahami pengguna secara mendalam?',
-
-                    'options' => ['Ideate', 'Empathize', 'Prototype', 'Define'],
-
-                    'answer' => 1,
-
-                    'explanation' => 'Empathize adalah langkah awal di mana desainer mengamati dan berempati dengan kebutuhan pengguna.'
-
-                ]
-
-            ]
-
-        ]
-
+        'desc' => 'Desain pengalaman pengguna (UX) dan antarmuka visual (UI) modern menggunakan prinsip Design Thinking, Auto-Layout Figma, dan Design System.',
+        'categories' => $uiuxCategories,
+        'topics' => $uiuxFlattenedTopics
     ]
-
 ];
 

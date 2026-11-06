@@ -33,6 +33,11 @@ $isBankEmpty = empty($currentUser['bank_account_number']);
                 <?php else: ?>
                     Kategori: <strong>Freelancer Umum</strong>
                 <?php endif; ?>
+                <?php if (!empty($isCertified)): ?>
+                    <span class="badge bg-gold text-navy fw-bold px-2 py-1 ms-1 rounded-pill" style="font-size: 0.72rem;">
+                        <i class="fa-solid fa-circle-check me-1"></i> SKPI Certified (<?= count($userCerts) ?> Sertifikat)
+                    </span>
+                <?php endif; ?>
                 &bull; Mulai ambil proyek menarik dan kembangkan portofoliomu.
             </p>
         </div>

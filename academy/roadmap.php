@@ -524,10 +524,15 @@ if (!in_array($activePath, $validPaths)) {
                 </div>
             </a>
 
-            <!-- Mobile Toggler -->
-            <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars fs-4 text-navy"></i>
-            </button>
+            <!-- Search Trigger & Mobile Toggler -->
+            <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-sm btn-light border rounded-circle d-xl-none me-2 d-flex align-items-center justify-content-center" onclick="openSpotlightSearch()" style="width: 36px; height: 36px;" title="Cari Materi (Ctrl+K)">
+                    <i class="fa-solid fa-magnifying-glass text-navy"></i>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#academyNavMenu" aria-controls="academyNavMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars fs-4 text-navy"></i>
+                </button>
+            </div>
 
             <!-- Navbar Links & Actions -->
             <div class="collapse navbar-collapse" id="academyNavMenu">
@@ -565,6 +570,11 @@ if (!in_array($activePath, $validPaths)) {
                 </ul>
 
                 <div class="d-flex align-items-center gap-2 pt-3 pt-xl-0 border-top border-xl-0">
+                    <button type="button" class="btn btn-sm btn-light border rounded-pill px-3 py-2 text-muted d-none d-xl-inline-flex align-items-center gap-2 me-1" onclick="openSpotlightSearch()" style="background: #f8fafc; font-size: 0.82rem; border-color: #e2e8f0 !important;" title="Pencarian Materi Cepat">
+                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                        <span>Cari materi...</span>
+                        <kbd class="bg-white border text-secondary px-1 py-0 rounded" style="font-size: 0.68rem; font-family: inherit;">Ctrl K</kbd>
+                    </button>
                     <?php if (!empty($isLoggedIn)): ?>
                         <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold d-flex align-items-center gap-2 " style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.85rem;">
                             <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="22" height="22" alt="Avatar">
@@ -2188,24 +2198,34 @@ if (!in_array($activePath, $validPaths)) {
                     <div class="step-card">
                         <span class="step-badge bg-danger-subtle text-danger-emphasis mb-2 d-inline-block">Tahap 1: Riset & Konsep</span>
                         <h4 class="fw-bold text-navy mb-2">Design Thinking & Riset Pengguna</h4>
-                        <p class="text-muted small mb-3">Memahami kebutuhan pengguna melalui empati, mendefinisikan masalah (Problem Statement), dan membuat persona.</p>
+                        <p class="text-muted small mb-3">Memahami kebutuhan pengguna melalui empati, merumuskan Problem Statement, membuat User Persona, dan memetakan Information Architecture.</p>
                         <label class="skill-item">
                             <input type="checkbox" class="skill-checkbox" data-skill="uiux_research">
-                            <span>User Interview, Empathy Map, Persona, User Journey Map, Information Architecture</span>
+                            <span>User Interview, Empathy Map, Persona, User Journey Map, Information Architecture, Card Sorting</span>
                         </label>
+                        <div class="mt-2">
+                            <a href="learn.php?c=uiux&p=uiux_intro" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-graduation-cap me-1 text-danger"></i> Pelajari Riset & Design Thinking &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="timeline-step">
                     <div class="timeline-node">2</div>
                     <div class="step-card">
-                        <span class="step-badge bg-primary-subtle text-primary-emphasis mb-2 d-inline-block">Tahap 2: Desain Visual</span>
-                        <h4 class="fw-bold text-navy mb-2">Figma Mastery & Design System</h4>
-                        <p class="text-muted small mb-3">Merancang antarmuka berkualitas tinggi (High-Fidelity) dengan Auto Layout, Reusable Components, dan Typography tokens.</p>
+                        <span class="step-badge bg-primary-subtle text-primary-emphasis mb-2 d-inline-block">Tahap 2: Desain Visual & Figma</span>
+                        <h4 class="fw-bold text-navy mb-2">Figma Mastery, Auto-Layout & Design Tokens</h4>
+                        <p class="text-muted small mb-3">Merancang antarmuka pixel-perfect menggunakan 8-point grid, Auto-Layout, Component Sets, Variants, dan Design System Tokens.</p>
                         <label class="skill-item">
                             <input type="checkbox" class="skill-checkbox" data-skill="uiux_figma">
-                            <span>Auto Layout, Component Variants, Color Palettes, Grid System, Interactive Prototype</span>
+                            <span>8-Point Grid, Auto-Layout (Shift+A), Component Variants, Color Tokens, Smart Animate Prototyping</span>
                         </label>
+                        <div class="mt-2">
+                            <a href="learn.php?c=uiux&p=uiux_auto_layout" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-brands fa-figma me-1 text-primary"></i> Pelajari Figma & Auto-Layout &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -2214,15 +2234,23 @@ if (!in_array($activePath, $validPaths)) {
                     <div class="step-card">
                         <span class="step-badge bg-success-subtle text-success-emphasis mb-2 d-inline-block">Tahap 3: Validasi & Handoff</span>
                         <h4 class="fw-bold text-navy mb-2">Usability Testing & Developer Handoff</h4>
-                        <p class="text-muted small mb-3">Menguji prototipe kepada calon pengguna asli dan menyiapkan dokumentasi aset untuk diserahkan ke tim developer.</p>
+                        <p class="text-muted small mb-3">Menguji prototipe ke calon pengguna dengan metrik SUS, serta serah terima aset dan token presisi via Figma Dev Mode.</p>
                         <div class="project-highlight">
                             <small class="fw-bold text-warning-emphasis d-block mb-1"><i class="fa-solid fa-trophy me-1"></i> Portofolio Akhir UI/UX:</small>
-                            <span class="small text-secondary">Studi kasus UI/UX lengkap (Case Study) desain aplikasi mobile/web interaktif yang dipublikasikan di Behance / Figma Community.</span>
+                            <span class="small text-secondary">Studi kasus UI/UX lengkap (Case Study) desain aplikasi mobile/web interaktif yang siap dipamerkan di Behance dan LinkedIn.</span>
                         </div>
                         <label class="skill-item mt-2">
                             <input type="checkbox" class="skill-checkbox" data-skill="uiux_case_study">
                             <span>Menyelesaikan Case Study UI/UX komprehensif dari riset hingga prototipe final</span>
                         </label>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <a href="learn.php?c=uiux&p=uiux_usability_testing" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.8rem;">
+                                <i class="fa-solid fa-clipboard-check me-1 text-success"></i> Pelajari Usability & Dev Mode &raquo;
+                            </a>
+                            <a href="exam.php?track=uiux" class="btn btn-sm btn-warning rounded-pill fw-bold text-navy" style="font-size: 0.8rem;">
+                                <i class="fa-solid fa-award me-1"></i> Ambil Ujian Sertifikasi UI/UX &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -2391,5 +2419,7 @@ if (!in_array($activePath, $validPaths)) {
             }
         });
     </script>
+<?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
+<script src="assets/js/spotlight.js"></script>
 </body>
 </html>

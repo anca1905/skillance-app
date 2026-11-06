@@ -20,6 +20,25 @@ $userType = $currentUser['user_type'] ?? 'umum';
 $userEmail = $currentUser['email'] ?? '';
 $userPhoto = $currentUser['photo'] ?? '';
 
+// Check for Skillance Academy SKPI Certificates
+$userCerts = [];
+if (!empty($conn) && !empty($userEmail)) {
+    // Check if table exists
+    $tblCheck = $conn->query("SHOW TABLES LIKE 'academy_certificates'");
+    if ($tblCheck && $tblCheck->num_rows > 0) {
+        $cStmt = $conn->prepare("SELECT certificate_no, track, score, issue_date FROM academy_certificates WHERE recipient_email = ? OR user_id = ? ORDER BY id DESC");
+        if ($cStmt) {
+            $cStmt->bind_param('si', $userEmail, $currentUserId);
+            $cStmt->execute();
+            $res = $cStmt->get_result();
+            while ($row = $res->fetch_assoc()) {
+                $userCerts[] = $row;
+            }
+        }
+    }
+}
+$isCertified = !empty($userCerts);
+
 if (empty($userPhoto)) {
     $avatarUrl = "https://ui-avatars.com/api/?name=" . urlencode($userName) . "&background=0d2e5c&color=fca311&bold=true";
 } elseif (strpos($userPhoto, 'http') === 0) {
@@ -204,6 +223,9 @@ $pageTitle = $pageTitle ?? "Dashboard Freelancer";
                         <span class="badge-type badge-mhs"><i class="fa-solid fa-graduation-cap me-1"></i> Mahasiswa</span>
                     <?php else: ?>
                         <span class="badge-type badge-umum"><i class="fa-solid fa-user me-1"></i> Umum</span>
+                    <?php endif; ?>
+                    <?php if (!empty($isCertified)): ?>
+                        <span class="badge bg-gold text-navy fw-bold" style="font-size: 0.65rem;" title="Lulus Sertifikasi SKPI Skillance Academy"><i class="fa-solid fa-certificate"></i> SKPI Certified</span>
                     <?php endif; ?>
                 </div>
             </div>

@@ -77,6 +77,11 @@ $activeMenu = $activeMenu ?? '';
             </a>
         </li>
         <li class="nav-item">
+            <a href="<?= $dashRoot ?>academy/leads.php" class="nav-link <?= $activeMenu === 'academy' ? 'active' : 'text-info fw-bold' ?>">
+                <i class="fa-solid fa-graduation-cap <?= $activeMenu === 'academy' ? 'text-gold' : 'text-info' ?>"></i> Academy Leads & CRM
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
                 <i class="fa-solid fa-user-gear"></i> Profil Saya
             </a>

@@ -35,6 +35,13 @@ $isWelcome = isset($_GET['welcome']) || isset($_GET['first_login']);
                 <?php else: ?>
                     <span class="badge-type badge-umum"><i class="fa-solid fa-user me-1"></i> Freelancer Umum</span>
                 <?php endif; ?>
+                <?php if (!empty($isCertified)): ?>
+                    <div class="mt-2">
+                        <span class="badge bg-success-subtle text-success border border-success fw-bold px-3 py-1 rounded-pill shadow-sm" style="font-size: 0.75rem;">
+                            <i class="fa-solid fa-circle-check text-success me-1"></i> SKPI Certified Developer
+                        </span>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <hr class="my-3">
@@ -190,7 +197,49 @@ $isWelcome = isset($_GET['welcome']) || isset($_GET['first_login']);
                     </button>
                 </div>
             </form>
-        </div>
+        
+            <!-- Daftar Sertifikasi SKPI Terverifikasi -->
+            <div class="card card-custom p-4 mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-navy mb-0">
+                        <i class="fa-solid fa-award text-gold me-2"></i> Sertifikat Kompetensi SKPI Terverifikasi
+                    </h5>
+                    <a href="https://academy.skillance.cloud/exam.php" class="btn btn-sm btn-outline-navy rounded-pill fw-semibold" style="font-size: 0.8rem;">
+                        <i class="fa-solid fa-plus me-1"></i> Ambil Ujian Baru &raquo;
+                    </a>
+                </div>
+
+                <?php if (!empty($userCerts)): ?>
+                    <div class="row g-3">
+                        <?php foreach ($userCerts as $c): ?>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded-3 bg-light position-relative">
+                                    <span class="badge bg-success text-white fw-bold mb-2">Nilai: <?= (int)$c['score'] ?> (Grade A)</span>
+                                    <h6 class="fw-bold text-navy mb-1"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $c['track']))) ?></h6>
+                                    <small class="text-muted font-monospace d-block mb-2">No. Seri: <?= htmlspecialchars($c['certificate_no']) ?></small>
+                                    <a href="https://academy.skillance.cloud/verify.php?cert=<?= urlencode($c['certificate_no']) ?>" target="_blank" class="btn btn-sm btn-navy rounded-pill px-3 py-1 fw-semibold text-white shadow-sm" style="font-size: 0.78rem;">
+                                        <i class="fa-solid fa-qrcode text-warning me-1"></i> Cek Verifikasi QR &raquo;
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-warning border-0 rounded-3 p-3 mb-0">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-circle-info fs-2 text-warning"></i>
+                            <div>
+                                <strong class="text-navy d-block">Tingkatkan Kepercayaan Klien dengan Lencana "SKPI Certified"!</strong>
+                                <p class="small text-muted mb-2">Ikuti ujian sertifikasi koding mandiri 30 menit di Skillance Academy. Skor &ge; 80% otomatis memverifikasi profil freelance Anda dengan lencana resmi ber-QR Code.</p>
+                                <a href="https://academy.skillance.cloud/exam.php" class="btn btn-sm btn-warning fw-bold rounded-pill px-3 py-1 text-navy">
+                                    <i class="fa-solid fa-award me-1"></i> Ikuti Ujian Kompetensi Sekarang &raquo;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+</div>
     </div>
 </div>
 
