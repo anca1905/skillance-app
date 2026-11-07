@@ -25,6 +25,12 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 <!-- INLINE CRITICAL NAVBAR STYLES -->
 <style>
 
+
+    .text-navy { color: #0d2e5c !important; }
+    .badge.bg-light, .badge.text-navy, a.badge {
+        color: #0f172a !important;
+    }
+
     /* DARK MODE ENGINE */
     :root {
         --app-bg: #f8fafc;

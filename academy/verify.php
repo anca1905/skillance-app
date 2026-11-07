@@ -344,6 +344,39 @@ $seoBreadcrumbs = [
                 margin: 1cm;
             }
         }
+
+        .text-navy {
+            color: #0d2e5c !important;
+        }
+        .btn-sample-cert {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #0f172a !important;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .btn-sample-cert:hover {
+            background-color: #e2e8f0;
+            border-color: #0d2e5c;
+            color: #0d2e5c !important;
+            transform: translateY(-1px);
+        }
+        [data-theme="dark"] .btn-sample-cert {
+            background-color: #111e38;
+            border-color: #243556;
+            color: #f8fafc !important;
+        }
+        [data-theme="dark"] .btn-sample-cert .text-dark {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .btn-sample-cert .text-muted {
+            color: #94a3b8 !important;
+        }
+        [data-theme="dark"] .btn-sample-cert:hover {
+            background-color: #1a2d54;
+            border-color: #fca311;
+        }
     </style>
 </head>
 <body>
@@ -394,8 +427,10 @@ $seoBreadcrumbs = [
             <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-2 border-top">
                 <span class="small text-muted fw-semibold">Contoh Demo Verifikasi:</span>
                 <?php foreach ($sampleCerts as $sc): ?>
-                    <a href="verify.php?cert=<?= urlencode($sc['no']) ?>" class="badge bg-light text-navy border text-decoration-none py-2 px-3 fw-bold">
-                        <i class="fa-solid fa-check-circle text-success me-1"></i> <?= $sc['no'] ?> (<?= $sc['name'] ?>)
+                    <a href="verify.php?cert=<?= urlencode($sc['no']) ?>" class="btn-sample-cert text-decoration-none py-1 px-3 fw-bold rounded-pill border d-inline-flex align-items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-success"></i> 
+                        <span class="text-dark fw-bold"><?= $sc['no'] ?></span> 
+                        <span class="text-muted fw-normal small">(<?= $sc['name'] ?>)</span>
                     </a>
                 <?php endforeach; ?>
             </div>
@@ -545,9 +580,9 @@ $seoBreadcrumbs = [
                             Sertifikat ini diterbitkan secara sah oleh <strong>Skillance Academy Indonesia</strong> sebagai bentuk pengakuan atas penguasaan kompetensi digital praktis. Dokumen ini dapat digunakan sebagai kelengkapan <strong>Surat Keterangan Pendamping Ijazah (SKPI)</strong>, portofolio magang, maupun berkas seleksi kerja profesional.
                         </p>
                         <div class="d-flex flex-wrap gap-2 pt-1">
-                            <span class="badge bg-light text-navy border"><i class="fa-solid fa-lock text-success me-1"></i> Database Terenkripsi</span>
-                            <span class="badge bg-light text-navy border"><i class="fa-solid fa-fingerprint text-primary me-1"></i> ID Unik Anti-Pemalsuan</span>
-                            <span class="badge bg-light text-navy border"><i class="fa-solid fa-globe text-warning me-1"></i> Dapat Diakses Publik</span>
+                            <span class="badge bg-light text-dark border"><i class="fa-solid fa-lock text-success me-1"></i> Database Terenkripsi</span>
+                            <span class="badge bg-light text-dark border"><i class="fa-solid fa-fingerprint text-primary me-1"></i> ID Unik Anti-Pemalsuan</span>
+                            <span class="badge bg-light text-dark border"><i class="fa-solid fa-globe text-warning me-1"></i> Dapat Diakses Publik</span>
                         </div>
                     </div>
                     <div class="col-md-4 text-md-end">
