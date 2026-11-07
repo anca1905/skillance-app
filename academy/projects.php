@@ -890,14 +890,21 @@ $seoBreadcrumbs = [
                     </div>
 
                     <!-- QRIS Barcode Box -->
-                    <div class="p-3 bg-white rounded-3 border shadow-sm mx-auto d-inline-block mb-3 position-relative" style="max-width: 280px;">
+                    <div class="p-3 bg-white rounded-3 border shadow-sm mx-auto d-inline-block mb-3 position-relative" style="max-width: 330px;">
                         <div class="d-flex justify-content-between align-items-center mb-2 px-1">
-                            <span class="fw-bold text-navy" style="font-size: 0.82rem; letter-spacing: 1px;">QRIS NASIONAL</span>
-                            <span class="badge bg-danger text-white px-2 py-0" style="font-size: 0.65rem;">GPN</span>
+                            <span class="fw-bold text-navy" style="font-size: 0.82rem; letter-spacing: 0.5px;"><i class="fa-solid fa-qrcode text-danger me-1"></i> QRIS STANDAR NASIONAL</span>
+                            <span class="badge bg-danger text-white px-2 py-1" style="font-size: 0.68rem; font-weight: 700;">GPN</span>
                         </div>
-                        <img id="qrisBarcodeImg" src="" alt="QRIS Code" class="img-fluid rounded" style="width: 220px; height: 220px; object-fit: contain;">
-                        <div class="small text-muted mt-2" style="font-size: 0.72rem;">
-                            NMID: ID1024392019281 • Skillance Store
+                        <div class="p-2 border rounded-2 bg-light text-center">
+                            <img id="qrisBarcodeImg" src="assets/img/qris_official.jpg" alt="Official QRIS Skillance" class="img-fluid rounded shadow-xs" style="max-width: 260px; height: auto;">
+                        </div>
+                        <div class="small text-muted mt-2 font-monospace" style="font-size: 0.75rem;">
+                            NMID: <strong class="text-dark">ID1026634363422</strong> &bull; A01
+                        </div>
+                        <div class="mt-2">
+                            <a href="assets/img/qris_official.jpg" download="QRIS-Pembayaran-Skillance.jpg" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-download me-1"></i> Simpan Gambar QRIS
+                            </a>
                         </div>
                     </div>
 
@@ -909,18 +916,24 @@ $seoBreadcrumbs = [
                         </div>
                     </div>
 
-                    <div class="alert alert-secondary py-2 px-3 small text-muted mb-3" style="font-size: 0.78rem;">
-                        <i class="fa-solid fa-mobile-screen me-1 text-primary"></i> Scan menggunakan BCA Mobile, Mandiri Livin', GoPay, ShopeePay, OVO, Dana, atau LinkAja.
+                    <div class="alert alert-secondary py-2 px-3 small text-muted mb-3 text-start" style="font-size: 0.78rem;">
+                        <div class="fw-bold text-navy mb-1"><i class="fa-solid fa-mobile-screen-button me-1 text-primary"></i> Petunjuk Pembayaran:</div>
+                        <ol class="mb-0 ps-3" style="line-height: 1.6;">
+                            <li>Buka aplikasi m-banking (<strong>BCA, BRI, Mandiri, BNI, BSI</strong>) atau e-wallet (<strong>GoPay, OVO, DANA, ShopeePay</strong>).</li>
+                            <li>Pilih menu <strong>Scan / Bayar QRIS</strong> dan arahkan kamera ke barcode di atas (atau simpan gambar lalu unggah dari galeri).</li>
+                            <li>Masukkan nominal sesuai total tagihan di atas.</li>
+                            <li>Setelah transfer berhasil, klik tombol <strong>Kirim Bukti Pembayaran ke WhatsApp</strong> di bawah untuk mendapatkan link download paket proyek.</li>
+                        </ol>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-success fw-bold py-2 rounded-pill shadow-sm" id="btnVerifyQris" onclick="simulateVerifyQris()">
-                            <i class="fa-solid fa-circle-check me-1"></i> Saya Sudah Bayar (Cek Otomatis)
-                        </button>
-                        <a href="#" id="btnFallbackWa" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill py-2">
-                            <i class="fa-brands fa-whatsapp text-success me-1"></i> Bantuan Pembayaran / Konfirmasi Manual
+                        <a href="#" id="btnFallbackWa" target="_blank" class="btn btn-success fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="fa-brands fa-whatsapp fs-5"></i> Kirim Bukti Transfer ke WhatsApp Admin &raquo;
                         </a>
+                        <button type="button" class="btn btn-sm btn-outline-primary fw-semibold py-2 rounded-pill" id="btnVerifyQris" onclick="simulateVerifyQris()">
+                            <i class="fa-solid fa-bolt me-1"></i> Verifikasi Instan & Akses Download
+                        </button>
                     </div>
                 </div>
 
@@ -981,17 +994,18 @@ $seoBreadcrumbs = [
         btnVerify.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Saya Sudah Bayar (Cek Otomatis)';
         btnVerify.disabled = false;
 
-        // Generate dynamic QR code URL
-        const qrData = `00020101021226600016ID.CO.SKILLANCE.WWW01189360091100293819280215${randomInv}5204581253033605802ID5914SKILLANCE STORE6007KOLAKA62070703A016304E882`;
-        const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(qrData);
-        document.getElementById('qrisBarcodeImg').src = qrUrl;
+        // Official QRIS Image
+        document.getElementById('qrisBarcodeImg').src = 'assets/img/qris_official.jpg';
 
-        // Fallback WhatsApp Link
-        const waText = encodeURIComponent(`Halo Admin Skillance Academy, saya ingin konfirmasi pembayaran QRIS untuk e-book:
+        // Direct WhatsApp Confirmation Link with Complete Invoice Details
+        const waText = encodeURIComponent(`Halo Admin Skillance Academy, saya sudah melakukan pembayaran QRIS untuk pembelian project kit:
 
-*${title}*
-No Invoice: ${randomInv}
-Nominal: ${price}`);
+📦 *${title}*
+🧾 No Invoice: ${randomInv}
+💰 Nominal Tagihan: ${price}
+🏛️ Merchant Tujuan: ID1026634363422 (Skillance Store)
+
+Berikut saya lampirkan bukti transfer pembayarannya. Mohon dibantu kirimkan link Google Drive / ZIP source code dan lisensi komersialnya ya. Terima kasih!`);
         document.getElementById('btnFallbackWa').href = `https://api.whatsapp.com/send?phone=6282291700778&text=${waText}`;
 
         // Start Countdown Timer (15 Minutes)
