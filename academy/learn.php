@@ -842,6 +842,24 @@ $seoCustomSchemaJson = json_encode([
                 </div>
             </div>
 
+            <!-- UPSELL & MONETIZATION: PROJECT KIT RECOMMENDATION -->
+            <div class="card border-0 rounded-4 shadow-xs p-4 mb-4 bg-light" style="border-left: 4px solid var(--gold) !important; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div>
+                        <span class="badge bg-warning text-dark px-2 py-1 rounded-pill small fw-bold mb-2">
+                            <i class="fa-solid fa-code text-danger me-1"></i> E-Book & Source Code Siap Pakai
+                        </span>
+                        <h6 class="fw-bold text-navy mb-1" style="font-size: 1rem;">Siap Bangun Proyek Skripsi atau Aplikasi Nyata?</h6>
+                        <p class="text-secondary small mb-0" style="max-width: 550px; line-height: 1.6;">
+                            Tingkatkan pemahaman Anda dari teori ke implementasi nyata. Dapatkan source code lengkap <strong>Website Desa Modern</strong>, <strong>Aplikasi Kasir POS</strong>, atau <strong>Toko Online Midtrans</strong> dengan lisensi komersial mulai Rp 49rb.
+                        </p>
+                    </div>
+                    <a href="projects.php" target="_blank" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm flex-shrink-0 align-self-start align-self-md-center" style="background-color: #0d2e5c !important;">
+                        <i class="fa-solid fa-laptop-code text-warning me-1"></i> Buka Project Kit &raquo;
+                    </a>
+                </div>
+            </div>
+
             <!-- Bottom Nav Buttons -->
             <div class="nav-buttons-bar border-top pt-4">
                 <?php if ($prevTopicKey): ?>

@@ -966,6 +966,197 @@ $seoBreadcrumbs = [
         </div>
     </section>
 
+    <!-- SECTION: VIRAL CLASSROOM SHARE BANNER (MONETIZATION & TRAFFIC DRIVER) -->
+    <section class="py-4 bg-light border-bottom">
+        <div class="container">
+            <div class="card border-0 rounded-4 shadow-sm p-4 p-md-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 60%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-8">
+                        <span class="badge bg-warning text-dark px-3 py-1 rounded-pill small fw-bold mb-2">
+                            <i class="fa-solid fa-users me-1 text-danger"></i> KOMUNITAS MAHASISWA & PROGRAMMER
+                        </span>
+                        <h4 class="fw-bold mb-1 text-white">Ajak Teman Sekelas Belajar Koding & Raih Sertifikat SKPI</h4>
+                        <p class="text-white-50 small mb-0" style="line-height: 1.6; max-width: 620px;">
+                            Bantu teman satu jurusan atau angkatan Anda menguasai koding dari nol dan mempersiapkan portofolio skripsi. Bagikan akses gratis Skillance Academy langsung ke grup WhatsApp kelas Anda!
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="https://api.whatsapp.com/send?text=<?= urlencode("Halo teman-teman! Ada platform belajar koding mandiri gratis dari Skillance Academy Indonesia. Lengkap tutorial praktis HTML, CSS, JS, PHP, Python, Flutter, sampai ujian sertifikasi resmi untuk lampiran SKPI kampus. Yuk coba kuis tryout kilatnya di sini: https://academy.skillance.cloud") ?>" 
+                           target="_blank" rel="noopener noreferrer" 
+                           class="btn btn-success btn-lg fw-bold px-4 py-3 rounded-pill shadow-sm d-inline-flex align-items-center gap-2" style="background-color: #25D366; border-color: #25D366;">
+                            <i class="fa-brands fa-whatsapp fs-5"></i> Bagikan ke Grup WA &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FAQ INTERAKTIF & GOOGLE RICH SNIPPET (TRUST & CONVERSION) -->
+    <section class="py-5 bg-white border-bottom" id="faq">
+        <div class="container py-2">
+            <div class="text-center mb-5">
+                <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important; font-size: 0.75rem;">
+                    <i class="fa-solid fa-circle-question me-1"></i> BANTUAN & TANYA JAWAB
+                </span>
+                <h2 class="display-6 fw-bold text-navy font-heading mb-2">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                <p class="text-muted small mx-auto mb-0" style="max-width: 620px; line-height: 1.7;">
+                    Semua yang perlu Anda ketahui mengenai akses belajar, keabsahan sertifikat SKPI kampus, ujian online, dan peluang monetisasi proyek teknologi di Skillance Academy.
+                </p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="accordion accordion-flush shadow-sm rounded-4 border overflow-hidden" id="academyFaqAccordion">
+                        
+                        <!-- FAQ 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading1">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-circle-check text-success me-2"></i> Apakah materi tutorial dan Code Lab di Skillance Academy benar-benar gratis?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    <strong>Ya, 100% gratis!</strong> Seluruh silabus komprehensif (HTML, CSS, JavaScript, PHP, MySQL, Python, Vue.js, Flutter, dan UI/UX Design) serta editor interaktif <em>Code Lab (Try it Yourself)</em> dapat diakses bebas tanpa dipungut biaya dan tanpa kewajiban berlangganan.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading2">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-shield-halved text-primary me-2"></i> Apakah sertifikat kelulusan resmi dan diakui untuk lampiran SKPI kampus?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    <strong>Sangat resmi dan terverifikasi.</strong> Setiap peserta yang lulus ujian kompetensi akan menerima e-sertifikat digital beresolusi tinggi (format cetak A4) yang dilengkapi <strong>Nomor Seri Unik</strong> dan <strong>QR Code Kriptografis</strong>. Pihak BAAK, dosen pembimbing, maupun HRD perusahaan dapat memindai atau memeriksa langsung keabsahannya di <a href="verify.php" class="text-decoration-none fw-bold text-navy">academy.skillance.cloud/verify.php</a> secara realtime.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading3">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-award text-warning me-2"></i> Berapa batas nilai ujian sertifikasi dan apakah bisa mengulang jika belum lulus?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    Batas kelulusan standar industri adalah skor minimal <strong>80%</strong> dari 25 butir soal pilihan ganda acak. Jika belum mencapai skor tersebut, Anda dapat mempelajari kembali modul materi dan mengulang ujian tanpa penalti. Kami juga menyediakan fitur <strong>Simulasi Tryout Kilat 5 Soal (2 Menit)</strong> untuk pemanasan instan sebelum memulai ujian resmi.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading4">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-laptop-code text-danger me-2"></i> Apa itu E-Book & Project Kit Siap Pakai dan apakah ada lisensi komersialnya?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    <strong>Project Kit</strong> di Skillance Academy adalah paket lengkap berupa source code aplikasi produksi nyata (seperti <em>Website Desa Modern</em>, <em>Aplikasi Kasir POS Thermal</em>, dan <em>E-Commerce Gateway Midtrans</em>) disertai e-book petunjuk instalasi dan skema database MySQL. Pembeli mendapatkan <strong>Lisensi Komersial Penuh (Full Commercial Rights)</strong>, sehingga kode program bebas dimodifikasi untuk tugas akhir/skripsi maupun dijual kembali kepada klien UMKM lokal.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 5 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading5">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-handshake text-success me-2"></i> Bagaimana ormawa (BEM/HIMA/UKM) dapat bermitra menyelenggarakan workshop?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    Ormawa dapat mengajukan kemitraan <em>Co-Branded Workshop</em> melalui menu <a href="partner.php" class="text-decoration-none fw-bold text-navy">Kemitraan Kampus</a>. Skillance Academy menyediakan instruktur ahli, kurikulum studi kasus, dan sistem sertifikat SKPI dengan sistem <strong>Bagi Hasil Tiket 40% – 50% masuk langsung ke kas ormawa</strong> tanpa biaya deposit awal (Zero Capital). Anda juga dapat mengunduh format surat proposal resmi siap cetak di <a href="proposal.php" class="text-decoration-none fw-bold text-navy">halaman proposal</a>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 6 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading6">
+                                <button class="accordion-button fw-bold text-navy py-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6" style="font-size: 0.98rem;">
+                                    <i class="fa-solid fa-mobile-screen-button text-info me-2"></i> Apakah bisa belajar koding dan mencoba editor hanya melalui smartphone?
+                                </button>
+                            </h2>
+                            <div id="faqCollapse6" class="accordion-collapse collapse" aria-labelledby="faqHeading6" data-bs-parent="#academyFaqAccordion">
+                                <div class="accordion-body text-secondary small" style="line-height: 1.8; font-size: 0.9rem;">
+                                    <strong>Bisa!</strong> Seluruh antarmuka platform dirancang responsif untuk peramban ponsel. Pada editor koding <em>Code Lab</em>, tersedia tab navigasi khusus ponsel (Editor, Hasil, dan Split) sehingga Anda dapat mengetik sintaks dan menguji tampilan secara ergonomis langsung dari genggaman tanpa harus membuka laptop.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEMA.ORG FAQPAGE (JSON-LD) FOR GOOGLE RICH SNIPPET -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah materi tutorial dan Code Lab di Skillance Academy benar-benar gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, 100% gratis tanpa biaya tersembunyi. Seluruh silabus komprehensif dan editor interaktif Code Lab dapat diakses bebas tanpa dipungut biaya."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah sertifikat kelulusan resmi dan diakui untuk lampiran SKPI kampus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sangat resmi. Setiap sertifikat kelulusan dilengkapi Nomor Seri Unik dan QR Code Kriptografis yang dapat divalidasi publik di academy.skillance.cloud/verify.php untuk keperluan SKPI kampus dan rekrutmen kerja."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa batas nilai ujian sertifikasi dan apakah bisa mengulang jika belum lulus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Batas kelulusan standar industri adalah skor minimal 80% dari 25 butir soal. Siswa dapat mengulang ujian kapan saja tanpa penalti."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa itu E-Book & Project Kit Siap Pakai dan apakah ada lisensi komersialnya?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Project Kit adalah paket lengkap berupa source code aplikasi produksi nyata (Website Desa, POS Kasir, E-Commerce) dengan lisensi komersial penuh untuk referensi skripsi maupun dijual ke klien UMKM."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana ormawa (BEM/HIMA/UKM) dapat bermitra menyelenggarakan workshop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ormawa dapat mengajukan kemitraan Co-Branded Workshop dengan bagi hasil tiket 40-50% masuk ke kas ormawa tanpa modal awal (Zero Capital)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah bisa belajar koding dan mencoba editor hanya melalui smartphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. Platform memiliki tata letak mobile ergonomis dengan mode tab Editor, Hasil, dan Split di browser smartphone."
+          }
+        }
+      ]
+    }
+    </script>
+
     <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- Bootstrap Bundle JS -->
