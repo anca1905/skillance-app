@@ -362,21 +362,10 @@ $seoBreadcrumbs = [
             color: #0d2e5c !important;
             transform: translateY(-1px);
         }
-        [data-theme="dark"] .btn-sample-cert {
-            background-color: #111e38;
-            border-color: #243556;
-            color: #f8fafc !important;
-        }
-        [data-theme="dark"] .btn-sample-cert .text-dark {
-            color: #ffffff !important;
-        }
-        [data-theme="dark"] .btn-sample-cert .text-muted {
-            color: #94a3b8 !important;
-        }
-        [data-theme="dark"] .btn-sample-cert:hover {
-            background-color: #1a2d54;
-            border-color: #fca311;
-        }
+        
+        
+        
+        
     </style>
 </head>
 <body>

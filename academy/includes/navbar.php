@@ -31,117 +31,6 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
         color: #0f172a !important;
     }
 
-    /* DARK MODE ENGINE */
-    :root {
-        --app-bg: #f8fafc;
-        --app-card: #ffffff;
-        --app-text: #1e293b;
-        --app-text-muted: #64748b;
-        --app-border: #e2e8f0;
-        --app-navbar-bg: #ffffff;
-    }
-    [data-theme="dark"], body.dark-mode {
-        --app-bg: #091124;
-        --app-card: #0f1c38;
-        --app-text: #f8fafc;
-        --app-text-muted: #94a3b8;
-        --app-border: #1e2e4f;
-        --app-navbar-bg: #060c1a;
-    }
-    [data-theme="dark"] body, body.dark-mode {
-        background-color: var(--app-bg) !important;
-        color: var(--app-text) !important;
-    }
-    [data-theme="dark"] .academy-navbar, body.dark-mode .academy-navbar {
-        background-color: var(--app-navbar-bg) !important;
-        border-bottom-color: var(--app-border) !important;
-    }
-    [data-theme="dark"] .nav-menu-link, body.dark-mode .nav-menu-link {
-        color: #cbd5e1 !important;
-    }
-    [data-theme="dark"] .nav-menu-link:hover, body.dark-mode .nav-menu-link:hover,
-    [data-theme="dark"] .nav-menu-link.active, body.dark-mode .nav-menu-link.active {
-        background-color: rgba(255, 255, 255, 0.08) !important;
-        color: #fca311 !important;
-    }
-    [data-theme="dark"] .card, body.dark-mode .card,
-    [data-theme="dark"] .search-card, body.dark-mode .search-card,
-    [data-theme="dark"] .project-card, body.dark-mode .project-card,
-    [data-theme="dark"] .share-lesson-box, body.dark-mode .share-lesson-box,
-    [data-theme="dark"] .completion-bar, body.dark-mode .completion-bar,
-    [data-theme="dark"] .learn-sidebar, body.dark-mode .learn-sidebar,
-    [data-theme="dark"] .dropdown-menu, body.dark-mode .dropdown-menu {
-        background-color: var(--app-card) !important;
-        color: var(--app-text) !important;
-        border-color: var(--app-border) !important;
-    }
-    [data-theme="dark"] .dropdown-item, body.dark-mode .dropdown-item {
-        color: #cbd5e1 !important;
-    }
-    [data-theme="dark"] .dropdown-item:hover, body.dark-mode .dropdown-item:hover {
-        background-color: rgba(255, 255, 255, 0.08) !important;
-        color: #ffffff !important;
-    }
-    [data-theme="dark"] .text-navy, body.dark-mode .text-navy,
-    [data-theme="dark"] h1, body.dark-mode h1,
-    [data-theme="dark"] h2, body.dark-mode h2,
-    [data-theme="dark"] h3, body.dark-mode h3,
-    [data-theme="dark"] h4, body.dark-mode h4,
-    [data-theme="dark"] h5, body.dark-mode h5,
-    [data-theme="dark"] h6, body.dark-mode h6 {
-        color: #ffffff !important;
-    }
-    [data-theme="dark"] .text-muted, body.dark-mode .text-muted,
-    [data-theme="dark"] .learn-content p, body.dark-mode .learn-content p {
-        color: var(--app-text-muted) !important;
-    }
-    [data-theme="dark"] .topic-link, body.dark-mode .topic-link {
-        color: #94a3b8 !important;
-    }
-    [data-theme="dark"] .topic-link:hover, body.dark-mode .topic-link:hover {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        color: #38bdf8 !important;
-    }
-    [data-theme="dark"] .topic-link.active, body.dark-mode .topic-link.active {
-        background-color: rgba(252, 163, 17, 0.15) !important;
-        color: #fca311 !important;
-    }
-    [data-theme="dark"] .bg-white, body.dark-mode .bg-white,
-    [data-theme="dark"] .bg-light, body.dark-mode .bg-light {
-        background-color: var(--app-card) !important;
-        color: var(--app-text) !important;
-    }
-    [data-theme="dark"] .border, body.dark-mode .border,
-    [data-theme="dark"] .border-top, body.dark-mode .border-top,
-    [data-theme="dark"] .border-bottom, body.dark-mode .border-bottom {
-        border-color: var(--app-border) !important;
-    }
-    .theme-toggle-btn {
-        width: 34px;
-        height: 34px;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        border: 1px solid #cbd5e1;
-        background: #f8fafc;
-        color: #475569;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .theme-toggle-btn:hover {
-        background: #e2e8f0;
-        color: #0d2e5c;
-    }
-    [data-theme="dark"] .theme-toggle-btn {
-        background: #111e38;
-        border-color: #2a3c61;
-        color: #fca311;
-    }
-    [data-theme="dark"] .theme-toggle-btn:hover {
-        background: #1a2d54;
-    }
     .btn-pwa-install {
         height: 34px;
         font-size: 0.8rem;
@@ -380,11 +269,6 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                     <i class="fa-solid fa-mobile-screen-button"></i>
                     <span>Install App</span>
                 </button>
-
-                <!-- Dark / Light Mode Switcher -->
-                <button type="button" class="theme-toggle-btn" id="themeToggleNavBtn" onclick="toggleAppTheme()" title="Ganti Mode Gelap / Terang">
-                    <i class="fa-solid fa-moon" id="themeIcon"></i>
-                </button>
                 <button type="button" class="btn btn-sm btn-light border rounded-pill px-2 px-xxl-3 py-1 text-muted d-none d-xl-inline-flex align-items-center gap-2" onclick="openSpotlightSearch()" style="background: #f8fafc; font-size: 0.82rem; height: 34px; border-color: #e2e8f0 !important;" title="Pencarian Materi Cepat (Ctrl+K)">
                     <i class="fa-solid fa-magnifying-glass text-secondary"></i>
                     <span class="d-none d-xxl-inline">Cari materi...</span>
@@ -430,33 +314,15 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 <?php endif; ?>
 
 
-<!-- PWA & DARK MODE CLIENT ENGINE -->
+<!-- PWA CLIENT ENGINE -->
 <script>
 (function() {
-    // 1. Initialize Theme immediately
-    const savedTheme = localStorage.getItem('skillance_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    applyTheme(savedTheme);
-
-    function applyTheme(theme) {
-        if (theme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            document.body && document.body.classList.add('dark-mode');
-            const icon = document.getElementById('themeIcon');
-            if (icon) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            document.body && document.body.classList.remove('dark-mode');
-            const icon = document.getElementById('themeIcon');
-            if (icon) { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
-        }
-    }
-
-    window.toggleAppTheme = function() {
-        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-        const next = current === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('skillance_theme', next);
-        applyTheme(next);
-    };
+    // 1. Force Pure Light Mode
+    try {
+        localStorage.removeItem('skillance_theme');
+        document.documentElement.removeAttribute('data-theme');
+        if (document.body) document.body.classList.remove('dark-mode');
+    } catch(e) {}
 
     // 2. Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
