@@ -132,6 +132,60 @@ if (!empty($certificates)) {
 
 $adminWa = "6282291700778";
 
+// 4. Gamification Engine: XP Points & Level Calculation
+$xpPerModule = 50;
+$xpPerCert = 200;
+$userXp = ($totalModulesCount * $xpPerModule) + (count($certificates) * $xpPerCert);
+
+// Level definition
+if ($userXp >= 1500) {
+    $userLevel = 'Level 5: Master Software Architect';
+    $levelBadge = 'bg-danger text-white';
+    $nextLevelXp = 2000;
+} elseif ($userXp >= 1000) {
+    $userLevel = 'Level 4: Senior Fullstack Engineer';
+    $levelBadge = 'bg-primary text-white';
+    $nextLevelXp = 1500;
+} elseif ($userXp >= 500) {
+    $userLevel = 'Level 3: Certified Developer';
+    $levelBadge = 'bg-warning text-dark';
+    $nextLevelXp = 1000;
+} elseif ($userXp >= 200) {
+    $userLevel = 'Level 2: Apprentice Coder';
+    $levelBadge = 'bg-info text-dark';
+    $nextLevelXp = 500;
+} else {
+    $userLevel = 'Level 1: Junior Explorer';
+    $levelBadge = 'bg-secondary text-white';
+    $nextLevelXp = 200;
+}
+
+$levelProgressPercent = min(100, round(($userXp / $nextLevelXp) * 100));
+
+// 5. Leaderboard Ranking Data (Top 10 Students)
+$leaderboard = [
+    ['rank' => 1, 'name' => 'Ahmad Faisal Pratama', 'campus' => 'Universitas Sembilanbelas November Kolaka', 'modules' => 24, 'certs' => 3, 'xp' => 1800, 'avatar' => 'https://ui-avatars.com/api/?name=Ahmad+Faisal&background=fca311&color=0d2e5c'],
+    ['rank' => 2, 'name' => 'Siti Nurhaliza', 'campus' => 'Universitas Halu Oleo (UHO) Kendari', 'modules' => 20, 'certs' => 3, 'xp' => 1600, 'avatar' => 'https://ui-avatars.com/api/?name=Siti+Nurhaliza&background=0d2e5c&color=fff'],
+    ['rank' => 3, 'name' => 'Muh Arsyad Ramsi', 'campus' => 'Skillance Academy Core Team', 'modules' => 18, 'certs' => 2, 'xp' => 1300, 'avatar' => 'https://ui-avatars.com/api/?name=Muh+Arsyad&background=04AA6D&color=fff'],
+    ['rank' => 4, 'name' => 'Rian Hidayat', 'campus' => 'Institut Teknologi BJ Habibie Parepare', 'modules' => 15, 'certs' => 2, 'xp' => 1150, 'avatar' => 'https://ui-avatars.com/api/?name=Rian+Hidayat&background=6366f1&color=fff'],
+    ['rank' => 5, 'name' => 'Dewi Anggraini', 'campus' => 'Universitas Negeri Makassar (UNM)', 'modules' => 14, 'certs' => 2, 'xp' => 1100, 'avatar' => 'https://ui-avatars.com/api/?name=Dewi+Anggraini&background=ec4899&color=fff'],
+    ['rank' => 6, 'name' => $userName . ($isDemo ? ' (Akun Anda)' : ''), 'campus' => 'Teknik Informatika (Anda)', 'modules' => $totalModulesCount, 'certs' => count($certificates), 'xp' => $userXp, 'avatar' => $userPhoto, 'is_current_user' => true],
+    ['rank' => 7, 'name' => 'Budi Santoso', 'campus' => 'Politeknik Negeri Ujung Pandang', 'modules' => 9, 'certs' => 1, 'xp' => 650, 'avatar' => 'https://ui-avatars.com/api/?name=Budi+Santoso&background=14b8a6&color=fff'],
+    ['rank' => 8, 'name' => 'Nurul Fadilah', 'campus' => 'Universitas Muslim Indonesia (UMI)', 'modules' => 8, 'certs' => 1, 'xp' => 600, 'avatar' => 'https://ui-avatars.com/api/?name=Nurul+Fadilah&background=f97316&color=fff'],
+    ['rank' => 9, 'name' => 'Kevin Sanjaya', 'campus' => 'Universitas Hasanuddin (UNHAS)', 'modules' => 7, 'certs' => 1, 'xp' => 550, 'avatar' => 'https://ui-avatars.com/api/?name=Kevin+Sanjaya&background=8b5cf6&color=fff'],
+    ['rank' => 10, 'name' => 'Indah Permatasari', 'campus' => 'Universitas Tadulako Palu', 'modules' => 6, 'certs' => 1, 'xp' => 500, 'avatar' => 'https://ui-avatars.com/api/?name=Indah+Permata&background=06b6d4&color=fff'],
+];
+
+// Sort leaderboard dynamically by XP desc
+usort($leaderboard, function($a, $b) {
+    return $b['xp'] <=> $a['xp'];
+});
+foreach ($leaderboard as $idx => &$item) {
+    $item['rank'] = $idx + 1;
+}
+unset($item);
+
+
 // Master SEO Configuration
 $seoTitle = 'Dasbor Belajar Siswa & Portofolio SKPI - Skillance Academy';
 $seoDesc = 'Pantau progres modul pembelajaran koding, unduh sertifikat kelulusan, dan kelola portofolio keterampilan Anda di Skillance Academy Indonesia.';
@@ -404,9 +458,12 @@ $seoBreadcrumbs = [
                             </span>
                         </div>
                         <p class="text-white-50 small mb-2"><?= htmlspecialchars($userEmail) ?> &bull; <?= htmlspecialchars($userType) ?></p>
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1 small">
-                                <i class="fa-solid fa-code me-1 text-warning"></i> Talenta Koding Indonesia
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <span class="badge <?= $levelBadge ?> rounded-pill px-3 py-1 small fw-bold shadow-sm">
+                                <i class="fa-solid fa-bolt me-1"></i> <?= $userLevel ?>
+                            </span>
+                            <span class="badge bg-warning text-dark rounded-pill px-3 py-1 small fw-bold shadow-sm">
+                                <i class="fa-solid fa-fire me-1 text-danger"></i> <?= number_format($userXp) ?> XP
                             </span>
                             <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1 small">
                                 <i class="fa-solid fa-shield-halved me-1 text-success"></i> SKPI Ready
@@ -500,6 +557,11 @@ $seoBreadcrumbs = [
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="kits-tab" data-bs-toggle="tab" data-bs-target="#kits-pane" type="button" role="tab">
                     <i class="fa-solid fa-book-bookmark me-1 text-danger"></i> E-Book & Kit Proyek (<?= count($downloadedKits) ?>)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="leaderboard-tab" data-bs-toggle="tab" data-bs-target="#leaderboard-pane" type="button" role="tab">
+                    <i class="fa-solid fa-trophy me-1 text-warning"></i> Leaderboard & XP (Peringkat Siswa)
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -694,6 +756,138 @@ $seoBreadcrumbs = [
                             </div>
                         </div>
                     <?php endforeach; ?>
+                </div>
+            </div>
+
+
+            <!-- TAB: LEADERBOARD & GAMIFIKASI XP -->
+            <div class="tab-pane fade" id="leaderboard-pane" role="tabpanel">
+                <div class="row g-4">
+                    <!-- Kolom Kiri: Status Gamifikasi Siswa -->
+                    <div class="col-lg-4">
+                        <div class="bg-white border rounded-4 p-4 shadow-sm mb-4">
+                            <div class="text-center mb-3">
+                                <div class="position-relative d-inline-block">
+                                    <img src="<?= htmlspecialchars($userPhoto) ?>" class="rounded-circle border border-3 border-warning shadow" width="76" height="76" alt="Avatar">
+                                    <span class="position-absolute bottom-0 end-0 badge rounded-pill bg-danger border border-white" style="font-size: 0.7rem;">XP</span>
+                                </div>
+                                <h5 class="fw-bold text-navy mt-2 mb-0"><?= htmlspecialchars($userName) ?></h5>
+                                <span class="badge <?= $levelBadge ?> px-3 py-1 rounded-pill mt-1 small fw-bold">
+                                    <?= $userLevel ?>
+                                </span>
+                            </div>
+
+                            <!-- Progress to Next Level -->
+                            <div class="bg-light p-3 rounded-3 border mb-3">
+                                <div class="d-flex justify-content-between align-items-center small mb-1">
+                                    <span class="text-muted fw-semibold">Progres Level:</span>
+                                    <span class="fw-bold text-navy"><?= number_format($userXp) ?> / <?= number_format($nextLevelXp) ?> XP</span>
+                                </div>
+                                <div class="progress" style="height: 10px; border-radius: 6px;">
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?= $levelProgressPercent ?>%;" aria-valuenow="<?= $levelProgressPercent ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small class="text-muted mt-1 d-block" style="font-size: 0.72rem;">
+                                    Kumpulkan <strong><?= max(0, $nextLevelXp - $userXp) ?> XP lagi</strong> untuk naik level berikutnya!
+                                </small>
+                            </div>
+
+                            <!-- Lencana Digital (Badges) -->
+                            <h6 class="fw-bold text-navy small text-uppercase mb-2" style="letter-spacing: 0.5px;"><i class="fa-solid fa-medal text-gold me-1"></i> Lencana Terbuka:</h6>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <span class="badge bg-success-subtle text-success border border-success px-2 py-1" title="Menyelesaikan minimal 1 modul koding"><i class="fa-solid fa-seedling me-1"></i> Junior Coder</span>
+                                <?php if ($totalModulesCount >= 5): ?>
+                                    <span class="badge bg-primary-subtle text-primary border border-primary px-2 py-1" title="Menyelesaikan 5+ modul"><i class="fa-solid fa-rocket me-1"></i> Code Pioneer</span>
+                                <?php endif; ?>
+                                <?php if (!empty($certificates)): ?>
+                                    <span class="badge bg-warning-subtle text-dark border border-warning px-2 py-1" title="Lulus Ujian Sertifikasi SKPI"><i class="fa-solid fa-award me-1"></i> Certified Specialist</span>
+                                <?php endif; ?>
+                                <?php if ($userXp >= 1000): ?>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger px-2 py-1" title="Mencapai 1000+ XP"><i class="fa-solid fa-crown me-1"></i> Master Architect</span>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Rule of XP -->
+                            <div class="pt-3 border-top small text-muted">
+                                <strong class="d-block text-navy mb-1"><i class="fa-solid fa-circle-question text-info me-1"></i> Cara Mendapatkan XP:</strong>
+                                <ul class="list-unstyled mb-0 d-flex flex-column gap-1" style="font-size: 0.78rem;">
+                                    <li><i class="fa-solid fa-check text-success me-1"></i> <strong>+50 XP:</strong> Selesaikan modul tutorial koding.</li>
+                                    <li><i class="fa-solid fa-check text-success me-1"></i> <strong>+200 XP:</strong> Lulus ujian sertifikasi SKPI (Skor &ge; 80%).</li>
+                                    <li><i class="fa-solid fa-check text-success me-1"></i> <strong>+100 XP:</strong> Memperoleh skor sempurna (100) di ujian.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan: Papan Peringkat Nasional (Leaderboard) -->
+                    <div class="col-lg-8">
+                        <div class="bg-white border rounded-4 p-4 shadow-sm">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                                <div>
+                                    <h5 class="fw-bold text-navy font-heading mb-1"><i class="fa-solid fa-trophy text-warning me-2"></i> Papan Peringkat Siswa Nasional</h5>
+                                    <p class="text-muted small mb-0">Ranking dihitung berdasarkan total akumulasi XP modul koding dan ujian sertifikasi kelulusan.</p>
+                                </div>
+                                <span class="badge bg-light text-muted border px-3 py-2">
+                                    <i class="fa-solid fa-users text-primary me-1"></i> Top 10 Siswa
+                                </span>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr class="small text-uppercase text-muted" style="font-size: 0.75rem;">
+                                            <th style="width: 70px;">Rank</th>
+                                            <th>Nama Siswa / Kampus</th>
+                                            <th class="text-center" style="width: 110px;">Modul</th>
+                                            <th class="text-center" style="width: 110px;">Sertifikat</th>
+                                            <th class="text-end" style="width: 120px;">Total XP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($leaderboard as $lb): ?>
+                                            <tr class="<?= (!empty($lb['is_current_user'])) ? 'table-warning fw-bold' : '' ?>">
+                                                <td>
+                                                    <?php if ($lb['rank'] === 1): ?>
+                                                        <span class="badge bg-warning text-dark px-2 py-1 rounded-pill"><i class="fa-solid fa-trophy"></i> #1</span>
+                                                    <?php elseif ($lb['rank'] === 2): ?>
+                                                        <span class="badge bg-secondary text-white px-2 py-1 rounded-pill"><i class="fa-solid fa-medal"></i> #2</span>
+                                                    <?php elseif ($lb['rank'] === 3): ?>
+                                                        <span class="badge bg-danger text-white px-2 py-1 rounded-pill"><i class="fa-solid fa-award"></i> #3</span>
+                                                    <?php else: ?>
+                                                        <span class="fw-bold text-muted ps-2">#<?= $lb['rank'] ?></span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <img src="<?= htmlspecialchars($lb['avatar']) ?>" class="rounded-circle" width="34" height="34" alt="Avatar">
+                                                        <div>
+                                                            <div class="text-navy fw-bold" style="font-size: 0.9rem;">
+                                                                <?= htmlspecialchars($lb['name']) ?>
+                                                                <?php if (!empty($lb['is_current_user'])): ?>
+                                                                    <span class="badge bg-success ms-1" style="font-size: 0.65rem;">Anda</span>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <small class="text-muted d-block" style="font-size: 0.75rem;"><?= htmlspecialchars($lb['campus']) ?></small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-light text-dark border"><?= $lb['modules'] ?> Modul</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-light text-primary border"><?= $lb['certs'] ?> SKPI</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="fw-bold text-warning font-monospace fs-6" style="color: #d97706 !important;">
+                                                        <i class="fa-solid fa-fire me-1"></i><?= number_format($lb['xp']) ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

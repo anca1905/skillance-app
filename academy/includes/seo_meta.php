@@ -73,10 +73,13 @@ $faviconUrl = 'https://skillance.my.id/assets/img/favicon.png';
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
 
-<!-- FAVICONS -->
+<!-- PWA MANIFEST & MOBILE ICONS -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Skillance">
 <link rel="icon" type="image/png" href="<?= $faviconUrl ?>">
 <link rel="shortcut icon" type="image/png" href="<?= $faviconUrl ?>">
-<link rel="apple-touch-icon" href="<?= $faviconUrl ?>">
+<link rel="apple-touch-icon" href="/assets/img/pwa-icon-192.png">
 
 <!-- STRUCTURED DATA: ORGANIZATION & WEBSITE (SCHEMA.ORG JSON-LD) -->
 <script type="application/ld+json">

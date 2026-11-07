@@ -58,6 +58,8 @@ $seoBreadcrumbs = [
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- HTML5 QR CODE SCANNER ENGINE -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     
     <style>
         :root {
@@ -370,15 +372,20 @@ $seoBreadcrumbs = [
         <!-- SEARCH FORM CARD -->
         <div class="search-card mb-5">
             <form action="verify.php" method="GET" class="row g-2 align-items-center">
-                <div class="col-md-9 col-sm-8">
+                <div class="col-lg-7 col-md-6 col-12">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-barcode"></i></span>
-                        <input type="text" name="cert" class="form-control form-control-lg border-start-0 fs-6 fw-semibold" placeholder="Masukkan Nomor Sertifikat (Contoh: SKL-2026-FE-8821)" value="<?= htmlspecialchars($certNo) ?>" required autocomplete="off">
+                        <input type="text" id="certInput" name="cert" class="form-control form-control-lg border-start-0 fs-6 fw-semibold" placeholder="Ketik Nomor Seri Sertifikat (Contoh: SKL-2026-FE-8821)" value="<?= htmlspecialchars($certNo) ?>" required autocomplete="off">
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-4">
+                <div class="col-lg-3 col-md-3 col-6">
                     <button type="submit" class="btn btn-navy btn-lg w-100 fw-bold fs-6 text-white" style="background: #0d2e5c;">
-                        <i class="fa-solid fa-magnifying-glass me-1"></i> Verifikasi Sekarang
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Cek Data
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-3 col-6">
+                    <button type="button" class="btn btn-outline-success btn-lg w-100 fw-bold fs-6" onclick="openQrModal()" title="Scan QR Code menggunakan kamera HP / Webcam">
+                        <i class="fa-solid fa-qrcode me-1"></i> Scan QR
                     </button>
                 </div>
             </form>
@@ -615,5 +622,167 @@ $seoBreadcrumbs = [
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- MODAL SCANNER QR CODE KAMERA -->
+    <div class="modal fade" id="qrScanModal" tabindex="-1" aria-labelledby="qrScanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-navy text-white py-3 px-4" style="background: #0d2e5c;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-qrcode text-warning fs-5"></i>
+                        <h5 class="modal-title fw-bold font-heading mb-0 fs-6 text-white" id="qrScanModalLabel">Scan QR Code Sertifikat</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="stopQrScanner()"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="small text-muted mb-3">
+                        Arahkan kamera ke QR Code yang tertera pada sertifikat fisik atau layar PDF. Nomor seri akan terdeteksi otomatis.
+                    </p>
+
+                    <!-- Camera Viewport Box -->
+                    <div id="qrReaderContainer" class="position-relative mx-auto rounded-3 overflow-hidden border shadow-inner mb-3" style="max-width: 380px; min-height: 260px; background: #0f172a;">
+                        <div id="qrReader" style="width: 100%;"></div>
+                        <div id="qrScannerStatus" class="position-absolute top-50 start-50 translate-middle text-white small">
+                            <div class="spinner-border text-warning spinner-border-sm mb-2" role="status"></div>
+                            <div>Menghubungkan kamera...</div>
+                        </div>
+                    </div>
+
+                    <!-- Scan Feedback Banner -->
+                    <div id="qrScanResultAlert" class="alert alert-success d-none py-2 px-3 small fw-bold mb-3">
+                        <i class="fa-solid fa-circle-check me-1"></i> QR Berhasil Terbaca! Mengalihkan...
+                    </div>
+
+                    <!-- Alternate: File Upload -->
+                    <div class="pt-2 border-top">
+                        <label for="qrFileInput" class="btn btn-sm btn-outline-secondary w-100 fw-semibold rounded-pill py-2">
+                            <i class="fa-solid fa-image me-1"></i> Atau Upload Gambar / Screenshot QR
+                        </label>
+                        <input type="file" id="qrFileInput" accept="image/*" class="d-none" onchange="scanQrFromImage(this)">
+                    </div>
+                </div>
+                <div class="modal-footer bg-light py-2 px-4 justify-content-between">
+                    <small class="text-muted"><i class="fa-solid fa-shield-halved text-success me-1"></i> Validasi Resmi Skillance Academy</small>
+                    <button type="button" class="btn btn-sm btn-secondary rounded-pill px-3" data-bs-dismiss="modal" onclick="stopQrScanner()">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR CODE SCANNER CONTROLLER SCRIPT -->
+    <script>
+    let html5QrScanner = null;
+    let isScanning = false;
+
+    function openQrModal() {
+        const modal = new bootstrap.Modal(document.getElementById('qrScanModal'));
+        modal.show();
+        startQrScanner();
+    }
+
+    function startQrScanner() {
+        const statusBox = document.getElementById('qrScannerStatus');
+        const alertBox = document.getElementById('qrScanResultAlert');
+        if (alertBox) alertBox.classList.add('d-none');
+        if (statusBox) statusBox.classList.remove('d-none');
+
+        if (!html5QrScanner) {
+            html5QrScanner = new Html5Qrcode("qrReader");
+        }
+
+        const config = { fps: 15, qrbox: { width: 220, height: 220 } };
+
+        // Prefer back camera for mobile scanning
+        html5QrScanner.start(
+            { facingMode: "environment" },
+            config,
+            onScanSuccess,
+            onScanError
+        ).then(() => {
+            isScanning = true;
+            if (statusBox) statusBox.classList.add('d-none');
+        }).catch(err => {
+            console.warn("Camera start error, trying default camera:", err);
+            html5QrScanner.start(
+                { facingMode: "user" },
+                config,
+                onScanSuccess,
+                onScanError
+            ).then(() => {
+                isScanning = true;
+                if (statusBox) statusBox.classList.add('d-none');
+            }).catch(fallbackErr => {
+                if (statusBox) {
+                    statusBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-camera-slash fs-4 d-block mb-1"></i>Izin kamera tidak diaktifkan.<br>Gunakan opsi upload screenshot QR di bawah.</span>';
+                }
+            });
+        });
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log("QR Code Scanned:", decodedText);
+        stopQrScanner();
+
+        const alertBox = document.getElementById('qrScanResultAlert');
+        if (alertBox) {
+            alertBox.classList.remove('d-none');
+            alertBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> QR Terdeteksi: ' + decodedText + '! Mengalihkan...';
+        }
+
+        // Extract cert code
+        let certCode = decodedText.trim();
+        // If URL like https://academy.skillance.cloud/verify.php?cert=SKL-2026-FE-8821
+        try {
+            if (certCode.startsWith('http')) {
+                const u = new URL(certCode);
+                const qCert = u.searchParams.get('cert');
+                if (qCert) certCode = qCert;
+            }
+        } catch(e) {}
+
+        // Set input & redirect
+        document.getElementById('certInput').value = certCode;
+        setTimeout(() => {
+            window.location.href = 'verify.php?cert=' + encodeURIComponent(certCode);
+        }, 600);
+    }
+
+    function onScanError(errorMessage) {
+        // Continuous scan error (no QR in frame) - ignore to keep loop active
+    }
+
+    function stopQrScanner() {
+        if (html5QrScanner && isScanning) {
+            html5QrScanner.stop().then(() => {
+                isScanning = false;
+                const statusBox = document.getElementById('qrScannerStatus');
+                if (statusBox) statusBox.classList.remove('d-none');
+            }).catch(err => console.error("Error stopping QR scanner:", err));
+        }
+    }
+
+    function scanQrFromImage(input) {
+        if (input.files && input.files[0]) {
+            const imageFile = input.files[0];
+            const html5QrCode = new Html5Qrcode("qrReader");
+            html5QrCode.scanFile(imageFile, true)
+                .then(decodedText => {
+                    onScanSuccess(decodedText, null);
+                })
+                .catch(err => {
+                    alert("QR Code tidak ditemukan dalam gambar yang diunggah. Pastikan QR code terlihat jelas.");
+                });
+        }
+    }
+
+    // Stop camera when modal hidden
+    const qrModalEl = document.getElementById('qrScanModal');
+    if (qrModalEl) {
+        qrModalEl.addEventListener('hidden.bs.modal', function () {
+            stopQrScanner();
+        });
+    }
+    </script>
+
 </body>
 </html>

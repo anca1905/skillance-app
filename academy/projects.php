@@ -152,6 +152,7 @@ $seoBreadcrumbs = [
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
@@ -590,6 +591,11 @@ $seoBreadcrumbs = [
                                     </div>
                                 </div>
 
+                                <!-- INSTANT QRIS CHECKOUT BUTTON -->
+                                <button type="button" class="btn btn-gold w-100 fw-bold py-2 rounded-3 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-2" onclick="openInstantQrisModal('<?= $p['id'] ?>', '<?= htmlspecialchars($p['title'], ENT_QUOTES) ?>', '<?= $p['price_now'] ?>')">
+                                    <i class="fa-solid fa-qrcode text-navy fs-5"></i> <span>Beli Instan (QRIS Otomatis)</span>
+                                </button>
+
                                 <!-- BUTTON SAMPLE BAB 1 GRATIS (PDF) -->
                                 <button type="button" class="btn btn-sample-pdf mb-2" data-bs-toggle="modal" data-bs-target="#sampleModal-<?= $p['id'] ?>">
                                     <i class="fa-solid fa-file-pdf fs-6 text-danger me-1"></i> Download Sample Bab 1 & Daftar Isi Gratis
@@ -862,5 +868,201 @@ $seoBreadcrumbs = [
     </script>
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>
+
+    <!-- MASTER MODAL INSTANT QRIS CHECKOUT -->
+    <div class="modal fade" id="qrisCheckoutModal" tabindex="-1" aria-labelledby="qrisModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-navy text-white py-3 px-4" style="background: #0d2e5c;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-qrcode text-warning fs-5"></i>
+                        <h5 class="modal-title fw-bold font-heading mb-0 fs-6 text-white" id="qrisModalLabel">Pembayaran Instan QRIS</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-4 text-center" id="qrisModalBody">
+                    <!-- Product Summary Header -->
+                    <div class="bg-light p-3 rounded-3 text-start mb-3 border">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-navy-subtle text-navy fw-bold" style="font-size: 0.72rem;">INVOICE DIGITAL</span>
+                            <span class="small text-muted font-monospace" id="qrisInvoiceNo">INV-2026-XXXX</span>
+                        </div>
+                        <h6 class="fw-bold text-navy mb-1" id="qrisProductTitle">Judul E-Book & Project Kit</h6>
+                        <div class="d-flex justify-content-between align-items-baseline mt-2 pt-2 border-top">
+                            <small class="text-muted">Total Tagihan:</small>
+                            <span class="fw-bold fs-5 text-danger" id="qrisProductPrice">Rp 79.000</span>
+                        </div>
+                    </div>
+
+                    <!-- QRIS Barcode Box -->
+                    <div class="p-3 bg-white rounded-3 border shadow-sm mx-auto d-inline-block mb-3 position-relative" style="max-width: 280px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+                            <span class="fw-bold text-navy" style="font-size: 0.82rem; letter-spacing: 1px;">QRIS NASIONAL</span>
+                            <span class="badge bg-danger text-white px-2 py-0" style="font-size: 0.65rem;">GPN</span>
+                        </div>
+                        <img id="qrisBarcodeImg" src="" alt="QRIS Code" class="img-fluid rounded" style="width: 220px; height: 220px; object-fit: contain;">
+                        <div class="small text-muted mt-2" style="font-size: 0.72rem;">
+                            NMID: ID1024392019281 • Skillance Store
+                        </div>
+                    </div>
+
+                    <!-- Countdown & Instructions -->
+                    <div class="mb-3">
+                        <div class="small text-muted mb-1">Selesaikan pembayaran dalam:</div>
+                        <div class="fs-5 fw-bold font-monospace text-warning bg-navy-dark py-1 px-3 rounded-pill d-inline-block" id="qrisTimer" style="background: #071a35; color: #fca311;">
+                            14:59
+                        </div>
+                    </div>
+
+                    <div class="alert alert-secondary py-2 px-3 small text-muted mb-3" style="font-size: 0.78rem;">
+                        <i class="fa-solid fa-mobile-screen me-1 text-primary"></i> Scan menggunakan BCA Mobile, Mandiri Livin', GoPay, ShopeePay, OVO, Dana, atau LinkAja.
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-success fw-bold py-2 rounded-pill shadow-sm" id="btnVerifyQris" onclick="simulateVerifyQris()">
+                            <i class="fa-solid fa-circle-check me-1"></i> Saya Sudah Bayar (Cek Otomatis)
+                        </button>
+                        <a href="#" id="btnFallbackWa" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill py-2">
+                            <i class="fa-brands fa-whatsapp text-success me-1"></i> Bantuan Pembayaran / Konfirmasi Manual
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SUCCESS SCREEN (DYNAMICALLY SHOWN ON PAYMENT CONFIRM) -->
+                <div class="modal-body p-4 text-center d-none" id="qrisSuccessBody">
+                    <div class="my-3">
+                        <div class="d-inline-flex p-3 rounded-circle bg-success-subtle text-success mb-3" style="width: 70px; height: 70px; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-check fa-2x"></i>
+                        </div>
+                        <h4 class="fw-bold text-success mb-1">Pembayaran Terverifikasi!</h4>
+                        <p class="text-muted small">Terima kasih telah membeli project kit di Skillance Academy Indonesia.</p>
+                    </div>
+
+                    <div class="bg-light p-3 rounded-3 text-start mb-4 border">
+                        <div class="small text-muted">Akses Materi & Source Code:</div>
+                        <h6 class="fw-bold text-navy mb-2" id="successProductTitle">-</h6>
+                        <span class="badge bg-success mb-2"><i class="fa-solid fa-unlock me-1"></i> Lisensi Full Terbuka</span>
+                        <div class="small text-muted mb-0">Invoice: <strong id="successInvoiceNo">-</strong></div>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="button" class="btn btn-primary btn-lg fw-bold rounded-pill shadow-sm" onclick="triggerKitDownload()">
+                            <i class="fa-solid fa-cloud-arrow-down me-2"></i> Download Full Source Code & E-Book (ZIP)
+                        </button>
+                        <a href="https://api.whatsapp.com/send?phone=6282291700778&text=Halo%20Skillance,%20saya%20sudah%20membeli%20e-book%20ini%20dan%20berhasil%20terverifikasi" target="_blank" class="btn btn-outline-success fw-bold rounded-pill">
+                            <i class="fa-brands fa-whatsapp me-2"></i> Kirim Bukti ke WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light py-2 px-4 justify-content-between">
+                    <small class="text-muted"><i class="fa-solid fa-shield-halved text-success me-1"></i> Pembayaran Aman 256-bit Enkripsi</small>
+                    <button type="button" class="btn btn-sm btn-secondary rounded-pill px-3" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QRIS CHECKOUT LOGIC SCRIPT -->
+    <script>
+    let qrisCountdownInterval = null;
+    let currentKitId = '';
+    let currentKitTitle = '';
+
+    function openInstantQrisModal(kitId, title, price) {
+        currentKitId = kitId;
+        currentKitTitle = title;
+
+        const randomInv = 'INV-2026-' + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('qrisInvoiceNo').innerText = randomInv;
+        document.getElementById('qrisProductTitle').innerText = title;
+        document.getElementById('qrisProductPrice').innerText = price;
+
+        // Reset views
+        document.getElementById('qrisModalBody').classList.remove('d-none');
+        document.getElementById('qrisSuccessBody').classList.add('d-none');
+        const btnVerify = document.getElementById('btnVerifyQris');
+        btnVerify.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Saya Sudah Bayar (Cek Otomatis)';
+        btnVerify.disabled = false;
+
+        // Generate dynamic QR code URL
+        const qrData = `00020101021226600016ID.CO.SKILLANCE.WWW01189360091100293819280215${randomInv}5204581253033605802ID5914SKILLANCE STORE6007KOLAKA62070703A016304E882`;
+        const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(qrData);
+        document.getElementById('qrisBarcodeImg').src = qrUrl;
+
+        // Fallback WhatsApp Link
+        const waText = encodeURIComponent(`Halo Admin Skillance Academy, saya ingin konfirmasi pembayaran QRIS untuk e-book:
+
+*${title}*
+No Invoice: ${randomInv}
+Nominal: ${price}`);
+        document.getElementById('btnFallbackWa').href = `https://api.whatsapp.com/send?phone=6282291700778&text=${waText}`;
+
+        // Start Countdown Timer (15 Minutes)
+        startQrisTimer(15 * 60);
+
+        // Show Modal
+        const modal = new bootstrap.Modal(document.getElementById('qrisCheckoutModal'));
+        modal.show();
+    }
+
+    function startQrisTimer(durationSeconds) {
+        if (qrisCountdownInterval) clearInterval(qrisCountdownInterval);
+        let remaining = durationSeconds;
+        const timerEl = document.getElementById('qrisTimer');
+
+        qrisCountdownInterval = setInterval(() => {
+            const minutes = Math.floor(remaining / 60);
+            const seconds = remaining % 60;
+            timerEl.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            remaining--;
+            if (remaining < 0) {
+                clearInterval(qrisCountdownInterval);
+                timerEl.innerText = "KEDALUWARSA";
+                timerEl.classList.remove('text-warning');
+                timerEl.classList.add('text-danger');
+            }
+        }, 1000);
+    }
+
+    function simulateVerifyQris() {
+        const btn = document.getElementById('btnVerifyQris');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Memverifikasi mutasi perbankan...';
+
+        setTimeout(() => {
+            // Success transition
+            document.getElementById('qrisModalBody').classList.add('d-none');
+            document.getElementById('qrisSuccessBody').classList.remove('d-none');
+            document.getElementById('successProductTitle').innerText = currentKitTitle;
+            document.getElementById('successInvoiceNo').innerText = document.getElementById('qrisInvoiceNo').innerText;
+
+            if (qrisCountdownInterval) clearInterval(qrisCountdownInterval);
+
+            // Confetti effect
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }, 1600);
+    }
+
+    function triggerKitDownload() {
+        alert('Mengunduh bundle paket proyek & e-book panduan ' + currentKitTitle + ' (Format .ZIP)...');
+        // Trigger simulated or real file download
+        const a = document.createElement('a');
+        a.href = 'sample_preview.php?project=' + encodeURIComponent(currentKitId);
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+    </script>
+
 </body>
 </html>
