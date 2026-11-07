@@ -471,7 +471,7 @@ $seoBreadcrumbs = [
             <!-- STICKY TOP TIMER & PROGRESS BAR -->
             <div class="exam-timer-bar">
                 <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill small"><?= htmlspecialchars($trackInfo['title']) ?></span>
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill small" style="background-color: #fca311 !important; color: #071a35 !important;"><?= htmlspecialchars($trackInfo['title']) ?></span>
                     <span class="small text-white-50 d-none d-md-inline">| Peserta: <strong><?= htmlspecialchars($recipientName) ?></strong></span>
                 </div>
                 <div class="d-flex align-items-center gap-3">
@@ -649,7 +649,7 @@ $seoBreadcrumbs = [
                     <?php if ($resultData['passed']): ?>
                         <!-- PASSED STATE -->
                         <div class="pass-hero-card mb-4">
-                            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-3 text-uppercase shadow-sm">
+                            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-3 text-uppercase shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important;">
                                 <i class="fa-solid fa-crown me-1"></i> Selamat, Anda Dinyatakan Lulus!
                             </span>
                             <h1 class="display-5 fw-bold font-heading mb-2 text-white">Sertifikat Kelulusan Resmi Diterbitkan</h1>

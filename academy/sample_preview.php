@@ -522,7 +522,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
                     <div><strong>Penerbit:</strong> Skillance Digital Indonesia &bull; <?= htmlspecialchars($book['edition']) ?></div>
                 </div>
                 <div class="text-md-end">
-                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill fs-6">
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill fs-6" style="background-color: #fca311 !important; color: #071a35 !important;">
                         Harga Full Kit: <?= $book['price_now'] ?>
                     </span>
                 </div>
@@ -590,7 +590,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
             <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow position-relative overflow-hidden no-print" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 70%, #04AA6D 100%);">
                 <div class="row align-items-center">
                     <div class="col-lg-8 mb-3 mb-lg-0">
-                        <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill mb-2">DISKON KHUSUS PEMBACA SAMPEL</span>
+                        <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill mb-2" style="background-color: #fca311 !important; color: #071a35 !important;">DISKON KHUSUS PEMBACA SAMPEL</span>
                         <h3 class="fw-bold font-heading mb-2 text-white">Lanjutkan Membaca Bab 2 s/d Bab Selesai & Dapatkan Full Source Code</h3>
                         <p class="text-white-50 small mb-0" style="line-height: 1.7;">
                             Dapatkan seluruh <strong>Full Source Code Project Siap Pakai</strong>, Database Seeder lengkap, E-Book PDF <?= $book['pages_total'] ?>, dan Lisensi Komersial tanpa batas untuk skripsi atau proyek freelance!

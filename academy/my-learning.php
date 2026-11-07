@@ -453,7 +453,7 @@ $seoBreadcrumbs = [
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
                             <h2 class="h4 fw-bold font-heading mb-0 text-white"><?= htmlspecialchars($userName) ?></h2>
-                            <span class="badge bg-gold text-navy fw-bold small px-2 py-1 rounded-pill">
+                            <span class="badge bg-gold text-navy fw-bold small px-2 py-1 rounded-pill" style="background-color: #fca311 !important; color: #071a35 !important;">
                                 <i class="fa-solid fa-circle-check text-success me-1"></i> Verified Student
                             </span>
                         </div>
@@ -896,7 +896,7 @@ $seoBreadcrumbs = [
                 <div class="p-4 p-md-5 rounded-4 text-white shadow-lg position-relative overflow-hidden mb-4" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 65%, #04AA6D 100%);">
                     <div class="row align-items-center">
                         <div class="col-lg-8">
-                            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase">
+                            <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="background-color: #fca311 !important; color: #071a35 !important;">
                                 <i class="fa-solid fa-briefcase me-1"></i> Skillance Freelance Ecosystem
                             </span>
                             <h2 class="display-6 fw-bold font-heading mb-2 text-white">Hubungkan Prestasi Belajar Anda dengan Penghasilan Riil</h2>

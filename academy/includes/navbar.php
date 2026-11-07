@@ -26,8 +26,34 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 <style>
 
 
-    .text-navy { color: #0d2e5c !important; }
-    .badge.bg-light, .badge.text-navy, a.badge {
+    :root {
+        --navy: #0d2e5c;
+        --navy-dark: #071a35;
+        --gold: #fca311;
+        --gold-hover: #e5930e;
+        --w3-green: #04AA6D;
+    }
+
+    .text-navy { color: #071a35 !important; }
+    .text-gold { color: #fca311 !important; }
+
+    /* Universal Gold Badges & Contrast Utilities */
+    .bg-gold {
+        background-color: #fca311 !important;
+        color: #071a35 !important;
+    }
+    .badge.bg-gold,
+    .badge.bg-gold *,
+    .badge.bg-gold.text-navy,
+    .badge.bg-gold.text-navy * {
+        background-color: #fca311 !important;
+        color: #071a35 !important;
+    }
+    .bg-gold-subtle {
+        background-color: rgba(252, 163, 17, 0.18) !important;
+        color: #b45309 !important;
+    }
+    .badge.bg-light, a.badge {
         color: #0f172a !important;
     }
 

@@ -401,7 +401,7 @@ $seoBreadcrumbs = [
         <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 65%, #04AA6D 100%);">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase">
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="background-color: #fca311 !important; color: #071a35 !important;">
                         <i class="fa-solid fa-file-contract me-1"></i> Berkas Resmi Siap Bawa
                     </span>
                     <h2 class="display-6 fw-bold font-heading mb-2 text-white">Butuh Proposal untuk Rapat BEM / Dosen Pembina?</h2>
@@ -428,7 +428,7 @@ $seoBreadcrumbs = [
         <div id="formKemitraan" class="form-card mt-5">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-5">
-                    <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill mb-2 text-uppercase">Formulir Kolaborasi</span>
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-1 rounded-pill mb-2 text-uppercase" style="background-color: #fca311 !important; color: #071a35 !important;">Formulir Kolaborasi</span>
                     <h3 class="fw-bold text-navy font-heading mb-3">Siap Mengadakan Event Koding di Kampus Anda?</h3>
                     <p class="text-muted small mb-4" style="line-height: 1.8;">
                         Isi formulir di samping untuk mendiskusikan jadwal, topik materi studi kasus, dan pembagian hasil kas organisasi. Tim kemitraan Skillance Academy akan menghubungi Anda via WhatsApp dalam waktu maksimal 1x24 jam.

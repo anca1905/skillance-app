@@ -777,7 +777,7 @@ $seoBreadcrumbs = [
         <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #0d2e5c 0%, #071a35 70%, #04AA6D 100%);">
             <div class="row align-items-center">
                 <div class="col-lg-8">
-                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase">
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase" style="background-color: #fca311 !important; color: #071a35 !important;">
                         <i class="fa-solid fa-gem me-1"></i> Paket All-In-One Developer Pack
                     </span>
                     <h2 class="display-6 fw-bold font-heading mb-2">Ingin Menguasai Seluruh 4 Kit Proyek Sekaligus?</h2>
