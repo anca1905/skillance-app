@@ -756,6 +756,36 @@ $seoCustomSchemaJson = json_encode([
                 </div>
             <?php endif; ?>
 
+            <!-- CATATAN PRIBADI BELAJAR SISWA -->
+            <div class="user-notes-card mb-4 border rounded-3 p-3 bg-white shadow-xs">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-primary"></i>
+                        <h6 class="fw-bold text-navy mb-0" style="font-size: 0.92rem;">Catatan Pribadi Topik Ini</h6>
+                        <span id="noteSavedBadge" class="badge bg-success-subtle text-success small" style="display:none; font-size: 0.7rem;">
+                            <i class="fa-solid fa-check me-1"></i> Tersimpan Otomatis
+                        </span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-link text-muted text-decoration-none p-0" onclick="toggleNotesCollapse()" style="font-size: 0.78rem;">
+                        <span id="notesToggleText"><i class="fa-solid fa-chevron-up"></i> Sembunyikan</span>
+                    </button>
+                </div>
+                <div id="notesCollapseArea">
+                    <textarea id="lessonUserNotes" class="form-control form-control-sm border-light-subtle rounded-2 font-monospace" rows="3" placeholder="Tulis rangkuman penting, rumus koding, atau catatan belajar Anda di sini... (Otomatis tersimpan di browser Anda)"></textarea>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 gap-2">
+                        <small class="text-muted" style="font-size: 0.72rem;"><i class="fa-solid fa-lock me-1"></i> Catatan ini bersifat privat dan tersimpan aman di perangkat Anda.</small>
+                        <div class="d-flex gap-1">
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="copyMyNotes()" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-copy me-1"></i> Salin
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-0" onclick="clearMyNotes()" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-trash-can me-1"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Complete Module Check Bar -->
             <div class="completion-bar">
                 <div>
@@ -928,6 +958,55 @@ $seoCustomSchemaJson = json_encode([
                 adjustLessonFontSize(savedSize);
             }
         });
+
+        // Private Lesson Notes Logic
+        const NOTE_KEY = `skillance_note_${COURSE_KEY}_${TOPIC_KEY}`;
+        const notesArea = document.getElementById('lessonUserNotes');
+        const noteBadge = document.getElementById('noteSavedBadge');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (notesArea) {
+                const saved = localStorage.getItem(NOTE_KEY);
+                if (saved) notesArea.value = saved;
+                let saveTimer;
+                notesArea.addEventListener('input', () => {
+                    clearTimeout(saveTimer);
+                    saveTimer = setTimeout(() => {
+                        localStorage.setItem(NOTE_KEY, notesArea.value);
+                        if (noteBadge) {
+                            noteBadge.style.display = 'inline-block';
+                            setTimeout(() => { noteBadge.style.display = 'none'; }, 2000);
+                        }
+                    }, 500);
+                });
+            }
+        });
+
+        function copyMyNotes() {
+            if (notesArea && notesArea.value.trim()) {
+                navigator.clipboard.writeText(notesArea.value);
+                alert('✓ Catatan berhasil disalin ke clipboard!');
+            }
+        }
+
+        function clearMyNotes() {
+            if (confirm('Hapus catatan untuk modul ini?')) {
+                if (notesArea) notesArea.value = '';
+                localStorage.removeItem(NOTE_KEY);
+            }
+        }
+
+        function toggleNotesCollapse() {
+            const area = document.getElementById('notesCollapseArea');
+            const txt = document.getElementById('notesToggleText');
+            if (area.style.display === 'none') {
+                area.style.display = 'block';
+                txt.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Sembunyikan';
+            } else {
+                area.style.display = 'none';
+                txt.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Tampilkan';
+            }
+        }
 
         function toggleProgress() {
             const newState = !isCompleted;

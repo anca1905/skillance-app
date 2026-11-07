@@ -52,6 +52,7 @@
                 <ul class="list-unstyled footer-nav-links small d-flex flex-column gap-2 mb-0">
                     <li><a href="exam.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-award text-success me-1"></i> Ujian Sertifikasi SKPI</a></li>
                     <li><a href="verify.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-circle-check text-info me-1"></i> Cek Keaslian Sertifikat</a></li>
+                    <li><a href="glossary.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-book-bookmark text-warning me-1"></i> Kamus Istilah Koding</a></li>
                     <li><a href="projects.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-laptop-code text-warning me-1"></i> E-Book & Kit Proyek</a></li>
                     <li><a href="partner.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-building-columns text-primary me-1"></i> Kemitraan Kampus / BEM</a></li>
                     <li><a href="my-learning.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-chart-line text-success me-1"></i> Dasbor & Leaderboard</a></li>
@@ -232,4 +233,92 @@ document.addEventListener('click', function(e) {
         }
     }
 });
+</script>
+
+
+<!-- REALTIME SOCIAL PROOF TOAST -->
+<div id="skillanceSocialToast" class="social-proof-toast shadow-lg p-2 px-3 rounded-4 bg-white border btn-print-hide" style="display: none;">
+    <div class="d-flex align-items-center gap-2">
+        <div id="socialToastIcon" class="toast-avatar-circle bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; min-width: 38px;">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="pe-2">
+            <span class="d-block fw-bold text-navy" style="font-size: 0.76rem;" id="socialToastTitle">Aktivitas Siswa</span>
+            <p class="mb-0 text-muted" style="font-size: 0.74rem; line-height: 1.3;" id="socialToastMsg">Ahmad F. baru saja lulus ujian Frontend Web Developer.</p>
+        </div>
+        <button type="button" class="btn-close ms-auto" style="font-size: 0.6rem;" onclick="dismissSocialToast()" aria-label="Tutup"></button>
+    </div>
+</div>
+
+<style>
+.social-proof-toast {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    z-index: 1040;
+    max-width: 340px;
+    border-left: 4px solid #fca311 !important;
+    animation: slideInToast 0.4s ease-out;
+}
+@keyframes slideInToast {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 576px) {
+    .social-proof-toast {
+        bottom: 85px;
+        left: 15px;
+        right: 15px;
+        max-width: calc(100vw - 30px);
+    }
+}
+</style>
+
+<script>
+const SOCIAL_ACTIVITIES = [
+    { icon: 'fa-solid fa-award text-success', title: 'Ujian Sertifikasi SKPI', msg: '<strong>Ahmad Faisal (Kolaka)</strong> baru saja lulus Ujian <em>Frontend Web Developer</em>.' },
+    { icon: 'fa-solid fa-fire text-danger', title: 'Komunitas Belajar', msg: '<strong>152 Mahasiswa</strong> sedang aktif belajar koding di platform hari ini.' },
+    { icon: 'fa-solid fa-circle-check text-info', title: 'Kelulusan Modul', msg: '<strong>Siti Nurhaliza</strong> baru saja menyelesaikan modul <em>Flutter & Dart Mobile</em>.' },
+    { icon: 'fa-solid fa-laptop-code text-warning', title: 'E-Book & Proyek', msg: '<strong>Kit E-Commerce Midtrans</strong> baru saja diunduh oleh mahasiswa Makassar.' },
+    { icon: 'fa-solid fa-trophy text-warning', title: 'Leaderboard Nasional', msg: '<strong>Faisal Pratama</strong> berhasil naik ke <em>Level 4 (Pakar Koding)</em>.' },
+    { icon: 'fa-solid fa-building-columns text-primary', title: 'Kemitraan Kampus', msg: '<strong>Ormawa USN Kolaka</strong> mendiskusikan silabus <em>Workshop Koding SKPI</em>.' }
+];
+
+let socialToastIdx = 0;
+function showNextSocialToast() {
+    if (sessionStorage.getItem('dismiss_skillance_social_toast') === '1') return;
+    const toast = document.getElementById('skillanceSocialToast');
+    if (!toast) return;
+    
+    const act = SOCIAL_ACTIVITIES[socialToastIdx % SOCIAL_ACTIVITIES.length];
+    socialToastIdx++;
+
+    const iconEl = document.getElementById('socialToastIcon');
+    const titleEl = document.getElementById('socialToastTitle');
+    const msgEl = document.getElementById('socialToastMsg');
+
+    if (iconEl) iconEl.innerHTML = `<i class="${act.icon}"></i>`;
+    if (titleEl) titleEl.innerText = act.title;
+    if (msgEl) msgEl.innerHTML = act.msg;
+
+    toast.style.display = 'block';
+
+    setTimeout(() => {
+        if (toast && toast.style.display !== 'none') {
+            toast.style.display = 'none';
+        }
+    }, 6000);
+}
+
+function dismissSocialToast() {
+    const toast = document.getElementById('skillanceSocialToast');
+    if (toast) toast.style.display = 'none';
+    sessionStorage.setItem('dismiss_skillance_social_toast', '1');
+}
+
+// Mulai setelah 4 detik, dan berulang tiap 22 detik
+setTimeout(() => {
+    showNextSocialToast();
+    setInterval(showNextSocialToast, 22000);
+}, 4000);
 </script>

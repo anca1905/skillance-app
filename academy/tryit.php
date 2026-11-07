@@ -311,20 +311,35 @@ if (empty($initialCode)) {
     <main id="tryitWorkspace" class="tryit-workspace view-editor">
         <!-- LEFT: CODE EDITOR -->
         <section class="tryit-pane-left">
-            <div class="pane-bar">
+            <div class="pane-bar d-flex justify-content-between align-items-center">
                 <span><i class="fa-solid fa-file-code me-1 text-primary"></i> Editor Kode Sumber</span>
-                <span class="small text-muted">Tekan <code>Ctrl + Enter</code> untuk Menjalankan</span>
+                <div class="d-flex align-items-center gap-1">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="copyEditorCode()" title="Salin Kode ke Clipboard" style="font-size: 0.74rem;">
+                        <i class="fa-solid fa-copy me-1"></i> <span class="d-none d-sm-inline">Salin</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="downloadEditorCode()" title="Unduh File HTML" style="font-size: 0.74rem;">
+                        <i class="fa-solid fa-download me-1"></i> <span class="d-none d-sm-inline">Unduh</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-0" onclick="resetEditorCode()" title="Kembalikan ke Kode Awal" style="font-size: 0.74rem;">
+                        <i class="fa-solid fa-rotate-left me-1"></i> <span class="d-none d-sm-inline">Reset</span>
+                    </button>
+                </div>
             </div>
             <textarea id="codeEditor" class="code-textarea" spellcheck="false"><?= htmlspecialchars($initialCode) ?></textarea>
         </section>
 
         <!-- RIGHT: LIVE RESULT PREVIEW -->
         <section class="tryit-pane-right">
-            <div class="pane-bar">
-                <span><i class="fa-solid fa-display me-1 text-success"></i> Hasil Tampilan (Browser Preview)</span>
-                <button class="btn btn-sm btn-link text-decoration-none text-muted p-0" onclick="runCode()">
-                    <i class="fa-solid fa-rotate-right me-1"></i> Muat Ulang
-                </button>
+            <div class="pane-bar d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-display me-1 text-success"></i> Hasil Tampilan Browser</span>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-link text-decoration-none text-muted p-0" onclick="runCode()" title="Muat Ulang Tampilan">
+                        <i class="fa-solid fa-rotate-right me-1"></i> <span class="d-none d-sm-inline">Muat Ulang</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-2 py-0" onclick="toggleFullscreenPreview()" title="Buka Mode Layar Penuh" style="font-size: 0.74rem;">
+                        <i class="fa-solid fa-expand me-1" id="fsIcon"></i> <span class="d-none d-sm-inline" id="fsText">Layar Penuh</span>
+                    </button>
+                </div>
             </div>
             <iframe id="codePreview" class="preview-iframe" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
         </section>
@@ -373,6 +388,56 @@ if (empty($initialCode)) {
                 this.selectionStart = this.selectionEnd = start + 4;
             }
         });
+
+        const INITIAL_SOURCE_CODE = document.getElementById('codeEditor').value;
+
+        function copyEditorCode() {
+            const code = document.getElementById('codeEditor').value;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✓ Kode berhasil disalin ke clipboard!');
+            }).catch(() => {
+                prompt('Salin kode ini:', code);
+            });
+        }
+
+        function downloadEditorCode() {
+            const code = document.getElementById('codeEditor').value;
+            const blob = new Blob([code], { type: 'text/html;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'skillance-code.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function resetEditorCode() {
+            if (confirm('Kembalikan kode ke contoh materi semula?')) {
+                document.getElementById('codeEditor').value = INITIAL_SOURCE_CODE;
+                runCode();
+            }
+        }
+
+        let isPreviewFullscreen = false;
+        function toggleFullscreenPreview() {
+            const rightPane = document.querySelector('.tryit-pane-right');
+            const leftPane = document.querySelector('.tryit-pane-left');
+            const fsIcon = document.getElementById('fsIcon');
+            const fsText = document.getElementById('fsText');
+            
+            isPreviewFullscreen = !isPreviewFullscreen;
+            if (isPreviewFullscreen) {
+                leftPane.style.display = 'none';
+                rightPane.style.width = '100%';
+                if (fsIcon) fsIcon.className = 'fa-solid fa-compress me-1';
+                if (fsText) fsText.textContent = 'Bagi Layar';
+            } else {
+                leftPane.style.display = 'flex';
+                rightPane.style.width = '50%';
+                if (fsIcon) fsIcon.className = 'fa-solid fa-expand me-1';
+                if (fsText) fsText.textContent = 'Layar Penuh';
+            }
+        }
 
         // Run initially on load
         window.addEventListener('DOMContentLoaded', runCode);

@@ -211,6 +211,7 @@ $seoBreadcrumbs = [
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         :root {
@@ -474,8 +475,11 @@ $seoBreadcrumbs = [
 
                 <div class="col-md-4 text-md-end">
                     <div class="d-flex flex-column flex-sm-row justify-content-md-end gap-2">
+                        <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#achievementCardModal">
+                            <i class="fa-solid fa-id-card me-1 text-gold"></i> Kartu Prestasi Siswa
+                        </button>
                         <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-warning fw-bold px-3 py-2 rounded-pill text-navy shadow-sm">
-                            <i class="fa-solid fa-briefcase me-1"></i> Profil Bursa Freelance &raquo;
+                            <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;
                         </a>
                         <?php if ($isLoggedIn): ?>
                             <a href="auth/logout.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
@@ -960,6 +964,104 @@ $seoBreadcrumbs = [
         </div>
 
     </main>
+
+    <!-- MODAL: KARTU PRESTASI DIGITAL SISWA -->
+    <div class="modal fade" id="achievementCardModal" tabindex="-1" aria-labelledby="achievementCardModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 480px;">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-navy text-white py-3 px-4" style="background-color: #071a35 !important;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-id-card text-gold fs-5"></i>
+                        <h5 class="modal-title fw-bold font-heading mb-0 text-white" id="achievementCardModalLabel" style="font-size: 1.05rem;">Kartu Prestasi Digital Siswa</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <!-- ACHIEVEMENTS BADGE CANVAS CONTAINER -->
+                    <div id="achievementCardCanvas" class="p-4 rounded-4 shadow-sm text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 60%, #06152b 100%); border: 2px solid #fca311;">
+                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-white border-opacity-15 pb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-warning text-navy rounded-circle p-1 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 0.9rem;"></i>
+                                </div>
+                                <div>
+                                    <span class="fw-bold d-block text-white font-heading" style="font-size: 0.85rem; letter-spacing: 0.5px;">SKILLANCE ACADEMY</span>
+                                    <small class="text-white-50" style="font-size: 0.65rem;">Digital Student Identity &bull; 2026</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-gold text-navy fw-bold px-2 py-1 rounded-pill" style="font-size: 0.65rem; background-color: #fca311 !important; color: #071a35 !important;">
+                                <i class="fa-solid fa-shield-halved me-1"></i> VERIFIED
+                            </span>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <img src="<?= htmlspecialchars($userPhoto) ?>" alt="Avatar" class="rounded-circle border border-3 border-warning shadow mb-2" style="width: 76px; height: 76px; object-fit: cover;">
+                            <h4 class="fw-bold font-heading mb-1 text-white"><?= htmlspecialchars($userName) ?></h4>
+                            <p class="text-white-50 small mb-2"><?= htmlspecialchars($userEmail) ?></p>
+                            <div class="d-flex justify-content-center gap-2 mb-2">
+                                <span class="badge <?= $levelBadge ?> rounded-pill px-3 py-1 fw-bold" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-bolt me-1"></i> <?= $userLevel ?>
+                                </span>
+                                <span class="badge bg-warning text-dark rounded-pill px-3 py-1 fw-bold" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-fire me-1 text-danger"></i> <?= number_format($userXp) ?> XP
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white bg-opacity-10 p-3 rounded-3 mb-3 border border-white border-opacity-10">
+                            <div class="row text-center g-2">
+                                <div class="col-4 border-end border-white border-opacity-15">
+                                    <span class="d-block fs-5 fw-bold text-warning"><?= count($completedModules) ?></span>
+                                    <small class="text-white-50" style="font-size: 0.65rem;">Modul Selesai</small>
+                                </div>
+                                <div class="col-4 border-end border-white border-opacity-15">
+                                    <span class="d-block fs-5 fw-bold text-success"><?= count($certificates) ?></span>
+                                    <small class="text-white-50" style="font-size: 0.65rem;">Sertifikat SKPI</small>
+                                </div>
+                                <div class="col-4">
+                                    <span class="d-block fs-5 fw-bold text-info">Top 10</span>
+                                    <small class="text-white-50" style="font-size: 0.65rem;">Rank Nasional</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-15">
+                            <div class="text-start">
+                                <small class="text-white-50 d-block" style="font-size: 0.65rem;">Platform Koding & Portofolio</small>
+                                <span class="text-warning fw-semibold font-monospace" style="font-size: 0.75rem;">academy.skillance.cloud</span>
+                            </div>
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=<?= urlencode('https://academy.skillance.cloud/verify.php') ?>" alt="QR Code" class="bg-white p-1 rounded-2 shadow-sm" style="width: 48px; height: 48px;">
+                        </div>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <button type="button" onclick="downloadAchievementBadgeImage()" class="btn btn-success fw-bold py-2 rounded-pill shadow-sm">
+                            <i class="fa-solid fa-download me-1"></i> Unduh Gambar Kartu (PNG)
+                        </button>
+                        <a href="https://api.whatsapp.com/send?text=<?= urlencode('Lihat kartu prestasi belajar koding saya di Skillance Academy Indonesia: https://academy.skillance.cloud/my-learning.php') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success fw-semibold py-2 rounded-pill">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Bagikan ke Status WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadAchievementBadgeImage() {
+            const cardEl = document.getElementById('achievementCardCanvas');
+            if (!cardEl) return;
+            html2canvas(cardEl, { scale: 3, useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Kartu-Prestasi-<?= preg_replace('/[^a-zA-Z0-9]/', '-', $userName) ?>.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                alert('Gagal mengunduh gambar: ' + err.message);
+            });
+        }
+    </script>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
 

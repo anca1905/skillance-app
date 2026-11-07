@@ -317,6 +317,12 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                         </li>
                         <li><hr class="dropdown-divider my-1"></li>
                         <li>
+                            <a class="dropdown-item py-2 d-flex align-items-center gap-2 <?= $activeNav === 'glossary' ? 'active fw-bold text-navy' : '' ?>" href="glossary.php">
+                                <i class="fa-solid fa-book-bookmark text-warning" style="width: 20px;"></i>
+                                <span>Kamus Istilah Koding</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="tryit.php">
                                 <i class="fa-solid fa-terminal text-warning" style="width: 20px;"></i>
                                 <span>Code Lab Playground</span>
