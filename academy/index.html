@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillance Academy Indonesia - Platform Belajar Koding Praktis & Mandiri</title>
+    <!-- MASTER ENTERPRISE SEO & OPEN GRAPH -->
     
-    <!-- Meta SEO -->
-    <meta name="description" content="Portal belajar koding mandiri dan interaktif resmi dari Skillance Academy Indonesia untuk mahasiswa dan umum. Kuasai HTML, CSS, JavaScript, PHP, MySQL, dan Flutter.">
     
     <!-- Google Fonts & Bootstrap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,6 +51,38 @@
             position: sticky;
             top: 0;
             z-index: 1020;
+        }
+
+        .nav-menu-link {
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-menu-link:hover {
+            color: #0d2e5c;
+            background-color: #f1f5f9;
+        }
+
+        .nav-menu-link.active {
+            color: #0d2e5c;
+            font-weight: 700;
+            background-color: #f1f5f9;
+        }
+
+        @media (max-width: 1199.98px) {
+            .nav-menu-link {
+                display: flex;
+                padding: 10px 14px;
+                border-radius: 8px;
+            }
         }
 
         /* Course Quick Nav (Skillance Modern Style) */
@@ -156,70 +186,80 @@
             border: 1px solid #e2e8f0;
             padding: 24px;
         }
+
+        /* Mobile & Touch Ergonomics */
+        .course-subnav {
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .course-subnav::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 45px 15px 40px;
+            }
+            .hero-banner h1 {
+                font-size: 1.85rem;
+                line-height: 1.3;
+            }
+            .hero-banner p.lead {
+                font-size: 0.95rem;
+            }
+            .course-card {
+                padding: 22px 18px;
+                border-radius: 14px;
+            }
+            .course-icon-badge {
+                width: 46px;
+                height: 46px;
+                font-size: 22px;
+                margin-bottom: 14px;
+            }
+            .feature-box {
+                padding: 18px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .academy-navbar {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+            .navbar-brand span {
+                font-size: 1.05rem !important;
+            }
+            .navbar-brand small {
+                display: none !important;
+            }
+            .top-hub-bar {
+                font-size: 0.74rem;
+            }
+            .hero-banner {
+                padding: 38px 12px 32px;
+            }
+            .hero-banner h1 {
+                font-size: 1.65rem;
+            }
+            .hero-banner .btn-lg {
+                width: 100%;
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+            .course-card {
+                padding: 18px 15px;
+            }
+            .course-nav-item {
+                padding: 8px 14px;
+                font-size: 0.82rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- TOP HUB BAR -->
-    <div class="top-hub-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <a href="https://skillance.my.id" class="text-decoration-none text-white-50 hover-white me-3">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke <strong>skillance.my.id</strong>
-                </a>
-                <a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-gold me-2 d-none d-md-inline">
-                    <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
-                </a>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <span class="small d-none d-md-inline" style="color: #cbd5e1;">Skillance Academy Indonesia</span>
-                
-                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="text-gold text-decoration-none fw-semibold">
-                        <i class="fa-solid fa-user me-1"></i> Masuk Akun
-                    </a>
-                
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg academy-navbar py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
-                <div class="bg-navy text-gold p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                    <i class="fa-solid fa-graduation-cap fs-5"></i>
-                </div>
-                <div>
-                    <span class="fw-bold text-navy font-heading" style="font-size: 1.25rem; letter-spacing: -0.5px;">SKILLANCE ACADEMY</span>
-                    <small class="d-block text-muted" style="font-size: 0.7rem; margin-top: -3px;">Pusat Belajar Koding Skillance Academy Indonesia</small>
-                </div>
-            </a>
-
-            <div class="d-flex align-items-center gap-2 ms-auto">
-                <a href="tryit.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-2 fw-bold">
-                    <i class="fa-solid fa-code text-gold me-1"></i> Code Lab Editor
-                </a>
-                
-                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-navy rounded-pill px-3 py-2 fw-bold">
-                        <i class="fa-solid fa-user me-1"></i> Masuk
-                    </a>
-                
-            </div>
-        </div>
-    </nav>
-
-    <!-- COURSE SUBNAV BAR (Skillance Quick Nav Bar) -->
-    <div class="course-subnav">
-        <div class="container d-flex">
-            <a href="learn.php?c=html" class="course-nav-item"><i class="fa-brands fa-html5 me-1 text-warning"></i> HTML</a>
-            <a href="learn.php?c=css" class="course-nav-item"><i class="fa-brands fa-css3-alt me-1 text-info"></i> CSS</a>
-            <a href="learn.php?c=javascript" class="course-nav-item"><i class="fa-brands fa-js me-1 text-warning"></i> JAVASCRIPT</a>
-            <a href="learn.php?c=php" class="course-nav-item"><i class="fa-brands fa-php me-1 text-primary"></i> PHP & MYSQL</a>
-            <a href="learn.php?c=flutter" class="course-nav-item"><i class="fa-solid fa-mobile-screen-button me-1 text-info"></i> FLUTTER</a>
-            <a href="learn.php?c=uiux" class="course-nav-item"><i class="fa-solid fa-bezier-curve me-1 text-pink"></i> UI/UX</a>
-            <a href="tryit.php" class="course-nav-item text-gold ms-auto"><i class="fa-solid fa-bolt me-1"></i> TRY IT YOURSELF</a>
-        </div>
-    </div>
+    
 
     <!-- HERO BANNER -->
     <header class="hero-banner">
@@ -233,11 +273,20 @@
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="learn.php?c=html" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
-                    <i class="fa-solid fa-play me-2"></i> Mulai Belajar HTML &raquo;
+                <a href="exam.php" class="btn btn-success btn-lg fw-bold px-4 py-3 rounded-pill shadow">
+                    <i class="fa-solid fa-award me-2"></i> Ikuti Ujian Sertifikasi SKPI &raquo;
                 </a>
-                <a href="tryit.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                    <i class="fa-solid fa-code me-2"></i> Buka Try It Yourself Editor
+                <a href="projects.php" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
+                    <i class="fa-solid fa-laptop-code me-2"></i> E-Book & Kit Proyek Industri &raquo;
+                </a>
+                <a href="roadmap.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-map-location-dot me-2 text-warning"></i> Roadmap Belajar
+                </a>
+                <a href="partner.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-building-columns me-2 text-info"></i> Kemitraan Kampus / UKM
+                </a>
+                <a href="verify.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
+                    <i class="fa-solid fa-shield-halved me-2 text-success"></i> Cek Sertifikat
                 </a>
             </div>
         </div>
@@ -261,7 +310,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-danger-subtle text-danger fw-bold">Dasar Web</span>
-                            <small class="text-muted">6 Topik Lengkap</small>
+                            <small class="text-muted">90 Topik Lengkap (8 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">HTML Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
@@ -286,7 +335,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-primary-subtle text-primary fw-bold">Styling & Desain</span>
-                            <small class="text-muted">3 Topik Inti</small>
+                            <small class="text-muted">125 Topik Lengkap (9 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">CSS Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
@@ -311,7 +360,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Interaktivitas</span>
-                            <small class="text-muted">Interaktif</small>
+                            <small class="text-muted">49 Topik Lengkap (5 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">JavaScript Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
@@ -336,7 +385,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-indigo-subtle text-indigo fw-bold" style="background:#e0e7ff; color:#4338ca;">Server & DB</span>
-                            <small class="text-muted">Backend</small>
+                            <small class="text-muted">117 Topik Lengkap (10 Kategori)</small>
                         </div>
                         <h4 class="fw-bold text-navy mb-2">PHP & MySQL Tutorial</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
@@ -353,6 +402,156 @@
                     </div>
                 </div>
 
+                <!-- CARD: SQL -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #ecfeff; color: #00758f;">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-info-subtle text-info fw-bold" style="background:#cffafe; color:#0e7490;">Database Relasional</span>
+                            <small class="text-muted">82 Topik Lengkap (5 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">SQL Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa standar internasional untuk mengelola database relasional, query SELECT, JOIN, agregasi, subquery, dan indexing.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=sql" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=sql" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: JQUERY -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #f0f9ff; color: #0769ad;">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">Pustaka JavaScript</span>
+                            <small class="text-muted">46 Topik Lengkap (9 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">jQuery Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Pustaka JavaScript legendaris berprinsip 'Write Less, Do More'. Mempermudah manipulasi DOM, animasi efek, dan komunikasi AJAX.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=jquery" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=jquery" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: PYTHON -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #eff6ff; color: #3776ab;">
+                            <i class="fa-brands fa-python"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">AI, Data & Web</span>
+                            <small class="text-muted">166 Topik (14 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Python Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa pemrograman serbaguna untuk Artificial Intelligence, Machine Learning, Data Science, Matplotlib, Algoritma DSA, dan Database.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=python" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=python" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: JAVA -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #fff7ed; color: #ea580c;">
+                            <i class="fa-brands fa-java"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Enterprise & Backend</span>
+                            <small class="text-muted">118 Topik (13 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa pemrograman berorientasi objek tangguh untuk sistem berskala enterprise, arsitektur microservices, aplikasi Android, dan Spring Boot backend.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=java" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=java" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: C++ -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #e0f2fe; color: #00599c;">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#00599c;">High Performance</span>
+                            <small class="text-muted">80 Topik (11 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">C++ Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Bahasa pemrograman biner super cepat untuk Game Development (Unreal Engine), sistem operasi, algoritma STL, dan pemrosesan komputasi intensif.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=cpp" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=cpp" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD: VUE.JS -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="course-card">
+                        <div class="course-icon-badge" style="background: #f0fdf4; color: #42b883;">
+                            <i class="fa-brands fa-vuejs"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-success-subtle text-success fw-bold" style="background:#f0fdf4; color:#16a34a;">Frontend Reaktif</span>
+                            <small class="text-muted">56 Topik (5 Kategori)</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Vue.js 3 Tutorial</h4>
+                        <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
+                            Framework JavaScript progresif untuk membangun Single Page Applications (SPA), antarmuka reaktif deklaratif, Single File Components, dan Composition API modern.
+                        </p>
+                        <div class="d-flex gap-2 pt-3 border-top">
+                            <a href="learn.php?c=vue" class="btn-learn flex-grow-1">
+                                Mulai Belajar &raquo;
+                            </a>
+                            <a href="tryit.php?c=vue" class="btn-tryit-outline" title="Coba Kode Langsung">
+                                <i class="fa-solid fa-code"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- CARD 5: FLUTTER -->
                 <div class="col-md-6 col-lg-4">
                     <div class="course-card">
@@ -360,12 +559,12 @@
                             <i class="fa-solid fa-mobile-screen-button"></i>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Mobile Native</span>
-                            <small class="text-muted">Android & iOS</small>
+                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Cross-Platform & AI</span>
+                            <small class="text-muted"><i class="fa-solid fa-book-open me-1"></i> 29 Topik</small>
                         </div>
-                        <h4 class="fw-bold text-navy mb-2">Flutter Mobile</h4>
+                        <h4 class="fw-bold text-navy mb-2">Flutter & Dart Mobile</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
-                            Toolkit UI dari Google untuk membangun aplikasi smartphone Android & iOS berperforma tinggi dengan satu basis kode Dart.
+                            Kuasai ekosistem Flutter resmi dari Google: Widget Tree, Material 3, BLoC/Riverpod, REST API, Gemini AI Mobile, dan rilis Google Play Store.
                         </p>
                         <div class="d-flex gap-2 pt-3 border-top">
                             <a href="learn.php?c=flutter" class="btn-learn flex-grow-1">
@@ -385,12 +584,12 @@
                             <i class="fa-solid fa-bezier-curve"></i>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-pink-subtle text-pink fw-bold" style="background:#fce7f3; color:#be185d;">Desain Produk</span>
-                            <small class="text-muted">Figma & UX</small>
+                            <span class="badge bg-pink-subtle text-pink fw-bold" style="background:#fce7f3; color:#be185d;">Desain Produk & Riset</span>
+                            <small class="text-muted"><i class="fa-solid fa-book-open me-1"></i> 18 Topik</small>
                         </div>
-                        <h4 class="fw-bold text-navy mb-2">UI/UX Design</h4>
+                        <h4 class="fw-bold text-navy mb-2">UI/UX Design & Figma</h4>
                         <p class="text-secondary small mb-4 flex-grow-1" style="line-height: 1.6;">
-                            Metodologi Design Thinking, riset pengguna, wireframing, Auto-Layout responsif di Figma, dan penyerahan desain ke developer.
+                            Kuasai metodologi Design Thinking, riset pengguna, Auto-Layout responsif Figma, Design Tokens, prototyping interaktif, dan handoff developer.
                         </p>
                         <div class="d-flex gap-2 pt-3 border-top">
                             <a href="learn.php?c=uiux" class="btn-learn flex-grow-1">
@@ -403,6 +602,172 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION: JALUR BELAJAR & ROADMAP TERSTRUKTUR -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container py-2">
+            <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+                <div>
+                    <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase shadow-sm" style="font-size: 0.75rem;">
+                        <i class="fa-solid fa-compass me-1"></i> Jalur Belajar Terstruktur
+                    </span>
+                    <h2 class="fw-bold text-navy font-heading mb-1">Roadmap Karier & Keahlian Digital</h2>
+                    <p class="text-muted mb-0">Panduan bertahap dari pemula, menengah, hingga mahir untuk mempersiapkan Anda siap berkarier.</p>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a href="roadmap.php" class="btn btn-navy rounded-pill px-4 py-2 fw-bold shadow-sm">
+                        <i class="fa-solid fa-map-location-dot text-gold me-1"></i> Buka Roadmap Lengkap &raquo;
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- CARD 1: FRONTEND -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #fca311 !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Frontend Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~12 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Frontend Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai pembuatan antarmuka web modern dari dasar struktur, desain responsif, hingga animasi interaktif tingkat lanjut.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">HTML5</span>
+                            <span class="badge bg-light text-secondary border">CSS3</span>
+                            <span class="badge bg-light text-secondary border">JavaScript</span>
+                            <span class="badge bg-light text-secondary border">jQuery</span>
+                            <span class="badge bg-light text-secondary border">Bootstrap 5</span>
+                            <span class="badge bg-light text-secondary border">Vue.js 3</span>
+                        </div>
+                        <a href="roadmap.php?path=frontend" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Frontend &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: BACKEND -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #00758f !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-info-subtle text-info-emphasis fw-bold">Backend Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~14 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Backend Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Bangun logika server-side, manajemen basis data relasional SQL berkinerja tinggi, dan arsitektur RESTful API yang aman.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">PHP 8</span>
+                            <span class="badge bg-light text-secondary border">SQL / MySQL</span>
+                            <span class="badge bg-light text-secondary border">PDO Security</span>
+                            <span class="badge bg-light text-secondary border">REST API</span>
+                            <span class="badge bg-light text-secondary border">Linux VPS</span>
+                        </div>
+                        <a href="roadmap.php?path=backend" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Backend &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 3: FULLSTACK -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #04AA6D !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-success-subtle text-success-emphasis fw-bold">Fullstack Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~20 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Fullstack Web Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Alur komprehensif end-to-end: merancang tampilan web, mengelola basis data, membangun backend, hingga rilis ke Cloud VPS.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">Client Layer</span>
+                            <span class="badge bg-light text-secondary border">Server Layer</span>
+                            <span class="badge bg-light text-secondary border">Database</span>
+                            <span class="badge bg-light text-secondary border">Cloud Nginx</span>
+                        </div>
+                        <a href="roadmap.php?path=fullstack" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Fullstack &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 4: PYTHON & AI -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #3776ab !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background:#e0f2fe; color:#0369a1;">AI & Data Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~14 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Python, Data & AI Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai bahasa pemrograman terpopuler untuk Machine Learning, manipulasi data Pandas/NumPy, visualisasi grafik, dan algoritma DSA.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">Python 3.12</span>
+                            <span class="badge bg-light text-secondary border">OOP & DSA</span>
+                            <span class="badge bg-light text-secondary border">NumPy & Pandas</span>
+                            <span class="badge bg-light text-secondary border">Matplotlib</span>
+                            <span class="badge bg-light text-secondary border">Machine Learning</span>
+                        </div>
+                        <a href="roadmap.php?path=python" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Python &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 5: JAVA ENTERPRISE -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #ea580c !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-warning-subtle text-warning-emphasis fw-bold">Enterprise Track</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~16 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">Java Enterprise Developer</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai bahasa OOP murni untuk arsitektur backend perbankan, multithreading, Collections Framework, dan Spring Boot microservices.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">Java 21</span>
+                            <span class="badge bg-light text-secondary border">OOP Murni</span>
+                            <span class="badge bg-light text-secondary border">Collections</span>
+                            <span class="badge bg-light text-secondary border">Streams</span>
+                            <span class="badge bg-light text-secondary border">Spring Boot</span>
+                        </div>
+                        <a href="roadmap.php?path=java" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur Java &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 6: C++ SYSTEMS & GAME DEVELOPER -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 rounded-4 p-4 shadow-sm" style="background: #f8fafc; border-top: 4px solid #00599c !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-primary-subtle text-primary fw-bold" style="background: #e0f2fe; color: #00599c;">Sistem & Game Dev</span>
+                            <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> ~14 Minggu</small>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-2">C++ Systems & Game Dev</h4>
+                        <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                            Kuasai C++20 modern, manajemen memori manual, pointer, OOP virtual polimorfik, Standard Template Library (STL), dan arsitektur low-latency.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 mb-4">
+                            <span class="badge bg-light text-secondary border">C++20</span>
+                            <span class="badge bg-light text-secondary border">Pointers & Heap</span>
+                            <span class="badge bg-light text-secondary border">STL Vector & Map</span>
+                            <span class="badge bg-light text-secondary border">Game Engine</span>
+                        </div>
+                        <a href="roadmap.php?path=cpp" class="btn btn-outline-navy btn-sm rounded-pill mt-auto fw-bold">
+                            Lihat Jalur C++ &raquo;
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -437,19 +802,84 @@
                     <div class="card border-0 rounded-4 p-4 shadow-sm" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-left: 4px solid var(--gold) !important;">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="bg-navy text-gold p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                                <i class="fa-solid fa-handshake fs-4"></i>
+                                <i class="fa-solid fa-graduation-cap fs-4 text-warning"></i>
                             </div>
                             <div>
-                                <h5 class="fw-bold text-navy mb-0">Mitra Komunitas & Kampus</h5>
+                                <h5 class="fw-bold text-navy mb-0">Rencana Kemitraan Kampus & Fakultas</h5>
                                 <small class="text-muted">Workshop Koding & Sertifikasi SKPI Mahasiswa</small>
                             </div>
                         </div>
                         <p class="text-secondary small mb-3" style="line-height: 1.7;">
-                            Skillance Academy berkolaborasi aktif dengan organisasi mahasiswa dan komunitas riset teknologi di kampus lokal untuk mencetak talenta programmer dan desainer siap industri dari daerah.
+                            Skillance Academy membuka program kemitraan bagi perguruan tinggi, fakultas, dan organisasi mahasiswa untuk menyelenggarakan workshop teknologi terapan, pembekalan skripsi, serta penerbitan sertifikat kompetensi SKPI resmi.
                         </p>
-                        <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-navy btn-sm rounded-pill px-4 py-2 fw-bold align-self-start">
-                            <i class="fa-solid fa-briefcase me-1"></i> Buka Bursa Freelance &raquo;
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="partner.php" class="btn btn-navy btn-sm rounded-pill px-3 py-2 fw-bold" style="background: #0d2e5c;">
+                                <i class="fa-solid fa-file-pdf text-warning me-1"></i> Pelajari Proposal Kerjasama &raquo;
+                            </a>
+                            <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ECOSYSTEM HIGHLIGHT (PROJECT KITS, CAMPUS PARTNERSHIP, CERTIFICATION) -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container py-2">
+            <div class="row g-4 align-items-stretch">
+                <!-- BOX 1: PROJECT KITS -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-danger text-white px-3 py-1 rounded-pill small fw-bold mb-3">Project-Based Learning</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">E-Book & Full Source Code Siap Pakai</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Pelajari studi kasus nyata: <strong>Website Desa Modern</strong> (Laravel + Vue), <strong>Aplikasi Kasir POS Thermal</strong>, dan <strong>E-Commerce Midtrans</strong>. Lengkap dengan lisensi komersial untuk skripsi atau dijual ke klien!
+                            </p>
+                        </div>
+                        <a href="projects.php" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold align-self-start" style="background: #0d2e5c;">
+                            <i class="fa-solid fa-book-bookmark text-warning me-1"></i> Buka Katalog E-Book &raquo;
                         </a>
+                    </div>
+                </div>
+
+                <!-- BOX 2: CAMPUS & UKM PARTNERSHIP -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-primary text-white px-3 py-1 rounded-pill small fw-bold mb-3">Kolaborasi Organisasi</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">Kemitraan BEM & UKM Mahasiswa</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Ingin mengadakan workshop koding di kampus? Skillance Academy menyediakan pemateri, modul, dan sertifikat SKPI dengan sistem <strong>Bagi Hasil Kas UKM 40%–50%</strong> tanpa biaya kerjasama awal.
+                            </p>
+                        </div>
+                        <a href="partner.php" class="btn btn-outline-navy btn-sm rounded-pill px-4 py-2 fw-bold align-self-start text-navy" style="border-color: #0d2e5c;">
+                            <i class="fa-solid fa-handshake me-1"></i> Ajukan Kolaborasi Kampus &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BOX 3: DIGITAL CERTIFICATION -->
+                <div class="col-lg-4">
+                    <div class="p-4 rounded-4 h-100 border d-flex flex-column justify-content-between" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+                        <div>
+                            <span class="badge bg-success text-white px-3 py-1 rounded-pill small fw-bold mb-3">Resmi & Terverifikasi</span>
+                            <h4 class="fw-bold text-navy font-heading mb-2">Verifikasi Sertifikat Digital SKPI</h4>
+                            <p class="text-secondary small mb-3" style="line-height: 1.7;">
+                                Setiap kelulusan jalur belajar diterbitkan sertifikat resmi dengan QR Code dan nomor registrasi unik yang dapat divalidasi langsung oleh pihak kampus dan HRD perusahaan secara realtime.
+                            </p>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="exam.php" class="btn btn-success btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-award me-1"></i> Ikuti Ujian Sertifikasi &raquo;
+                            </a>
+                            <a href="verify.php" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-bold">
+                                <i class="fa-solid fa-shield-halved text-success me-1"></i> Cek Keaslian &raquo;
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -470,5 +900,7 @@
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/js/spotlight.js"></script>
 </body>
 </html>
