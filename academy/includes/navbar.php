@@ -57,6 +57,44 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
         color: #0f172a !important;
     }
 
+    /* Primary Navy & Outline Utilities */
+    .bg-navy {
+        background-color: #0d2e5c !important;
+        color: #ffffff !important;
+    }
+    .bg-navy-subtle {
+        background-color: rgba(13, 46, 92, 0.08) !important;
+        color: #0d2e5c !important;
+    }
+    .btn-navy, a.btn-navy, button.btn-navy {
+        background-color: #0d2e5c !important;
+        color: #ffffff !important;
+        border: 1px solid #0d2e5c !important;
+        transition: all 0.25s ease;
+    }
+    .btn-navy:hover, a.btn-navy:hover, button.btn-navy:hover,
+    .btn-navy:focus, a.btn-navy:focus, button.btn-navy:focus {
+        background-color: #071a35 !important;
+        color: #ffffff !important;
+        border-color: #071a35 !important;
+        box-shadow: 0 4px 14px rgba(13, 46, 92, 0.35);
+        transform: translateY(-1px);
+    }
+    .btn-outline-navy, a.btn-outline-navy, button.btn-outline-navy {
+        background-color: transparent !important;
+        color: #0d2e5c !important;
+        border: 1.5px solid #0d2e5c !important;
+        transition: all 0.25s ease;
+    }
+    .btn-outline-navy:hover, a.btn-outline-navy:hover, button.btn-outline-navy:hover,
+    .btn-outline-navy:focus, a.btn-outline-navy:focus, button.btn-outline-navy:focus {
+        background-color: #0d2e5c !important;
+        color: #ffffff !important;
+        border-color: #0d2e5c !important;
+        box-shadow: 0 4px 14px rgba(13, 46, 92, 0.25);
+        transform: translateY(-1px);
+    }
+
     .btn-pwa-install {
         height: 34px;
         font-size: 0.8rem;
