@@ -961,13 +961,7 @@ $seoBreadcrumbs = [
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="py-4 bg-white border-top text-center text-muted small mt-5">
-        <div class="container">
-            <p class="mb-1 fw-semibold">&copy; <?= date('Y') ?> <strong>Skillance Academy Indonesia</strong> — Dashboard Profil & Integrasi Karier Mahasiswa.</p>
-            <p class="mb-0 text-muted" style="font-size: 0.75rem;">Platform inkubasi keterampilan teknologi dan bursa kerja digital terintegrasi se-Indonesia.</p>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>

@@ -966,17 +966,7 @@ $seoBreadcrumbs = [
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="py-4 text-center bg-white border-top">
-        <div class="container">
-            <p class="small text-muted mb-1">&copy; 2026 Skillance Academy Indonesia & Skillance Digital Indonesia. All rights reserved.</p>
-            <p class="small text-muted mb-0">
-                <a href="https://skillance.my.id" class="text-navy text-decoration-none me-3">Website Utama</a>
-                <a href="https://skillance.my.id/bursa-freelance.php" class="text-navy text-decoration-none me-3">Bursa Freelance</a>
-                <a href="learn.php?c=html" class="text-navy text-decoration-none">Materi HTML</a>
-            </p>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

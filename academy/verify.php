@@ -444,10 +444,26 @@ $seoBreadcrumbs = [
                     </span>
                     <span class="text-muted small d-none d-md-inline">ID: #<?= $certificate['id'] ?></span>
                 </div>
+                <?php
+                $certIssueTime = !empty($certificate['issued_at']) ? strtotime($certificate['issued_at']) : time();
+                $certYear = date('Y', $certIssueTime);
+                $certMonth = date('n', $certIssueTime);
+                $certVerifyUrl = 'https://academy.skillance.cloud/verify.php?cert=' . urlencode($certificate['certificate_no']);
+                $linkedInUrl = 'https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME'
+                    . '&name=' . urlencode($certificate['track_title'] . ' Competence')
+                    . '&organizationName=' . urlencode('Skillance Digital Indonesia')
+                    . '&issueYear=' . $certYear
+                    . '&issueMonth=' . $certMonth
+                    . '&certUrl=' . urlencode($certVerifyUrl)
+                    . '&certId=' . urlencode($certificate['certificate_no']);
+                ?>
                 <div class="d-flex flex-wrap gap-2">
                     <button id="btnDownloadPdf" onclick="downloadCertificatePDF()" class="btn btn-sm btn-success fw-bold rounded-pill px-3 py-2 text-white shadow-sm">
                         <i class="fa-solid fa-file-pdf me-1"></i> Download PDF (HD A4)
                     </button>
+                    <a href="<?= $linkedInUrl ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary fw-bold rounded-pill px-3 py-2 shadow-sm d-inline-flex align-items-center gap-1" style="color: #0a66c2; border-color: #0a66c2;" title="Tambahkan sertifikat ini ke profil LinkedIn Anda">
+                        <i class="fa-brands fa-linkedin fs-6"></i> Tambah ke LinkedIn
+                    </a>
                     <button onclick="window.print()" class="btn btn-sm btn-outline-navy fw-bold rounded-pill px-3 py-2 text-navy" style="border-color: #0d2e5c;">
                         <i class="fa-solid fa-print me-1"></i> Cetak Printer
                     </button>
@@ -625,13 +641,7 @@ $seoBreadcrumbs = [
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="py-4 bg-white border-top text-center text-muted small mt-5 btn-print-hide">
-        <div class="container">
-            <p class="mb-1 fw-semibold">&copy; <?= date('Y') ?> <strong>Skillance Academy Indonesia</strong> — Sistem Sertifikasi & Pengembangan Talenta Digital.</p>
-            <p class="mb-0 text-muted" style="font-size: 0.75rem;">Materi dan sertifikat resmi diterbitkan untuk tujuan akademik dan profesional di bawah naungan Skillance Indonesia.</p>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <script>
         function copyShareUrl() {

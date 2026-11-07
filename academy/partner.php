@@ -501,13 +501,7 @@ $seoBreadcrumbs = [
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="py-4 bg-white border-top text-center text-muted small mt-5">
-        <div class="container">
-            <p class="mb-1 fw-semibold">&copy; <?= date('Y') ?> <strong>Skillance Academy Indonesia</strong> — Kolaborasi Ekosistem Talenta Digital Kampus.</p>
-            <p class="mb-0 text-muted" style="font-size: 0.75rem;">Mendukung percepatan literasi teknologi mahasiswa Indonesia menuju talenta siap industri.</p>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <script>
         function submitPartnerForm(e) {

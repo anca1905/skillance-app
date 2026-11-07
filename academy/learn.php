@@ -663,7 +663,31 @@ $seoCustomSchemaJson = json_encode([
                 </ol>
             </nav>
 
-            <h1 class="topic-heading"><?= htmlspecialchars($currentTopic['title']) ?></h1>
+            <h1 class="topic-heading mb-2"><?= htmlspecialchars($currentTopic['title']) ?></h1>
+
+            <?php
+            $rawLessonText = strip_tags(($currentTopic['content'] ?? '') . ' ' . ($currentTopic['explanation'] ?? ''));
+            $lessonWordCount = str_word_count($rawLessonText);
+            $estLessonMinutes = max(2, ceil($lessonWordCount / 140));
+            ?>
+            <!-- LESSON READING METADATA & FONT SIZE ADJUSTER -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 py-2 px-3 bg-light rounded-3 mb-3 border">
+                <div class="d-flex align-items-center gap-2 small text-muted">
+                    <span><i class="fa-regular fa-clock text-primary me-1"></i> Estimasi: <strong>~<?= $estLessonMinutes ?> menit</strong> baca</span>
+                    <span class="text-black-50">&bull;</span>
+                    <span><i class="fa-solid fa-layer-group text-warning me-1"></i> Modul <strong><?= htmlspecialchars($courseData['name']) ?></strong></span>
+                    <?php if (!empty($currentTopic['quiz'])): ?>
+                        <span class="text-black-50 d-none d-sm-inline">&bull;</span>
+                        <span class="d-none d-sm-inline"><i class="fa-solid fa-circle-question text-success me-1"></i> Ada Kuis Singkat</span>
+                    <?php endif; ?>
+                </div>
+                <div class="d-flex align-items-center gap-1 font-resizer-bar">
+                    <span class="small text-muted me-1 d-none d-sm-inline" style="font-size: 0.74rem;">Ukuran Teks:</span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('small')" title="Ukuran Teks Lebih Kecil" style="font-size: 0.74rem;">A-</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('normal')" title="Ukuran Teks Standar" style="font-size: 0.74rem;">Normal</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('large')" title="Ukuran Teks Lebih Besar" style="font-size: 0.74rem;">A+</button>
+                </div>
+            </div>
 
             <!-- Top Nav Buttons -->
             <div class="nav-buttons-bar">
@@ -881,6 +905,29 @@ $seoCustomSchemaJson = json_encode([
                 btn.innerHTML = '<i class="fa-regular fa-square-check me-1"></i> Tandai Selesai';
             }
         }
+
+        function adjustLessonFontSize(size) {
+            const body = document.querySelector('.article-body');
+            if (!body) return;
+            if (size === 'small') {
+                body.style.fontSize = '0.92rem';
+                body.style.lineHeight = '1.7';
+            } else if (size === 'large') {
+                body.style.fontSize = '1.18rem';
+                body.style.lineHeight = '1.85';
+            } else {
+                body.style.fontSize = '1.05rem';
+                body.style.lineHeight = '1.75';
+            }
+            localStorage.setItem('skillance_lesson_font_size', size);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedSize = localStorage.getItem('skillance_lesson_font_size');
+            if (savedSize) {
+                adjustLessonFontSize(savedSize);
+            }
+        });
 
         function toggleProgress() {
             const newState = !isCompleted;

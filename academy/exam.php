@@ -678,6 +678,9 @@ $seoBreadcrumbs = [
                                 <a href="verify.php?cert=<?= urlencode($resultData['certificate_no']) ?>" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
                                     <i class="fa-solid fa-certificate me-2 fs-5"></i> Buka & Cetak Sertifikat Digital SKPI &raquo;
                                 </a>
+                                <a href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=<?= urlencode($resultData['track_title'] . ' Competence') ?>&organizationName=<?= urlencode('Skillance Digital Indonesia') ?>&issueYear=<?= date('Y') ?>&issueMonth=<?= date('n') ?>&certUrl=<?= urlencode('https://academy.skillance.cloud/verify.php?cert=' . $resultData['certificate_no']) ?>&certId=<?= urlencode($resultData['certificate_no']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill shadow-sm">
+                                    <i class="fa-brands fa-linkedin me-2 text-info fs-5"></i> Tambah ke LinkedIn
+                                </a>
                                 <a href="exam.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
                                     <i class="fa-solid fa-rotate-right me-1"></i> Ambil Ujian Jalur Lain
                                 </a>
@@ -754,13 +757,7 @@ $seoBreadcrumbs = [
         </main>
     <?php endif; ?>
 
-    <!-- FOOTER -->
-    <footer class="py-4 bg-white border-top text-center text-muted small mt-5">
-        <div class="container">
-            <p class="mb-1 fw-semibold">&copy; <?= date('Y') ?> <strong>Skillance Academy Indonesia</strong> — Sistem Sertifikasi Kompetensi & Pengembangan Talenta Digital.</p>
-            <p class="mb-0 text-muted" style="font-size: 0.75rem;">Sertifikat digital diterbitkan secara sah dan tersimpan permanen pada basis data kredensial Skillance.</p>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>

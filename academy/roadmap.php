@@ -2146,25 +2146,7 @@ $seoBreadcrumbs = [
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-navy text-white py-5 mt-5 border-top">
-        <div class="container text-center">
-            <h5 class="fw-bold text-gold font-heading mb-2">SKILLANCE ACADEMY INDONESIA</h5>
-            <p class="text-light small mb-3" style="max-width: 600px; margin: auto;">
-                Platform edukasi teknologi digital dan koding mandiri terpadu. Dilengkapi materi terstruktur dan lingkungan latihan langsung di browser.
-            </p>
-            <div class="d-flex justify-content-center gap-3 small text-secondary">
-                <a href="index.php" class="text-decoration-none text-light opacity-75">Katalog Kursus</a>
-                <span>•</span>
-                <a href="roadmap.php" class="text-decoration-none text-gold fw-bold">Roadmap Belajar</a>
-                <span>•</span>
-                <a href="tryit.php" class="text-decoration-none text-light opacity-75">Code Lab Editor</a>
-            </div>
-            <div class="mt-4 pt-3 border-top border-white border-opacity-10 text-muted small">
-                &copy; <?= date('Y') ?> Skillance Academy Indonesia. Hak Cipta Dilindungi.
-            </div>
-        </div>
-    </footer>
+    <?php include __DIR__ . '/includes/footer.php'; ?>
 
     <!-- INTERACTIVE ROADMAP SCRIPT -->
     <script>
