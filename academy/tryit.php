@@ -323,6 +323,9 @@ if (empty($initialCode)) {
                     <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-0" onclick="resetEditorCode()" title="Kembalikan ke Kode Awal" style="font-size: 0.74rem;">
                         <i class="fa-solid fa-rotate-left me-1"></i> <span class="d-none d-sm-inline">Reset</span>
                     </button>
+                    <button type="button" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-2 py-0 fw-semibold shadow-sm" onclick="openCodeBreakdown()" title="Bedah struktur & logika kode ini" style="font-size: 0.74rem; background-color: #fffbeb;">
+                        <i class="fa-solid fa-wand-magic-sparkles text-warning me-1"></i> <span class="d-none d-sm-inline">Bedah Kode</span>
+                    </button>
                 </div>
             </div>
             <textarea id="codeEditor" class="code-textarea" spellcheck="false"><?= htmlspecialchars($initialCode) ?></textarea>
@@ -441,6 +444,119 @@ if (empty($initialCode)) {
 
         // Run initially on load
         window.addEventListener('DOMContentLoaded', runCode);
+
+        // Bedah Kode (Smart Code Breakdown) Logic
+        function openCodeBreakdown() {
+            analyzeCurrentCode();
+            const offcanvasEl = new bootstrap.Offcanvas(document.getElementById('codeBreakdownOffcanvas'));
+            offcanvasEl.show();
+        }
+
+        function analyzeCurrentCode() {
+            const code = document.getElementById('codeEditor').value || '';
+            const badgesContainer = document.getElementById('breakdownTechBadges');
+            const analysisContainer = document.getElementById('breakdownAnalysisContent');
+            const suggestionsList = document.getElementById('breakdownSuggestionsList');
+
+            let badges = [];
+            let hasHtml = code.includes('<') && code.includes('>');
+            let hasCss = code.includes('<style') || code.includes('style=') || code.includes('{');
+            let hasJs = code.includes('<script') || code.includes('function') || code.includes('const ') || code.includes('let ') || code.includes('alert(');
+            let hasPhp = code.includes('<' + '?php') || code.includes('<' + '?=');
+            let hasBootstrap = code.toLowerCase().includes('bootstrap');
+            let hasVue = code.toLowerCase().includes('vue');
+
+            if (hasHtml) badges.push('<span class="badge bg-danger-subtle text-danger fw-bold border border-danger border-opacity-25"><i class="fa-brands fa-html5 me-1"></i> HTML5 Semantic</span>');
+            if (hasCss) badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border border-primary border-opacity-25"><i class="fa-brands fa-css3-alt me-1"></i> CSS3 Styling</span>');
+            if (hasJs) badges.push('<span class="badge bg-warning-subtle text-warning fw-bold border border-warning border-opacity-25" style="color: #b45309 !important;"><i class="fa-brands fa-js me-1"></i> JavaScript (DOM)</span>');
+            if (hasPhp) badges.push('<span class="badge bg-info-subtle text-info fw-bold border border-info border-opacity-25"><i class="fa-brands fa-php me-1"></i> PHP Server Engine</span>');
+            if (hasVue) badges.push('<span class="badge bg-success-subtle text-success fw-bold border border-success border-opacity-25"><i class="fa-brands fa-vuejs me-1"></i> Vue.js 3 Reactive</span>');
+            if (hasBootstrap) badges.push('<span class="badge bg-secondary-subtle text-dark fw-bold border"><i class="fa-brands fa-bootstrap me-1 text-primary"></i> Bootstrap 5</span>');
+
+            if (badges.length === 0) {
+                badges.push('<span class="badge bg-secondary text-white">Kode Polos / Teks</span>');
+            }
+            badgesContainer.innerHTML = badges.join(' ');
+
+            let breakdownHtml = '<div class="d-flex flex-column gap-2">';
+            if (hasHtml) {
+                breakdownHtml += '<div><strong>1. Struktur Kerangka (HTML):</strong> Menggunakan elemen dokumen untuk menyusun tata letak halaman dan konten teks/gambar.</div>';
+            }
+            if (hasCss) {
+                breakdownHtml += '<div><strong>2. Presentasi & Desain (CSS):</strong> Mengatur warna, tata letak responsif, margin/padding, dan tipografi agar sedap dipandang.</div>';
+            }
+            if (hasJs) {
+                breakdownHtml += '<div><strong>3. Logika & Interaktivitas (JS):</strong> Menghubungkan aksi klik atau perubahan data agar halaman dinamis tanpa muat ulang.</div>';
+            }
+            if (hasPhp) {
+                breakdownHtml += '<div><strong>4. Logika Server (PHP):</strong> Mengolah data variabel dan logika kondisi sebelum dikirimkan ke peramban.</div>';
+            }
+            breakdownHtml += '</div>';
+            analysisContainer.innerHTML = breakdownHtml;
+
+            let suggestions = [];
+            if (hasCss) {
+                suggestions.push('Coba ubah kode warna (misal <code>#0d2e5c</code> atau <code>#fca311</code>) ke warna favorit Anda lalu klik Jalankan.');
+                suggestions.push('Ubah nilai <code>font-size</code> atau <code>padding</code> untuk melihat perubahan proporsi visual.');
+            } else {
+                suggestions.push('Tambahkan tag <code>&lt;style&gt; body { background: #f0fdf4; } &lt;/style&gt;</code> untuk memberikan sentuhan desain.');
+            }
+
+            if (hasJs) {
+                suggestions.push('Cari event listener atau fungsi, lalu ubah teks pada <code>alert(...)</code> atau manipulasi teks.');
+            } else if (hasHtml) {
+                suggestions.push('Tambahkan tombol baru: <code>&lt;button onclick="alert(\'Halo Skillance!\')"&gt;Klik Saya&lt;/button&gt;</code>.');
+            }
+
+            suggestions.push('Unduh file hasil karya Anda menggunakan tombol <strong>Unduh</strong> di bilah atas untuk disimpan di laptop.');
+            suggestionsList.innerHTML = suggestions.map(s => '<li>' + s + '</li>').join('');
+        }
     </script>
+
+    <!-- OFFCANVAS BEDAH KODE (SMART CODE BREAKDOWN) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="codeBreakdownOffcanvas" aria-labelledby="codeBreakdownLabel" style="width: 440px;">
+        <div class="offcanvas-header bg-navy text-white px-4 py-3" style="background-color: #0d2e5c !important;">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-warning fs-5"></i>
+                <div>
+                    <h6 class="offcanvas-title fw-bold mb-0" id="codeBreakdownLabel">Bedah Kode (Smart Code Breakdown)</h6>
+                    <small class="text-white-50">Analisis struktur sintaks, komponen, & tips eksperimen</small>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-4 bg-light">
+            <!-- RINGKASAN STRUKTUR DOKUMEN -->
+            <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white">
+                <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-layer-group text-primary me-2"></i>Komposisi Teknologi:</h6>
+                <div class="d-flex flex-wrap gap-2" id="breakdownTechBadges">
+                    <!-- Badges injected by JS -->
+                </div>
+            </div>
+
+            <!-- ANALISIS LOGIKA BLOK PER BLOK -->
+            <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white">
+                <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-magnifying-glass-chart text-success me-2"></i>Anatomi & Logika Skrip:</h6>
+                <div class="small" id="breakdownAnalysisContent" style="line-height: 1.6; color: #334155;">
+                    <!-- Breakdown injected by JS -->
+                </div>
+            </div>
+
+            <!-- SARAN EKSPERIMEN BELAJAR -->
+            <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white border-start border-4 border-warning">
+                <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-flask-vial text-warning me-2"></i>Coba Eksperimen Ini:</h6>
+                <ul class="small mb-0 ps-3 text-secondary" id="breakdownSuggestionsList" style="line-height: 1.7;">
+                    <!-- Suggestions injected by JS -->
+                </ul>
+            </div>
+
+            <div class="alert alert-info border-0 rounded-3 small mb-0">
+                <i class="fa-solid fa-circle-info me-1"></i>
+                <strong>Tips Koding:</strong> Modifikasi langsung kode di editor sebelah kiri, lalu klik tombol <strong>Jalankan (Ctrl+Enter)</strong> untuk melihat dampaknya seketika pada layar hasil!
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

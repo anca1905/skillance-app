@@ -397,6 +397,191 @@ $seoBreadcrumbs = [
 
         </div>
 
+        <!-- KALKULATOR KONVERSI JAM PELATIHAN (JP) SKPI KAMPUS & KAS ORMAWA (FEATURE 5) -->
+        <div id="jpCalculatorSection" class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mt-5 bg-white border-top border-4 border-warning">
+            <div class="text-center mb-4">
+                <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill mb-2 text-uppercase shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important; font-size: 0.75rem;">
+                    <i class="fa-solid fa-calculator me-1"></i> SIMULATOR AKADEMIK & ANGGARAN ORMAWA
+                </span>
+                <h3 class="fw-bold text-navy font-heading mb-2">Kalkulator Konversi Jam Pelatihan (JP) SKPI Kampus</h3>
+                <p class="text-muted small mx-auto mb-0" style="max-width: 650px; line-height: 1.7;">
+                    Bantu tim BEM, HIMA, dan Dosen Pembina menghitung bobot <strong>Jam Pelatihan (JP)</strong>, kredit poin SKPI mahasiswa, serta proyeksi penerimaan kas ormawa sebelum mengajukan proposal kegiatan.
+                </p>
+            </div>
+
+            <div class="row g-4 align-items-stretch">
+                <!-- LEFT: CONTROLS & SLIDERS -->
+                <div class="col-lg-6">
+                    <div class="p-4 rounded-4 bg-light border h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- FORMAT EVENT -->
+                            <div class="mb-4">
+                                <label class="form-label small fw-bold text-navy mb-2"><i class="fa-solid fa-calendar-days text-primary me-1"></i> Format & Durasi Pelatihan:</label>
+                                <select id="jpFormatSelect" class="form-select fw-semibold" onchange="calculateJpSimulation()">
+                                    <option value="8" selected>1 Hari Workshop Intensif (8 Jam Pelatihan / JP)</option>
+                                    <option value="16">2 Hari Weekend Bootcamp (16 Jam Pelatihan / JP - 1 SKS)</option>
+                                    <option value="32">4 Hari Modular Masterclass (32 Jam Pelatihan / JP - 2 SKS)</option>
+                                </select>
+                            </div>
+
+                            <!-- SLIDER PESERTA -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label small fw-bold text-navy mb-0"><i class="fa-solid fa-users text-success me-1"></i> Estimasi Target Peserta:</label>
+                                    <span class="badge bg-navy text-white fw-bold px-3 py-1 rounded-pill" id="displayPesertaBadge" style="background-color: #0d2e5c !important;">50 Mahasiswa</span>
+                                </div>
+                                <input type="range" class="form-range" id="inputPesertaRange" min="20" max="200" step="5" value="50" oninput="calculateJpSimulation()">
+                                <div class="d-flex justify-content-between text-muted small" style="font-size: 0.72rem;">
+                                    <span>20 Peserta</span>
+                                    <span>100 Peserta</span>
+                                    <span>200 Peserta</span>
+                                </div>
+                            </div>
+
+                            <!-- SLIDER HARGA TIKET -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label small fw-bold text-navy mb-0"><i class="fa-solid fa-ticket text-warning me-1"></i> Biaya Registrasi per Peserta:</label>
+                                    <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill" id="displayTiketBadge">Rp 50.000</span>
+                                </div>
+                                <input type="range" class="form-range" id="inputTiketRange" min="25000" max="150000" step="5000" value="50000" oninput="calculateJpSimulation()">
+                                <div class="d-flex justify-content-between text-muted small" style="font-size: 0.72rem;">
+                                    <span>Rp 25.000 (Terjangkau)</span>
+                                    <span>Rp 75.000</span>
+                                    <span>Rp 150.000</span>
+                                </div>
+                            </div>
+
+                            <!-- SLIDER PERSENTASE KAS ORMAWA -->
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="form-label small fw-bold text-navy mb-0"><i class="fa-solid fa-hand-holding-dollar text-success me-1"></i> Bagi Hasil Kas Ormawa:</label>
+                                    <span class="badge bg-success text-white fw-bold px-3 py-1 rounded-pill" id="displayShareBadge">50% (Maksimal)</span>
+                                </div>
+                                <input type="range" class="form-range" id="inputShareRange" min="40" max="50" step="5" value="50" oninput="calculateJpSimulation()">
+                                <div class="d-flex justify-content-between text-muted small" style="font-size: 0.72rem;">
+                                    <span>40% Bagi Hasil</span>
+                                    <span>45% Bagi Hasil</span>
+                                    <span>50% Bagi Hasil</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-top mt-3 text-muted small" style="font-size: 0.75rem;">
+                            <i class="fa-solid fa-shield-halved text-primary me-1"></i> Skema kemitraan tanpa risiko finansial (Zero Capital). Skillance Academy menyediakan kurikulum, instruktur, dan sistem verifikasi sertifikat.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: OUTPUT PROJECTIONS -->
+                <div class="col-lg-6">
+                    <div class="p-4 rounded-4 text-white h-100 d-flex flex-column justify-content-between shadow-sm" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%); border-left: 5px solid #fca311 !important;">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-white border-opacity-15">
+                                <span class="small text-warning fw-bold text-uppercase"><i class="fa-solid fa-chart-pie me-1"></i> Hasil Perhitungan Realtime</span>
+                                <span class="badge bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 small">SKPI Ready</span>
+                            </div>
+
+                            <!-- METRIC 1: AKADEMIK & SKPI -->
+                            <div class="bg-white bg-opacity-10 p-3 rounded-3 mb-3 border border-white border-opacity-10">
+                                <div class="row g-2 text-center">
+                                    <div class="col-4 border-end border-white border-opacity-15">
+                                        <div class="text-white-50 small" style="font-size: 0.72rem;">Beban Waktu</div>
+                                        <div class="fs-4 fw-bold text-warning" id="resultJpText">8 JP</div>
+                                        <div class="text-white-50" style="font-size: 0.65rem;">Jam Pelatihan</div>
+                                    </div>
+                                    <div class="col-4 border-end border-white border-opacity-15">
+                                        <div class="text-white-50 small" style="font-size: 0.72rem;">Bobot SKPI</div>
+                                        <div class="fs-4 fw-bold text-success" id="resultSkpiText">10 Poin</div>
+                                        <div class="text-white-50" style="font-size: 0.65rem;">Standar Kampus</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-white-50 small" style="font-size: 0.72rem;">Konversi SKS</div>
+                                        <div class="fs-4 fw-bold text-info" id="resultSksText">0.5 SKS</div>
+                                        <div class="text-white-50" style="font-size: 0.65rem;">Mata Kuliah Penunjang</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- METRIC 2: FINANSIAL KAS ORMAWA -->
+                            <div class="bg-white bg-opacity-10 p-3 rounded-3 mb-3 border border-white border-opacity-10">
+                                <div class="text-white-50 small mb-1" style="font-size: 0.75rem;">Estimasi Dana Masuk Kas Ormawa / UKM:</div>
+                                <div class="display-6 fw-bold text-warning mb-1" id="resultKasText">Rp 1.250.000</div>
+                                <div class="d-flex justify-content-between small text-white-50" style="font-size: 0.72rem;">
+                                    <span>Total Omset Tiket: <strong class="text-white" id="resultOmsetText">Rp 2.500.000</strong></span>
+                                    <span>Bagi Hasil: <strong class="text-success" id="resultSharePercentText">50%</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- LIST BENEFIT -->
+                            <div class="small text-white-50 mb-3" style="font-size: 0.78rem; line-height: 1.6;">
+                                <div class="text-white fw-bold mb-1"><i class="fa-solid fa-gift text-warning me-1"></i> Paket Sudah Termasuk Untuk Tiap Peserta:</div>
+                                <div>&bull; E-Sertifikat Resmi Ber-QR Code Terverifikasi Database</div>
+                                <div>&bull; Modul Koding Lengkap & Full Source Code Studi Kasus</div>
+                                <div>&bull; Instruktur Skillance & Pendampingan Praktik Langsung</div>
+                            </div>
+                        </div>
+
+                        <!-- ACTION WA BUTTON -->
+                        <div>
+                            <button type="button" class="btn btn-warning text-navy btn-lg fw-bold w-100 rounded-pill shadow-sm" onclick="sendJpSimulationToWa()">
+                                <i class="fa-brands fa-whatsapp fs-5 me-1 text-success"></i> Ajukan Simulasi Ini via WhatsApp &raquo;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function calculateJpSimulation() {
+                const jpVal = parseInt(document.getElementById('jpFormatSelect').value);
+                const peserta = parseInt(document.getElementById('inputPesertaRange').value);
+                const tiket = parseInt(document.getElementById('inputTiketRange').value);
+                const sharePct = parseInt(document.getElementById('inputShareRange').value);
+
+                // Update Badges
+                document.getElementById('displayPesertaBadge').textContent = peserta + ' Mahasiswa';
+                document.getElementById('displayTiketBadge').textContent = 'Rp ' + tiket.toLocaleString('id-ID');
+                document.getElementById('displayShareBadge').textContent = sharePct + '%';
+
+                // Calculations
+                let skpiPoints = 10;
+                let sksEquiv = '0.5 SKS';
+                if (jpVal === 16) {
+                    skpiPoints = 20;
+                    sksEquiv = '1.0 SKS';
+                } else if (jpVal === 32) {
+                    skpiPoints = 35;
+                    sksEquiv = '2.0 SKS';
+                }
+
+                const totalOmset = peserta * tiket;
+                const kasOrmawa = Math.round(totalOmset * (sharePct / 100));
+
+                document.getElementById('resultJpText').textContent = jpVal + ' JP';
+                document.getElementById('resultSkpiText').textContent = skpiPoints + ' Poin';
+                document.getElementById('resultSksText').textContent = sksEquiv;
+                document.getElementById('resultKasText').textContent = 'Rp ' + kasOrmawa.toLocaleString('id-ID');
+                document.getElementById('resultOmsetText').textContent = 'Rp ' + totalOmset.toLocaleString('id-ID');
+                document.getElementById('resultSharePercentText').textContent = sharePct + '%';
+            }
+
+            function sendJpSimulationToWa() {
+                const jpVal = document.getElementById('jpFormatSelect').value;
+                const peserta = document.getElementById('inputPesertaRange').value;
+                const tiket = parseInt(document.getElementById('inputTiketRange').value).toLocaleString('id-ID');
+                const kas = document.getElementById('resultKasText').textContent;
+                const skpi = document.getElementById('resultSkpiText').textContent;
+
+                const msg = `Halo Tim Kemitraan Skillance Academy Indonesia,%0A%0ASaya ingin mengajukan simulasi workshop koding untuk kampus kami:%0A- Durasi: ${jpVal} JP (Poin SKPI: ${skpi})%0A- Estimasi Peserta: ${peserta} Mahasiswa%0A- Tiket per Peserta: Rp ${tiket}%0A- Proyeksi Kas Ormawa: ${kas}%0A%0AMohon info ketersediaan jadwal instruktur dan draf proposal resminya. Terima kasih!`;
+                window.open('https://api.whatsapp.com/send?phone=6282291700778&text=' + msg, '_blank');
+            }
+
+            // Run initial calculation
+            document.addEventListener('DOMContentLoaded', calculateJpSimulation);
+        </script>
+
         <!-- SECTION: PROPOSAL & SURAT PENGANTAR RESMI (DOWNLOAD / CETAK) -->
         <div class="p-4 p-md-5 rounded-4 text-white mt-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 65%, #04AA6D 100%);">
             <div class="row align-items-center">

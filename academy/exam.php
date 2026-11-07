@@ -394,6 +394,24 @@ $seoBreadcrumbs = [
         <main class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
+                    <!-- TRYOUT KILAT BANNER (FEATURE 3) -->
+                    <div class="card border-0 rounded-4 shadow-sm mb-4 p-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #0d2e5c 0%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                            <div>
+                                <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold mb-2 small shadow-sm">
+                                    <i class="fa-solid fa-bolt me-1 text-danger"></i> PEMANASAN UJIAN CEPAT
+                                </span>
+                                <h4 class="fw-bold mb-1 text-white">Simulasi Tryout Kilat 5 Soal (2 Menit)</h4>
+                                <p class="text-white-50 small mb-0" style="max-width: 480px; line-height: 1.6;">
+                                    Ingin uji kemampuan awal sebelum ujian 25 butir? Kerjakan 5 soal interaktif kilat dengan pembahasan langsung dan peroleh <strong>+30 XP</strong>!
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-warning text-navy fw-bold px-4 py-3 rounded-pill shadow-sm align-self-start align-self-md-center flex-shrink-0" onclick="openQuickTryoutModal()" style="font-size: 0.95rem;">
+                                <i class="fa-solid fa-play me-1"></i> Mulai Tryout Kilat &raquo;
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="exam-card">
                         <form action="exam.php" method="GET">
                             <input type="hidden" name="action" value="start_exam">
@@ -756,6 +774,329 @@ $seoBreadcrumbs = [
             </div>
         </main>
     <?php endif; ?>
+
+
+    <!-- MODAL SIMULASI TRYOUT KILAT 5 SOAL -->
+    <div class="modal fade" id="quickTryoutModal" tabindex="-1" aria-labelledby="quickTryoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white px-4 py-3" style="background-color: #0d2e5c !important;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bolt text-warning fs-5"></i>
+                        <div>
+                            <h5 class="modal-title fw-bold mb-0" id="quickTryoutModalLabel">Simulasi Tryout Kilat 5 Soal</h5>
+                            <small class="text-white-50">Kuis kilat 2 menit dengan pembahasan instan & reward +30 XP</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-4 bg-light">
+                    <!-- STEP 1: PILIH TRACK -->
+                    <div id="tryoutSetupStep">
+                        <div class="text-center mb-4">
+                            <h5 class="fw-bold text-navy">Pilih Jalur Soal Tryout</h5>
+                            <p class="text-muted small">Pilih salah satu spesialisasi koding yang ingin Anda uji coba:</p>
+                        </div>
+                        <div class="row g-2 mb-4">
+                            <?php foreach ($examQuestionsData as $k => $info): ?>
+                                <div class="col-6 col-md-4">
+                                    <button type="button" class="btn btn-outline-navy w-100 p-3 rounded-3 text-start h-100 track-tryout-btn" onclick="selectTryoutTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', this)">
+                                        <div class="fw-bold text-navy small mb-1"><?= htmlspecialchars($info['title']) ?></div>
+                                        <small class="text-muted" style="font-size: 0.72rem;"><?= count($info['questions']) ?> butir bank soal</small>
+                                    </button>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" id="btnStartTryoutQuiz" class="btn btn-warning text-navy fw-bold px-5 py-2 rounded-pill shadow-sm disabled" onclick="launchTryoutQuiz()">
+                                <i class="fa-solid fa-rocket me-1"></i> Mulai Kuis (2 Menit)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: KUIS INTERAKTIF -->
+                    <div id="tryoutQuizStep" style="display: none;">
+                        <!-- PROGRESS & TIMER BAR -->
+                        <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-white rounded-3 border">
+                            <span class="small fw-bold text-navy" id="tryoutTrackBadge">HTML & CSS Specialist</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold font-monospace" id="tryoutTimer">
+                                    <i class="fa-regular fa-clock me-1"></i> 02:00
+                                </span>
+                                <span class="small text-muted fw-semibold" id="tryoutProgressText">Soal 1 / 5</span>
+                            </div>
+                        </div>
+
+                        <!-- QUESTION CARD -->
+                        <div class="card border-0 shadow-sm rounded-3 p-4 mb-3 bg-white">
+                            <h6 class="fw-bold text-navy mb-3" id="tryoutQuestionText">Memuat pertanyaan...</h6>
+                            <div id="tryoutOptionsList" class="d-flex flex-column gap-2 mb-3">
+                                <!-- Options rendered via JS -->
+                            </div>
+                            <div id="tryoutFeedbackBox" style="display: none;" class="p-3 rounded-3 small mb-2">
+                                <!-- Feedback rendered via JS -->
+                            </div>
+                        </div>
+
+                        <!-- CONTROLS -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="abortTryout()">
+                                Batal
+                            </button>
+                            <button type="button" id="btnNextTryoutQ" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" style="background-color: #0d2e5c !important;" onclick="handleTryoutNext()">
+                                Cek Jawaban &raquo;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: RESULT -->
+                    <div id="tryoutResultStep" style="display: none;" class="text-center py-4">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-trophy text-warning" style="font-size: 3.5rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-navy mb-1">Tryout Kilat Selesai!</h4>
+                        <p class="text-muted small mb-3">Berikut adalah hasil performa kilat Anda:</p>
+                        
+                        <div class="bg-white p-3 rounded-4 shadow-sm mx-auto mb-4 border" style="max-width: 320px;">
+                            <div class="display-5 fw-bold text-navy mb-1" id="tryoutScoreDisplay">4 / 5</div>
+                            <div class="text-success fw-bold small mb-2" id="tryoutScorePercentage">Skor 80% (Bagus!)</div>
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold">
+                                <i class="fa-solid fa-bolt text-danger me-1"></i> +30 XP Belajar Diperoleh
+                            </span>
+                        </div>
+
+                        <p class="small text-muted mb-4" style="max-width: 450px; margin: 0 auto;">
+                            Kemampuan dasar Anda sudah sangat baik! Ambil Ujian Sertifikasi 25 Soal Resmi sekarang untuk menerbitkan sertifikat SKPI bertanda tangan digital.
+                        </p>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">
+                                Tutup
+                            </button>
+                            <button type="button" class="btn btn-success fw-bold rounded-pill px-4 shadow-sm" onclick="proceedToFullExam()">
+                                <i class="fa-solid fa-award me-1"></i> Lanjut Ujian 25 Soal &raquo;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUESTIONS BANK JSON FOR TRYOUT -->
+    <script>
+        const ALL_EXAM_DATA = <?= json_encode($examQuestionsData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+        
+        let selectedTryoutTrackKey = null;
+        let selectedTryoutTrackTitle = '';
+        let tryoutQuestions = [];
+        let currentTryoutIdx = 0;
+        let tryoutScore = 0;
+        let tryoutTimerInterval = null;
+        let tryoutTimeRemaining = 120; // 2 minutes
+        let isQuestionAnswered = false;
+
+        function openQuickTryoutModal() {
+            const modalEl = new bootstrap.Modal(document.getElementById('quickTryoutModal'));
+            modalEl.show();
+            resetTryoutToSetup();
+        }
+
+        function resetTryoutToSetup() {
+            clearInterval(tryoutTimerInterval);
+            document.getElementById('tryoutSetupStep').style.display = 'block';
+            document.getElementById('tryoutQuizStep').style.display = 'none';
+            document.getElementById('tryoutResultStep').style.display = 'none';
+            document.querySelectorAll('.track-tryout-btn').forEach(btn => {
+                btn.classList.remove('btn-navy', 'text-white');
+                btn.classList.add('btn-outline-navy');
+                btn.style.backgroundColor = '';
+            });
+            document.getElementById('btnStartTryoutQuiz').classList.add('disabled');
+            selectedTryoutTrackKey = null;
+        }
+
+        function selectTryoutTrack(key, title, btnEl) {
+            selectedTryoutTrackKey = key;
+            selectedTryoutTrackTitle = title;
+            document.querySelectorAll('.track-tryout-btn').forEach(b => {
+                b.classList.remove('btn-navy', 'text-white');
+                b.classList.add('btn-outline-navy');
+                b.style.backgroundColor = '';
+                b.style.color = '#0d2e5c';
+            });
+            btnEl.classList.remove('btn-outline-navy');
+            btnEl.classList.add('btn-navy', 'text-white');
+            btnEl.style.backgroundColor = '#0d2e5c';
+            btnEl.style.color = '#ffffff';
+            document.getElementById('btnStartTryoutQuiz').classList.remove('disabled');
+        }
+
+        function launchTryoutQuiz() {
+            if (!selectedTryoutTrackKey || !ALL_EXAM_DATA[selectedTryoutTrackKey]) return;
+            const fullBank = ALL_EXAM_DATA[selectedTryoutTrackKey].questions;
+            // Shuffle and pick 5
+            const shuffled = [...fullBank].sort(() => 0.5 - Math.random());
+            tryoutQuestions = shuffled.slice(0, 5);
+            currentTryoutIdx = 0;
+            tryoutScore = 0;
+            tryoutTimeRemaining = 120;
+            isQuestionAnswered = false;
+
+            document.getElementById('tryoutSetupStep').style.display = 'none';
+            document.getElementById('tryoutQuizStep').style.display = 'block';
+            document.getElementById('tryoutTrackBadge').textContent = selectedTryoutTrackTitle;
+
+            renderTryoutQuestion();
+            startTryoutTimer();
+        }
+
+        function startTryoutTimer() {
+            clearInterval(tryoutTimerInterval);
+            updateTimerDisplay();
+            tryoutTimerInterval = setInterval(() => {
+                tryoutTimeRemaining--;
+                updateTimerDisplay();
+                if (tryoutTimeRemaining <= 0) {
+                    clearInterval(tryoutTimerInterval);
+                    finishTryout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(tryoutTimeRemaining / 60);
+            const s = tryoutTimeRemaining % 60;
+            const str = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+            const timerEl = document.getElementById('tryoutTimer');
+            if (timerEl) {
+                timerEl.innerHTML = '<i class="fa-regular fa-clock me-1"></i> ' + str;
+                if (tryoutTimeRemaining <= 30) {
+                    timerEl.className = 'badge bg-danger text-white px-3 py-1 rounded-pill fw-bold font-monospace';
+                }
+            }
+        }
+
+        function renderTryoutQuestion() {
+            isQuestionAnswered = false;
+            const q = tryoutQuestions[currentTryoutIdx];
+            document.getElementById('tryoutProgressText').textContent = 'Soal ' + (currentTryoutIdx + 1) + ' / ' + tryoutQuestions.length;
+            document.getElementById('tryoutQuestionText').textContent = (currentTryoutIdx + 1) + '. ' + q.q;
+
+            const optList = document.getElementById('tryoutOptionsList');
+            optList.innerHTML = '';
+            const feedbackBox = document.getElementById('tryoutFeedbackBox');
+            feedbackBox.style.display = 'none';
+
+            const nextBtn = document.getElementById('btnNextTryoutQ');
+            nextBtn.textContent = 'Cek Jawaban »';
+
+            q.options.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = 'border rounded-3 p-3 d-flex align-items-center gap-2 cursor-pointer bg-white';
+                label.style.cursor = 'pointer';
+                label.innerHTML = `
+                    <input type="radio" name="tryoutRadio" value="${idx}" class="form-check-input mt-0 me-2" style="accent-color: #0d2e5c;">
+                    <span class="small fw-semibold text-dark">${escapeTryoutHtml(opt)}</span>
+                `;
+                label.onclick = () => {
+                    if (!isQuestionAnswered) {
+                        label.querySelector('input').checked = true;
+                    }
+                };
+                optList.appendChild(label);
+            });
+        }
+
+        function handleTryoutNext() {
+            const q = tryoutQuestions[currentTryoutIdx];
+            const nextBtn = document.getElementById('btnNextTryoutQ');
+
+            if (!isQuestionAnswered) {
+                const selected = document.querySelector('input[name="tryoutRadio"]:checked');
+                if (!selected) {
+                    alert('Silakan pilih salah satu jawaban terlebih dahulu!');
+                    return;
+                }
+
+                const userAns = parseInt(selected.value);
+                const isCorrect = (userAns === q.correct);
+                if (isCorrect) tryoutScore++;
+
+                isQuestionAnswered = true;
+                const feedbackBox = document.getElementById('tryoutFeedbackBox');
+                feedbackBox.style.display = 'block';
+
+                if (isCorrect) {
+                    feedbackBox.className = 'p-3 rounded-3 small mb-2 bg-success-subtle text-success border border-success';
+                    feedbackBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> <strong>Jawaban Anda Benar!</strong> Sangat tepat.';
+                } else {
+                    feedbackBox.className = 'p-3 rounded-3 small mb-2 bg-danger-subtle text-danger border border-danger';
+                    feedbackBox.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> <strong>Kurang Tepat.</strong> Jawaban yang benar adalah opsi: <em>' + escapeTryoutHtml(q.options[q.correct]) + '</em>';
+                }
+
+                if (currentTryoutIdx + 1 < tryoutQuestions.length) {
+                    nextBtn.textContent = 'Soal Berikutnya »';
+                } else {
+                    nextBtn.textContent = 'Lihat Hasil Akhir »';
+                }
+            } else {
+                currentTryoutIdx++;
+                if (currentTryoutIdx < tryoutQuestions.length) {
+                    renderTryoutQuestion();
+                } else {
+                    finishTryout();
+                }
+            }
+        }
+
+        function finishTryout() {
+            clearInterval(tryoutTimerInterval);
+            document.getElementById('tryoutQuizStep').style.display = 'none';
+            document.getElementById('tryoutResultStep').style.display = 'block';
+
+            const pct = Math.round((tryoutScore / tryoutQuestions.length) * 100);
+            document.getElementById('tryoutScoreDisplay').textContent = tryoutScore + ' / ' + tryoutQuestions.length;
+            document.getElementById('tryoutScorePercentage').textContent = 'Skor ' + pct + '% ' + (pct >= 80 ? '(Sangat Kompeten!)' : '(Perlu Latihan Tambahan)');
+
+            // Award 30 XP in localStorage
+            try {
+                let curXp = parseInt(localStorage.getItem('skillance_user_xp') || '0');
+                curXp += 30;
+                localStorage.setItem('skillance_user_xp', curXp);
+            } catch(e) {}
+        }
+
+        function proceedToFullExam() {
+            const modalEl = bootstrap.Modal.getInstance(document.getElementById('quickTryoutModal'));
+            if (modalEl) modalEl.hide();
+
+            if (selectedTryoutTrackKey) {
+                const radio = document.querySelector(`input[name="track"][value="${selectedTryoutTrackKey}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    document.querySelectorAll('.option-label').forEach(el => el.classList.remove('selected'));
+                    radio.closest('label').classList.add('selected');
+                }
+            }
+            const formEl = document.querySelector('form[action="exam.php"]');
+            if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function abortTryout() {
+            if (confirm('Yakin ingin membatalkan simulasi tryout kilat?')) {
+                resetTryoutToSetup();
+            }
+        }
+
+        function escapeTryoutHtml(t) {
+            if (!t) return '';
+            return t.replace(/[&<>"']/g, function(m) {
+                return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+            });
+        }
+    </script>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
 

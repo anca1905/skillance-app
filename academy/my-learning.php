@@ -478,6 +478,9 @@ $seoBreadcrumbs = [
                         <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#achievementCardModal">
                             <i class="fa-solid fa-id-card me-1 text-gold"></i> Kartu Prestasi Siswa
                         </button>
+                        <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#atsResumeModal">
+                            <i class="fa-solid fa-file-lines me-1 text-gold"></i> Buat CV ATS Koding
+                        </button>
                         <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-warning fw-bold px-3 py-2 rounded-pill text-navy shadow-sm">
                             <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;
                         </a>
@@ -1078,6 +1081,229 @@ $seoBreadcrumbs = [
             }
         }
     </script>
+
+    <!-- MODAL GENERATOR CV ATS KODING -->
+    <div class="modal fade" id="atsResumeModal" tabindex="-1" aria-labelledby="atsResumeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-navy text-white px-4 py-3" style="background-color: #0d2e5c !important;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-file-invoice text-warning fs-5"></i>
+                        <div>
+                            <h5 class="modal-title fw-bold mb-0" id="atsResumeModalLabel">Generator CV Koding ATS-Friendly (1 Halaman Standar)</h5>
+                            <small class="text-white-50">Format bersih tanpa kolom kompleks, siap lolos filter Applicant Tracking System (ATS)</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-4 bg-light">
+                    <!-- CONTROLS TOOLBAR -->
+                    <div class="card border-0 shadow-sm rounded-3 p-3 mb-4 bg-white">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-5">
+                                <label class="form-label small fw-bold text-navy mb-1"><i class="fa-solid fa-user-tag text-primary me-1"></i> Posisi / Target Karir:</label>
+                                <input type="text" id="atsJobTitleInput" class="form-control form-control-sm fw-semibold" value="Junior Fullstack Web Developer" oninput="updateAtsTitle(this.value)">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-navy mb-1"><i class="fa-solid fa-phone text-success me-1"></i> Nomor WhatsApp / HP:</label>
+                                <input type="text" id="atsPhoneInput" class="form-control form-control-sm fw-semibold" value="+62 822-XXXX-XXXX" oninput="updateAtsPhone(this.value)">
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end gap-2 pt-md-3">
+                                <button type="button" onclick="printAtsCv()" class="btn btn-navy text-white btn-sm rounded-pill px-3 py-2 fw-bold w-100 shadow-sm" style="background-color: #0d2e5c !important;">
+                                    <i class="fa-solid fa-print me-1"></i> Cetak / Simpan PDF
+                                </button>
+                                <button type="button" onclick="copyAtsPlainText()" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-2 fw-bold w-100 shadow-sm" title="Salin teks polos untuk paste ke portal kerja">
+                                    <i class="fa-solid fa-copy me-1"></i> Salin Teks
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATS RESUME SHEET (A4 PREVIEW) -->
+                    <div class="ats-preview-wrapper d-flex justify-content-center">
+                        <div id="atsResumeCanvas" class="ats-resume-sheet shadow bg-white p-5">
+                            
+                            <!-- HEADER -->
+                            <div class="ats-header text-center pb-2 mb-3 border-bottom border-dark border-2">
+                                <h1 class="ats-name fw-bold mb-1 font-monospace" style="letter-spacing: 1.5px; font-size: 1.75rem; color: #000;"><?= strtoupper(htmlspecialchars($userName)) ?></h1>
+                                <div class="ats-role fw-bold text-uppercase mb-1" id="atsRoleDisplay" style="font-size: 0.95rem; color: #222;">JUNIOR FULLSTACK WEB DEVELOPER</div>
+                                <div class="ats-contact small text-muted font-monospace" style="font-size: 0.82rem; color: #333 !important;">
+                                    <span><?= htmlspecialchars($userEmail) ?></span> &bull; 
+                                    <span id="atsPhoneDisplay">+62 822-XXXX-XXXX</span> &bull; 
+                                    <span>Indonesia</span> &bull; 
+                                    <span>academy.skillance.cloud</span>
+                                </div>
+                            </div>
+
+                            <!-- RINGKASAN PROFESIONAL -->
+                            <div class="ats-section mb-3">
+                                <h6 class="ats-sec-title fw-bold text-uppercase border-bottom border-dark pb-1 mb-2 font-monospace" style="font-size: 0.9rem; letter-spacing: 0.5px; color: #000;">Ringkasan Profesional</h6>
+                                <p class="ats-sec-content small mb-0" style="line-height: 1.6; text-align: justify; color: #222; font-size: 0.84rem;">
+                                    Junior Web Developer berdedikasi dengan fondasi kuat dalam rekayasa perangkat lunak web fullstack. Terbiasa membangun antarmuka interaktif responsif (HTML5, CSS3, JavaScript ES6+, Vue.js) dan sistem backend modular berbasis PHP 8 serta basis data relasional MySQL. Telah menyelesaikan kurikulum sertifikasi kompetensi digital di Skillance Academy Indonesia dengan predikat kelulusan terverifikasi SKPI. Siap berkontribusi dalam tim engineering secara lincah, terstruktur, dan berorientasi pada solusi nyata.
+                                </p>
+                            </div>
+
+                            <!-- KEAHLIAN TEKNIS -->
+                            <div class="ats-section mb-3">
+                                <h6 class="ats-sec-title fw-bold text-uppercase border-bottom border-dark pb-1 mb-2 font-monospace" style="font-size: 0.9rem; letter-spacing: 0.5px; color: #000;">Keahlian Teknis (Technical Skills)</h6>
+                                <ul class="ats-list small mb-0 ps-3" style="line-height: 1.6; font-size: 0.84rem; color: #222;">
+                                    <li><strong>Bahasa Pemrograman:</strong> PHP 8+, JavaScript (ES6+), SQL, HTML5, CSS3, Python</li>
+                                    <li><strong>Framework & Pustaka:</strong> Bootstrap 5, Vue.js 3, Tailwind CSS, Composer</li>
+                                    <li><strong>Basis Data & Tools:</strong> MySQL, phpMyAdmin, Git, GitHub, RESTful API, Postman, VS Code</li>
+                                    <li><strong>Kompetensi Tambahan:</strong> Slicing Desain Figma to Code, Optimasi Kueri SQL, Integrasi Gateway QRIS/Midtrans</li>
+                                </ul>
+                            </div>
+
+                            <!-- SERTIFIKASI & SKPI RESMI -->
+                            <div class="ats-section mb-3">
+                                <h6 class="ats-sec-title fw-bold text-uppercase border-bottom border-dark pb-1 mb-2 font-monospace" style="font-size: 0.9rem; letter-spacing: 0.5px; color: #000;">Sertifikasi & Kredensial Resmi (SKPI)</h6>
+                                <div class="ats-cert-list">
+                                    <?php if (!empty($certificates)): ?>
+                                        <?php foreach ($certificates as $c): ?>
+                                            <div class="mb-2">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <strong style="font-size: 0.86rem; color: #000;"><?= htmlspecialchars($c['track_title']) ?> Competence Certificate</strong>
+                                                    <span class="small font-monospace" style="font-size: 0.78rem;"><?= !empty($c['issued_at']) ? date('M Y', strtotime($c['issued_at'])) : date('M Y') ?></span>
+                                                </div>
+                                                <div class="small text-muted font-monospace" style="font-size: 0.78rem;">
+                                                    Penerbit: <strong>Skillance Academy Indonesia</strong> &bull; No. Seri: <strong><?= htmlspecialchars($c['certificate_no']) ?></strong>
+                                                </div>
+                                                <div class="small text-muted" style="font-size: 0.76rem;">
+                                                    Tautan Verifikasi: https://academy.skillance.cloud/verify.php?cert=<?= urlencode($c['certificate_no']) ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class="mb-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <strong style="font-size: 0.86rem; color: #000;">Frontend Web Development Specialist (Standard Curriculum)</strong>
+                                                <span class="small font-monospace" style="font-size: 0.78rem;">Skillance Academy (<?= date('Y') ?>)</span>
+                                            </div>
+                                            <div class="small text-muted" style="font-size: 0.78rem;">
+                                                Status: Modul Pembelajaran Terverifikasi (<?= count($completedModules) ?> Modul Selesai) &bull; SKPI Standar Kampus
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- PROYEK TEKNOLOGI -->
+                            <div class="ats-section mb-3">
+                                <h6 class="ats-sec-title fw-bold text-uppercase border-bottom border-dark pb-1 mb-2 font-monospace" style="font-size: 0.9rem; letter-spacing: 0.5px; color: #000;">Proyek Rekayasa Perangkat Lunak (Key Projects)</h6>
+                                
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong style="font-size: 0.86rem; color: #000;">Sistem Informasi & Portal Layanan Publik Terpadu</strong>
+                                        <span class="small font-monospace" style="font-size: 0.78rem;">PHP, MySQL, Bootstrap</span>
+                                    </div>
+                                    <ul class="ats-list small mb-0 ps-3" style="line-height: 1.5; font-size: 0.82rem; color: #222;">
+                                        <li>Merancang arsitektur MVC sederhana untuk manajemen data warga, pengajuan berkas digital, dan log aktivitas perangkat.</li>
+                                        <li>Mengimplementasikan validasi formulir sisi server dan sanitasi input database guna mencegah celah keamanan SQL Injection.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong style="font-size: 0.86rem; color: #000;">Aplikasi Transaksi Kasir Point-of-Sale (POS) & Inventori</strong>
+                                        <span class="small font-monospace" style="font-size: 0.78rem;">PHP, JavaScript, MySQL</span>
+                                    </div>
+                                    <ul class="ats-list small mb-0 ps-3" style="line-height: 1.5; font-size: 0.82rem; color: #222;">
+                                        <li>Membangun modul kalkulasi kasir interaktif dengan fitur diskon dinamis, scan barcode barang, dan cetak invoice thermal.</li>
+                                        <li>Mengoptimalkan kueri stok barang otomatis dengan transaksi ACID MySQL guna menjaga konsistensi neraca penjualan.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- PENDIDIKAN & PELATIHAN -->
+                            <div class="ats-section">
+                                <h6 class="ats-sec-title fw-bold text-uppercase border-bottom border-dark pb-1 mb-2 font-monospace" style="font-size: 0.9rem; letter-spacing: 0.5px; color: #000;">Pendidikan & Pelatihan Terstruktur</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong style="font-size: 0.86rem; color: #000;">Skillance Academy Indonesia</strong>
+                                    <span class="small font-monospace" style="font-size: 0.78rem;"><?= date('Y') ?></span>
+                                </div>
+                                <div class="small text-muted" style="font-size: 0.8rem;">
+                                    Program Mandiri & Workshop Intensif Pengembangan Aplikasi Web Fullstack & Portofolio Industri.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer bg-white border-top px-4 py-3 d-flex justify-content-between">
+                    <small class="text-muted"><i class="fa-solid fa-circle-check text-success me-1"></i> Format ATS 1-Halaman telah disesuaikan dengan standar industri HR tech modern.</small>
+                    <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .ats-resume-sheet {
+            width: 100%;
+            max-width: 800px;
+            min-height: 1050px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #111827;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #atsResumeCanvas, #atsResumeCanvas * {
+                visibility: visible !important;
+            }
+            #atsResumeCanvas {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 12mm 15mm !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <script>
+        function updateAtsTitle(val) {
+            const roleEl = document.getElementById('atsRoleDisplay');
+            if (roleEl) roleEl.textContent = val.toUpperCase();
+        }
+
+        function updateAtsPhone(val) {
+            const phoneEl = document.getElementById('atsPhoneDisplay');
+            if (phoneEl) phoneEl.textContent = val;
+        }
+
+        function printAtsCv() {
+            window.print();
+        }
+
+        function copyAtsPlainText() {
+            const canvas = document.getElementById('atsResumeCanvas');
+            if (!canvas) return;
+            const text = canvas.innerText;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('CV Koding berhasil disalin ke clipboard dalam format teks polos! Anda dapat langsung menempelkannya (paste) ke formulir pendaftaran kerja atau email.');
+                });
+            } else {
+                prompt('Salin teks CV berikut:', text);
+            }
+        }
+    </script>
+
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>
 </body>

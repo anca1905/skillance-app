@@ -682,7 +682,10 @@ $seoCustomSchemaJson = json_encode([
                     <?php endif; ?>
                 </div>
                 <div class="d-flex align-items-center gap-1 font-resizer-bar">
-                    <span class="small text-muted me-1 d-none d-sm-inline" style="font-size: 0.74rem;">Ukuran Teks:</span>
+                    <button type="button" id="btnAudioNarrate" class="btn btn-sm btn-outline-primary rounded-pill px-2 py-0 d-inline-flex align-items-center gap-1" onclick="toggleAudioNarration()" title="Dengarkan narasi audio materi ini" style="font-size: 0.74rem;">
+                        <i class="fa-solid fa-volume-high" id="audioIcon"></i> <span id="audioText">Dengarkan</span>
+                    </button>
+                    <span class="small text-muted ms-2 me-1 d-none d-sm-inline" style="font-size: 0.74rem;">Ukuran Teks:</span>
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('small')" title="Ukuran Teks Lebih Kecil" style="font-size: 0.74rem;">A-</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('normal')" title="Ukuran Teks Standar" style="font-size: 0.74rem;">Normal</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="adjustLessonFontSize('large')" title="Ukuran Teks Lebih Besar" style="font-size: 0.74rem;">A+</button>
@@ -957,6 +960,70 @@ $seoCustomSchemaJson = json_encode([
             if (savedSize) {
                 adjustLessonFontSize(savedSize);
             }
+        });
+
+        // Audio Narration Logic (Web Speech API)
+        let isNarrating = false;
+        let speechUtterance = null;
+
+        function toggleAudioNarration() {
+            if (!('speechSynthesis' in window)) {
+                alert('Fitur Audio Narasi tidak didukung oleh browser ini. Disarankan menggunakan Google Chrome, Edge, atau Safari.');
+                return;
+            }
+
+            const btn = document.getElementById('btnAudioNarrate');
+            const icon = document.getElementById('audioIcon');
+            const txt = document.getElementById('audioText');
+
+            if (isNarrating) {
+                window.speechSynthesis.cancel();
+                isNarrating = false;
+                if (btn) btn.className = 'btn btn-sm btn-outline-primary rounded-pill px-2 py-0 d-inline-flex align-items-center gap-1';
+                if (icon) icon.className = 'fa-solid fa-volume-high';
+                if (txt) txt.textContent = 'Dengarkan';
+            } else {
+                const article = document.querySelector('.article-body');
+                if (!article) return;
+
+                const clone = article.cloneNode(true);
+                clone.querySelectorAll('pre, code, .btn, script, style, .user-notes-card').forEach(el => el.remove());
+                const cleanText = clone.innerText.trim();
+
+                if (!cleanText) {
+                    alert('Tidak ada teks narasi yang dapat dibacakan.');
+                    return;
+                }
+
+                window.speechSynthesis.cancel();
+                speechUtterance = new SpeechSynthesisUtterance(cleanText);
+                speechUtterance.lang = 'id-ID';
+                speechUtterance.rate = 1.0;
+
+                speechUtterance.onend = () => {
+                    isNarrating = false;
+                    if (btn) btn.className = 'btn btn-sm btn-outline-primary rounded-pill px-2 py-0 d-inline-flex align-items-center gap-1';
+                    if (icon) icon.className = 'fa-solid fa-volume-high';
+                    if (txt) txt.textContent = 'Dengarkan';
+                };
+
+                speechUtterance.onerror = () => {
+                    isNarrating = false;
+                    if (btn) btn.className = 'btn btn-sm btn-outline-primary rounded-pill px-2 py-0 d-inline-flex align-items-center gap-1';
+                    if (icon) icon.className = 'fa-solid fa-volume-high';
+                    if (txt) txt.textContent = 'Dengarkan';
+                };
+
+                window.speechSynthesis.speak(speechUtterance);
+                isNarrating = true;
+                if (btn) btn.className = 'btn btn-sm btn-danger rounded-pill px-2 py-0 d-inline-flex align-items-center gap-1';
+                if (icon) icon.className = 'fa-solid fa-pause';
+                if (txt) txt.textContent = 'Hentikan';
+            }
+        }
+
+        window.addEventListener('beforeunload', () => {
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
         });
 
         // Private Lesson Notes Logic

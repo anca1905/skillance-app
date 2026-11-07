@@ -349,9 +349,9 @@ $seoBreadcrumbs = [
             color: #0d2e5c !important;
         }
         .btn-sample-cert {
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            color: #0f172a !important;
+            background-color: #f1f5f9;
+            border: 1.5px solid #0d2e5c;
+            color: #0d2e5c !important;
             font-size: 0.82rem;
             transition: all 0.2s ease;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
