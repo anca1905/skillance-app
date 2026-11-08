@@ -1110,12 +1110,7 @@ $seoBreadcrumbs = [
         document.getElementById('qrisProductTitle').innerText = title;
         document.getElementById('qrisProductPrice').innerText = price;
 
-        // Reset views
-        document.getElementById('qrisModalBody').classList.remove('d-none');
-        document.getElementById('qrisSuccessBody').classList.add('d-none');
-        const btnVerify = document.getElementById('btnVerifyQris');
-        btnVerify.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Saya Sudah Bayar (Cek Otomatis)';
-        btnVerify.disabled = false;
+
 
         // Official QRIS Image
         document.getElementById('qrisBarcodeImg').src = 'assets/img/qris_official.jpg';
