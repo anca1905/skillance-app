@@ -14,6 +14,20 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Pembersih HTML jika teks ditempel dengan tag mentah
+function sanitizeBlogContent($content) {
+    if (strpos($content, '&lt;') !== false) {
+        $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (strpos($content, '&lt;') !== false) {
+            $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+        $content = preg_replace('/^<pre class="ql-syntax"[^>]*>(.*)<\/pre>$/s', '$1', $content);
+        $content = preg_replace('/^<p>\s*(<[a-z0-9]+)/i', '$1', $content);
+        $content = preg_replace('/(<\/[a-z0-9]+>)\s*<\/p>$/i', '$1', $content);
+    }
+    return trim($content);
+}
+
 // Fitur upload cover blog
 function uploadCover($file) {
     if ($file['error'] === UPLOAD_ERR_OK) {
@@ -51,7 +65,7 @@ if ($method === 'POST') {
         $category = $_POST['category'] ?? '';
         $author = $_POST['author'] ?? $_SESSION['name'] ?? 'Admin';
         $excerpt = $_POST['excerpt'] ?? '';
-        $content = $_POST['content'] ?? '';
+        $content = sanitizeBlogContent($_POST['content'] ?? '');
         $badge_class = $_POST['badge_class'] ?? 'bg-navy-subtle text-navy';
         $date = date('Y-m-d');
         
@@ -79,7 +93,7 @@ if ($method === 'POST') {
         $category = $_POST['category'] ?? '';
         $author = $_POST['author'] ?? '';
         $excerpt = $_POST['excerpt'] ?? '';
-        $content = $_POST['content'] ?? '';
+        $content = sanitizeBlogContent($_POST['content'] ?? '');
         $badge_class = $_POST['badge_class'] ?? 'bg-navy-subtle text-navy';
 
         if (empty($title) || empty($content) || $id === 0) {

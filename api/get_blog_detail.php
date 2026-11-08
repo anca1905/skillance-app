@@ -26,6 +26,12 @@ if ($result->num_rows > 0) {
     ];
     $blog['date'] = $dateObj->format('d') . ' ' . $bulanIndo[(int)$dateObj->format('n')] . ' ' . $dateObj->format('Y');
     
+    // Auto decode HTML entities if saved escaped
+    if (strpos($blog['content'], '&lt;') !== false) {
+        $decoded = html_entity_decode($blog['content'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $blog['content'] = preg_replace('/^<pre class="ql-syntax"[^>]*>(.*)<\/pre>$/s', '$1', $decoded);
+    }
+    
     echo json_encode(["status" => "success", "data" => $blog]);
 } else {
     echo json_encode(["status" => "error", "message" => "Artikel tidak ditemukan."]);

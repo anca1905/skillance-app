@@ -216,7 +216,14 @@
                         document.getElementById('b-author').innerText = res.data.author || 'Tim Skillance';
                         document.getElementById('b-date').innerText = res.data.date;
                         document.getElementById('b-image').src = res.data.image;
-                        document.getElementById('b-content').innerHTML = res.data.content;
+                        
+                        let articleHtml = res.data.content || '';
+                        if (articleHtml.includes('&lt;') && (articleHtml.includes('&lt;p') || articleHtml.includes('&lt;h') || articleHtml.includes('&lt;ul'))) {
+                            const tmp = document.createElement('div');
+                            tmp.innerHTML = articleHtml;
+                            articleHtml = tmp.textContent || tmp.innerText || articleHtml;
+                        }
+                        document.getElementById('b-content').innerHTML = articleHtml;
                         
                         document.title = res.data.title + " | Skillance";
 

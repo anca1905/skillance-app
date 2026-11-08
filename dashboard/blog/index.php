@@ -208,6 +208,16 @@ if (!isset($_SESSION['user_id'])) {
                 }
             });
 
+            // Smart HTML Paste: Otomatis render tag HTML jika user mem-paste kode HTML mentah
+            quill.root.addEventListener('paste', function(e) {
+                const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+                if (text && (text.includes('<p>') || text.includes('<h2>') || text.includes('<h3>') || text.includes('<ul>') || text.includes('<div>'))) {
+                    e.preventDefault();
+                    const range = quill.getSelection() || { index: quill.getLength() };
+                    quill.clipboard.dangerouslyPasteHTML(range.index, text);
+                }
+            });
+
             // Logout Event
             document.getElementById('btnLogout')?.addEventListener('click', function(e) {
                 e.preventDefault();
