@@ -22,12 +22,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
     
     fputcsv($output, ['ID', 'Waktu Masuk', 'Nama Lengkap', 'WhatsApp', 'Email', 'Profesi', 'Produk E-Book / Kit', 'Status']);
     
-    $res = $conn->query("SELECT id, created_at, full_name, whatsapp, email, profession, product_title, status FROM academy_leads ORDER BY id DESC");
+    $res = $conn->query("SELECT id, downloaded_at, full_name, whatsapp, email, profession, product_title, status FROM academy_leads ORDER BY id DESC");
     if ($res) {
         while ($row = $res->fetch_assoc()) {
+            $waktu = !empty($row['downloaded_at']) ? $row['downloaded_at'] : (!empty($row['created_at']) ? $row['created_at'] : '-');
             fputcsv($output, [
                 $row['id'],
-                $row['created_at'],
+                $waktu,
                 $row['full_name'],
                 $row['whatsapp'],
                 $row['email'],
@@ -45,7 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_status') {
     $leadId = intval($_POST['lead_id'] ?? 0);
     $newStatus = trim($_POST['status'] ?? 'active');
-    if ($leadId > 0 && in_array($newStatus, ['active', 'contacted', 'converted'])) {
+    if ($leadId > 0 && in_array($newStatus, ['active', 'new', 'contacted', 'converted'])) {
         $up = $conn->prepare("UPDATE academy_leads SET status = ? WHERE id = ?");
         if ($up) {
             $up->bind_param('si', $newStatus, $leadId);
@@ -284,7 +285,11 @@ $grandTotal = $conn->query("SELECT COUNT(*) as c FROM academy_leads")->fetch_ass
                             ?>
                                 <tr>
                                     <td class="ps-3 text-muted">
-                                        <?= date('d/m/Y H:i', strtotime($l['created_at'])) ?>
+                                        <?php 
+                                            $rawDate = !empty($l['downloaded_at']) ? $l['downloaded_at'] : (!empty($l['created_at']) ? $l['created_at'] : null);
+                                            $formattedDate = $rawDate ? date('d/m/Y H:i', strtotime($rawDate)) : '-';
+                                        ?>
+                                        <span class="small fw-semibold text-dark"><i class="fa-regular fa-clock me-1 text-muted"></i><?= $formattedDate ?></span>
                                     </td>
                                     <td>
                                         <strong class="d-block text-navy"><?= htmlspecialchars($l['full_name']) ?></strong>
@@ -308,7 +313,7 @@ $grandTotal = $conn->query("SELECT COUNT(*) as c FROM academy_leads")->fetch_ass
                                             <input type="hidden" name="action" value="update_status">
                                             <input type="hidden" name="lead_id" value="<?= $l['id'] ?>">
                                             <select name="status" class="form-select form-select-sm py-0 px-2" style="font-size: 0.75rem; width: auto;" onchange="this.form.submit()">
-                                                <option value="active" <?= $l['status'] === 'active' ? 'selected' : '' ?>>🔵 Baru</option>
+                                                <option value="active" <?= in_array($l['status'], ['active', 'new']) ? 'selected' : '' ?>>🔵 Baru</option>
                                                 <option value="contacted" <?= $l['status'] === 'contacted' ? 'selected' : '' ?>>🟡 Sudah Chat</option>
                                                 <option value="converted" <?= $l['status'] === 'converted' ? 'selected' : '' ?>>🟢 Closing</option>
                                             </select>
