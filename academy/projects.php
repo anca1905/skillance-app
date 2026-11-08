@@ -593,7 +593,7 @@ $seoBreadcrumbs = [
 
                                 <!-- INSTANT QRIS CHECKOUT BUTTON -->
                                 <button type="button" class="btn btn-gold w-100 fw-bold py-2 rounded-3 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-2" onclick="openInstantQrisModal('<?= $p['id'] ?>', '<?= htmlspecialchars($p['title'], ENT_QUOTES) ?>', '<?= $p['price_now'] ?>')">
-                                    <i class="fa-solid fa-qrcode text-navy fs-5"></i> <span>Beli Instan (QRIS Otomatis)</span>
+                                    <i class="fa-solid fa-qrcode text-navy fs-5"></i> <span>Bayar via QRIS (Scan & Konfirmasi WA)</span>
                                 </button>
 
                                 <!-- BUTTON SAMPLE BAB 1 GRATIS (PDF) -->
@@ -718,12 +718,13 @@ $seoBreadcrumbs = [
                                     Silakan isi data berikut untuk menerima sampel bab gratis (PDF). Dokumen dapat Anda baca langsung di browser dan di-download/dicetak:
                                 </p>
 
-                                <form onsubmit="handleLeadSubmit(event, '<?= $p['id'] ?>', '<?= addslashes($p['title']) ?>')">
+                                <!-- STEP 1: FORM PENGISIAN DATA & REQUEST VERIFIKASI WA -->
+                                <form id="lead-form-<?= $p['id'] ?>" onsubmit="requestWaOtp(event, '<?= $p['id'] ?>', '<?= addslashes($p['title']) ?>')">
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold text-navy">Nama Lengkap Anda <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-white"><i class="fa-regular fa-user text-muted"></i></span>
-                                            <input type="text" name="full_name" class="form-control" placeholder="Contoh: Muhammad Farhan" required>
+                                            <input type="text" name="full_name" id="name-<?= $p['id'] ?>" class="form-control" placeholder="Contoh: Muhammad Farhan" required>
                                         </div>
                                     </div>
 
@@ -731,22 +732,24 @@ $seoBreadcrumbs = [
                                         <label class="form-label small fw-bold text-navy">Nomor WhatsApp Aktif <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-white"><i class="fa-brands fa-whatsapp text-success"></i></span>
-                                            <input type="tel" name="whatsapp" class="form-control" placeholder="Contoh: 081234567890" required>
+                                            <input type="tel" name="whatsapp" id="wa-<?= $p['id'] ?>" class="form-control" placeholder="Contoh: 081234567890" oninput="liveCheckWa('<?= $p['id'] ?>', this.value)" required>
                                         </div>
-                                        <small class="text-muted" style="font-size: 0.72rem;">Untuk pengiriman link update dan voucher diskon khusus mahasiswa.</small>
+                                        <div id="wa-feedback-<?= $p['id'] ?>" class="mt-1" style="font-size: 0.72rem;">
+                                            <span class="text-muted">Untuk verifikasi akses dan pengiriman link update serta voucher mahasiswa.</span>
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold text-navy">Alamat Email <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text bg-white"><i class="fa-regular fa-envelope text-muted"></i></span>
-                                            <input type="email" name="email" class="form-control" placeholder="nama@email.com" required>
+                                            <input type="email" name="email" id="email-<?= $p['id'] ?>" class="form-control" placeholder="nama@email.com" required>
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label small fw-bold text-navy">Status / Profesi</label>
-                                        <select name="profession" class="form-select small">
+                                        <select name="profession" id="prof-<?= $p['id'] ?>" class="form-select small">
                                             <option value="Mahasiswa Tingkat Akhir (Skripsi)">Mahasiswa Tingkat Akhir (Sedang Skripsi/TA)</option>
                                             <option value="Mahasiswa Baru / Menengah">Mahasiswa Semester 1 - 6</option>
                                             <option value="Freelancer Web Developer">Freelancer Web Developer</option>
@@ -763,9 +766,33 @@ $seoBreadcrumbs = [
                                     </div>
 
                                     <button type="submit" class="btn btn-danger w-100 fw-bold py-2 rounded-pill shadow-sm" id="btn-submit-<?= $p['id'] ?>">
-                                        <i class="fa-solid fa-file-pdf me-1"></i> Buka & Download Sampel Bab 1 (PDF) &raquo;
+                                        <i class="fa-brands fa-whatsapp me-1"></i> Verifikasi WhatsApp & Buka Dokumen Sampel &raquo;
                                     </button>
                                 </form>
+
+                                <!-- STEP 2: VERIFIKASI KODE OTP WHATSAPP -->
+                                <div id="otp-step-<?= $p['id'] ?>" class="d-none text-center py-2">
+                                    <div class="alert alert-success border-0 shadow-xs p-3 text-start mb-3 rounded-3" style="font-size: 0.8rem; background: #ecfdf5; border-left: 4px solid #10b981 !important;">
+                                        <div class="fw-bold text-success mb-1"><i class="fa-solid fa-paper-plane me-1"></i> Kode Verifikasi Telah Dikirim!</div>
+                                        <div class="text-secondary" id="otp-target-msg-<?= $p['id'] ?>">
+                                            Kode 4-digit telah dikirim ke nomor WhatsApp Anda. Masukkan kode di bawah untuk membuka dokumen:
+                                        </div>
+                                        <div id="otp-dev-notice-<?= $p['id'] ?>" class="badge bg-warning text-dark mt-2 p-2 d-none"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold text-navy">Masukkan 4-Digit Kode Verifikasi</label>
+                                        <input type="text" id="otp-code-<?= $p['id'] ?>" class="form-control text-center fs-3 fw-bold font-monospace mx-auto" style="letter-spacing: 8px; max-width: 220px;" maxlength="4" placeholder="••••" required>
+                                    </div>
+
+                                    <button type="button" class="btn btn-success w-100 fw-bold py-2 rounded-pill shadow-sm mb-2" id="btn-verify-otp-<?= $p['id'] ?>" onclick="submitWaOtp('<?= $p['id'] ?>', '<?= addslashes($p['title']) ?>')">
+                                        <i class="fa-solid fa-check-circle me-1"></i> Konfirmasi & Download Sampel Bab 1 &raquo;
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-sm text-muted text-decoration-none" onclick="backToStep1('<?= $p['id'] ?>')">
+                                        <i class="fa-solid fa-arrow-left me-1"></i> Ganti Nomor / Kirim Ulang
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -822,22 +849,135 @@ $seoBreadcrumbs = [
             });
         }
 
-        function handleLeadSubmit(event, productId, productTitle) {
+        function liveCheckWa(productId, value) {
+            const feedback = document.getElementById('wa-feedback-' + productId);
+            if (!feedback) return;
+
+            let clean = value.replace(/[^0-9]/g, '');
+            if (clean.startsWith('0')) clean = '62' + clean.substring(1);
+            else if (clean.startsWith('8')) clean = '62' + clean;
+
+            if (clean.length < 5) {
+                feedback.innerHTML = '<span class="text-muted">Untuk verifikasi akses dan pengiriman link update serta voucher mahasiswa.</span>';
+                return;
+            }
+
+            // Check dummy / repeating patterns
+            const suffix = clean.substring(5);
+            if (/^(.)\1+$/.test(suffix) || /(12345|54321|998877|9988|7766|112233|00000)/.test(suffix)) {
+                feedback.innerHTML = '<span class="text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-1"></i> Terindikasi nomor acak/palsu. Mohon masukkan nomor WhatsApp aktif Anda.</span>';
+                return;
+            }
+
+            const prefix3 = clean.substring(2, 5); // 812, 822, 852
+            const operators = {
+                'Telkomsel': ['811','812','813','821','822','823','851','852','853'],
+                'Indosat Ooredoo': ['814','815','816','855','856','857','858'],
+                'XL Axiata': ['817','818','819','859','877','878'],
+                'Axis': ['831','832','833','838'],
+                'Tri (3)': ['895','896','897','898','899'],
+                'Smartfren': ['881','882','883','884','885','886','887','888','889']
+            };
+
+            let matched = null;
+            for (const [op, prefixes] of Object.entries(operators)) {
+                if (prefixes.includes(prefix3)) {
+                    matched = op;
+                    break;
+                }
+            }
+
+            if (clean.length >= 11 && clean.length <= 14 && matched) {
+                feedback.innerHTML = `<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="fa-solid fa-circle-check me-1"></i> ${matched} - Format nomor valid</span>`;
+            } else if (clean.length > 14) {
+                feedback.innerHTML = '<span class="text-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i> Nomor terlalu panjang (maksimal 13 digit).</span>';
+            } else {
+                feedback.innerHTML = '<span class="text-muted">Masukkan 10-13 digit nomor HP WhatsApp aktif...</span>';
+            }
+        }
+
+        function requestWaOtp(event, productId, productTitle) {
             event.preventDefault();
-            const form = event.target;
             const submitBtn = document.getElementById('btn-submit-' + productId);
             const originalText = submitBtn.innerHTML;
 
+            const name = document.getElementById('name-' + productId).value.trim();
+            const wa = document.getElementById('wa-' + productId).value.trim();
+
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Menyiapkan Dokumen Sampel...';
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Mengirim Kode Verifikasi WA...';
 
-            const formData = new FormData(form);
-            formData.append('product_id', productId);
-            formData.append('product_title', productTitle);
-
-            fetch('api/save_lead.php', {
+            fetch('api/send_wa_otp.php', {
                 method: 'POST',
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    whatsapp: wa,
+                    full_name: name,
+                    product_id: productId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Switch to Step 2
+                    document.getElementById('lead-form-' + productId).classList.add('d-none');
+                    const step2 = document.getElementById('otp-step-' + productId);
+                    step2.classList.remove('d-none');
+
+                    document.getElementById('otp-target-msg-' + productId).innerText = 
+                        `Kode 4-digit telah dikirimkan ke WhatsApp ${data.phone} (${data.operator}).`;
+
+                    const noticeEl = document.getElementById('otp-dev-notice-' + productId);
+                    if (data.simulation_otp) {
+                        noticeEl.classList.remove('d-none');
+                        noticeEl.innerText = `Kode OTP Anda: ${data.simulation_otp} (Otomatis dibuat untuk verifikasi)`;
+                        document.getElementById('otp-code-' + productId).value = data.simulation_otp;
+                    } else {
+                        noticeEl.classList.add('d-none');
+                    }
+                } else {
+                    alert(data.message || 'Gagal mengirim kode verifikasi.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Terjadi kesalahan jaringan saat mengirim kode verifikasi.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            });
+        }
+
+        function submitWaOtp(productId, productTitle) {
+            const btn = document.getElementById('btn-verify-otp-' + productId);
+            const originalText = btn.innerHTML;
+            const otp = document.getElementById('otp-code-' + productId).value.trim();
+            const name = document.getElementById('name-' + productId).value.trim();
+            const wa = document.getElementById('wa-' + productId).value.trim();
+            const email = document.getElementById('email-' + productId).value.trim();
+            const prof = document.getElementById('prof-' + productId).value;
+
+            if (!otp || otp.length < 4) {
+                alert('Mohon masukkan 4-digit kode verifikasi WhatsApp yang telah dikirim.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Memverifikasi Kode...';
+
+            fetch('api/verify_wa_otp.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    whatsapp: wa,
+                    otp: otp,
+                    full_name: name,
+                    email: email,
+                    profession: prof,
+                    product_id: productId,
+                    product_title: productTitle
+                })
             })
             .then(res => res.json())
             .then(data => {
@@ -849,15 +989,25 @@ $seoBreadcrumbs = [
                     }
                     window.location.href = data.preview_url;
                 } else {
-                    alert(data.message || 'Terjadi kendala saat menyiapkan sampel.');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+                    alert(data.message || 'Verifikasi kode gagal.');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
                 }
             })
             .catch(err => {
                 console.error(err);
-                window.location.href = 'sample_preview.php?pid=' + encodeURIComponent(productId);
+                alert('Terjadi gangguan saat memverifikasi kode.');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             });
+        }
+
+        function backToStep1(productId) {
+            document.getElementById('otp-step-' + productId).classList.add('d-none');
+            document.getElementById('lead-form-' + productId).classList.remove('d-none');
+            const submitBtn = document.getElementById('btn-submit-' + productId);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-brands fa-whatsapp me-1"></i> Verifikasi WhatsApp & Buka Dokumen Sampel &raquo;';
         }
     </script>
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
@@ -928,39 +1078,12 @@ $seoBreadcrumbs = [
 
                     <!-- Action Buttons -->
                     <div class="d-grid gap-2">
-                        <a href="#" id="btnFallbackWa" target="_blank" class="btn btn-success fw-bold py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2">
-                            <i class="fa-brands fa-whatsapp fs-5"></i> Kirim Bukti Transfer ke WhatsApp Admin &raquo;
+                        <a href="#" id="btnFallbackWa" target="_blank" class="btn btn-success btn-lg fw-bold py-3 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="fa-brands fa-whatsapp fs-4"></i> Kirim Bukti Transfer ke WhatsApp Admin &raquo;
                         </a>
-                        <button type="button" class="btn btn-sm btn-outline-primary fw-semibold py-2 rounded-pill" id="btnVerifyQris" onclick="simulateVerifyQris()">
-                            <i class="fa-solid fa-bolt me-1"></i> Verifikasi Instan & Akses Download
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SUCCESS SCREEN (DYNAMICALLY SHOWN ON PAYMENT CONFIRM) -->
-                <div class="modal-body p-4 text-center d-none" id="qrisSuccessBody">
-                    <div class="my-3">
-                        <div class="d-inline-flex p-3 rounded-circle bg-success-subtle text-success mb-3" style="width: 70px; height: 70px; align-items: center; justify-content: center;">
-                            <i class="fa-solid fa-check fa-2x"></i>
+                        <div class="alert alert-warning py-2 px-3 small text-dark mb-0 rounded-3 text-start mt-1" style="font-size: 0.78rem;">
+                            <i class="fa-solid fa-circle-exclamation text-warning me-1"></i> <strong>Verifikasi Manual:</strong> Setelah scan & transfer via QRIS, kirimkan tangkapan layar bukti bayar ke WhatsApp Admin di atas. Kami akan langsung mengonfirmasi dan memberikan akses unduh bundle proyek Anda.
                         </div>
-                        <h4 class="fw-bold text-success mb-1">Pembayaran Terverifikasi!</h4>
-                        <p class="text-muted small">Terima kasih telah membeli project kit di Skillance Academy Indonesia.</p>
-                    </div>
-
-                    <div class="bg-light p-3 rounded-3 text-start mb-4 border">
-                        <div class="small text-muted">Akses Materi & Source Code:</div>
-                        <h6 class="fw-bold text-navy mb-2" id="successProductTitle">-</h6>
-                        <span class="badge bg-success mb-2"><i class="fa-solid fa-unlock me-1"></i> Lisensi Full Terbuka</span>
-                        <div class="small text-muted mb-0">Invoice: <strong id="successInvoiceNo">-</strong></div>
-                    </div>
-
-                    <div class="d-grid gap-2 mb-3">
-                        <button type="button" class="btn btn-primary btn-lg fw-bold rounded-pill shadow-sm" onclick="triggerKitDownload()">
-                            <i class="fa-solid fa-cloud-arrow-down me-2"></i> Download Full Source Code & E-Book (ZIP)
-                        </button>
-                        <a href="https://api.whatsapp.com/send?phone=6282291700778&text=Halo%20Skillance,%20saya%20sudah%20membeli%20e-book%20ini%20dan%20berhasil%20terverifikasi" target="_blank" class="btn btn-outline-success fw-bold rounded-pill">
-                            <i class="fa-brands fa-whatsapp me-2"></i> Kirim Bukti ke WhatsApp
-                        </a>
                     </div>
                 </div>
 
@@ -1035,41 +1158,6 @@ Berikut saya lampirkan bukti transfer pembayarannya. Mohon dibantu kirimkan link
         }, 1000);
     }
 
-    function simulateVerifyQris() {
-        const btn = document.getElementById('btnVerifyQris');
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Memverifikasi mutasi perbankan...';
-
-        setTimeout(() => {
-            // Success transition
-            document.getElementById('qrisModalBody').classList.add('d-none');
-            document.getElementById('qrisSuccessBody').classList.remove('d-none');
-            document.getElementById('successProductTitle').innerText = currentKitTitle;
-            document.getElementById('successInvoiceNo').innerText = document.getElementById('qrisInvoiceNo').innerText;
-
-            if (qrisCountdownInterval) clearInterval(qrisCountdownInterval);
-
-            // Confetti effect
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-            }
-        }, 1600);
-    }
-
-    function triggerKitDownload() {
-        alert('Mengunduh bundle paket proyek & e-book panduan ' + currentKitTitle + ' (Format .ZIP)...');
-        // Trigger simulated or real file download
-        const a = document.createElement('a');
-        a.href = 'sample_preview.php?project=' + encodeURIComponent(currentKitId);
-        a.target = '_blank';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
     </script>
 
 </body>

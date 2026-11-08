@@ -296,9 +296,18 @@ $grandTotal = $conn->query("SELECT COUNT(*) as c FROM academy_leads")->fetch_ass
                                         <span class="badge bg-light text-secondary border" style="font-size: 0.65rem;"><?= htmlspecialchars($l['profession']) ?></span>
                                     </td>
                                     <td>
-                                        <a href="<?= $waUrl ?>" target="_blank" class="fw-bold text-success text-decoration-none">
+                                        <a href="<?= $waUrl ?>" target="_blank" class="fw-bold text-success text-decoration-none d-block">
                                             <i class="fa-brands fa-whatsapp me-1"></i> <?= htmlspecialchars($l['whatsapp']) ?>
                                         </a>
+                                        <?php if (!empty($l['is_wa_verified'])): ?>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle d-inline-flex align-items-center gap-1 mt-1" style="font-size: 0.65rem;">
+                                                <i class="fa-solid fa-circle-check"></i> WA Terverifikasi (<?= htmlspecialchars($l['wa_provider'] ?: 'Aktif') ?>)
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle d-inline-flex align-items-center gap-1 mt-1" style="font-size: 0.65rem;">
+                                                <i class="fa-solid fa-triangle-exclamation"></i> Belum Terverifikasi
+                                            </span>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-muted">
                                         <?= htmlspecialchars($l['email'] ?: '-') ?>

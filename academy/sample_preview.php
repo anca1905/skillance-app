@@ -456,24 +456,36 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
 </head>
 <body>
 
+    <?php if (isset($_GET['verified']) && $_GET['verified'] === '1'): ?>
+    <div class="bg-success text-white py-2 px-3 text-center small no-print shadow-sm fw-semibold">
+        <i class="fa-solid fa-circle-check me-1"></i> Nomor WhatsApp Anda Berhasil Terverifikasi! Selamat membaca Kak <strong><?= $leadName ?></strong>. Tautan unduh PDF & paket proyek telah aktif di bawah.
+    </div>
+    <?php endif; ?>
+
     <!-- TOP FLOATING TOOLBAR -->
     <header class="preview-toolbar py-2 px-3 no-print">
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center gap-2">
                 <a href="projects.php" class="btn btn-outline-secondary btn-sm rounded-pill">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Katalog
+                    <i class="fa-solid fa-arrow-left me-1"></i> Katalog
                 </a>
-                <span class="badge bg-danger text-white rounded-pill px-3 py-1 fw-bold small">
-                    <i class="fa-solid fa-file-pdf me-1"></i> FREE PREVIEW BAB 1 (<?= $book['pages_total'] ?>)
+                <span class="badge bg-danger text-white rounded-pill px-2 py-1 fw-bold small">
+                    <i class="fa-solid fa-file-pdf me-1"></i> BAB 1 PREVIEW
                 </span>
             </div>
 
-            <div class="d-flex align-items-center gap-2 ms-auto">
-                <button onclick="window.print()" class="btn btn-outline-navy btn-sm rounded-pill fw-bold px-3" style="border-color: #0d2e5c; color: #0d2e5c;">
-                    <i class="fa-solid fa-print me-1"></i> Cetak / Simpan PDF
-                </button>
-                <a href="<?= $waUrl ?>" target="_blank" class="btn btn-success btn-sm rounded-pill fw-bold px-4 shadow-sm">
-                    <i class="fa-brands fa-whatsapp fs-6 me-1"></i> Beli Full Kit (<?= $book['price_now'] ?>) &raquo;
+            <div class="d-flex flex-wrap align-items-center gap-2 ms-auto">
+                <a href="downloads/sidesa-project-kit/ebook_pdf/SIDESA_Panduan_Lengkap_Full_Edisi_2026.pdf" download class="btn btn-danger btn-sm rounded-pill fw-bold px-3 shadow-xs">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Unduh E-Book Master (PDF)
+                </a>
+                <a href="downloads/sidesa-bundle-master.zip" download class="btn btn-primary btn-sm rounded-pill fw-bold px-3 shadow-xs">
+                    <i class="fa-solid fa-file-zipper me-1"></i> Unduh Project Bundle (.ZIP)
+                </a>
+                <a href="downloads/sidesa-project-kit/source_code/index.php" target="_blank" class="btn btn-outline-dark btn-sm rounded-pill fw-semibold px-3">
+                    <i class="fa-solid fa-play me-1"></i> Demo SIDESA
+                </a>
+                <a href="<?= $waUrl ?>" target="_blank" class="btn btn-success btn-sm rounded-pill fw-bold px-3 shadow-sm">
+                    <i class="fa-brands fa-whatsapp fs-6 me-1"></i> Chat Admin &raquo;
                 </a>
             </div>
         </div>
@@ -601,9 +613,14 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
                             <span class="text-decoration-line-through text-white-50 me-2 small"><?= $book['price_old'] ?></span>
                             <span class="fs-3 fw-bold text-gold font-heading"><?= $book['price_now'] ?></span>
                         </div>
-                        <a href="<?= $waUrl ?>" target="_blank" class="btn btn-warning btn-lg fw-bold px-4 py-2 rounded-pill text-navy shadow w-100">
-                            <i class="fa-brands fa-whatsapp fs-5 me-1"></i> Beli Sekarang via WA &raquo;
-                        </a>
+                        <div class="d-grid gap-2">
+                            <a href="downloads/sidesa-bundle-master.zip" download class="btn btn-warning btn-lg fw-bold px-4 py-2 rounded-pill text-navy shadow">
+                                <i class="fa-solid fa-cloud-arrow-down fs-5 me-1"></i> Unduh Bundle Lengkap (.ZIP) &raquo;
+                            </a>
+                            <a href="<?= $waUrl ?>" target="_blank" class="btn btn-outline-light btn-sm fw-semibold rounded-pill py-2">
+                                <i class="fa-brands fa-whatsapp me-1"></i> Konsultasi Proyek & Tugas Akhir via WA
+                            </a>
+                        </div>
                         <small class="d-block text-white-50 mt-1" style="font-size: 0.72rem;">*Bonus Konsultasi Instalasi Lokal</small>
                     </div>
                 </div>
