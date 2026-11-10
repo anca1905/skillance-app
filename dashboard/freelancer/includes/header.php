@@ -26,7 +26,7 @@ if (!empty($conn) && !empty($userEmail)) {
     // Check if table exists
     $tblCheck = $conn->query("SHOW TABLES LIKE 'academy_certificates'");
     if ($tblCheck && $tblCheck->num_rows > 0) {
-        $cStmt = $conn->prepare("SELECT certificate_no, track, score, issue_date FROM academy_certificates WHERE recipient_email = ? OR user_id = ? ORDER BY id DESC");
+        $cStmt = $conn->prepare("SELECT certificate_no, track_id, track_title, COALESCE(track_title, track_id) AS track, score, issue_date FROM academy_certificates WHERE recipient_email = ? OR user_id = ? ORDER BY id DESC");
         if ($cStmt) {
             $cStmt->bind_param('si', $userEmail, $currentUserId);
             $cStmt->execute();
