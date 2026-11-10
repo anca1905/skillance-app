@@ -28,6 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ==========================================
+    // VISITOR COUNTER & GLOBAL REACH ANALYTICS
+    // ==========================================
+    if (document.querySelector('.visitorTotalViews')) {
+        initVisitorMetrics();
+    }
+
+    // ==========================================
     // 3. FORM KONTAK SIMULASI
     // ==========================================
     const contactForm = document.getElementById("contactForm");
@@ -318,4 +325,43 @@ function loadBlogs() {
             }
         })
         .catch(err => console.error("Gagal load blog"));
+}
+
+// ==========================================
+// REALTIME VISITOR METRICS FETCHER
+// ==========================================
+function initVisitorMetrics() {
+    fetch('api/visitor_counter.php?action=hit')
+        .then(res => res.json())
+        .then(res => {
+            if (res && res.status === 'success' && res.data) {
+                const d = res.data;
+                document.querySelectorAll('.visitorTotalViews').forEach(el => {
+                    el.textContent = Number(d.total_visitors).toLocaleString('id-ID');
+                });
+                document.querySelectorAll('.visitorTodayViews').forEach(el => {
+                    el.textContent = Number(d.today_visitors).toLocaleString('id-ID');
+                });
+                document.querySelectorAll('.visitorOnlineNow').forEach(el => {
+                    el.textContent = d.online_now + ' Online';
+                });
+
+                if (d.countries && d.countries.length > 0) {
+                    let html = '';
+                    d.countries.forEach(c => {
+                        html += `
+                            <span class="badge bg-dark bg-opacity-75 text-white border border-secondary border-opacity-50 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="${c.name}: ${Number(c.count).toLocaleString('id-ID')} views">
+                                <span>${c.flag || '🌐'}</span> <span class="fw-semibold">${c.code}</span> <span class="text-gold fw-bold">${c.percent}%</span>
+                            </span>
+                        `;
+                    });
+                    document.querySelectorAll('.visitorCountryBadges').forEach(el => {
+                        el.innerHTML = html;
+                    });
+                }
+            }
+        })
+        .catch(() => {
+            // Graceful fallback to static cached values
+        });
 }
