@@ -38,8 +38,6 @@ header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
 .page-header-banner h1, .page-header-banner h2, .page-header-banner h3,
 [style*="linear-gradient"] h1, [style*="linear-gradient"] h2, [style*="linear-gradient"] h3,
 [style*="linear-gradient"] h4, [style*="linear-gradient"] h5, [style*="linear-gradient"] h6,
-.card[style*="background"] h1, .card[style*="background"] h2, .card[style*="background"] h3,
-.card[style*="background"] h4, .card[style*="background"] h5, .card[style*="background"] h6,
 .card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4, .card-dark h5, .card-dark h6 {
     color: #ffffff !important;
 }

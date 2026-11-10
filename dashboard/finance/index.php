@@ -223,13 +223,13 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                 </div>
             </div>
             <div class="col-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm" style="border-left: 4px solid #ffc107 !important; background: #fffcf0;">
+                <div class="card h-100 border-0 shadow-sm" style="border-left: 4px solid #f59e0b !important; background: #fffdf5;">
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-warning-emphasis text-uppercase fw-bold" style="font-size: 0.7rem;">PPh Final 0.5% (Tahun Ini)</small>
                             <i class="fa-solid fa-receipt text-warning"></i>
                         </div>
-                        <h4 class="fw-bold text-dark mt-2 mb-0" id="statPph">Rp 0</h4>
+                        <h4 class="fw-bold mt-2 mb-0" id="statPph" style="color: #92400e !important;">Rp 0</h4>
                         <small class="text-muted" style="font-size: 0.72rem;">Pajak SPT Badan Terutang</small>
                     </div>
                 </div>
