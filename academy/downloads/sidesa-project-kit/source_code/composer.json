@@ -1,24 +1,23 @@
 {
     "name": "skillance/sidesa-app",
     "type": "project",
-    "description": "Sistem Informasi Desa Mandiri & Layanan Surat Warga (SIDESA) - Laravel 11 & Vue.js 3",
-    "keywords": ["laravel", "inertia", "vue3", "sidesa", "desa", "surat-online", "apbdes"],
+    "description": "Sistem Informasi Desa Mandiri & Layanan Surat Warga (SIDESA) - Laravel 10 & Blade HTML5",
+    "keywords": ["laravel10", "blade", "bootstrap5", "sidesa", "desa", "surat-online", "apbdes"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "barryvdh/laravel-dompdf": "^3.0",
-        "guzzlehttp/guzzle": "^7.8",
-        "inertiajs/inertia-laravel": "^2.0",
-        "laravel/framework": "^11.0",
-        "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
+        "php": "^8.1|^8.2",
+        "barryvdh/laravel-dompdf": "^2.0",
+        "guzzlehttp/guzzle": "^7.5",
+        "laravel/framework": "^10.0",
+        "laravel/sanctum": "^3.2",
+        "laravel/tinker": "^2.8",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.5"
+        "fakerphp/faker": "^1.21",
+        "mockery/mockery": "^1.5",
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {

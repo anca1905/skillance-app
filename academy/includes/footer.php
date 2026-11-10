@@ -54,6 +54,7 @@
                     <li><a href="verify.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-circle-check text-info me-1"></i> Cek Keaslian Sertifikat</a></li>
                     <li><a href="glossary.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-book-bookmark text-warning me-1"></i> Kamus Istilah Koding</a></li>
                     <li><a href="projects.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-laptop-code text-warning me-1"></i> E-Book & Kit Proyek</a></li>
+                    <li><a href="bootcamp.php" class="text-decoration-none text-navy fw-semibold"><i class="fa-solid fa-fire text-danger me-1"></i> Online Bootcamp (Dicoding Style)</a></li>
                     <li><a href="partner.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-building-columns text-primary me-1"></i> Kemitraan Kampus / BEM</a></li>
                     <li><a href="my-learning.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-chart-line text-success me-1"></i> Dasbor & Leaderboard</a></li>
                     <li><a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-navy fw-semibold"><i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;</a></li>

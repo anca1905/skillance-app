@@ -5,11 +5,11 @@ $projects = [
     [
         'id' => 'sidesa',
         'title' => 'Sistem Informasi Desa Mandiri & Layanan Surat Warga (SIDESA)',
-        'category' => 'laravel-vue',
+        'category' => 'laravel-blade',
         'badge' => 'Paling Populer',
         'badge_color' => 'bg-danger',
-        'desc' => 'Panduan lengkap membangun portal kependudukan desa modern dengan layanan permohonan surat online warga, statistik APBDes interaktif, dan notifikasi WhatsApp.',
-        'tech' => ['Laravel 11', 'Inertia.js', 'Vue.js 3', 'Tailwind CSS', 'MySQL'],
+        'desc' => 'Panduan lengkap membangun portal kependudukan desa modern dengan layanan permohonan surat online warga, statistik APBDes interaktif, dan notifikasi WhatsApp berbasis Laravel 10 dan HTML/Blade standar industri.',
+        'tech' => ['Laravel 10', 'Blade (HTML5)', 'Bootstrap 5', 'JavaScript', 'MySQL'],
         'pages' => '185 Halaman PDF',
         'price_old' => 'Rp 199.000',
         'price_now' => 'Rp 79.000',
@@ -20,11 +20,11 @@ $projects = [
             'Export otomatis surat format resmi PDF dengan Tanda Tangan Digital & QR Code',
             'Visualisasi infografis APBDes dan data demografi kependudukan',
             'Dashboard aparatur desa untuk manajemen data penduduk & arsip',
-            'Desain antarmuka modern, estetik, dan responsif mobile smartphone'
+            'Frontend HTML5 & Bootstrap 5 (Blade Template murni tanpa framework rumit)'
         ],
         'chapters' => [
             'Bab 1: Analisis Kebutuhan Sistem Informasi Desa & Skema Relasi Database (ERD)',
-            'Bab 2: Setup Laravel 11, Inertia.js, Vue.js 3, dan Tailwind CSS',
+            'Bab 2: Setup Laravel 10, Blade Template Engine, dan Desain UI Responsif HTML5 & Bootstrap 5',
             'Bab 3: Pembuatan Sistem Otentikasi Bertingkat (Admin Desa, Petugas, Warga)',
             'Bab 4: Modul Manajemen Kependudukan, Kartu Keluarga, dan Mutasi Warga',
             'Bab 5: Pembangunan Layanan Permohonan Surat Mandiri & Generator PDF',
@@ -503,7 +503,7 @@ $seoBreadcrumbs = [
         <!-- FILTER CHIPS -->
         <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
             <button class="filter-btn active" onclick="filterProjects('all', this)">Semua Kit Proyek</button>
-            <button class="filter-btn" onclick="filterProjects('laravel-vue', this)">Laravel & Vue.js</button>
+            <button class="filter-btn" onclick="filterProjects('laravel-blade', this)">Laravel 10 & Blade</button>
             <button class="filter-btn" onclick="filterProjects('fullstack', this)">Fullstack PHP & MySQL</button>
             <button class="filter-btn" onclick="filterProjects('api-payment', this)">API & Payment Gateway</button>
         </div>

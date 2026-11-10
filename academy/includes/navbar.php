@@ -294,6 +294,11 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="bootcamp.php" class="nav-menu-link <?= $activeNav === 'bootcamp' ? 'active' : '' ?>">
+                        <i class="fa-solid fa-fire small text-warning"></i> Bootcamp <span class="badge bg-gold text-navy fw-bold" style="font-size: 0.65rem; padding: 2px 6px;">Hot</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="exam.php" class="nav-menu-link <?= $activeNav === 'exam' ? 'active' : '' ?>">
                         <i class="fa-solid fa-award small text-muted"></i> Ujian SKPI
                     </a>

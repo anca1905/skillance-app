@@ -23,16 +23,16 @@ $samples = [
     'sidesa-laravel' => [
         'id' => 'sidesa-laravel',
         'title' => 'Sistem Informasi Desa Mandiri & Layanan Surat Warga (SIDESA)',
-        'subtitle' => 'Panduan Komprehensif Membangun Portal Layanan Surat Online Warga, Statistik APBDes Interaktif, dan Notifikasi WhatsApp Berbasis Laravel 11, Inertia.js & Vue.js 3',
+        'subtitle' => 'Panduan Komprehensif Membangun Portal Layanan Surat Online Warga, Statistik APBDes Interaktif, dan Notifikasi WhatsApp Berbasis Laravel 10 dan HTML/Blade Template Engine',
         'edition' => 'Edisi Pertama - Cetakan 2026 (Standar Industri & Skripsi)',
         'author' => 'Tim Perekayasa Perangkat Lunak Skillance Digital Indonesia',
         'pages_total' => '185 Halaman PDF',
         'price_old' => 'Rp 199.000',
         'price_now' => 'Rp 79.000',
-        'tech_stack' => ['Laravel 11', 'Inertia.js', 'Vue.js 3', 'Tailwind CSS', 'MySQL 8', 'Fpdf / DomPDF', 'Fonnte WA Gateway'],
+        'tech_stack' => ['Laravel 10', 'Blade (HTML5)', 'Bootstrap 5', 'JavaScript Native', 'MySQL 8', 'DomPDF', 'Fonnte WA Gateway'],
         'chapters_toc' => [
             ['no' => 1, 'title' => 'Analisis Kebutuhan Sistem Informasi Desa & Skema Relasi Database (ERD)', 'pages' => 'Hal. 1 - 28', 'status' => 'sample'],
-            ['no' => 2, 'title' => 'Setup Laravel 11, Inertia.js, Vue.js 3, dan Tailwind CSS dari Nol', 'pages' => 'Hal. 29 - 52', 'status' => 'full'],
+            ['no' => 2, 'title' => 'Setup Laravel 10, Blade Template Engine, dan Desain UI Responsif HTML5 & Bootstrap 5', 'pages' => 'Hal. 29 - 52', 'status' => 'full'],
             ['no' => 3, 'title' => 'Pembuatan Sistem Otentikasi Bertingkat (Admin Desa, Petugas, dan Warga)', 'pages' => 'Hal. 53 - 74', 'status' => 'full'],
             ['no' => 4, 'title' => 'Modul Manajemen Kependudukan, Kartu Keluarga, dan Mutasi Penduduk', 'pages' => 'Hal. 75 - 104', 'status' => 'full'],
             ['no' => 5, 'title' => 'Pembangunan Layanan Permohonan Surat Mandiri & Otomasi Generator PDF Ber-QR Code', 'pages' => 'Hal. 105 - 132', 'status' => 'full'],
@@ -92,7 +92,7 @@ HTML
             [
                 'title' => '1.3 Perancangan Skema Database Relasional (Entity Relationship Diagram)',
                 'content' => <<<HTML
-<p>Keberhasilan sistem yang tangguh terletak pada rancangan skema database yang ternormalisasi (minimal 3NF). Di bawah ini adalah rancangan tabel inti yang akan kita bangun di Laravel 11:</p>
+<p>Keberhasilan sistem yang tangguh terletak pada rancangan skema database yang ternormalisasi (minimal 3NF). Di bawah ini adalah rancangan tabel inti yang akan kita bangun di Laravel 10:</p>
 <div class="bg-light p-3 rounded-3 border mb-3">
     <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-database text-warning me-1"></i> Struktur Skema Tabel Utama SIDESA:</h6>
     <ol class="small mb-0" style="line-height: 1.8;">
@@ -103,7 +103,7 @@ HTML
         <li><code>apbdes_anggaran</code>: Menyimpan data pos pendapatan dan belanja desa per tahun anggaran beserta persentase realisasi.</li>
     </ol>
 </div>
-<p>Berikut adalah potongan migration resmi Laravel 11 untuk tabel <code>pengajuan_surat</code> yang dilengkapi Foreign Key dan Indexing performa tinggi:</p>
+<p>Berikut adalah potongan migration resmi Laravel 10 untuk tabel <code>pengajuan_surat</code> yang dilengkapi Foreign Key dan Indexing performa tinggi:</p>
 <pre class="bg-dark text-white p-3 rounded-3 small"><code>// database/migrations/2026_01_01_000003_create_pengajuan_surat_table.php
 Schema::create('pengajuan_surat', function (Blueprint \$table) {
     \$table->id();
@@ -127,11 +127,11 @@ HTML
             [
                 'title' => '1.4 Prasyarat Lingkungan Pengembangan (Development Environment)',
                 'content' => <<<HTML
-<p>Sebelum melangkah ke Bab 2 (Instalasi dan Konfigurasi Laravel 11 + Inertia Vue 3), pastikan komputer kerja Anda telah memenuhi spesifikasi berikut:</p>
+<p>Sebelum melangkah ke Bab 2 (Instalasi dan Konfigurasi Laravel 10 + Blade Template HTML5), pastikan komputer kerja Anda telah memenuhi spesifikasi berikut:</p>
 <ul>
     <li><strong>PHP 8.2 atau 8.3+:</strong> Pastikan ekstensi <code>pdo_mysql</code>, <code>mbstring</code>, <code>openssl</code>, <code>gd</code>, dan <code>zip</code> aktif.</li>
     <li><strong>Composer 2.7+:</strong> Manajemen paket dependensi PHP.</li>
-    <li><strong>Node.js 20 LTS & NPM 10+:</strong> Kompilasi aset Vite, Vue 3, dan Tailwind CSS.</li>
+    <li><strong>Laragon / XAMPP / Apache:</strong> Siap dijalankan langsung tanpa kerumitan build NPM karena menggunakan Blade Template HTML5 & Bootstrap 5 murni.</li>
     <li><strong>MySQL 8.0+ atau MariaDB 10.4+:</strong> RDBMS penyimpanan data.</li>
     <li><strong>Code Editor:</strong> Visual Studio Code atau PHPStorm dengan ekstensi Vue - Official (Volar) dan Tailwind CSS IntelliSense.</li>
 </ul>
