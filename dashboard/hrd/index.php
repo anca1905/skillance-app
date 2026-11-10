@@ -4,6 +4,14 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
+if (($_SESSION['user_role'] ?? '') !== 'admin') {
+    if (($_SESSION['user_role'] ?? '') === 'bendahara') {
+        header("Location: ../finance/index.php");
+    } else {
+        header("Location: ../freelancer/index.php");
+    }
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

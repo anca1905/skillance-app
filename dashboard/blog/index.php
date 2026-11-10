@@ -4,6 +4,10 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
+if (in_array(($_SESSION['user_role'] ?? ''), ['freelancer', 'bendahara'])) {
+    header("Location: " . (($_SESSION['user_role'] === 'bendahara') ? "../finance/index.php" : "../freelancer/index.php"));
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

@@ -4,6 +4,10 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
+if (($_SESSION['user_role'] ?? '') === 'freelancer') {
+    header("Location: ../freelancer/index.php");
+    exit();
+}
 
 $currentUserRole = $_SESSION['user_role'] ?? 'admin';
 $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';

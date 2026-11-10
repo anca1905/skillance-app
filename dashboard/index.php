@@ -8,6 +8,10 @@ if (($_SESSION['user_role'] ?? '') === 'freelancer') {
     header("Location: freelancer/index.php");
     exit();
 }
+if (($_SESSION['user_role'] ?? '') === 'bendahara') {
+    header("Location: finance/index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

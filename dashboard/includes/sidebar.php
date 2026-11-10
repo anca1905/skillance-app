@@ -26,58 +26,88 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
 <!-- Mobile Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- Sidebar Admin Navigation -->
+<!-- Sidebar Navigation -->
 <nav class="sidebar shadow-sm" id="sidebar">
-    <div class="px-3 px-md-4 mb-3 d-flex align-items-center justify-content-between">
-        <a href="<?= $dashRoot ?>index.php" class="text-decoration-none d-flex align-items-center gap-2">
-            <i class="fa-solid fa-code text-gold fs-4"></i>
-            <div>
-                <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
-                <small class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">OFFICE SYSTEM</small>
-            </div>
-        </a>
-        <button type="button" class="btn btn-sm btn-light d-md-none rounded-circle sidebar-close-btn" id="btnCloseSidebar" title="Tutup Menu">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-
     <?php if ($currentUserRole === 'bendahara'): ?>
-    <div class="px-3 px-md-4 mb-3">
-        <div class="p-2 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-25 text-center">
-            <span class="badge bg-warning text-dark px-2 py-1 small fw-bold mb-1">
-                <i class="fa-solid fa-coins me-1"></i> Bendahara Keuangan
-            </span>
-            <div class="small text-muted" style="font-size: 0.7rem;">PT Skillance Digital Indonesia</div>
+        <!-- Header Khusus Portal Keuangan (Bendahara) -->
+        <div class="px-3 px-md-4 mb-3 d-flex align-items-center justify-content-between">
+            <a href="<?= $dashRoot ?>finance/index.php" class="text-decoration-none d-flex align-items-center gap-2">
+                <i class="fa-solid fa-coins text-warning fs-3"></i>
+                <div>
+                    <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
+                    <small class="text-success fw-bold" style="font-size: 0.65rem; letter-spacing: 0.8px;">FINANCE & TAX PORTAL</small>
+                </div>
+            </a>
+            <button type="button" class="btn btn-sm btn-light d-md-none rounded-circle sidebar-close-btn" id="btnCloseSidebar" title="Tutup Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
-    </div>
-    <?php endif; ?>
 
-    <ul class="nav flex-column">
-        <?php if ($currentUserRole === 'bendahara'): ?>
+        <div class="px-3 px-md-4 mb-3">
+            <div class="p-2.5 rounded-3 border text-center shadow-sm" style="background: linear-gradient(135deg, #064e3b 0%, #0d2e5c 100%); color: #fff;">
+                <span class="badge bg-gold text-navy px-2 py-1 small fw-bold mb-1">
+                    <i class="fa-solid fa-vault me-1"></i> Bendahara Keuangan PT
+                </span>
+                <div class="small text-white-50" style="font-size: 0.68rem;">PT Skillance Digital Indonesia</div>
+            </div>
+        </div>
+
+        <ul class="nav flex-column">
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>finance/index.php" class="nav-link <?= $activeMenu === 'finance' ? 'active fw-bold text-navy' : 'text-primary fw-bold' ?>">
-                    <i class="fa-solid fa-wallet text-gold"></i> Keuangan & SPT Pajak
+                    <i class="fa-solid fa-wallet text-gold"></i> Buku Kas & SPT Pajak
                 </a>
             </li>
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>project/index.php" class="nav-link <?= $activeMenu === 'project' ? 'active' : '' ?>">
-                    <i class="fa-solid fa-briefcase"></i> Project & Invoice
+                    <i class="fa-solid fa-file-invoice-dollar text-success"></i> Tagihan Klien (Invoice)
                 </a>
             </li>
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>freelance/index.php" class="nav-link <?= $activeMenu === 'freelance' ? 'active fw-bold text-navy' : '' ?>">
-                    <i class="fa-solid fa-handshake"></i> Bursa Freelance
+                    <i class="fa-solid fa-handshake text-info"></i> Payout Freelancer
                 </a>
             </li>
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
-                    <i class="fa-solid fa-user-gear"></i> Profil Saya
+                    <i class="fa-solid fa-user-gear"></i> Profil Saya & Sandi
                 </a>
             </li>
-        <?php else: ?>
+            <li class="nav-item mt-3">
+                <a href="<?= $apiRoot ?>logout.php" class="nav-link text-danger" id="btnLogout" onclick="confirmLogout(event)">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout Sistem
+                </a>
+            </li>
+        </ul>
+
+    <?php else: ?>
+        <!-- Header Khusus Administrator / Direktur Eksekutif -->
+        <div class="px-3 px-md-4 mb-3 d-flex align-items-center justify-content-between">
+            <a href="<?= $dashRoot ?>index.php" class="text-decoration-none d-flex align-items-center gap-2">
+                <i class="fa-solid fa-code text-gold fs-4"></i>
+                <div>
+                    <h5 class="fw-bold text-navy mb-0 ls-2">SKILLANCE</h5>
+                    <small class="text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">EXECUTIVE OFFICE</small>
+                </div>
+            </a>
+            <button type="button" class="btn btn-sm btn-light d-md-none rounded-circle sidebar-close-btn" id="btnCloseSidebar" title="Tutup Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="px-3 px-md-4 mb-3">
+            <div class="p-2 rounded-3 bg-navy text-white text-center shadow-sm">
+                <span class="badge bg-gold text-navy px-2 py-1 small fw-bold mb-1">
+                    <i class="fa-solid fa-crown me-1"></i> Administrator / CEO
+                </span>
+                <div class="small text-white-50" style="font-size: 0.68rem;">Executive Management</div>
+            </div>
+        </div>
+
+        <ul class="nav flex-column">
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>index.php" class="nav-link <?= $activeMenu === 'dashboard' ? 'active' : '' ?>">
-                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                    <i class="fa-solid fa-chart-line"></i> Dashboard Eksekutif
                 </a>
             </li>
             <li class="nav-item">
@@ -87,12 +117,12 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
             </li>
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>project/index.php" class="nav-link <?= $activeMenu === 'project' ? 'active' : '' ?>">
-                    <i class="fa-solid fa-briefcase"></i> Project
+                    <i class="fa-solid fa-briefcase"></i> Project Management
                 </a>
             </li>
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>finance/index.php" class="nav-link <?= $activeMenu === 'finance' ? 'active' : '' ?>">
-                    <i class="fa-solid fa-wallet"></i> Keuangan & SPT
+                    <i class="fa-solid fa-wallet"></i> Keuangan & SPT PT
                 </a>
             </li>
             <li class="nav-item">
@@ -120,19 +150,19 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                     <i class="fa-solid fa-user-gear"></i> Profil Saya
                 </a>
             </li>
-        <?php endif; ?>
 
-        <li class="nav-item mt-3 px-3">
-            <a href="<?= $dashRoot ?>freelancer/index.php" class="btn btn-sm btn-outline-primary w-100 fw-bold" style="font-size: 0.78rem;">
-                <i class="fa-solid fa-eye me-1"></i> Mode Freelancer
-            </a>
-        </li>
-        <li class="nav-item mt-2">
-            <a href="<?= $apiRoot ?>logout.php" class="nav-link text-danger" id="btnLogout" onclick="confirmLogout(event)">
-                <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </a>
-        </li>
-    </ul>
+            <li class="nav-item mt-3 px-3">
+                <a href="<?= $dashRoot ?>freelancer/index.php" class="btn btn-sm btn-outline-primary w-100 fw-bold" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-eye me-1"></i> Preview Mode Freelancer
+                </a>
+            </li>
+            <li class="nav-item mt-2">
+                <a href="<?= $apiRoot ?>logout.php" class="nav-link text-danger" id="btnLogout" onclick="confirmLogout(event)">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+            </li>
+        </ul>
+    <?php endif; ?>
 </nav>
 
 <script>
