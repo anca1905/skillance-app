@@ -13,6 +13,9 @@ function clean_str($conn, $val) {
 }
 
 if ($method === 'GET') {
+    $isArchive = (isset($_GET['archive']) && $_GET['archive'] == '1');
+    $table = $isArchive ? 'finances_legacy_archive' : 'finances';
+
     $year = isset($_GET['year']) ? intval($_GET['year']) : intval(date('Y'));
     if ($year < 2020 || $year > 2035) $year = intval(date('Y'));
 
@@ -21,8 +24,16 @@ if ($method === 'GET') {
     $income = 0;
     $expense = 0;
 
+    // Archive count
+    $archiveCount = 0;
+    $q_arc_chk = $conn->query("SHOW TABLES LIKE 'finances_legacy_archive'");
+    if ($q_arc_chk && $q_arc_chk->num_rows > 0) {
+        $q_arc = $conn->query("SELECT COUNT(*) as c FROM finances_legacy_archive");
+        if ($q_arc) $archiveCount = (int)$q_arc->fetch_assoc()['c'];
+    }
+
     // 1. Overall stats
-    $stats_query = $conn->query("SELECT type, SUM(amount) as total FROM finances GROUP BY type");
+    $stats_query = $conn->query("SELECT type, SUM(amount) as total FROM $table GROUP BY type");
     if ($stats_query) {
         while ($row = $stats_query->fetch_assoc()) {
             if ($row['type'] === 'income') {
@@ -38,7 +49,9 @@ if ($method === 'GET') {
         "income" => $income,
         "expense" => $expense,
         "balance" => $balance,
-        "active_year" => $year
+        "active_year" => $year,
+        "is_archive" => $isArchive,
+        "archive_count" => $archiveCount
     ];
 
     // 2. Monthly SPT Pajak Badan (PP 55 / PPh Final 0.5% & Laba Rugi)
@@ -68,7 +81,7 @@ if ($method === 'GET') {
             type,
             SUM(amount) as total_amt,
             COUNT(id) as cnt
-        FROM finances 
+        FROM $table 
         WHERE YEAR(date) = $year
         GROUP BY MONTH(date), type
     ");
@@ -144,7 +157,7 @@ if ($method === 'GET') {
             type,
             SUM(amount) as total,
             COUNT(id) as cnt
-        FROM finances
+        FROM $table
         GROUP BY unit_name, type
     ");
 
@@ -183,7 +196,7 @@ if ($method === 'GET') {
     $trx_query = $conn->query("
         SELECT id, project_id, type, amount, description, category, date, created_at,
                COALESCE(NULLIF(unit_bisnis, ''), 'Software House') as unit_bisnis
-        FROM finances 
+        FROM $table 
         $whereClause
         ORDER BY date DESC, id DESC 
         LIMIT 100

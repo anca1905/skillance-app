@@ -149,6 +149,9 @@ function loadFinance(year = 2026, unit = '') {
             if (document.getElementById('statPph') && data.spt_summary) {
                 document.getElementById('statPph').innerText = fmt.format(data.spt_summary.yearly_pph_final);
             }
+            if (document.getElementById('archiveCountBadge') && data.stats && data.stats.archive_count !== undefined) {
+                document.getElementById('archiveCountBadge').innerText = data.stats.archive_count;
+            }
 
             // 2. Render Transactions Table
             const container = document.getElementById('trxList');
@@ -314,3 +317,79 @@ function escapeHtml(text) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
+let cachedArchiveList = [];
+
+window.loadArchiveData = function () {
+    const tbody = document.getElementById('archiveTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin me-2"></i>Memuat arsip 42 catatan proyek pra-PT...</td></tr>`;
+
+    fetch('../../api/finance.php?archive=1')
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === 'success' && data.transactions) {
+                cachedArchiveList = data.transactions;
+                renderArchiveRows(cachedArchiveList);
+
+                if (document.getElementById('archiveTotalIncome') && data.stats) {
+                    const fmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+                    document.getElementById('archiveTotalIncome').innerText = fmt.format(data.stats.income);
+                }
+            } else {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-3 text-muted">Tidak ada data arsip ditemukan.</td></tr>`;
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching archive:', err);
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center py-3 text-danger">Gagal memuat arsip transaksi.</td></tr>`;
+        });
+};
+
+function renderArchiveRows(list) {
+    const tbody = document.getElementById('archiveTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-3 text-muted">Tidak ada data yang cocok dengan pencarian.</td></tr>`;
+        return;
+    }
+
+    const fmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+
+    list.forEach(trx => {
+        const isInc = trx.type === 'income';
+        const typeBadge = isInc 
+            ? '<span class="badge bg-success-subtle text-success border border-success-subtle">Masuk</span>' 
+            : '<span class="badge bg-danger-subtle text-danger border border-danger-subtle">Keluar</span>';
+        const amtClass = isInc ? 'text-success' : 'text-danger';
+        const sign = isInc ? '+' : '-';
+
+        tbody.innerHTML += `
+            <tr>
+                <td class="ps-3 text-muted font-monospace">${trx.date}</td>
+                <td>
+                    <span class="fw-semibold text-navy d-block">${escapeHtml(trx.desc)}</span>
+                </td>
+                <td><span class="badge bg-light text-dark border">${escapeHtml(trx.category)}</span></td>
+                <td>${typeBadge}</td>
+                <td class="text-end pe-3 fw-bold ${amtClass}">${sign} ${fmt.format(trx.amount)}</td>
+            </tr>
+        `;
+    });
+}
+
+// Live search in archive
+document.addEventListener('input', function (e) {
+    if (e.target && e.target.id === 'searchArchiveInput') {
+        const q = e.target.value.toLowerCase().trim();
+        const filtered = cachedArchiveList.filter(t => 
+            (t.desc && t.desc.toLowerCase().includes(q)) ||
+            (t.category && t.category.toLowerCase().includes(q)) ||
+            (t.date && t.date.includes(q))
+        );
+        renderArchiveRows(filtered);
+    }
+});

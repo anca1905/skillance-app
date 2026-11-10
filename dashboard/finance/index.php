@@ -164,6 +164,9 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                     </p>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-light btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#archiveModal" onclick="loadArchiveData()">
+                        <i class="fa-solid fa-box-archive me-1 text-gold"></i> Arsip Pra-PT (<span id="archiveCountBadge">42</span>)
+                    </button>
                     <a href="print_spt.php" target="_blank" class="btn btn-warning text-navy btn-sm fw-bold shadow-sm">
                         <i class="fa-solid fa-file-invoice-dollar me-1"></i> Cetak Rekap SPT 1771
                     </a>
@@ -472,6 +475,67 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Arsip Transaksi Lama Pra-PT (Jokian & Historis) -->
+    <div class="modal fade" id="archiveModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-box-archive text-gold fs-5"></i>
+                        <div>
+                            <h6 class="modal-title fw-bold text-white mb-0">Arsip Pembukuan Historis Pra-PT (Projek Jokian)</h6>
+                            <small class="text-white-50" style="font-size: 0.72rem;">Catatan keuangan masa lalu sebelum berbadan hukum resmi PT Skillance Digital Indonesia</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert alert-warning py-2.5 px-3 small d-flex align-items-center justify-content-between mb-3 rounded-3">
+                        <div>
+                            <i class="fa-solid fa-shield-halved text-warning me-2"></i>
+                            <strong>Pemberitahuan Arsip:</strong> Data di bawah ini adalah rekaman transaksi masa lalu (sebelum pendirian PT resmi) yang diarsipkan agar tetap bisa ditinjau untuk referensi proyek. Data ini <strong>tidak</strong> memengaruhi penghitungan SPT Badan PT Skillance yang dimulai dari bulan lalu.
+                        </div>
+                        <span class="badge bg-dark px-2.5 py-1.5 ms-3">42 Catatan Tersimpan</span>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-8">
+                            <input type="text" id="searchArchiveInput" class="form-control form-control-sm" placeholder="Cari nama project, sekolah, instansi, atau keterangan...">
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="small text-muted">Total Omzet Historis: <strong class="text-navy" id="archiveTotalIncome">Rp 0</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="max-height: 450px;">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead class="table-light small sticky-top">
+                                <tr>
+                                    <th class="ps-3" style="width: 100px;">TANGGAL</th>
+                                    <th>KETERANGAN / NAMA PROJEK</th>
+                                    <th style="width: 130px;">KATEGORI</th>
+                                    <th style="width: 90px;">TIPE</th>
+                                    <th class="text-end pe-3" style="width: 130px;">NOMINAL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="archiveTableBody" class="small">
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">
+                                        <i class="fa-solid fa-spinner fa-spin me-2"></i>Memuat data arsip...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light py-2">
+                    <span class="small text-muted me-auto"><i class="fa-solid fa-database me-1"></i> Dump Backup SQL lengkap tersimpan di server & komputer lokal</span>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
