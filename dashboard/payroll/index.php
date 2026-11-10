@@ -153,10 +153,10 @@ $activeMenu = "payroll";
             <i class="fa-solid fa-shield-halved fs-3 text-warning mt-1"></i>
             <div>
                 <h6 class="fw-bold text-warning-emphasis mb-1">
-                    Prinsip Keuangan: Skema Bagi Hasil Per-Proyek (Cashflow Protection)
+                    Prinsip Keuangan: Skema Bagi Hasil Dari Laba Bersih Proyek (Net Profit Sharing)
                 </h6>
                 <p class="small text-muted mb-0" style="line-height: 1.55;">
-                    Karena kondisi kas rintisan saat ini berbasis perputaran proyek (belum gaji bulanan tetap), pembayaran honor programmer, desainer, dan tim teknis menganut sistem <strong>Bagi Hasil Nilai Proyek (Profit Sharing)</strong>. Honor hanya dicairkan setelah pembayaran/termin dari klien masuk ke rekening PT Skillance untuk menjaga kas perusahaan tetap sehat dan tidak defisit.
+                    Perhitungan kompensasi dihitung dari <strong>Laba Bersih Proyek</strong> (Nilai Kontrak Klien dikurangi Biaya Langsung seperti domain, server, atau tool). Dari laba bersih tersebut dibagi: <strong>50% Kas Cadangan PT Skillance</strong>, <strong>40% Programmer / Tim Teknis</strong>, dan <strong>10% Bendahara Keuangan</strong>. Uang biaya langsung tetap diamankan di kas PT untuk menutup biaya operasional riil.
                 </p>
             </div>
         </div>
@@ -294,7 +294,7 @@ $activeMenu = "payroll";
                             
                             <div id="projectInfoBox" class="p-3 mt-2 rounded-3 border bg-light d-none" style="font-size: 0.8rem;">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span class="text-muted">Nilai Kontrak Klien:</span>
+                                    <span class="text-muted">Nilai Kontrak Klien (Bruto):</span>
                                     <span class="fw-bold fs-6 text-navy" id="projPriceDisplay">Rp 0</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -302,29 +302,54 @@ $activeMenu = "payroll";
                                     <span class="badge bg-secondary" id="projPayStatusDisplay">-</span>
                                 </div>
 
-                                <!-- Rincian Skema Bagi Hasil PT Skillance (50% Kas PT, 40% Programmer, 10% Bendahara) -->
+                                <!-- Input Beban Langsung Proyek (Domain, Server, Tool) -->
+                                <div class="p-2 mb-2 rounded border bg-white">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="small text-danger fw-bold mb-0" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-receipt me-1"></i>BIAYA LANGSUNG PROYEK (HPP):
+                                        </label>
+                                        <span class="text-muted small" style="font-size: 0.68rem;">(Domain / Server / Tool)</span>
+                                    </div>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text bg-light text-muted">Rp</span>
+                                        <input type="number" id="projExpensesInput" class="form-control" value="0" min="0" step="1000" placeholder="0">
+                                    </div>
+                                    <small class="text-muted d-block mt-1" style="font-size: 0.68rem;">
+                                        * Uang biaya langsung tetap di Kas PT sebagai reimbursement/cadangan operasional riil.
+                                    </small>
+                                </div>
+
+                                <!-- Laba Bersih Proyek (Net Profit) -->
+                                <div class="d-flex justify-content-between align-items-center py-1.5 px-2.5 mb-2 rounded bg-success-subtle border border-success border-opacity-25">
+                                    <span class="fw-bold text-success" style="font-size: 0.76rem;">
+                                        <i class="fa-solid fa-scale-balanced me-1"></i>LABA BERSIH PROYEK (NET PROFIT):
+                                    </span>
+                                    <span class="fw-bold fs-6 text-success" id="projNetProfitDisplay">Rp 0</span>
+                                </div>
+
+                                <!-- Rincian Skema Bagi Hasil PT Skillance Dari Laba Bersih (50% Kas PT, 40% Programmer, 10% Bendahara) -->
                                 <div class="card p-2.5 border-0 bg-white shadow-sm mb-2 rounded-3">
                                     <div class="d-flex justify-content-between align-items-center mb-1.5 pb-1 border-bottom">
                                         <span class="fw-bold text-navy" style="font-size: 0.76rem;">
-                                            <i class="fa-solid fa-chart-pie text-warning me-1"></i>Simulasi Bagi Hasil Proyek:
+                                            <i class="fa-solid fa-chart-pie text-warning me-1"></i>Bagi Hasil dari Laba Bersih:
                                         </span>
-                                        <span class="badge bg-primary-subtle text-primary fw-bold" style="font-size: 0.65rem;">50% - 40% - 10%</span>
+                                        <span class="badge bg-primary-subtle text-primary fw-bold" style="font-size: 0.65rem;">50% - 40% - 10% (Bersih)</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center py-0.5">
-                                        <span class="text-muted small"><i class="fa-solid fa-building-columns text-navy me-1"></i>Kas PT Skillance (50%):</span>
+                                        <span class="text-muted small"><i class="fa-solid fa-building-columns text-navy me-1"></i>Kas PT Skillance (50% Bersih):</span>
                                         <strong class="text-navy" id="calcKasPt">Rp 0</strong>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center py-0.5">
-                                        <span class="text-muted small"><i class="fa-solid fa-code text-primary me-1"></i>Programmer / Tim Teknis (40%):</span>
+                                        <span class="text-muted small"><i class="fa-solid fa-code text-primary me-1"></i>Programmer / Tim Teknis (40% Bersih):</span>
                                         <strong class="text-primary" id="calcProg">Rp 0</strong>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center py-0.5">
-                                        <span class="text-muted small"><i class="fa-solid fa-vault text-warning me-1"></i>Bendahara Keuangan (10%):</span>
+                                        <span class="text-muted small"><i class="fa-solid fa-vault text-warning me-1"></i>Bendahara Keuangan (10% Bersih):</span>
                                         <strong class="text-warning-emphasis" id="calcBendahara">Rp 0</strong>
                                     </div>
                                 </div>
 
-                                <div class="text-muted small mb-1 fw-bold" style="font-size: 0.72rem;">TERAPKAN FEE KE FORM:</div>
+                                <div class="text-muted small mb-1 fw-bold" style="font-size: 0.72rem;">TERAPKAN FEE BERSIH KE FORM:</div>
                                 <div class="row g-1 mb-1">
                                     <div class="col-6">
                                         <button type="button" class="btn btn-outline-primary btn-sm w-100 py-1.5 fw-bold" onclick="applyRoleShare('Programmer', 0.40)">
@@ -338,13 +363,13 @@ $activeMenu = "payroll";
                                     </div>
                                 </div>
                                 <div class="btn-group w-100 mt-1" role="group">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.50, '50% Eksekutor / 50% Kas PT')">50%</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.35, '35% Programmer / 15% Bendahara')">35%</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.15, '15% Bendahara')">15%</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.30, '30% Fee')">30%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.50, '50% Bersih Eksekutor / 50% Kas PT')">50%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.35, '35% Bersih Programmer / 15% Bendahara')">35%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.15, '15% Bersih Bendahara')">15%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.30, '30% Bersih Fee')">30%</button>
                                 </div>
                                 <div class="text-muted mt-1.5" style="font-size: 0.68rem;" id="shareNote">
-                                    * Klik tombol di atas untuk mengisi tarif honor secara otomatis.
+                                    * Fee dihitung murni dari Laba Bersih (Nilai Kontrak dikurangi Beban Operasional).
                                 </div>
                             </div>
                         </div>

@@ -32,17 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         statusBadge.className = 'badge bg-danger';
                     }
 
-                    // Hitung simulasi pembagian 50% Kas PT, 40% Programmer, 10% Bendahara
-                    const kasPt = Math.round(price * 0.50);
-                    const progShare = Math.round(price * 0.40);
-                    const bendaharaShare = price - kasPt - progShare;
-
-                    const elKas = document.getElementById('calcKasPt');
-                    if (elKas) elKas.innerText = formatRp(kasPt);
-                    const elProg = document.getElementById('calcProg');
-                    if (elProg) elProg.innerText = formatRp(progShare);
-                    const elBendahara = document.getElementById('calcBendahara');
-                    if (elBendahara) elBendahara.innerText = formatRp(bendaharaShare);
+                    // Reset input beban operasional dan hitung laba bersih
+                    document.getElementById('projExpensesInput').value = 0;
+                    recalculateProfitShare();
 
                     // Auto suggest description and unit
                     document.getElementById('pUnit').value = 'Software House';
@@ -77,9 +69,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Handle manual rate and qty changes
+    // Handle manual rate, qty, and project expense changes
     rateInput.addEventListener('input', calculateEstimasi);
     qtyInput.addEventListener('input', calculateEstimasi);
+
+    const expensesInput = document.getElementById('projExpensesInput');
+    if (expensesInput) {
+        expensesInput.addEventListener('input', function () {
+            recalculateProfitShare();
+        });
+    }
 
     // Initial calculation
     calculateEstimasi();
@@ -90,6 +89,33 @@ document.addEventListener("DOMContentLoaded", function () {
         savePayroll();
     });
 });
+
+function recalculateProfitShare() {
+    const projectSelect = document.getElementById('pProject');
+    const projId = parseInt(projectSelect.value) || 0;
+    if (projId <= 0) return;
+
+    const proj = cachedProjects.find(p => parseInt(p.id) === projId);
+    if (!proj) return;
+
+    const price = parseFloat(proj.price) || 0;
+    const directExpenses = parseFloat(document.getElementById('projExpensesInput').value) || 0;
+    const netProfit = Math.max(0, price - directExpenses);
+
+    const elNet = document.getElementById('projNetProfitDisplay');
+    if (elNet) elNet.innerText = formatRp(netProfit);
+
+    const kasPt = Math.round(netProfit * 0.50);
+    const progShare = Math.round(netProfit * 0.40);
+    const bendaharaShare = Math.max(0, netProfit - kasPt - progShare); // 10%
+
+    const elKas = document.getElementById('calcKasPt');
+    if (elKas) elKas.innerText = formatRp(kasPt);
+    const elProg = document.getElementById('calcProg');
+    if (elProg) elProg.innerText = formatRp(progShare);
+    const elBendahara = document.getElementById('calcBendahara');
+    if (elBendahara) elBendahara.innerText = formatRp(bendaharaShare);
+}
 
 function applyRoleShare(role, pct) {
     const projectSelect = document.getElementById('pProject');
@@ -102,7 +128,9 @@ function applyRoleShare(role, pct) {
     }
 
     const price = parseFloat(proj.price) || 0;
-    const shareAmount = Math.round(price * pct);
+    const directExpenses = parseFloat(document.getElementById('projExpensesInput').value) || 0;
+    const netProfit = Math.max(0, price - directExpenses);
+    const shareAmount = Math.round(netProfit * pct);
     const pctNum = Math.round(pct * 100);
 
     // Set role
@@ -115,17 +143,19 @@ function applyRoleShare(role, pct) {
     document.getElementById('pQty').value = 1;
     calculateEstimasi();
 
+    const expenseNote = directExpenses > 0 ? ` (Setelah potong beban ${formatRp(directExpenses)})` : '';
+
     if (role === 'Programmer') {
-        document.getElementById('pDesc').value = `Bagi Hasil Proyek (${pctNum}%): ${proj.name}`;
+        document.getElementById('pDesc').value = `Bagi Hasil Proyek (${pctNum}% Bersih): ${proj.name}${expenseNote}`;
         document.getElementById('shareNote').innerHTML = `
-            <span class="text-primary fw-bold"><i class="fa-solid fa-code me-1"></i>Fee Programmer: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
-            <span class="text-navy fw-semibold">Kas PT Cadangan: ${formatRp(price * 0.50)} (50%)</span>
+            <span class="text-primary fw-bold"><i class="fa-solid fa-code me-1"></i>Fee Programmer: ${formatRp(shareAmount)} (${pctNum}% Bersih)</span> • 
+            <span class="text-navy fw-semibold">Kas PT: ${formatRp(netProfit * 0.50)} (50% Bersih)</span>
         `;
     } else if (role === 'Bendahara') {
-        document.getElementById('pDesc').value = `Fee Penagihan, Invoicing & Pajak (${pctNum}%): ${proj.name}`;
+        document.getElementById('pDesc').value = `Fee Penagihan & Pajak (${pctNum}% Bersih): ${proj.name}${expenseNote}`;
         document.getElementById('shareNote').innerHTML = `
-            <span class="text-warning-emphasis fw-bold"><i class="fa-solid fa-vault me-1"></i>Fee Bendahara: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
-            <span class="text-navy fw-semibold">Kas PT Cadangan: ${formatRp(price * 0.50)} (50%)</span>
+            <span class="text-warning-emphasis fw-bold"><i class="fa-solid fa-vault me-1"></i>Fee Bendahara: ${formatRp(shareAmount)} (${pctNum}% Bersih)</span> • 
+            <span class="text-navy fw-semibold">Kas PT: ${formatRp(netProfit * 0.50)} (50% Bersih)</span>
         `;
         
         // Auto select bendahara in user dropdown if exists
@@ -150,18 +180,21 @@ function applyProjectShare(pct, label) {
     }
 
     const price = parseFloat(proj.price) || 0;
-    const shareAmount = Math.round(price * pct);
-    const kasShare = price - shareAmount;
+    const directExpenses = parseFloat(document.getElementById('projExpensesInput').value) || 0;
+    const netProfit = Math.max(0, price - directExpenses);
+    const shareAmount = Math.round(netProfit * pct);
+    const kasShare = Math.max(0, netProfit - shareAmount);
 
     document.getElementById('pRate').value = shareAmount;
     document.getElementById('pQty').value = 1;
     calculateEstimasi();
 
     const pctNum = Math.round(pct * 100);
-    document.getElementById('pDesc').value = `Bagi Hasil (${pctNum}%): ${proj.name}`;
+    const expenseNote = directExpenses > 0 ? ` (Setelah potong beban ${formatRp(directExpenses)})` : '';
+    document.getElementById('pDesc').value = `Bagi Hasil (${pctNum}% Bersih): ${proj.name}${expenseNote}`;
     document.getElementById('shareNote').innerHTML = `
-        <span class="text-success fw-bold"><i class="fa-solid fa-check me-1"></i>Eksekutor: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
-        <span class="text-navy fw-semibold">Kas PT: ${formatRp(kasShare)} (${100 - pctNum}%)</span>
+        <span class="text-success fw-bold"><i class="fa-solid fa-check me-1"></i>Eksekutor: ${formatRp(shareAmount)} (${pctNum}% Bersih)</span> • 
+        <span class="text-navy fw-semibold">Kas PT: ${formatRp(kasShare)} (Bersih)</span>
     `;
 }
 
