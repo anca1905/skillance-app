@@ -164,8 +164,8 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                     </p>
 
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="#pilihan-kelas" class="btn btn-warning fw-bold px-4 py-3 rounded-pill text-navy shadow-sm d-flex align-items-center gap-2" style="background-color: #fca311 !important;">
-                            <i class="fa-solid fa-graduation-cap fs-5"></i> Pilih Jalur Bootcamp &raquo;
+                        <a href="bootcamp-register.php" class="btn btn-warning fw-bold px-4 py-3 rounded-pill text-navy shadow-sm d-flex align-items-center gap-2" style="background-color: #fca311 !important;">
+                            <i class="fa-solid fa-graduation-cap fs-5"></i> Daftar Bootcamp Sekarang &raquo;
                         </a>
                         <a href="#portal-submission" class="btn btn-outline-light fw-bold px-4 py-3 rounded-pill d-flex align-items-center gap-2">
                             <i class="fa-solid fa-code-commit fs-5 text-warning"></i> Portal Submission Tugas
@@ -298,7 +298,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                                     <div class="fs-4 fw-bold text-navy lh-1">Rp 149.000</div>
                                     <small class="text-success fw-semibold"><i class="fa-solid fa-infinity me-1"></i>Akses Selamanya</small>
                                 </div>
-                                <a href="https://wa.me/6282291700778?text=Halo%20Admin%20Skillance,%20saya%20ingin%20daftar%20Online%20Bootcamp%20Fullstack%20Laravel%2010%20(Akses%20Selamanya)." target="_blank" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
+                                <a href="bootcamp-register.php?path=laravel10" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
                                     Daftar Kelas &raquo;
                                 </a>
                             </div>
@@ -344,7 +344,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                                     <div class="fs-4 fw-bold text-navy lh-1">Rp 179.000</div>
                                     <small class="text-success fw-semibold"><i class="fa-solid fa-infinity me-1"></i>Akses Selamanya</small>
                                 </div>
-                                <a href="https://wa.me/6282291700778?text=Halo%20Admin%20Skillance,%20saya%20ingin%20daftar%20Online%20Bootcamp%20Flutter%20Mobile%20(Akses%20Selamanya)." target="_blank" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
+                                <a href="bootcamp-register.php?path=flutter" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
                                     Daftar Kelas &raquo;
                                 </a>
                             </div>
@@ -390,7 +390,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                                     <div class="fs-4 fw-bold text-navy lh-1">Rp 99.000</div>
                                     <small class="text-success fw-semibold"><i class="fa-solid fa-infinity me-1"></i>Akses Selamanya</small>
                                 </div>
-                                <a href="https://wa.me/6282291700778?text=Halo%20Admin%20Skillance,%20saya%20ingin%20daftar%20Online%20Bootcamp%20Frontend%20JavaScript%20(Akses%20Selamanya)." target="_blank" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
+                                <a href="bootcamp-register.php?path=frontend" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
                                     Daftar Kelas &raquo;
                                 </a>
                             </div>
@@ -436,7 +436,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                                     <div class="fs-4 fw-bold text-navy lh-1">Rp 149.000</div>
                                     <small class="text-success fw-semibold"><i class="fa-solid fa-infinity me-1"></i>Akses Selamanya</small>
                                 </div>
-                                <a href="https://wa.me/6282291700778?text=Halo%20Admin%20Skillance,%20saya%20ingin%20daftar%20Online%20Bootcamp%20Backend%20Cloud%20(Akses%20Selamanya)." target="_blank" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
+                                <a href="bootcamp-register.php?path=backend" class="btn btn-warning fw-bold px-4 py-2.5 rounded-pill text-navy shadow-sm">
                                     Daftar Kelas &raquo;
                                 </a>
                             </div>

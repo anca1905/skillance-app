@@ -1082,7 +1082,21 @@ $seoBreadcrumbs = [
                             <i class="fa-brands fa-whatsapp fs-4"></i> Kirim Bukti Transfer ke WhatsApp Admin &raquo;
                         </a>
                         <div class="alert alert-warning py-2 px-3 small text-dark mb-0 rounded-3 text-start mt-1" style="font-size: 0.78rem;">
-                            <i class="fa-solid fa-circle-exclamation text-warning me-1"></i> <strong>Verifikasi Manual:</strong> Setelah scan & transfer via QRIS, kirimkan tangkapan layar bukti bayar ke WhatsApp Admin di atas. Kami akan langsung mengonfirmasi dan memberikan akses unduh bundle proyek Anda.
+                            <i class="fa-solid fa-circle-exclamation text-warning me-1"></i> <strong>Verifikasi Pembayaran:</strong> Setelah scan & transfer via QRIS, kirimkan tangkapan layar bukti bayar ke WhatsApp Admin di atas untuk validasi resmi.
+                        </div>
+                    </div>
+
+                    <!-- PILIHAN AKSES SETELAH PEMBAYARAN -->
+                    <div class="mt-3 pt-3 border-top text-start">
+                        <div class="small fw-bold text-navy mb-2"><i class="fa-solid fa-box-archive text-primary me-1"></i> Pilihan Pengambilan File Setelah Terverifikasi:</div>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="downloads/sidesa-bundle-master.zip" download="sidesa-bundle-master.zip" class="btn btn-outline-primary fw-bold py-2.5 rounded-3 d-flex align-items-center justify-content-center gap-2">
+                                <i class="fa-solid fa-file-zipper fs-5 text-primary"></i>
+                                <span>Opsi 1: Download File ZIP Langsung (Full Source Code & E-Book)</span>
+                            </a>
+                            <small class="text-muted" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-circle-check text-success me-1"></i> Akses seumur hidup &bull; Berisi Handbook PDF 185 Hal, Source Code Laravel 10 Blade, dan Database SQL.
+                            </small>
                         </div>
                     </div>
                 </div>
