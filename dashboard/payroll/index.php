@@ -18,14 +18,81 @@ $activeMenu = "payroll";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $pageTitle ?> | PT Skillance Digital Indonesia</title>
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <style>
         :root {
             --navy: #0d2e5c;
             --gold: #f59e0b;
         }
+
+        body {
+            background-color: #f4f6f9;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 20px;
+            z-index: 1000;
+            transition: 0.3s;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 24px 30px;
+            transition: 0.3s;
+            min-height: 100vh;
+        }
+
+        .nav-link {
+            color: #4b5563;
+            padding: 12px 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: var(--navy) !important;
+            border-right: 3px solid var(--navy);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -260px;
+            }
+
+            .sidebar.active {
+                margin-left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px 12px;
+            }
+        }
+
         .text-navy { color: var(--navy) !important; }
         .bg-navy { background-color: var(--navy) !important; }
         .border-navy { border-color: var(--navy) !important; }
@@ -51,7 +118,12 @@ $activeMenu = "payroll";
     <!-- Sidebar Dynamic (Admin & Bendahara) -->
     <?php include __DIR__ . '/../includes/sidebar.php'; ?>
 
-    <div class="main-content p-3 p-md-4">
+    <div class="main-content">
+        <!-- Topbar Mobile -->
+        <div class="d-flex justify-content-between align-items-center mb-3 d-md-none">
+            <button class="btn btn-navy btn-sm sidebar-toggle-btn" id="sidebarToggle" onclick="window.toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <span class="fw-bold text-navy">Penggajian & Bagi Hasil</span>
+        </div>
         <!-- Header -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
             <div>
