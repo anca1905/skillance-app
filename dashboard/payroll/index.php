@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../../config/config.php';
 
 // Cek hak akses: hanya admin dan bendahara yang boleh mengakses halaman ini
-$currentUserRole = $_SESSION['role'] ?? '';
+$currentUserRole = $_SESSION['user_role'] ?? $_SESSION['role'] ?? '';
 if (!isset($_SESSION['user_id']) || !in_array($currentUserRole, ['admin', 'bendahara'])) {
     header("Location: ../finance/index.php");
     exit();

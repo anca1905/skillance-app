@@ -126,6 +126,11 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 </a>
             </li>
             <li class="nav-item">
+                <a href="<?= $dashRoot ?>payroll/index.php" class="nav-link <?= $activeMenu === 'payroll' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-money-check-dollar text-info"></i> Penggajian & Honor Tim
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="<?= $dashRoot ?>team/index.php" class="nav-link <?= $activeMenu === 'team' ? 'active' : '' ?>">
                     <i class="fa-solid fa-people-group"></i> Manajemen Tim
                 </a>

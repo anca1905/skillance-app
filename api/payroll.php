@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$userRole = $_SESSION['role'] ?? '';
+$userRole = $_SESSION['user_role'] ?? $_SESSION['role'] ?? '';
 if (!in_array($userRole, ['admin', 'bendahara'])) {
     echo json_encode(['status' => 'error', 'message' => 'Akses ditolak: Hanya Admin dan Bendahara yang berhak mengakses sistem payroll.']);
     exit();

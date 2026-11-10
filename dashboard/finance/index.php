@@ -171,6 +171,9 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                     <button class="btn btn-outline-light btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#archiveModal" onclick="loadArchiveData()">
                         <i class="fa-solid fa-box-archive me-1 text-gold"></i> Arsip Pra-PT (<span id="archiveCountBadge">42</span>)
                     </button>
+                    <a href="../payroll/index.php" class="btn btn-outline-warning text-white btn-sm shadow-sm">
+                        <i class="fa-solid fa-money-check-dollar me-1 text-gold"></i> Penggajian & Honor Tim
+                    </a>
                     <a href="print_spt.php" target="_blank" class="btn btn-warning text-navy btn-sm fw-bold shadow-sm">
                         <i class="fa-solid fa-file-invoice-dollar me-1"></i> Cetak Rekap SPT 1771
                     </a>
