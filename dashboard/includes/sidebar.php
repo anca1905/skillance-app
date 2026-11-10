@@ -64,8 +64,8 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= $dashRoot ?>freelance/index.php" class="nav-link <?= $activeMenu === 'freelance' ? 'active fw-bold text-navy' : '' ?>">
-                    <i class="fa-solid fa-handshake text-info"></i> Payout Freelancer
+                <a href="<?= $dashRoot ?>payroll/index.php" class="nav-link <?= $activeMenu === 'payroll' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-money-check-dollar text-info"></i> Penggajian & Honor Tim
                 </a>
             </li>
             <li class="nav-item">

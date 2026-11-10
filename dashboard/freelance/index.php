@@ -6,6 +6,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $userRole = $_SESSION['user_role'] ?? '';
+if ($userRole === 'bendahara') {
+    header("Location: ../finance/index.php");
+    exit();
+}
 if ($userRole !== 'admin' && $userRole !== 'client' && $userRole !== 'staff') {
     header("Location: ../freelancer/index.php");
     exit();

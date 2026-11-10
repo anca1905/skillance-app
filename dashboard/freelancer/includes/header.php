@@ -7,6 +7,10 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
+if (($_SESSION['user_role'] ?? '') === 'bendahara') {
+    header("Location: ../finance/index.php");
+    exit();
+}
 
 require_once __DIR__ . '/../../../config/config.php';
 
