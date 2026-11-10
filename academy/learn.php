@@ -91,6 +91,7 @@ $seoCustomSchemaJson = json_encode([
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 
     <style>
         :root {
@@ -470,16 +471,27 @@ $seoCustomSchemaJson = json_encode([
             margin-bottom: 12px;
         }
         .skillance-code-wrapper {
-            background-color: #ffffff;
+            background-color: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 16px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             line-height: 1.6;
             margin-bottom: 15px;
             overflow-x: auto;
             color: #0f172a;
+        }
+        .skillance-code-wrapper pre {
+            background: transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+        }
+        .skillance-code-wrapper code {
+            font-family: 'Fira Code', monospace !important;
+            background: transparent !important;
+            text-shadow: none !important;
         }
         .btn-tryit {
             background-color: var(--w3-green);
@@ -720,12 +732,29 @@ $seoCustomSchemaJson = json_encode([
 
             <!-- Skillance Interactive Code Example -->
             <?php if (!empty($currentTopic['example_code'])): ?>
+                <?php
+                    $prismLangMap = [
+                        'html' => 'html',
+                        'css' => 'css',
+                        'javascript' => 'javascript',
+                        'js' => 'javascript',
+                        'php' => 'php',
+                        'sql' => 'sql',
+                        'python' => 'python',
+                        'java' => 'java',
+                        'cpp' => 'cpp',
+                        'flutter' => 'dart',
+                        'vue' => 'html',
+                        'jquery' => 'javascript',
+                    ];
+                    $codeLangClass = $prismLangMap[$currentCourse] ?? 'html';
+                ?>
                 <div class="skillance-code-box">
                     <div class="skillance-code-header">
                         <i class="fa-solid fa-code text-success me-2"></i><?= htmlspecialchars($currentTopic['example_title']) ?>:
                     </div>
                     <div class="skillance-code-wrapper">
-                        <pre class="m-0"><code><?= htmlspecialchars($currentTopic['example_code']) ?></code></pre>
+                        <pre class="m-0"><code class="language-<?= $codeLangClass ?>"><?= htmlspecialchars($currentTopic['example_code']) ?></code></pre>
                     </div>
                     <a href="tryit.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($currentTopicKey) ?>" target="_blank" class="btn-tryit">
                         <i class="fa-solid fa-bolt"></i> Coba Sendiri (Try it Yourself) &raquo;
@@ -1224,6 +1253,8 @@ $seoCustomSchemaJson = json_encode([
             }
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 <?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
 <script src="assets/js/spotlight.js"></script>
 </body>

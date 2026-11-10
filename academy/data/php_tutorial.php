@@ -1,8 +1,7 @@
 <?php
 /**
  * Silabus Lengkap Tutorial PHP & MySQL - Skillance Academy Indonesia
- * Skillance Academy Indonesia
- * Terbagi ke dalam 10 Kategori Utama dengan 117 Topik Lengkap
+ * Semua Materi & Contoh Kode Menggunakan Sintaks Murni PHP 8.2 & Modern Best Practices
  */
 
 return json_decode(<<<'JSON_DATA'
@@ -14,7 +13,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Selamat Datang di Tutorial PHP Skillance Academy. PHP adalah bahasa pemrograman server-side paling banyak digunakan di dunia.",
         "content": "<p class=\"lead\">Selamat datang di <strong>Tutorial PHP & MySQL Lengkap</strong> Skillance Academy resmi dari Skillance Academy Indonesia. PHP (Hypertext Preprocessor) adalah bahasa scripting sisi server yang menjadi tulang punggung lebih dari 75% website di internet, termasuk WordPress, Wikipedia, dan Facebook.</p>\n    <div class=\"card bg-light border-0 p-3 mb-4 rounded-3\">\n        <h6 class=\"fw-bold text-navy mb-2\"><i class=\"fa-brands fa-php text-primary me-2\"></i>Keunggulan Belajar PHP di Skillance Academy:</h6>\n        <ul class=\"mb-0 ps-3 small\" style=\"line-height: 1.8;\">\n            <li><strong>Mudah Dipelajari</strong>: Sintaks ramah pemula namun sangat bertenaga untuk aplikasi skala enterprise.</li>\n            <li><strong>Integrasi Database Alami</strong>: Dukungan bawaan terbaik untuk MySQL, PostgreSQL, SQLite, dan SQL Server.</li>\n            <li><strong>Fondasi Framework Modern</strong>: Menguasai PHP murni (Native) adalah syarat utama sebelum melangkah ke Laravel 11.</li>\n        </ul>\n    </div>",
         "example_title": "Contoh Kode PHP HOME",
-        "example_code": "<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body { font-family: monospace; background: #0f172a; color: #f8fafc; padding: 30px; }\n        .server-box { background: #1e293b; border: 1px solid #334155; border-left: 4px solid #777bb4; padding: 25px; border-radius: 8px; }\n        .tag-php { color: #f43f5e; font-weight: bold; }\n        .output { background: #020617; padding: 15px; border-radius: 6px; color: #4ade80; margin-top: 15px; }\n    </style>\n</head>\n<body>\n    <div class=\"server-box\">\n        <h3>// Eksekusi PHP Pertama di Server</h3>\n        <p><span class=\"tag-php\">&lt;?php</span><br>\n        echo \"Selamat Datang di Skillance Academy PHP Tutorial! 🐘\";<br>\n        <span class=\"tag-php\">?&gt;</span></p>\n        <div class=\"output\">\n            <strong>Output Browser:</strong><br>\n            Selamat Datang di Skillance Academy PHP Tutorial! 🐘\n        </div>\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        echo \"Selamat Datang di Skillance Academy PHP Tutorial! 🐘\";\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_intro": {
@@ -38,7 +37,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Sintaks dasar PHP: Tag pembuka <?php, tag penutup ?>, titik koma (;), dan aturan case sensitivity.",
         "content": "<p class=\"lead\">Perintah PHP wajib diakhiri dengan tanda titik koma (<code>;</code>). Di PHP, nama fungsi dan kata kunci (if, else, echo) tidak case-sensitive, tetapi <strong>nama variabel bersifat Case-Sensitive</strong> (<code>$warna</code> berbeda dengan <code>$WARNA</code>).</p>",
         "example_title": "Contoh Kode PHP Syntax",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Sintaks Dasar PHP</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        <code>&lt;?php<br>\n        $pesan = \"Halo Dunia!\";<br>\n        echo $pesan;<br>\n        ?&gt;</code>\n    </div>\n    <p>Hasil: <strong>Halo Dunia!</strong></p>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $pesan = \"Halo Dunia!\";\n\n        echo $pesan;\n\n        ?>\n    \n    Hasil: Halo Dunia!",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_comments": {
@@ -46,7 +45,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Penulisan komentar di PHP: Komentar satu baris (// dan #) serta komentar banyak baris (/* ... */).",
         "content": "<p class=\"lead\">Komentar adalah baris catatan kode yang diabaikan oleh mesin PHP saat eksekusi. Sangat berguna untuk dokumentasi logika program.</p>",
         "example_title": "Contoh Kode PHP Comments",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #94a3b8;\">\n    <p><span style=\"color:#f43f5e;\">&lt;?php</span><br>\n    <span style=\"color:#64748b;\">// Ini komentar satu baris</span><br>\n    <span style=\"color:#64748b;\"># Ini juga komentar satu baris</span><br>\n    <span style=\"color:#64748b;\">/* Ini adalah komentar<br>\n    &nbsp;&nbsp;&nbsp;banyak baris untuk dokumentasi fungsi */</span><br>\n    echo \"Komentar tidak ditampilkan di browser!\";<br>\n    <span style=\"color:#f43f5e;\">?&gt;</span></p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    // Ini komentar satu baris\n\n    # Ini juga komentar satu baris\n\n    /* Ini adalah komentar\n\n       banyak baris untuk dokumentasi fungsi */\n\n    echo \"Komentar tidak ditampilkan di browser!\";\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_variables": {
@@ -54,7 +53,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mendeklarasikan variabel dengan awalan $, aturan penamaan variabel, dan ruang lingkup variabel (Scope).",
         "content": "<p class=\"lead\">Variabel PHP dimulai dengan tanda <code>$</code> diikuti nama variabel. Nama variabel harus dimulai dengan huruf atau garis bawah (_), dan tidak boleh diawali dengan angka.</p>",
         "example_title": "Contoh Kode PHP Variables",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Variabel PHP</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $nama = \"Faisal\";<br>\n        $umur = 21;<br>\n        echo \"Nama: \" . $nama . \", Usia: \" . $umur . \" tahun\";<br>\n        ?&gt;\n    </div>\n    <p>Output: <strong>Nama: Faisal, Usia: 21 tahun</strong></p>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $nama = \"Faisal\";\n\n        $umur = 21;\n\n        echo \"Nama: \" . $nama . \", Usia: \" . $umur . \" tahun\";\n\n        ?>\n    \n    Output: Nama: Faisal, Usia: 21 tahun",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_echo_print": {
@@ -62,7 +61,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Perbedaan antara pernyataan echo dan print untuk mencetak teks atau HTML ke browser.",
         "content": "<p class=\"lead\"><code>echo</code> dan <code>print</code> kurang lebih sama untuk mencetak output, namun <code>echo</code> tidak memiliki nilai kembali (void) dan sedikit lebih cepat serta dapat menerima banyak parameter argumen sekaligus.</p>",
         "example_title": "Contoh Kode PHP Echo / Print",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Echo vs Print</h2>\n    <p>&lt;?php echo \"&lt;h3 style='color:#0d2e5c;'&gt;Dicetak dengan Echo&lt;/h3&gt;\"; ?&gt;</p>\n    <h3 style=\"color:#0d2e5c;\">Dicetak dengan Echo</h3>\n</body>\n</html>",
+        "example_code": "<?php echo \"<h3 style='color:#0d2e5c;'>Dicetak dengan Echo</h3>\"; ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_datatypes": {
@@ -70,7 +69,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Tipe data bawaan PHP: String, Integer, Float, Boolean, Array, Object, NULL, dan Resource.",
         "content": "<p class=\"lead\">Gunakan fungsi <code>var_dump()</code> untuk memeriksa tipe data dan nilai yang dikandung oleh suatu variabel secara mendalam.</p>",
         "example_title": "Contoh Kode PHP Data Types",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #38bdf8;\">\n    <h3>// var_dump() di PHP</h3>\n    <p>&lt;?php<br>\n    $x = 5985;<br>\n    var_dump($x); // int(5985)<br><br>\n    $y = 10.365;<br>\n    var_dump($y); // float(10.365)<br><br>\n    $z = true;<br>\n    var_dump($z); // bool(true)<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $x = 5985;\n\n    var_dump($x); // int(5985)\n\n\n    $y = 10.365;\n\n    var_dump($y); // float(10.365)\n\n\n    $z = true;\n\n    var_dump($z); // bool(true)\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_strings": {
@@ -78,7 +77,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Manipulasi teks string: strlen(), str_word_count(), strrev(), strpos(), str_replace(), dan penggabungan titik (.).",
         "content": "<p class=\"lead\">Teks string di PHP digabungkan menggunakan operator titik (<code>.</code>). String yang diapit petik ganda <code>\"...\"</code> akan mengevaluasi variabel di dalamnya, sedangkan petik tunggal <code>'...'</code> dicetak secara harfiah.</p>",
         "example_title": "Contoh Kode PHP Strings",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Fungsi Manipulasi String</h2>\n    <div style=\"background:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $teks = \"Skillance Academy Indonesia\";<br>\n        echo \"Panjang karakter: \" . strlen($teks) . \"&lt;br&gt;\";<br>\n        echo \"Jumlah kata: \" . str_word_count($teks) . \"&lt;br&gt;\";<br>\n        echo \"Ganti kata: \" . str_replace(\"Indonesia\", \"Digital\", $teks);<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $teks = \"Skillance Academy Indonesia\";\n\n        echo \"Panjang karakter: \" . strlen($teks) . \"<br>\";\n\n        echo \"Jumlah kata: \" . str_word_count($teks) . \"<br>\";\n\n        echo \"Ganti kata: \" . str_replace(\"Indonesia\", \"Digital\", $teks);\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_numbers": {
@@ -86,7 +85,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Bekerja dengan angka: Integer, Float, is_int(), is_numeric(), dan batasan PHP_INT_MAX.",
         "content": "<p class=\"lead\">PHP secara otomatis mengonversi tipe angka sesuai konteks operasinya (type juggling). Fungsi <code>is_numeric()</code> memeriksa apakah nilai string merupakan angka yang sah.</p>",
         "example_title": "Contoh Kode PHP Numbers",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Pemeriksaan is_numeric()</h2>\n    <p>&lt;?php<br>\n    $harga = \"50000\";<br>\n    echo is_numeric($harga) ? \"Angka valid\" : \"Bukan angka\";<br>\n    ?&gt;</p>\n    <p>Hasil: <strong>Angka valid</strong></p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $harga = \"50000\";\n\n    echo is_numeric($harga) ? \"Angka valid\" : \"Bukan angka\";\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_casting": {
@@ -94,7 +93,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mengubah tipe data variabel secara eksplisit: (string), (int), (float), (bool), (array).",
         "content": "<p class=\"lead\">Type Casting memaksa konversi suatu variabel ke tipe data tertentu, misalnya mengubah string <code>\"25\"</code> menjadi integer dengan <code>(int)$str</code>.</p>",
         "example_title": "Contoh Kode PHP Casting",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    $a = 5;<br>\n    $b = 5.34;<br>\n    $c = \"25 kilometer\";<br><br>\n    $a = (string) $a; // berubah jadi \"5\"<br>\n    $b = (int) $b;    // berubah jadi 5 (desimal dibuang)<br>\n    $c = (int) $c;    // berubah jadi 25<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $a = 5;\n\n    $b = 5.34;\n\n    $c = \"25 kilometer\";\n\n\n    $a = (string) $a; // berubah jadi \"5\"\n\n    $b = (int) $b;    // berubah jadi 5 (desimal dibuang)\n\n    $c = (int) $c;    // berubah jadi 25\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_math": {
@@ -110,7 +109,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mendefinisikan konstanta global yang tidak dapat diubah nilainya menggunakan define() atau const.",
         "content": "<p class=\"lead\">Konstanta otomatis bersifat global dan dapat diakses di seluruh skrip tanpa perlu deklarasi <code>global</code>. Secara konvensi ditulis dengan huruf kapital.</p>",
         "example_title": "Contoh Kode PHP Constants",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Konstanta di PHP</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        define(\"NAMA_PORTAL\", \"Skillance Academy\");<br>\n        const VERSI_APP = \"2.0\";<br>\n        echo NAMA_PORTAL . \" Versi \" . VERSI_APP;<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        define(\"NAMA_PORTAL\", \"Skillance Academy\");\n\n        const VERSI_APP = \"2.0\";\n\n        echo NAMA_PORTAL . \" Versi \" . VERSI_APP;\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_magic_constants": {
@@ -118,7 +117,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Konstanta ajaib bawaan PHP yang nilainya berubah sesuai konteks tempat ia dipanggil: __DIR__, __FILE__, __LINE__, __FUNCTION__, __CLASS__.",
         "content": "<p class=\"lead\">Konstanta ajaib seperti <code>__DIR__</code> sangat penting saat menyertakan file (include/require) dengan path absolut yang aman.</p>",
         "example_title": "Contoh Kode PHP Magic Constants",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    echo \"Folder saat ini: \" . __DIR__ . \"&lt;br&gt;\";<br>\n    echo \"File saat ini: \" . __FILE__ . \"&lt;br&gt;\";<br>\n    echo \"Baris kode saat ini: \" . __LINE__;<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    echo \"Folder saat ini: \" . __DIR__ . \"<br>\";\n\n    echo \"File saat ini: \" . __FILE__ . \"<br>\";\n\n    echo \"Baris kode saat ini: \" . __LINE__;\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_operators": {
@@ -126,7 +125,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Operator di PHP: Aritmatika, Penugasan, Perbandingan (==, ===, <=> Spaceship), Logika, String, dan Null Coalescing (??).",
         "content": "<p class=\"lead\">Operator Spaceship <code>$a <=> $b</code> mengembalikan -1 jika a &lt; b, 0 jika a == b, dan 1 jika a &gt; b. Operator Null Coalescing <code>$x ?? 'default'</code> mencegah notice undefined variable.</p>",
         "example_title": "Contoh Kode PHP Operators",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Null Coalescing Operator (??)</h2>\n    <p>&lt;?php<br>\n    $user = $_GET['user'] ?? 'Tamu Mahasiswa';<br>\n    echo \"Halo, \" . $user;<br>\n    ?&gt;</p>\n    <p>Hasil: <strong>Halo, Tamu Mahasiswa</strong></p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $user = $_GET['user'] ?? 'Tamu Mahasiswa';\n\n    echo \"Halo, \" . $user;\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_if_else": {
@@ -134,7 +133,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Percabangan logika kondisional untuk mengambil alur eksekusi berdasarkan evaluasi boolean.",
         "content": "<p class=\"lead\">Pernyataan <code>if</code> mengeksekusi blok kode jika kondisi benar. Gunakan <code>elseif</code> untuk menguji beberapa kondisi bertingkat.</p>",
         "example_title": "Contoh Kode PHP If...Else...Elseif",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Percabangan Nilai Ujian</h2>\n    <p>&lt;?php<br>\n    $skor = 85;<br>\n    if ($skor >= 80) {<br>\n    &nbsp;&nbsp;echo \"Predikat: A (Lulus Memuaskan)\";<br>\n    } else {<br>\n    &nbsp;&nbsp;echo \"Predikat: B\";<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $skor = 85;\n\n    if ($skor >= 80) {\n\n      echo \"Predikat: A (Lulus Memuaskan)\";\n\n    } else {\n\n      echo \"Predikat: B\";\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_switch": {
@@ -142,7 +141,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Struktur pemilihan banyak blok kode alternatif berdasarkan kesamaan satu nilai variabel.",
         "content": "<p class=\"lead\">Pernyataan <code>switch</code> mengevaluasi ekspresi satu kali dan membandingkan nilainya dengan setiap klausa <code>case</code>. Gunakan <code>break</code> untuk mencegah fallthrough.</p>",
         "example_title": "Contoh Kode PHP Switch",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Struktur Switch Case</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $role = \"admin\";<br>\n        switch ($role) {<br>\n        &nbsp;&nbsp;case \"admin\": echo \"Akses penuh sistem\"; break;<br>\n        &nbsp;&nbsp;case \"member\": echo \"Akses belajar\"; break;<br>\n        &nbsp;&nbsp;default: echo \"Akses tamu\";<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $role = \"admin\";\n\n        switch ($role) {\n\n          case \"admin\": echo \"Akses penuh sistem\"; break;\n\n          case \"member\": echo \"Akses belajar\"; break;\n\n          default: echo \"Akses tamu\";\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_match": {
@@ -150,7 +149,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Ekspresi modern pencocokan nilai di PHP 8+ yang lebih ringkas dan menggunakan perbandingan ketat (===).",
         "content": "<p class=\"lead\">Ekspresi <code>match</code> diperkenalkan pada PHP 8.0 sebagai alternatif modern dari switch. Match mengembalikan nilai, tidak memerlukan break, dan mengevaluasi kesetaraan tipe secara ketat.</p>",
         "example_title": "Contoh Kode PHP Match",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Ekspresi Match (PHP 8+)</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $status = 200;<br>\n        $pesan = match ($status) {<br>\n        &nbsp;&nbsp;200 => 'OK Berhasil',<br>\n        &nbsp;&nbsp;404 => 'Halaman Tidak Ditemukan',<br>\n        &nbsp;&nbsp;500 => 'Server Error',<br>\n        &nbsp;&nbsp;default => 'Status Tidak Dikenal'<br>\n        };<br>\n        echo $pesan;<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $status = 200;\n\n        $pesan = match ($status) {\n\n          200 => 'OK Berhasil',\n\n          404 => 'Halaman Tidak Ditemukan',\n\n          500 => 'Server Error',\n\n          default => 'Status Tidak Dikenal'\n\n        };\n\n        echo $pesan;\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_loops": {
@@ -158,7 +157,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Perulangan di PHP: while, do...while, for, dan foreach untuk mengiterasi elemen array.",
         "content": "<p class=\"lead\">Perulangan <code>foreach</code> dirancang khusus dan paling efisien untuk menelusuri array di PHP, baik array terindeks maupun array asosiatif (key => value).</p>",
         "example_title": "Contoh Kode PHP Loops",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Perulangan foreach Array Asosiatif</h2>\n    <div style=\"background:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $modul = [\"HTML\" => 90, \"CSS\" => 125, \"JavaScript\" => 49];<br>\n        foreach ($modul as $nama => $jumlah) {<br>\n        &nbsp;&nbsp;echo \"$nama: $jumlah topik&lt;br&gt;\";<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $modul = [\"HTML\" => 90, \"CSS\" => 125, \"JavaScript\" => 49];\n\n        foreach ($modul as $nama => $jumlah) {\n\n          echo \"$nama: $jumlah topik<br>\";\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_functions": {
@@ -166,7 +165,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mendeklarasikan fungsi, argumen parameter, nilai default parameter, type hinting, dan return type.",
         "content": "<p class=\"lead\">PHP 7 dan 8 mendukung deklarasi tipe ketat (Type Declarations) pada parameter fungsi dan nilai kembali untuk mencegah bug logika.</p>",
         "example_title": "Contoh Kode PHP Functions",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Fungsi dengan Type Hinting</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        function hitungTotal(int $harga, int $jumlah): int {<br>\n        &nbsp;&nbsp;return $harga * $jumlah;<br>\n        }<br>\n        echo \"Total: Rp \" . number_format(hitungTotal(50000, 3), 0, ',', '.');<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        function hitungTotal(int $harga, int $jumlah): int {\n\n          return $harga * $jumlah;\n\n        }\n\n        echo \"Total: Rp \" . number_format(hitungTotal(50000, 3), 0, ',', '.');\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_arrays": {
@@ -174,7 +173,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Struktur data array: Indexed Arrays, Associative Arrays, Multidimensional Arrays, dan fungsi array (count, array_push, in_array, array_merge).",
         "content": "<p class=\"lead\">Array asosiatif menggunakan kunci bernama (string) untuk mengakses nilainya, sangat sering digunakan untuk memodelkan data record pengguna atau produk.</p>",
         "example_title": "Contoh Kode PHP Arrays",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Array Multidimensi</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $kursus = [<br>\n        &nbsp;&nbsp;[\"judul\" => \"HTML\", \"level\" => \"Dasar\"],<br>\n        &nbsp;&nbsp;[\"judul\" => \"Laravel\", \"level\" => \"Mahir\"]<br>\n        ];<br>\n        echo $kursus[0][\"judul\"] . \" - Level: \" . $kursus[0][\"level\"];<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $kursus = [\n\n          [\"judul\" => \"HTML\", \"level\" => \"Dasar\"],\n\n          [\"judul\" => \"Laravel\", \"level\" => \"Mahir\"]\n\n        ];\n\n        echo $kursus[0][\"judul\"] . \" - Level: \" . $kursus[0][\"level\"];\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_superglobals": {
@@ -182,7 +181,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Variabel global bawaan yang selalu dapat diakses di seluruh cakupan skrip: $GLOBALS, $_SERVER, $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION.",
         "content": "<p class=\"lead\">Superglobals adalah variabel khusus yang disediakan oleh PHP untuk membaca informasi server (<code>$_SERVER</code>), input formulir (<code>$_GET</code>, <code>$_POST</code>), dan data sesi autentikasi (<code>$_SESSION</code>).</p>",
         "example_title": "Contoh Kode PHP Superglobals",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    echo \"Metode Request: \" . $_SERVER['REQUEST_METHOD'] . \"&lt;br&gt;\";<br>\n    echo \"Nama Server Host: \" . $_SERVER['SERVER_NAME'] . \"&lt;br&gt;\";<br>\n    echo \"Browser Agen: \" . $_SERVER['HTTP_USER_AGENT'];<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    echo \"Metode Request: \" . $_SERVER['REQUEST_METHOD'] . \"<br>\";\n\n    echo \"Nama Server Host: \" . $_SERVER['SERVER_NAME'] . \"<br>\";\n\n    echo \"Browser Agen: \" . $_SERVER['HTTP_USER_AGENT'];\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_regex": {
@@ -198,7 +197,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Fungsi ekspresi reguler bawaan: preg_match(), preg_match_all(), preg_replace(), dan preg_split().",
         "content": "<p class=\"lead\">Fungsi <code>preg_match()</code> memeriksa apakah suatu pola cocok di dalam string, sedangkan <code>preg_replace()</code> mengganti teks yang cocok dengan string baru.</p>",
         "example_title": "Contoh Kode PHP RegEx Functions",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Fungsi preg_match()</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $teks = \"Kunjungi Skillance Academy\";<br>\n        $pola = \"/skillance/i\"; // i = case-insensitive<br>\n        if (preg_match($pola, $teks)) {<br>\n        &nbsp;&nbsp;echo \"Pencocokan pola kata berhasil ditemukan!\";<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $teks = \"Kunjungi Skillance Academy\";\n\n        $pola = \"/skillance/i\"; // i = case-insensitive\n\n        if (preg_match($pola, $teks)) {\n\n          echo \"Pencocokan pola kata berhasil ditemukan!\";\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       }
     },
@@ -208,7 +207,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Menangani pengiriman data formulir HTML dengan metode GET vs POST di PHP.",
         "content": "<p class=\"lead\">Data formulir sensitif (seperti password atau data registrasi) wajib dikirimkan dengan metode <code>POST</code> agar tidak terlihat di bilah alamat URL peramban.</p>",
         "example_title": "Contoh Kode PHP Form Handling",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Pengolahan Form POST di PHP</h2>\n    <form method=\"POST\" action=\"\">\n        <label>Nama Siswa:</label><br>\n        <input type=\"text\" name=\"nama\" value=\"Ahmad\" style=\"padding:8px; width:220px; margin:5px 0;\"><br>\n        <button type=\"button\" style=\"padding:8px 16px; background:#0d2e5c; color:white; border:none; border-radius:4px;\">Kirim Data</button>\n    </form>\n    <p>&lt;?php $nama = $_POST['nama'] ?? ''; echo \"Halo, \" . htmlspecialchars($nama); ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php $nama = $_POST['nama'] ?? ''; echo \"Halo, \" . htmlspecialchars($nama); ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_form_validation": {
@@ -216,7 +215,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membersihkan data input pengguna dari celah XSS (Cross-Site Scripting) dengan htmlspecialchars() dan trim().",
         "content": "<p class=\"lead\">Aturan keamanan utama: <strong>Jangan pernah mempercayai input pengguna!</strong> Selalu bersihkan dengan <code>trim()</code>, <code>stripslashes()</code>, dan <code>htmlspecialchars()</code>.</p>",
         "example_title": "Contoh Kode PHP Form Validation",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    function bersihkanInput($data) {<br>\n    &nbsp;&nbsp;$data = trim($data);<br>\n    &nbsp;&nbsp;$data = stripslashes($data);<br>\n    &nbsp;&nbsp;$data = htmlspecialchars($data);<br>\n    &nbsp;&nbsp;return $data;<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    function bersihkanInput($data) {\n\n      $data = trim($data);\n\n      $data = stripslashes($data);\n\n      $data = htmlspecialchars($data);\n\n      return $data;\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_form_required": {
@@ -224,7 +223,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Memvalidasi kolom input yang wajib diisi dan menampilkan pesan error peringatan berwarna merah.",
         "content": "<p class=\"lead\">Gunakan fungsi <code>empty()</code> untuk memeriksa apakah pengguna mengosongkan kolom input yang wajib diisi.</p>",
         "example_title": "Contoh Kode PHP Form Required",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Validasi Kolom Wajib Diisi</h2>\n    <div style=\"background:#fee2e2; border-left:4px solid #ef4444; padding:12px; color:#991b1b; border-radius:4px;\">\n        &lt;?php if (empty($_POST['email'])) echo \"Kolom Email wajib diisi!\"; ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php if (empty($_POST['email'])) echo \"Kolom Email wajib diisi!\"; ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_form_url_email": {
@@ -232,7 +231,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Memvalidasi format URL dan Email yang sah menggunakan filter bawaan filter_var().",
         "content": "<p class=\"lead\">Gunakan <code>filter_var($email, FILTER_VALIDATE_EMAIL)</code> untuk memverifikasi keabsahan struktur alamat email secara otomatis.</p>",
         "example_title": "Contoh Kode PHP Form URL/E-mail",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>filter_var() Validasi Email</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $email = \"halo@skillance.cloud\";<br>\n        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {<br>\n        &nbsp;&nbsp;echo \"Format email tidak valid!\";<br>\n        } else {<br>\n        &nbsp;&nbsp;echo \"Email terverifikasi sah!\";<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $email = \"halo@skillance.cloud\";\n\n        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {\n\n          echo \"Format email tidak valid!\";\n\n        } else {\n\n          echo \"Email terverifikasi sah!\";\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_form_complete": {
@@ -240,7 +239,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membangun formulir pendaftaran lengkap dengan validasi komprehensif dan mempertahankan nilai input saat ada error.",
         "content": "<p class=\"lead\">Formulir lengkap yang baik mempertahankan nilai yang telah diketik pengguna (sticky form) sehingga mereka tidak perlu mengulang ketik dari awal jika terjadi kesalahan validasi.</p>",
         "example_title": "Contoh Kode PHP Form Complete",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h3>Formulir Registrasi Lengkap</h3>\n    <p>Menampilkan nilai lama dengan <code>value=\"&lt;?php echo $nama; ?&gt;\"</code>.</p>\n</body>\n</html>",
+        "example_code": "Menampilkan nilai lama dengan value=\"<?php echo $nama; ?>\".",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       }
     },
@@ -250,7 +249,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mengatur zona waktu (date_default_timezone_set) dan format tanggal/waktu dengan date() serta strtotime().",
         "content": "<p class=\"lead\">Selalu atur zona waktu dengan <code>date_default_timezone_set('Asia/Makassar')</code> atau <code>'Asia/Jakarta'</code> agar jam transaksi server presisi.</p>",
         "example_title": "Contoh Kode PHP Date and Time",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Format Tanggal PHP</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        date_default_timezone_set(\"Asia/Jakarta\");<br>\n        echo date(\"d F Y, H:i:s\") . \" WIB\";<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        date_default_timezone_set(\"Asia/Jakarta\");\n\n        echo date(\"d F Y, H:i:s\") . \" WIB\";\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_includes": {
@@ -258,7 +257,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Modularitas file dengan include, require, include_once, dan require_once.",
         "content": "<p class=\"lead\">Perbedaan utama: <code>require</code> akan menghasilkan Fatal Error dan menghentikan seluruh eksekusi program jika file tidak ditemukan, sedangkan <code>include</code> hanya memunculkan Warning dan program tetap berjalan.</p>",
         "example_title": "Contoh Kode PHP Include",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Struktur Modular Header & Footer</h2>\n    <pre style=\"background:#1e293b; color:#38bdf8; padding:15px; border-radius:8px;\">\n&lt;?php\nrequire_once __DIR__ . '/config/database.php';\ninclude __DIR__ . '/components/navbar.php';\n?&gt;\n    </pre>\n</body>\n</html>",
+        "example_code": "<?php\nrequire_once __DIR__ . '/config/database.php';\ninclude __DIR__ . '/components/navbar.php';\n?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_file": {
@@ -266,7 +265,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membaca seluruh isi file teks server dengan readfile() dan file_get_contents().",
         "content": "<p class=\"lead\">Fungsi <code>file_get_contents()</code> adalah cara tercepat membaca seluruh isi file teks atau respons endpoint API ke dalam variabel string.</p>",
         "example_title": "Contoh Kode PHP File Handling",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    echo readfile(\"catatan.txt\");<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    echo readfile(\"catatan.txt\");\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_file_open": {
@@ -274,7 +273,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuka file dengan fopen(), membaca per baris dengan fgets(), dan feof().",
         "content": "<p class=\"lead\">Untuk file log berukuran besar (ratusan megabyte), gunakan <code>fopen()</code> dan <code>fgets()</code> agar memori RAM server tetap hemat.</p>",
         "example_title": "Contoh Kode PHP File Open/Read",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    $file = fopen(\"log.txt\", \"r\") or die(\"Gagal membuka file!\");<br>\n    while(!feof($file)) {<br>\n    &nbsp;&nbsp;echo fgets($file) . \"&lt;br&gt;\";<br>\n    }<br>\n    fclose($file);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $file = fopen(\"log.txt\", \"r\") or die(\"Gagal membuka file!\");\n\n    while(!feof($file)) {\n\n      echo fgets($file) . \"<br>\";\n\n    }\n\n    fclose($file);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_file_create": {
@@ -282,7 +281,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuat file baru dan menulis data teks dengan fwrite() mode 'w' (overwrite) atau 'a' (append).",
         "content": "<p class=\"lead\">Mode <code>'a'</code> (append) menambahkan teks di baris paling akhir file tanpa menghapus isi yang sudah ada sebelumnya.</p>",
         "example_title": "Contoh Kode PHP File Create/Write",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #fca311;\">\n    <p>&lt;?php<br>\n    $f = fopen(\"aktivitas.log\", \"a\");<br>\n    fwrite($f, \"[\" . date(\"Y-m-d H:i:s\") . \"] User login berhasil\n\");<br>\n    fclose($f);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $f = fopen(\"aktivitas.log\", \"a\");\n\n    fwrite($f, \"[\" . date(\"Y-m-d H:i:s\") . \"] User login berhasil\n\");\n\n    fclose($f);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_file_upload": {
@@ -290,7 +289,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Menangani upload file dokumen dan foto via $_FILES, enctype multipart/form-data, dan move_uploaded_file().",
         "content": "<p class=\"lead\">Validasi tipe MIME, ekstensi file, dan batasan ukuran byte sangat wajib sebelum memindahkan file sementara ke folder tujuan penyimpanan.</p>",
         "example_title": "Contoh Kode PHP File Upload",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Form Upload Berkas</h2>\n    <form action=\"\" method=\"post\" enctype=\"multipart/form-data\">\n        Pilih File: <input type=\"file\" name=\"foto\"><br><br>\n        <button type=\"button\">Unggah Foto</button>\n    </form>\n</body>\n</html>",
+        "example_code": "<!DOCTYPE html>\n<html>\n<body>\n\n<form action=\"\" method=\"post\" enctype=\"multipart/form-data\">\n        Pilih File: <input type=\"file\" name=\"foto\"><br><br>\n        <button type=\"button\">Unggah Foto</button>\n    </form>\n\n</body>\n</html>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_cookies": {
@@ -298,7 +297,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuat dan membaca cookie di browser klien dengan setcookie() dan $_COOKIE.",
         "content": "<p class=\"lead\">Cookie disimpan di browser pengguna dan sering digunakan untuk mengingat preferensi tema (dark mode) atau token remember-me.</p>",
         "example_title": "Contoh Kode PHP Cookies",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Menyimpan Cookie 30 Hari</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        setcookie(\"tema_web\", \"dark\", time() + (86400 * 30), \"/\");<br>\n        echo \"Cookie tema: \" . ($_COOKIE['tema_web'] ?? 'light');<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        setcookie(\"tema_web\", \"dark\", time() + (86400 * 30), \"/\");\n\n        echo \"Cookie tema: \" . ($_COOKIE['tema_web'] ?? 'light');\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_sessions": {
@@ -306,7 +305,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mengelola sesi login autentikasi pengguna secara aman di server dengan session_start() dan $_SESSION.",
         "content": "<p class=\"lead\">Berbeda dengan cookie yang disimpan di komputer klien, data session disimpan aman di server web sehingga cocok untuk data akun pengguna.</p>",
         "example_title": "Contoh Kode PHP Sessions",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Manajemen Sesi Pengguna</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        session_start();<br>\n        $_SESSION['user_id'] = 101;<br>\n        $_SESSION['user_name'] = \"Faisal\";<br>\n        echo \"Selamat datang, \" . $_SESSION['user_name'];<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        session_start();\n\n        $_SESSION['user_id'] = 101;\n\n        $_SESSION['user_name'] = \"Faisal\";\n\n        echo \"Selamat datang, \" . $_SESSION['user_name'];\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_filter": {
@@ -314,7 +313,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Validasi dan sanitasi data dengan filter_var() dan filter_input().",
         "content": "<p class=\"lead\">Ekstensi PHP Filter dirancang untuk memudahkan validasi data formulir dari sumber luar.</p>",
         "example_title": "Contoh Kode PHP Filters",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Validasi Angka Integer</h2>\n    <p>&lt;?php<br>\n    $int = 122;<br>\n    echo filter_var($int, FILTER_VALIDATE_INT) ? \"Integer Sah\" : \"Bukan Integer\";<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $int = 122;\n\n    echo filter_var($int, FILTER_VALIDATE_INT) ? \"Integer Sah\" : \"Bukan Integer\";\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_filter_advanced": {
@@ -322,7 +321,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Validasi filter lanjutan: Memeriksa rentang angka integer (min_range & max_range) dan karakter ASCII.",
         "content": "<p class=\"lead\">Gunakan array opsi <code>options</code> untuk menetapkan batasan nilai minimum dan maksimum pada filter.</p>",
         "example_title": "Contoh Kode PHP Filters Advanced",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    $opsi = [\"options\" => [\"min_range\" => 1, \"max_range\" => 100]];<br>\n    echo filter_var(75, FILTER_VALIDATE_INT, $opsi) ? \"Valid\" : \"Di luar rentang\";<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $opsi = [\"options\" => [\"min_range\" => 1, \"max_range\" => 100]];\n\n    echo filter_var(75, FILTER_VALIDATE_INT, $opsi) ? \"Valid\" : \"Di luar rentang\";\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_callback_functions": {
@@ -330,7 +329,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Menggunakan fungsi sebagai argumen pada fungsi lain: array_map() dan fungsi anonim (Closures).",
         "content": "<p class=\"lead\">Callback functions di PHP dapat berupa nama fungsi dalam bentuk string, atau fungsi anonim (Anonymous Functions / Closures).</p>",
         "example_title": "Contoh Kode PHP Callback Functions",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>array_map dengan Callback</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $panjangKata = array_map(fn($item) => strlen($item), [\"PHP\", \"MySQL\", \"Laravel\"]);<br>\n        print_r($panjangKata); // [3, 5, 7]<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $panjangKata = array_map(fn($item) => strlen($item), [\"PHP\", \"MySQL\", \"Laravel\"]);\n\n        print_r($panjangKata); // [3, 5, 7]\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_json": {
@@ -338,7 +337,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Encoding dan decoding data JSON untuk REST API dengan json_encode() dan json_decode().",
         "content": "<p class=\"lead\">Untuk mengubah array PHP menjadi string JSON REST API, gunakan <code>json_encode()</code>. Untuk membaca JSON menjadi array asosiatif, sertakan argumen <code>true</code> pada <code>json_decode($json, true)</code>.</p>",
         "example_title": "Contoh Kode PHP JSON",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #4ade80;\">\n    <p>&lt;?php<br>\n    header('Content-Type: application/json');<br>\n    $data = [\"status\" => \"success\", \"message\" => \"API Skillance Aktif\"];<br>\n    echo json_encode($data);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    header('Content-Type: application/json');\n\n    $data = [\"status\" => \"success\", \"message\" => \"API Skillance Aktif\"];\n\n    echo json_encode($data);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_exceptions": {
@@ -346,7 +345,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Menangani eksepsi kesalahan sistem secara anggun dengan try, catch, finally, dan class Exception kustom.",
         "content": "<p class=\"lead\">Blok <code>try...catch</code> menangkap kegagalan koneksi database atau operasi file tanpa mengekspos pesan error sistem internal ke publik.</p>",
         "example_title": "Contoh Kode PHP Exceptions",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Blok try...catch Exception</h2>\n    <div style=\"background:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        try {<br>\n        &nbsp;&nbsp;throw new Exception(\"Koneksi gagal\");<br>\n        } catch (Exception $e) {<br>\n        &nbsp;&nbsp;echo \"Tertangkap error: \" . $e->getMessage();<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        try {\n\n          throw new Exception(\"Koneksi gagal\");\n\n        } catch (Exception $e) {\n\n          echo \"Tertangkap error: \" . $e->getMessage();\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       }
     },
@@ -364,7 +363,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mendefinisikan Class dan membuat instance Objek dengan kata kunci new.",
         "content": "<p class=\"lead\">Class adalah cetak biru (blueprint), sedangkan Object adalah bentuk nyata hasil cetak biru tersebut.</p>",
         "example_title": "Contoh Kode PHP Classes/Objects",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Definisi Class & Object</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        class Mobil {<br>\n        &nbsp;&nbsp;public $warna = \"Merah\";<br>\n        }<br>\n        $avanza = new Mobil();<br>\n        echo \"Warna mobil: \" . $avanza->warna;<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        class Mobil {\n\n          public $warna = \"Merah\";\n\n        }\n\n        $avanza = new Mobil();\n\n        echo \"Warna mobil: \" . $avanza->warna;\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_constructor": {
@@ -372,7 +371,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Method khusus __construct() yang otomatis dipanggil saat objek pertama kali diinisialisasi.",
         "content": "<p class=\"lead\">Constructor biasanya digunakan untuk mengisi nilai properti awal objek pada saat pembuatan <code>new Kelas(...)</code>.</p>",
         "example_title": "Contoh Kode PHP Constructor",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Constructor __construct()</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        class User {<br>\n        &nbsp;&nbsp;public $nama;<br>\n        &nbsp;&nbsp;public function __construct($nama) {<br>\n        &nbsp;&nbsp;&nbsp;&nbsp;$this->nama = $nama;<br>\n        &nbsp;&nbsp;}<br>\n        }<br>\n        $u = new User(\"Faisal\");<br>\n        echo \"Nama: \" . $u->nama;<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        class User {\n\n          public $nama;\n\n          public function __construct($nama) {\n\n            $this->nama = $nama;\n\n          }\n\n        }\n\n        $u = new User(\"Faisal\");\n\n        echo \"Nama: \" . $u->nama;\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_destructor": {
@@ -380,7 +379,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Method khusus __destruct() yang otomatis dipanggil saat objek selesai digunakan atau skrip berakhir.",
         "content": "<p class=\"lead\">Destructor berguna untuk membersihkan koneksi database atau menutup file log yang terbuka secara otomatis.</p>",
         "example_title": "Contoh Kode PHP Destructor",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    class FileHandler {<br>\n    &nbsp;&nbsp;public function __destruct() {<br>\n    &nbsp;&nbsp;&nbsp;&nbsp;echo \"Koneksi resource ditutup aman.\";<br>\n    &nbsp;&nbsp;}<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    class FileHandler {\n\n      public function __destruct() {\n\n        echo \"Koneksi resource ditutup aman.\";\n\n      }\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_access_modifiers": {
@@ -396,7 +395,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Pewarisan sifat dan fungsionalitas dari kelas induk ke kelas anak dengan kata kunci extends.",
         "content": "<p class=\"lead\">Inheritance menghindari duplikasi kode dengan mewariskan seluruh properti dan method berhak akses public dan protected ke kelas turunan.</p>",
         "example_title": "Contoh Kode PHP Inheritance",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Pewarisan Sifat dengan extends</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        class Hewan { public function makan() { echo \"Sedang makan\"; } }<br>\n        class Kucing extends Hewan {}<br>\n        $k = new Kucing();<br>\n        $k->makan(); // Mewarisi method makan<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        class Hewan { public function makan() { echo \"Sedang makan\"; } }\n\n        class Kucing extends Hewan {}\n\n        $k = new Kucing();\n\n        $k->makan(); // Mewarisi method makan\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_constants": {
@@ -404,7 +403,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Konstanta di dalam Class menggunakan kata kunci const dan diakses dengan scope resolution operator (::).",
         "content": "<p class=\"lead\">Konstanta kelas dialokasikan satu kali per kelas, bukan per objek instansi.</p>",
         "example_title": "Contoh Kode PHP Constants",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #4ade80;\">\n    <p>&lt;?php<br>\n    class Konfigurasi {<br>\n    &nbsp;&nbsp;const APP_NAME = \"Skillance Portal\";<br>\n    }<br>\n    echo Konfigurasi::APP_NAME;<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    class Konfigurasi {\n\n      const APP_NAME = \"Skillance Portal\";\n\n    }\n\n    echo Konfigurasi::APP_NAME;\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_classes_abstract": {
@@ -412,7 +411,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Kelas abstrak sebagai kerangka acuan yang tidak dapat diinstansiasi langsung dan wajib diimplementasikan oleh kelas anak.",
         "content": "<p class=\"lead\">Kelas abstrak berisi setidaknya satu metode abstrak yang hanya mendefinisikan nama dan parameternya saja tanpa isi implementasi.</p>",
         "example_title": "Contoh Kode PHP Abstract Classes",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Kelas Abstrak</h2>\n    <div style=\"background:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        abstract class Pembayaran {<br>\n        &nbsp;&nbsp;abstract public function prosesTransaksi(): bool;<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        abstract class Pembayaran {\n\n          abstract public function prosesTransaksi(): bool;\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_interfaces": {
@@ -420,7 +419,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mendefinisikan kontrak method yang harus diimplementasikan oleh kelas dengan kata kunci implements.",
         "content": "<p class=\"lead\">Sebuah kelas dapat mengimplementasikan beberapa Interface sekaligus (Multiple Implementation), mengatasi batasan single-inheritance di PHP.</p>",
         "example_title": "Contoh Kode PHP Interfaces",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    interface Notifikasi {<br>\n    &nbsp;&nbsp;public function kirimPesan($tujuan, $isi);<br>\n    }<br>\n    class EmailNotif implements Notifikasi {<br>\n    &nbsp;&nbsp;public function kirimPesan($tujuan, $isi) { /* kirim */ }<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    interface Notifikasi {\n\n      public function kirimPesan($tujuan, $isi);\n\n    }\n\n    class EmailNotif implements Notifikasi {\n\n      public function kirimPesan($tujuan, $isi) { /* kirim */ }\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_traits": {
@@ -428,7 +427,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mekanisme penggunaan kembali method di berbagai kelas yang berdiri sendiri tanpa relasi hierarki warisan (use Trait).",
         "content": "<p class=\"lead\">Traits memecahkan batasan single-inheritance di PHP dengan menyisipkan sekumpulan method ke dalam beberapa kelas berbeda.</p>",
         "example_title": "Contoh Kode PHP Traits",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Penggunaan Trait</h2>\n    <div style=\"background:#e0f2fe; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        trait Logger { public function catat($msg) { echo \"Log: $msg\"; } }<br>\n        class Order { use Logger; }<br>\n        $o = new Order();<br>\n        $o->catat(\"Pesanan dibuat\");<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        trait Logger { public function catat($msg) { echo \"Log: $msg\"; } }\n\n        class Order { use Logger; }\n\n        $o = new Order();\n\n        $o->catat(\"Pesanan dibuat\");\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_static_methods": {
@@ -436,7 +435,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Method statis yang dapat dipanggil langsung dari nama kelas tanpa membuat instance objek: NamaKelas::metode().",
         "content": "<p class=\"lead\">Method statis sangat cocok untuk fungsi-fungsi utilitas kalkulator atau helper murni.</p>",
         "example_title": "Contoh Kode PHP Static Methods",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #fca311;\">\n    <p>&lt;?php<br>\n    class MathHelper {<br>\n    &nbsp;&nbsp;public static function diskon($harga, $persen) {<br>\n    &nbsp;&nbsp;&nbsp;&nbsp;return $harga - ($harga * $persen / 100);<br>\n    &nbsp;&nbsp;}<br>\n    }<br>\n    echo MathHelper::diskon(100000, 10); // 90000<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    class MathHelper {\n\n      public static function diskon($harga, $persen) {\n\n        return $harga - ($harga * $persen / 100);\n\n      }\n\n    }\n\n    echo MathHelper::diskon(100000, 10); // 90000\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_oop_static_properties": {
@@ -444,7 +443,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Properti statis yang nilainya dibagikan ke seluruh objek dari kelas yang sama.",
         "content": "<p class=\"lead\">Properti statis diakses menggunakan operator resolusi lingkup ganda <code>Kelas::$properti</code>.</p>",
         "example_title": "Contoh Kode PHP Static Properties",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Static Property Pengunjung</h2>\n    <p>&lt;?php Counter::$total++; echo Counter::$total; ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php Counter::$total++; echo Counter::$total; ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_namespaces": {
@@ -452,7 +451,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mencegah tabrakan nama kelas dengan mengorganisasi kode ke dalam ruang nama modular (namespace App\\Models).",
         "content": "<p class=\"lead\">Namespace memecahkan masalah saat dua pustaka eksternal pihak ketiga memiliki nama kelas yang sama persis.</p>",
         "example_title": "Contoh Kode PHP Namespaces",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    namespace Skillance\\Academy\\Models;<br><br>\n    class Mahasiswa {}<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    namespace Skillance\\Academy\\Models;\n\n\n    class Mahasiswa {}\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_iterables": {
@@ -460,7 +459,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Tipe pseudo-type iterable yang dapat diulang dengan foreach (Array atau objek Iterator).",
         "content": "<p class=\"lead\">Type hint <code>iterable</code> dapat menerima array biasa maupun objek generator yang mengimplementasikan antarmuka Traversable.</p>",
         "example_title": "Contoh Kode PHP Iterables",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Tipe Data iterable</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        function tampilkanDaftar(iterable $daftar) {<br>\n        &nbsp;&nbsp;foreach ($daftar as $item) { echo \"$item \"; }<br>\n        }<br>\n        tampilkanDaftar([\"A\", \"B\", \"C\"]);<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        function tampilkanDaftar(iterable $daftar) {\n\n          foreach ($daftar as $item) { echo \"$item \"; }\n\n        }\n\n        tampilkanDaftar([\"A\", \"B\", \"C\"]);\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       }
     },
@@ -478,7 +477,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuka koneksi PHP ke server MySQL menggunakan ekstensi modern MySQLi atau PDO (PHP Data Objects).",
         "content": "<p class=\"lead\">Skillance Academy merekomendasikan penggunaan <strong>PDO</strong> atau <strong>MySQLi Object-Oriented</strong> dengan penanganan try-catch.</p>",
         "example_title": "Contoh Kode MySQL Connect",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    $host = \"localhost\";<br>\n    $user = \"root\";<br>\n    $pass = \"\";<br>\n    $db   = \"skillance_academy\";<br><br>\n    $conn = new mysqli($host, $user, $pass, $db);<br>\n    if ($conn->connect_error) {<br>\n    &nbsp;&nbsp;die(\"Koneksi gagal: \" . $conn->connect_error);<br>\n    }<br>\n    echo \"Koneksi ke MySQL Berhasil!\";<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $host = \"localhost\";\n\n    $user = \"root\";\n\n    $pass = \"\";\n\n    $db   = \"skillance_academy\";\n\n\n    $conn = new mysqli($host, $user, $pass, $db);\n\n    if ($conn->connect_error) {\n\n      die(\"Koneksi gagal: \" . $conn->connect_error);\n\n    }\n\n    echo \"Koneksi ke MySQL Berhasil!\";\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_create": {
@@ -486,7 +485,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuat basis data baru melalui perintah SQL CREATE DATABASE.",
         "content": "<p class=\"lead\">Gunakan query <code>CREATE DATABASE nama_database CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci</code> untuk mendukung emoji dan karakter internasional.</p>",
         "example_title": "Contoh Kode MySQL Create DB",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #4ade80;\">\n    <p>&lt;?php<br>\n    $sql = \"CREATE DATABASE IF NOT EXISTS skillance_db\";<br>\n    $conn->query($sql);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $sql = \"CREATE DATABASE IF NOT EXISTS skillance_db\";\n\n    $conn->query($sql);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_create_table": {
@@ -502,7 +501,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Menambahkan baris record data baru ke dalam tabel menggunakan query INSERT INTO.",
         "content": "<p class=\"lead\">Perintah SQL <code>INSERT INTO nama_tabel (kolom1, kolom2) VALUES (nilai1, nilai2)</code> menyisipkan data baru.</p>",
         "example_title": "Contoh Kode MySQL Insert Data",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    $sql = \"INSERT INTO siswa (nama, email) VALUES ('Andi', 'andi@mail.com')\";<br>\n    if ($conn->query($sql) === TRUE) {<br>\n    &nbsp;&nbsp;echo \"Data baru berhasil disimpan!\";<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $sql = \"INSERT INTO siswa (nama, email) VALUES ('Andi', 'andi@mail.com')\";\n\n    if ($conn->query($sql) === TRUE) {\n\n      echo \"Data baru berhasil disimpan!\";\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_insert_lastid": {
@@ -510,7 +509,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mengambil ID primary key auto_increment dari data yang baru saja disisipkan dengan $conn->insert_id.",
         "content": "<p class=\"lead\">Mengambil ID data terakhir sangat penting saat membuat transaksi bertingkat (misalnya membuat Order lalu membuat Order Item).</p>",
         "example_title": "Contoh Kode MySQL Get Last ID",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>$conn->insert_id</h2>\n    <p>&lt;?php echo \"ID Transaksi Baru: \" . $conn->insert_id; ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php echo \"ID Transaksi Baru: \" . $conn->insert_id; ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_insert_multiple": {
@@ -526,7 +525,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Teknik wajib standar keamanan industri untuk mencegah serangan berbahaya SQL Injection (Prepared Statements).",
         "content": "<p class=\"lead\"><strong>SQL Injection</strong> adalah ancaman nomor satu keamanan web. Prepared Statements memisahkan query instruksi SQL dari data parameter input pengguna sehingga injeksi kode berbahaya tidak mungkin dieksekusi.</p>",
         "example_title": "Contoh Kode MySQL Prepared",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <h3>// Kode Aman Kebal SQL Injection</h3>\n    <p>&lt;?php<br>\n    $stmt = $conn->prepare(\"SELECT id, nama, email FROM users WHERE email = ?\");<br>\n    $stmt->bind_param(\"s\", $emailPengguna);<br>\n    $stmt->execute();<br>\n    $hasil = $stmt->get_result();<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $stmt = $conn->prepare(\"SELECT id, nama, email FROM users WHERE email = ?\");\n\n    $stmt->bind_param(\"s\", $emailPengguna);\n\n    $stmt->execute();\n\n    $hasil = $stmt->get_result();\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_select": {
@@ -534,7 +533,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membaca dan menampilkan data tabel ke antarmuka web menggunakan SELECT dan fetch_assoc().",
         "content": "<p class=\"lead\">Gunakan <code>$hasil->fetch_assoc()</code> di dalam perulangan while untuk membaca setiap baris data menjadi array asosiatif.</p>",
         "example_title": "Contoh Kode MySQL Select Data",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Menampilkan Data Tabel</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $res = $conn->query(\"SELECT id, nama FROM siswa\");<br>\n        while($row = $res->fetch_assoc()) {<br>\n        &nbsp;&nbsp;echo \"ID: \" . $row[\"id\"] . \" - Nama: \" . $row[\"nama\"] . \"&lt;br&gt;\";<br>\n        }<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $res = $conn->query(\"SELECT id, nama FROM siswa\");\n\n        while($row = $res->fetch_assoc()) {\n\n          echo \"ID: \" . $row[\"id\"] . \" - Nama: \" . $row[\"nama\"] . \"<br>\";\n\n        }\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_mysql_select_where": {
@@ -592,7 +591,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membaca file XML dengan simplexml_load_file() dan string XML dengan simplexml_load_string().",
         "content": "<p class=\"lead\">SimpleXML memetakan elemen XML menjadi objek yang sangat mudah diakses dengan operator tanda panah <code>$xml->judul</code>.</p>",
         "example_title": "Contoh Kode PHP SimpleXML Parser",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>simplexml_load_string()</h2>\n    <div style=\"background:#f1f5f9; padding:15px; border-radius:8px;\">\n        &lt;?php<br>\n        $xmlData = \"&lt;kursus&gt;&lt;nama&gt;PHP Skillance Academy&lt;/nama&gt;&lt;/kursus&gt;\";<br>\n        $xml = simplexml_load_string($xmlData);<br>\n        echo \"Nama Kursus: \" . $xml->nama;<br>\n        ?&gt;\n    </div>\n</body>\n</html>",
+        "example_code": "<?php\n\n        $xmlData = \"<kursus><nama>PHP Skillance Academy</nama></kursus>\";\n\n        $xml = simplexml_load_string($xmlData);\n\n        echo \"Nama Kursus: \" . $xml->nama;\n\n        ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_xml_simplexml_get": {
@@ -600,7 +599,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Mengambil nilai node elemen dan atribut XML menggunakan pengindeksan array dan perulangan loop.",
         "content": "<p class=\"lead\">Gunakan <code>$elemen['atribut']</code> untuk membaca nilai atribut yang menempel pada tag XML.</p>",
         "example_title": "Contoh Kode PHP SimpleXML - Get",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    foreach($xml->children() as $buku) {<br>\n    &nbsp;&nbsp;echo $buku->judul . \" (\" . $buku['kategori'] . \")&lt;br&gt;\";<br>\n    }<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    foreach($xml->children() as $buku) {\n\n      echo $buku->judul . \" (\" . $buku['kategori'] . \")<br>\";\n\n    }\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_xml_parser_expat": {
@@ -608,7 +607,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Parser berbasis event (SAX) yang sangat hemat memori untuk membaca dokumen XML berukuran ratusan megabyte.",
         "content": "<p class=\"lead\">Expat parser memproses dokumen XML alur per alur (streaming) dan memicu fungsi handler saat tag pembuka atau penutup ditemukan.</p>",
         "example_title": "Contoh Kode PHP XML Expat Parser",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #1e293b; color: #38bdf8;\">\n    <p>&lt;?php<br>\n    $parser = xml_parser_create();<br>\n    // set handler callback...<br>\n    xml_parser_free($parser);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $parser = xml_parser_create();\n\n    // set handler callback...\n\n    xml_parser_free($parser);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_xml_dom": {
@@ -616,7 +615,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membuat, memodifikasi, dan menavigasi dokumen XML atau HTML dengan DOMDocument.",
         "content": "<p class=\"lead\">DOMDocument memuat seluruh dokumen XML ke dalam memori sebagai pohon objek DOM yang dapat dimanipulasi secara leluasa.</p>",
         "example_title": "Contoh Kode PHP DOM Parser",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #fca311;\">\n    <p>&lt;?php<br>\n    $dom = new DOMDocument();<br>\n    $dom->loadXML(\"&lt;app&gt;&lt;name&gt;Skillance&lt;/name&gt;&lt;/app&gt;\");<br>\n    echo $dom->saveXML();<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    $dom = new DOMDocument();\n\n    $dom->loadXML(\"<app><name>Skillance</name></app>\");\n\n    echo $dom->saveXML();\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       }
     },
@@ -634,7 +633,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Membangun endpoint skrip PHP khusus yang melayani respon data asinkron.",
         "content": "<p class=\"lead\">Endpoint AJAX di PHP hanya mengeluarkan payload data yang relevan (misalnya potongan HTML atau JSON) tanpa tag &lt;html&gt; atau header lengkap.</p>",
         "example_title": "Contoh Kode AJAX PHP",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php<br>\n    // file: get_hint.php<br>\n    $q = $_GET[\"q\"] ?? \"\";<br>\n    echo \"Saran kata kunci untuk: \" . htmlspecialchars($q);<br>\n    ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php\n\n    // file: get_hint.php\n\n    $q = $_GET[\"q\"] ?? \"\";\n\n    echo \"Saran kata kunci untuk: \" . htmlspecialchars($q);\n\n    ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_ajax_database": {
@@ -686,7 +685,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Koleksi contoh kode PHP praktis untuk menyelesaikan kasus-kasus pengembangan web sehari-hari.",
         "content": "<p class=\"lead\">Katalog referensi potongan kode cepat untuk format tanggal, manipulasi string, dan kalkulasi array.</p>",
         "example_title": "Contoh Kode PHP Examples",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: sans-serif; padding: 20px;\">\n    <h2>Contoh Format Mata Uang Rupiah</h2>\n    <p>&lt;?php echo \"Rp \" . number_format(1500000, 0, ',', '.'); ?&gt;</p>\n    <p>Hasil: <strong>Rp 1.500.000</strong></p>\n</body>\n</html>",
+        "example_code": "<?php echo \"Rp \" . number_format(1500000, 0, ',', '.'); ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_compiler": {
@@ -694,7 +693,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Editor dan runner interaktif di browser Skillance Academy untuk menguji skrip kode langsung.",
         "content": "<p class=\"lead\">Gunakan Try It Yourself Editor untuk menguji logika kode tanpa perlu konfigurasi web server lokal.</p>",
         "example_title": "Contoh Kode PHP Compiler",
-        "example_code": "<!DOCTYPE html>\n<html>\n<body style=\"font-family: monospace; padding: 20px; background: #0f172a; color: #4ade80;\">\n    <p>&lt;?php echo \"Uji coba kode PHP Anda di Code Lab Skillance!\"; ?&gt;</p>\n</body>\n</html>",
+        "example_code": "<?php echo \"Uji coba kode PHP Anda di Code Lab Skillance!\"; ?>",
         "explanation": "<p>Uji kode PHP dan amati simulasi output server pada panel pratinjau di atas.</p>"
       },
       "php_quiz": {
@@ -966,5 +965,4 @@ return json_decode(<<<'JSON_DATA'
     }
   }
 }
-JSON_DATA
-, true);
+JSON_DATA, true);

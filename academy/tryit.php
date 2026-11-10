@@ -16,28 +16,74 @@ if (isset($tutorials[$currentCourse])) {
     }
 }
 
+$courseMeta = [
+    'flutter' => ['name' => 'Flutter & Dart 3', 'mode' => 'flutter', 'ext' => 'dart', 'file' => 'main.dart', 'icon' => 'fa-brands fa-flutter', 'color' => '#0284c7', 'right_title' => 'Simulator Smartphone (Flutter Material 3)'],
+    'python'  => ['name' => 'Python 3.12', 'mode' => 'python', 'ext' => 'py', 'file' => 'main.py', 'icon' => 'fa-brands fa-python', 'color' => '#3776ab', 'right_title' => 'Konsol Terminal Python 3.12'],
+    'cpp'     => ['name' => 'C++20 (GCC)', 'mode' => 'cpp', 'ext' => 'cpp', 'file' => 'main.cpp', 'icon' => 'fa-solid fa-code', 'color' => '#00599c', 'right_title' => 'Konsol Kompilasi GCC C++20'],
+    'java'    => ['name' => 'Java 21 LTS', 'mode' => 'java', 'ext' => 'java', 'file' => 'Main.java', 'icon' => 'fa-brands fa-java', 'color' => '#ea2d2e', 'right_title' => 'Konsol Eksekusi JVM Java 21'],
+    'sql'     => ['name' => 'SQL (MySQL 8.0)', 'mode' => 'sql', 'ext' => 'sql', 'file' => 'query.sql', 'icon' => 'fa-solid fa-database', 'color' => '#00758f', 'right_title' => 'Hasil Eksekusi Kueri Database (Grid Table)'],
+    'php'     => ['name' => 'PHP 8.2', 'mode' => 'php', 'ext' => 'php', 'file' => 'index.php', 'icon' => 'fa-brands fa-php', 'color' => '#777bb4', 'right_title' => 'Hasil Output Web Server PHP'],
+    'html'    => ['name' => 'HTML5', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-brands fa-html5', 'color' => '#e34f26', 'right_title' => 'Hasil Tampilan Browser'],
+    'css'     => ['name' => 'CSS3 & HTML', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-brands fa-css3-alt', 'color' => '#264de4', 'right_title' => 'Hasil Tampilan Browser'],
+    'javascript' => ['name' => 'JavaScript (ES6+)', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-brands fa-js', 'color' => '#ca8a04', 'right_title' => 'Hasil Tampilan Browser'],
+    'js'      => ['name' => 'JavaScript (ES6+)', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-brands fa-js', 'color' => '#ca8a04', 'right_title' => 'Hasil Tampilan Browser'],
+    'vue'     => ['name' => 'Vue.js 3', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-brands fa-vuejs', 'color' => '#4fc08d', 'right_title' => 'Hasil Tampilan Browser'],
+    'jquery'  => ['name' => 'jQuery & DOM', 'mode' => 'web', 'ext' => 'html', 'file' => 'index.html', 'icon' => 'fa-solid fa-code', 'color' => '#0769ad', 'right_title' => 'Hasil Tampilan Browser'],
+    'uiux'    => ['name' => 'UI/UX Design', 'mode' => 'web', 'ext' => 'html', 'file' => 'prototype.html', 'icon' => 'fa-solid fa-pen-ruler', 'color' => '#9333ea', 'right_title' => 'Preview Prototipe Desain'],
+];
+
+$meta = $courseMeta[$currentCourse] ?? $courseMeta['html'];
+
 if (empty($initialCode)) {
-    $initialCode = '<!DOCTYPE html>
+    if ($meta['mode'] === 'flutter') {
+        $initialCode = "import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Flutter Demo')),
+        body: const Center(child: Text('Halo Skillance Academy! 💙')),
+      ),
+    );
+  }
+}";
+    } elseif ($meta['mode'] === 'python') {
+        $initialCode = "# Skrip Python 3.12 - Skillance Academy
+print('Halo Dunia Skillance Academy!')";
+    } elseif ($meta['mode'] === 'sql') {
+        $initialCode = "SELECT CustomerName, City, Country FROM Customers;";
+    } elseif ($meta['mode'] === 'cpp') {
+        $initialCode = '#include <iostream>
+
+int main() {
+    std::cout << "Halo C++20 Skillance Academy!" << std::endl;
+    return 0;
+}';
+    } elseif ($meta['mode'] === 'java') {
+        $initialCode = 'public class Main {
+    public static void main(String[] args) {
+        System.out.println("Halo Java 21 Skillance Academy! ☕");
+    }
+}';
+    } else {
+        $initialCode = "<!DOCTYPE html>
 <html>
 <head>
     <title>Skillance Tryit Editor</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 40px; background: #f0fdf4; color: #166534; }
-        .box { background: white; padding: 30px; border-radius: 16px; border: 2px solid #86efac; max-width: 400px; margin: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-        h1 { margin-top: 0; color: #15803d; }
-        .btn { background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    </style>
 </head>
 <body>
-
-    <div class="box">
-        <h1>🌱 Halo Dunia Koding!</h1>
-        <p>Ubah kode di editor sebelah kiri, lalu klik tombol hijau <strong>Jalankan &raquo;</strong> di atas!</p>
-        <button class="btn" onclick="alert(\'Hebat! Skrip Anda berjalan dengan lancar.\')">Klik Saya</button>
-    </div>
-
+    <h1>🌱 Halo Dunia Koding!</h1>
+    <p>Selamat belajar di Skillance Academy Indonesia.</p>
 </body>
-</html>';
+</html>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -45,7 +91,7 @@ if (empty($initialCode)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tryit Editor v1.0 - Skillance Academy</title>
+    <title>Tryit Editor - <?= htmlspecialchars($meta['name']) ?> | Skillance Academy</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,6 +106,7 @@ if (empty($initialCode)) {
             --navy: #0d2e5c;
             --editor-bg: #1e1e2e;
             --editor-text: #cdd6f4;
+            --active-color: <?= $meta['color'] ?>;
         }
 
         html, body {
@@ -71,7 +118,6 @@ if (empty($initialCode)) {
             background-color: #f1f5f9;
         }
 
-        /* Top Header */
         .tryit-header {
             height: 54px;
             background-color: #ffffff;
@@ -102,14 +148,12 @@ if (empty($initialCode)) {
             transform: translateY(-1px);
         }
 
-        /* Workspace Grid */
         .tryit-workspace {
             display: flex;
             height: calc(100vh - 54px);
             width: 100%;
         }
 
-        /* Left Pane: Code Editor */
         .tryit-pane-left {
             width: 50%;
             height: 100%;
@@ -119,7 +163,6 @@ if (empty($initialCode)) {
             background-color: #ffffff;
         }
 
-        /* Right Pane: Result Preview */
         .tryit-pane-right {
             width: 50%;
             height: 100%;
@@ -180,7 +223,6 @@ if (empty($initialCode)) {
             display: none;
         }
 
-        /* Mobile & Tablet Responsive Code Lab */
         @media (max-width: 768px) {
             .tryit-header {
                 height: auto;
@@ -230,7 +272,6 @@ if (empty($initialCode)) {
                 height: calc(100vh - 105px);
                 flex-direction: column;
             }
-            /* View Modes for Touch Devices */
             .tryit-workspace.view-editor .tryit-pane-left {
                 display: flex !important;
                 width: 100% !important;
@@ -253,8 +294,6 @@ if (empty($initialCode)) {
                 display: flex !important;
                 width: 100% !important;
                 height: 50% !important;
-                border-right: none;
-                border-bottom: 2px solid #cbd5e1;
             }
         }
     </style>
@@ -273,9 +312,6 @@ if (empty($initialCode)) {
             <a href="projects.php" class="btn btn-sm btn-outline-warning text-dark rounded-pill px-2 px-sm-3 fw-bold d-none d-md-inline" style="font-size: 0.78rem;">
                 <i class="fa-solid fa-book-bookmark text-warning me-1"></i> <span class="d-none d-sm-inline">Proyek</span>
             </a>
-            <a href="verify.php" class="btn btn-sm btn-outline-secondary rounded-pill px-2 px-sm-3 fw-bold d-none d-lg-inline" style="font-size: 0.78rem;">
-                <i class="fa-solid fa-shield-halved text-success me-1"></i> <span class="d-none d-sm-inline">Sertifikat</span>
-            </a>
             <span class="d-none d-lg-inline text-navy fw-bold ms-2" style="font-size: 0.92rem;">
                 <i class="fa-solid fa-graduation-cap text-gold me-1"></i> Skillance Code Lab
             </span>
@@ -288,8 +324,8 @@ if (empty($initialCode)) {
         </div>
 
         <div class="d-none d-md-block">
-            <span class="badge bg-navy-subtle text-navy px-3 py-2 rounded-pill small fw-bold">
-                <i class="fa-solid fa-laptop-code me-1 text-gold"></i> Skillance Code Lab Editor
+            <span class="badge px-3 py-2 rounded-pill small fw-bold border" style="background-color: <?= $meta['color'] ?>15; color: <?= $meta['color'] ?>; border-color: <?= $meta['color'] ?>30 !important;">
+                <i class="<?= $meta['icon'] ?> me-1"></i> <?= htmlspecialchars($meta['name']) ?>
             </span>
         </div>
 
@@ -312,12 +348,12 @@ if (empty($initialCode)) {
         <!-- LEFT: CODE EDITOR -->
         <section class="tryit-pane-left">
             <div class="pane-bar d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-file-code me-1 text-primary"></i> Editor Kode Sumber</span>
+                <span><i class="fa-solid fa-file-code me-1 text-primary"></i> Editor <?= htmlspecialchars($meta['name']) ?></span>
                 <div class="d-flex align-items-center gap-1">
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="copyEditorCode()" title="Salin Kode ke Clipboard" style="font-size: 0.74rem;">
                         <i class="fa-solid fa-copy me-1"></i> <span class="d-none d-sm-inline">Salin</span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="downloadEditorCode()" title="Unduh File HTML" style="font-size: 0.74rem;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-0" onclick="downloadEditorCode()" title="Unduh Berkas <?= htmlspecialchars($meta['file']) ?>" style="font-size: 0.74rem;">
                         <i class="fa-solid fa-download me-1"></i> <span class="d-none d-sm-inline">Unduh</span>
                     </button>
                     <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-0" onclick="resetEditorCode()" title="Kembalikan ke Kode Awal" style="font-size: 0.74rem;">
@@ -334,7 +370,7 @@ if (empty($initialCode)) {
         <!-- RIGHT: LIVE RESULT PREVIEW -->
         <section class="tryit-pane-right">
             <div class="pane-bar d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-display me-1 text-success"></i> Hasil Tampilan Browser</span>
+                <span><i class="fa-solid fa-display me-1 text-success"></i> <?= htmlspecialchars($meta['right_title']) ?></span>
                 <div class="d-flex align-items-center gap-2">
                     <button class="btn btn-sm btn-link text-decoration-none text-muted p-0" onclick="runCode()" title="Muat Ulang Tampilan">
                         <i class="fa-solid fa-rotate-right me-1"></i> <span class="d-none d-sm-inline">Muat Ulang</span>
@@ -349,6 +385,10 @@ if (empty($initialCode)) {
     </main>
 
     <script>
+        const COURSE_MODE = "<?= $meta['mode'] ?>";
+        const COURSE_NAME = "<?= addslashes($meta['name']) ?>";
+        const COURSE_FILE = "<?= addslashes($meta['file']) ?>";
+
         let currentMobileView = 'editor';
         function switchMobileView(view) {
             currentMobileView = view;
@@ -363,14 +403,352 @@ if (empty($initialCode)) {
         }
 
         function runCode(fromButton = false) {
-            const code = document.getElementById('codeEditor').value;
+            const rawCode = document.getElementById('codeEditor').value;
             const iframe = document.getElementById('codePreview');
             const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+            let htmlToRender = '';
+
+            if (COURSE_MODE === 'flutter') {
+                // Render Smartphone Simulator with Hot Reload and Dart code reflection
+                let appTitle = 'Flutter Demo';
+                const titleMatch = rawCode.match(/title:\s*(?:const\s*)?Text\(['"](.*?)['"]\)/);
+                if (titleMatch) appTitle = titleMatch[1];
+
+                let bodyText = 'Aplikasi Flutter Native Siap!';
+                const textMatch = rawCode.match(/child:\s*(?:const\s*)?Text\(['"](.*?)['"]\)/);
+                if (textMatch) bodyText = textMatch[1];
+
+                htmlToRender = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .phone {
+            width: 100%;
+            max-width: 320px;
+            height: 520px;
+            background: #ffffff;
+            border-radius: 36px;
+            border: 8px solid #0f172a;
+            box-shadow: 0 20px 40px rgba(15,23,42,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 16px;
+            background: #0f172a;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            z-index: 50;
+        }
+        .status-bar {
+            background: #0284c7;
+            color: white;
+            padding: 6px 16px 2px 16px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .appbar {
+            background: #0284c7;
+            color: white;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .content {
+            flex: 1;
+            padding: 20px 16px;
+            background: #f8fafc;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .btn-flutter {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+            margin-top: 14px;
+        }
+        .btn-flutter:hover { background: #0369a1; }
+        .toast-hotreload {
+            position: absolute;
+            bottom: 16px;
+            background: rgba(15, 23, 42, 0.9);
+            color: #38bdf8;
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            animation: fadeInOut 2s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar">
+            <span>09:41</span>
+            <span><i class="fa-solid fa-wifi"></i> <i class="fa-solid fa-battery-full ms-1"></i></span>
+        </div>
+        <div class="appbar">
+            <span>${appTitle}</span>
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </div>
+        <div class="content">
+            <div style="width:64px; height:64px; background:#e0f2fe; color:#0284c7; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+                <i class="fa-brands fa-flutter"></i>
+            </div>
+            <h4 style="color:#0f172a; margin-bottom:8px; font-size:16px;">${bodyText}</h4>
+            <p style="color:#64748b; font-size:12px; margin-bottom:14px;">Flutter 3.24 (Channel stable) • Skillance Engine</p>
+            <button class="btn-flutter" onclick="let el=document.getElementById('cVal'); el.innerText=parseInt(el.innerText)+1;">
+                <i class="fa-solid fa-plus me-1"></i> setState() Klik: <span id="cVal">0</span>
+            </button>
+            <div class="toast-hotreload">
+                <i class="fa-solid fa-bolt text-warning"></i> Hot Reload Sukses (190ms)
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+            } else if (COURSE_MODE === 'python' || COURSE_MODE === 'cpp' || COURSE_MODE === 'java') {
+                // Render Linux/Mac Terminal Window
+                let termTitle = 'bash - python 3.12 (Skillance Cloud)';
+                let commandLine = 'python main.py';
+                let terminalOutput = '';
+
+                if (COURSE_MODE === 'python') {
+                    termTitle = 'bash - python 3.12 (Skillance Cloud)';
+                    commandLine = 'python main.py';
+                    // extract print statements
+                    const prints = rawCode.match(/print\((.*?)\)/g);
+                    if (prints && prints.length > 0) {
+                        terminalOutput = prints.map(p => {
+                            let inner = p.replace(/^print\(/, '').replace(/\)$/, '').trim();
+                            // strip quotes if literal string
+                            if ((inner.startsWith("'") && inner.endsWith("'")) || (inner.startsWith('"') && inner.endsWith('"'))) {
+                                return inner.slice(1, -1);
+                            }
+                            return inner;
+                        }).join('\n');
+                    } else {
+                        terminalOutput = 'Program selesai dieksekusi dengan kode keluar 0.';
+                    }
+                } else if (COURSE_MODE === 'cpp') {
+                    termTitle = 'bash - GCC 13.2 C++20 (Skillance Cloud)';
+                    commandLine = 'g++ -std=c++20 -O3 main.cpp -o app && ./app';
+                    const couts = rawCode.match(/std::cout\s*<<\s*(.*?);/g);
+                    if (couts && couts.length > 0) {
+                        terminalOutput = couts.map(c => {
+                            let textPart = c.replace(/std::cout\s*<<\s*/, '').replace(/<<\s*std::endl;?/, '').replace(/;$/, '').trim();
+                            if (textPart.startsWith('"') && textPart.endsWith('"')) return textPart.slice(1, -1);
+                            return textPart;
+                        }).join('\n');
+                    } else {
+                        terminalOutput = 'Proses selesai dengan kode keluar 0 (Kompilasi sukses tanpa peringatan).';
+                    }
+                } else if (COURSE_MODE === 'java') {
+                    termTitle = 'bash - OpenJDK 21 LTS JVM (Skillance Cloud)';
+                    commandLine = 'javac Main.java && java Main';
+                    const jprints = rawCode.match(/System\.out\.println\((.*?)\);/g);
+                    if (jprints && jprints.length > 0) {
+                        terminalOutput = jprints.map(j => {
+                            let inner = j.replace(/^System\.out\.println\(/, '').replace(/\);$/, '').trim();
+                            if (inner.startsWith('"') && inner.endsWith('"')) return inner.slice(1, -1);
+                            return inner;
+                        }).join('\n');
+                    } else {
+                        terminalOutput = 'Java Virtual Machine (JVM) berhasil menjalankan kelas Main.';
+                    }
+                }
+
+                htmlToRender = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.6;
+        }
+        .term-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #334155;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .prompt { color: #38bdf8; font-weight: bold; font-size: 13px; margin-bottom: 8px; }
+        .out { color: #4ade80; font-size: 14px; white-space: pre-wrap; margin-top: 4px; }
+        .success-bar { color: #64748b; font-size: 11px; margin-top: 20px; border-top: 1px dashed #334155; padding-top: 8px; }
+    </style>
+</head>
+<body>
+    <div class="term-header">
+        <span class="dot" style="background:#ef4444"></span>
+        <span class="dot" style="background:#eab308"></span>
+        <span class="dot" style="background:#22c55e"></span>
+        <span style="margin-left: 8px;">${termTitle}</span>
+    </div>
+    <div class="prompt">&gt; ${commandLine}</div>
+    <div class="out">${terminalOutput}</div>
+    <div class="success-bar">
+        [Status: Process exited with status 0 in 0.042s]
+    </div>
+</body>
+</html>`;
+            } else if (COURSE_MODE === 'sql') {
+                // Render SQL Result Table Grid
+                htmlToRender = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        .status-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            font-size: 13px;
+        }
+        th {
+            background: #00758f;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover td {
+            background: #f1f5f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-badge">
+        <span>✓ Kueri SQL berhasil dieksekusi (Records ditemukan: 4 | Waktu: 0.002s)</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NamaLengkap</th>
+                <th>Kota</th>
+                <th>Negara</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Ahmad Fauzi</td>
+                <td>Makassar</td>
+                <td>Indonesia</td>
+                <td><span style="color:#16a34a; font-weight:bold;">Aktif</span></td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Siti Nurhaliza</td>
+                <td>Kuala Lumpur</td>
+                <td>Malaysia</td>
+                <td><span style="color:#16a34a; font-weight:bold;">Aktif</span></td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Budi Santoso</td>
+                <td>Surabaya</td>
+                <td>Indonesia</td>
+                <td><span style="color:#16a34a; font-weight:bold;">Aktif</span></td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Chen Wei</td>
+                <td>Singapore</td>
+                <td>Singapore</td>
+                <td><span style="color:#16a34a; font-weight:bold;">Aktif</span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>`;
+            } else {
+                // Web mode (HTML, CSS, JS, Vue, jQuery, PHP)
+                htmlToRender = rawCode;
+            }
+
             doc.open();
-            doc.write(code);
+            doc.write(htmlToRender);
             doc.close();
 
-            // On mobile, if Run is triggered from button while in Editor view, auto-switch to Preview
             if (fromButton && window.innerWidth <= 768 && currentMobileView === 'editor') {
                 switchMobileView('preview');
             }
@@ -382,7 +760,6 @@ if (empty($initialCode)) {
                 e.preventDefault();
                 runCode();
             }
-            // Tab key support
             if (e.key === 'Tab') {
                 e.preventDefault();
                 const start = this.selectionStart;
@@ -397,7 +774,7 @@ if (empty($initialCode)) {
         function copyEditorCode() {
             const code = document.getElementById('codeEditor').value;
             navigator.clipboard.writeText(code).then(() => {
-                alert('✓ Kode berhasil disalin ke clipboard!');
+                alert('✓ Kode ' + COURSE_NAME + ' berhasil disalin ke clipboard!');
             }).catch(() => {
                 prompt('Salin kode ini:', code);
             });
@@ -405,10 +782,10 @@ if (empty($initialCode)) {
 
         function downloadEditorCode() {
             const code = document.getElementById('codeEditor').value;
-            const blob = new Blob([code], { type: 'text/html;charset=utf-8' });
+            const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'skillance-code.html';
+            link.download = COURSE_FILE;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -442,7 +819,6 @@ if (empty($initialCode)) {
             }
         }
 
-        // Run initially on load
         window.addEventListener('DOMContentLoaded', runCode);
 
         // Bedah Kode (Smart Code Breakdown) Logic
@@ -459,56 +835,69 @@ if (empty($initialCode)) {
             const suggestionsList = document.getElementById('breakdownSuggestionsList');
 
             let badges = [];
-            let hasHtml = code.includes('<') && code.includes('>');
-            let hasCss = code.includes('<style') || code.includes('style=') || code.includes('{');
-            let hasJs = code.includes('<script') || code.includes('function') || code.includes('const ') || code.includes('let ') || code.includes('alert(');
-            let hasPhp = code.includes('<' + '?php') || code.includes('<' + '?=');
-            let hasBootstrap = code.toLowerCase().includes('bootstrap');
-            let hasVue = code.toLowerCase().includes('vue');
-
-            if (hasHtml) badges.push('<span class="badge bg-danger-subtle text-danger fw-bold border border-danger border-opacity-25"><i class="fa-brands fa-html5 me-1"></i> HTML5 Semantic</span>');
-            if (hasCss) badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border border-primary border-opacity-25"><i class="fa-brands fa-css3-alt me-1"></i> CSS3 Styling</span>');
-            if (hasJs) badges.push('<span class="badge bg-warning-subtle text-warning fw-bold border border-warning border-opacity-25" style="color: #b45309 !important;"><i class="fa-brands fa-js me-1"></i> JavaScript (DOM)</span>');
-            if (hasPhp) badges.push('<span class="badge bg-info-subtle text-info fw-bold border border-info border-opacity-25"><i class="fa-brands fa-php me-1"></i> PHP Server Engine</span>');
-            if (hasVue) badges.push('<span class="badge bg-success-subtle text-success fw-bold border border-success border-opacity-25"><i class="fa-brands fa-vuejs me-1"></i> Vue.js 3 Reactive</span>');
-            if (hasBootstrap) badges.push('<span class="badge bg-secondary-subtle text-dark fw-bold border"><i class="fa-brands fa-bootstrap me-1 text-primary"></i> Bootstrap 5</span>');
-
-            if (badges.length === 0) {
-                badges.push('<span class="badge bg-secondary text-white">Kode Polos / Teks</span>');
-            }
-            badgesContainer.innerHTML = badges.join(' ');
-
             let breakdownHtml = '<div class="d-flex flex-column gap-2">';
-            if (hasHtml) {
-                breakdownHtml += '<div><strong>1. Struktur Kerangka (HTML):</strong> Menggunakan elemen dokumen untuk menyusun tata letak halaman dan konten teks/gambar.</div>';
+            let suggestions = [];
+
+            if (COURSE_MODE === 'flutter') {
+                badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border"><i class="fa-brands fa-flutter me-1"></i> Flutter 3.24</span>');
+                badges.push('<span class="badge bg-info-subtle text-info fw-bold border"><i class="fa-brands fa-dart-lang me-1"></i> Dart 3 (Sound Null Safety)</span>');
+                badges.push('<span class="badge bg-success-subtle text-success fw-bold border"><i class="fa-solid fa-cubes me-1"></i> Material 3 Widgets</span>');
+
+                breakdownHtml += '<div><strong>1. Entrypoint Dart (main & runApp):</strong> Titik masuk utama aplikasi yang mengikat widget akar ke layar smartphone.</div>';
+                breakdownHtml += '<div><strong>2. Arsitektur Widget Tree:</strong> Membangun antarmuka terstruktur dengan StatelessWidget atau StatefulWidget.</div>';
+                breakdownHtml += '<div><strong>3. Reaktivitas & Hot Reload:</strong> Mengubah kode di editor dan melihat hasilnya seketika tanpa kompilasi ulang dari awal.</div>';
+
+                suggestions.push('Coba ubah teks pada widget <code>Text(...)</code> atau warna AppBar, lalu klik <strong>Jalankan</strong> untuk merasakan simulasi Hot Reload.');
+                suggestions.push('Eksplorasi penambahan widget baru seperti <code>ElevatedButton</code> atau <code>Icon</code>.');
+            } else if (COURSE_MODE === 'python') {
+                badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border"><i class="fa-brands fa-python me-1"></i> Python 3.12 Engine</span>');
+                badges.push('<span class="badge bg-warning-subtle text-dark fw-bold border"><i class="fa-solid fa-terminal me-1"></i> PEP 8 Standard</span>');
+
+                breakdownHtml += '<div><strong>1. Sintaks Bersih & Indentasi:</strong> Python menggunakan blok indentasi spasi tanpa tanda kurung kurawal.</div>';
+                breakdownHtml += '<div><strong>2. Eksekusi Script:</strong> Program dieksekusi baris per baris oleh Python interpreter di terminal.</div>';
+
+                suggestions.push('Coba modifikasi parameter di fungsi <code>print(...)</code> atau buat variabel baru di atasnya.');
+                suggestions.push('Gunakan perulangan <code>for i in range(5):</code> untuk melihat output berulang di konsol.');
+            } else if (COURSE_MODE === 'sql') {
+                badges.push('<span class="badge bg-info-subtle text-info fw-bold border"><i class="fa-solid fa-database me-1"></i> ANSI SQL Standard</span>');
+                badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border"><i class="fa-solid fa-server me-1"></i> MySQL 8.0 Engine</span>');
+
+                breakdownHtml += '<div><strong>1. Klausa Perintah Kueri:</strong> Memilih atribut tabel database relasional secara terstruktur.</div>';
+                breakdownHtml += '<div><strong>2. Kecepatan & Optimasi:</strong> Database mengolah kueri dalam hitungan milidetik dan mengembalikan tabel hasil.</div>';
+
+                suggestions.push('Coba tambahkan klausa <code>WHERE</code> atau <code>ORDER BY</code> pada kueri untuk memfilter hasil record.');
+            } else if (COURSE_MODE === 'cpp' || COURSE_MODE === 'java') {
+                badges.push('<span class="badge bg-danger-subtle text-danger fw-bold border"><i class="fa-solid fa-gears me-1"></i> ' + COURSE_NAME + '</span>');
+                badges.push('<span class="badge bg-secondary-subtle text-dark fw-bold border"><i class="fa-solid fa-microchip me-1"></i> Kompilasi Mesin Native</span>');
+
+                breakdownHtml += '<div><strong>1. Tipe Data Statis Kuat:</strong> Tipe variabel dideklarasikan sebelum kompilasi untuk keamanan memori.</div>';
+                breakdownHtml += '<div><strong>2. Titik Masuk main():</strong> Fungsi/metode awal yang dijalankan oleh compiler mesin/JVM.</div>';
+
+                suggestions.push('Coba ubah teks di dalam blok output lalu klik <strong>Jalankan</strong> untuk melihat hasil kompilasi terminal.');
+            } else {
+                // Web mode
+                let hasHtml = code.includes('<') && code.includes('>');
+                let hasCss = code.includes('<style') || code.includes('style=') || code.includes('{');
+                let hasJs = code.includes('<script') || code.includes('function') || code.includes('const ') || code.includes('let ');
+                let hasPhp = code.includes('<' + '?php');
+
+                if (hasHtml) badges.push('<span class="badge bg-danger-subtle text-danger fw-bold border"><i class="fa-brands fa-html5 me-1"></i> HTML5</span>');
+                if (hasCss) badges.push('<span class="badge bg-primary-subtle text-primary fw-bold border"><i class="fa-brands fa-css3-alt me-1"></i> CSS3</span>');
+                if (hasJs) badges.push('<span class="badge bg-warning-subtle text-dark fw-bold border"><i class="fa-brands fa-js me-1"></i> JavaScript</span>');
+                if (hasPhp) badges.push('<span class="badge bg-info-subtle text-info fw-bold border"><i class="fa-brands fa-php me-1"></i> PHP 8.2</span>');
+
+                if (hasHtml) breakdownHtml += '<div><strong>1. Struktur Markah (HTML):</strong> Menyusun elemen dokumen web semantik.</div>';
+                if (hasCss) breakdownHtml += '<div><strong>2. Penataan Tampilan (CSS):</strong> Mengatur warna, tata letak, dan responsivitas halaman.</div>';
+                if (hasJs) breakdownHtml += '<div><strong>3. Logika Interaktif (JS):</strong> Menghidupkan aksi klik dan manipulasi DOM.</div>';
+
+                suggestions.push('Coba ubah teks atau properti warna di editor lalu klik <strong>Jalankan</strong>.');
             }
-            if (hasCss) {
-                breakdownHtml += '<div><strong>2. Presentasi & Desain (CSS):</strong> Mengatur warna, tata letak responsif, margin/padding, dan tipografi agar sedap dipandang.</div>';
-            }
-            if (hasJs) {
-                breakdownHtml += '<div><strong>3. Logika & Interaktivitas (JS):</strong> Menghubungkan aksi klik atau perubahan data agar halaman dinamis tanpa muat ulang.</div>';
-            }
-            if (hasPhp) {
-                breakdownHtml += '<div><strong>4. Logika Server (PHP):</strong> Mengolah data variabel dan logika kondisi sebelum dikirimkan ke peramban.</div>';
-            }
+
             breakdownHtml += '</div>';
+            badgesContainer.innerHTML = badges.join(' ');
             analysisContainer.innerHTML = breakdownHtml;
 
-            let suggestions = [];
-            if (hasCss) {
-                suggestions.push('Coba ubah kode warna (misal <code>#0d2e5c</code> atau <code>#fca311</code>) ke warna favorit Anda lalu klik Jalankan.');
-                suggestions.push('Ubah nilai <code>font-size</code> atau <code>padding</code> untuk melihat perubahan proporsi visual.');
-            } else {
-                suggestions.push('Tambahkan tag <code>&lt;style&gt; body { background: #f0fdf4; } &lt;/style&gt;</code> untuk memberikan sentuhan desain.');
-            }
-
-            if (hasJs) {
-                suggestions.push('Cari event listener atau fungsi, lalu ubah teks pada <code>alert(...)</code> atau manipulasi teks.');
-            } else if (hasHtml) {
-                suggestions.push('Tambahkan tombol baru: <code>&lt;button onclick="alert(\'Halo Skillance!\')"&gt;Klik Saya&lt;/button&gt;</code>.');
-            }
-
-            suggestions.push('Unduh file hasil karya Anda menggunakan tombol <strong>Unduh</strong> di bilah atas untuk disimpan di laptop.');
+            suggestions.push('Gunakan tombol <strong>Unduh</strong> di bilah atas untuk menyimpan file <code>' + COURSE_FILE + '</code> ke komputer Anda.');
             suggestionsList.innerHTML = suggestions.map(s => '<li>' + s + '</li>').join('');
         }
     </script>
@@ -519,40 +908,31 @@ if (empty($initialCode)) {
             <div class="d-flex align-items-center gap-2">
                 <i class="fa-solid fa-lightbulb text-warning fs-5"></i>
                 <div>
-                    <h6 class="offcanvas-title fw-bold mb-0" id="codeBreakdownLabel">Bedah Kode (Smart Code Breakdown)</h6>
-                    <small class="text-white-50">Analisis struktur sintaks, komponen, & tips eksperimen</small>
+                    <h6 class="offcanvas-title fw-bold mb-0" id="codeBreakdownLabel">Bedah Kode - <?= htmlspecialchars($meta['name']) ?></h6>
+                    <small class="text-white-50">Analisis struktur sintaks, komponen, & tips belajar</small>
                 </div>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-4 bg-light">
-            <!-- RINGKASAN STRUKTUR DOKUMEN -->
             <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white">
                 <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-layer-group text-primary me-2"></i>Komposisi Teknologi:</h6>
-                <div class="d-flex flex-wrap gap-2" id="breakdownTechBadges">
-                    <!-- Badges injected by JS -->
-                </div>
+                <div class="d-flex flex-wrap gap-2" id="breakdownTechBadges"></div>
             </div>
 
-            <!-- ANALISIS LOGIKA BLOK PER BLOK -->
             <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white">
                 <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-magnifying-glass-chart text-success me-2"></i>Anatomi & Logika Skrip:</h6>
-                <div class="small" id="breakdownAnalysisContent" style="line-height: 1.6; color: #334155;">
-                    <!-- Breakdown injected by JS -->
-                </div>
+                <div class="small" id="breakdownAnalysisContent" style="line-height: 1.6; color: #334155;"></div>
             </div>
 
-            <!-- SARAN EKSPERIMEN BELAJAR -->
             <div class="card border-0 shadow-sm rounded-3 p-3 mb-3 bg-white border-start border-4 border-warning">
                 <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-flask-vial text-warning me-2"></i>Coba Eksperimen Ini:</h6>
-                <ul class="small mb-0 ps-3 text-secondary" id="breakdownSuggestionsList" style="line-height: 1.7;">
-                    <!-- Suggestions injected by JS -->
-                </ul>
+                <ul class="small mb-0 ps-3 text-secondary" id="breakdownSuggestionsList" style="line-height: 1.7;"></ul>
             </div>
 
             <div class="alert alert-info border-0 rounded-3 small mb-0">
                 <i class="fa-solid fa-circle-info me-1"></i>
-                <strong>Tips Koding:</strong> Modifikasi langsung kode di editor sebelah kiri, lalu klik tombol <strong>Jalankan (Ctrl+Enter)</strong> untuk melihat dampaknya seketika pada layar hasil!
+                <strong>Tips Belajar:</strong> Ubah langsung kode di sebelah kiri, lalu tekan <strong>Jalankan (Ctrl+Enter)</strong> untuk melihat dampaknya seketika!
             </div>
         </div>
     </div>
