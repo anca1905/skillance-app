@@ -152,7 +152,48 @@ $seoBreadcrumbs = [
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+    function checkInvoiceVerification() {
+        const invInput = document.getElementById('inputCheckInvoice');
+        if (!invInput || !invInput.value) return;
+        const inv = invInput.value.trim();
+        const btnWrap = document.getElementById('zipButtonWrapper');
+
+        btnWrap.innerHTML = `<button class="btn btn-secondary w-100 py-2.5 rounded-3" disabled><i class="fa-solid fa-spinner fa-spin me-1"></i> Memeriksa status invoice...</button>`;
+
+        fetch('api/order_status.php?action=check&invoice=' + encodeURIComponent(inv))
+            .then(res => res.json())
+            .then(res => {
+                if (res && res.status === 'verified') {
+                    btnWrap.innerHTML = `
+                        <div class="alert alert-success py-2 px-3 small mb-2 rounded-3 text-center">
+                            <i class="fa-solid fa-circle-check text-success me-1"></i> <strong>Pembayaran Terverifikasi!</strong> Akses unduhan Anda telah aktif seumur hidup.
+                        </div>
+                        <a href="${res.data.download_url || 'downloads/sidesa-bundle-master.zip'}" download="sidesa-bundle-master.zip" class="btn btn-success w-100 fw-bold py-2.5 rounded-3 shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="fa-solid fa-download fs-5"></i>
+                            <span>Download File ZIP Langsung (Full Source Code & E-Book)</span>
+                        </a>
+                    `;
+                } else {
+                    btnWrap.innerHTML = `
+                        <div class="alert alert-warning py-2 px-3 small mb-2 rounded-3 text-start">
+                            <i class="fa-solid fa-clock text-warning me-1"></i> <strong>Menunggu Konfirmasi Admin:</strong> Pembayaran No. Invoice <code>${inv}</code> sedang dalam antrean verifikasi Admin (Maksimal 1x24 Jam).
+                        </div>
+                        <button type="button" class="btn btn-secondary w-100 fw-bold py-2.5 rounded-3 disabled opacity-75" disabled>
+                            <i class="fa-solid fa-lock text-warning me-1"></i> Unduhan ZIP Terkunci (Menunggu Konfirmasi Admin 1x24 Jam)
+                        </button>
+                    `;
+                }
+            })
+            .catch(() => {
+                btnWrap.innerHTML = `
+                    <button type="button" class="btn btn-secondary w-100 fw-bold py-2.5 rounded-3 disabled opacity-75" disabled>
+                        <i class="fa-solid fa-lock text-warning me-1"></i> Unduhan ZIP Terkunci (Menunggu Konfirmasi Admin 1x24 Jam)
+                    </button>
+                `;
+            });
+    }
+</script>
     
     <style>
         :root {
@@ -1086,18 +1127,38 @@ $seoBreadcrumbs = [
                         </div>
                     </div>
 
-                    <!-- PILIHAN AKSES SETELAH PEMBAYARAN -->
+                    <!-- PILIHAN AKSES SETELAH PEMBAYARAN (MENUNGGU KONFIRMASI ADMIN 1X24 JAM) -->
                     <div class="mt-3 pt-3 border-top text-start">
-                        <div class="small fw-bold text-navy mb-2"><i class="fa-solid fa-box-archive text-primary me-1"></i> Pilihan Pengambilan File Setelah Terverifikasi:</div>
-                        <div class="d-flex flex-column gap-2">
-                            <a href="downloads/sidesa-bundle-master.zip" download="sidesa-bundle-master.zip" class="btn btn-outline-primary fw-bold py-2.5 rounded-3 d-flex align-items-center justify-content-center gap-2">
-                                <i class="fa-solid fa-file-zipper fs-5 text-primary"></i>
-                                <span>Opsi 1: Download File ZIP Langsung (Full Source Code & E-Book)</span>
-                            </a>
-                            <small class="text-muted" style="font-size: 0.72rem;">
-                                <i class="fa-solid fa-circle-check text-success me-1"></i> Akses seumur hidup &bull; Berisi Handbook PDF 185 Hal, Source Code Laravel 10 Blade, dan Database SQL.
-                            </small>
+                        <div class="small fw-bold text-navy mb-2">
+                            <i class="fa-solid fa-box-archive text-primary me-1"></i> Opsi 1: Download File ZIP Langsung Setelah Pembayaran
                         </div>
+
+                        <!-- Status Notice 1x24 Jam -->
+                        <div class="alert alert-secondary py-2.5 px-3 small text-muted mb-2 rounded-3 border" style="font-size: 0.78rem; line-height: 1.6;">
+                            <div class="fw-bold text-navy mb-1">
+                                <i class="fa-solid fa-clock-rotate-left text-warning me-1"></i> Status: Menunggu Konfirmasi Admin (Maksimal 1x24 Jam)
+                            </div>
+                            Setelah Anda scan & transfer via QRIS, notifikasi otomatis masuk ke WhatsApp Admin (<strong>0822-9170-0778</strong>). Admin akan memverifikasi mutasi dalam 1x24 jam kerja, lalu tautan unduhan File ZIP di bawah ini akan otomatis aktif.
+                        </div>
+
+                        <!-- Cek Status Invoice -->
+                        <div class="input-group input-group-sm mb-2">
+                            <input type="text" id="inputCheckInvoice" class="form-control" placeholder="Nomor Invoice..." readonly>
+                            <button class="btn btn-outline-navy fw-bold px-3" type="button" onclick="checkInvoiceVerification()">
+                                <i class="fa-solid fa-rotate me-1"></i> Cek Status Verifikasi
+                            </button>
+                        </div>
+
+                        <!-- Container Tombol Download (Terkunci Sebelum Diverifikasi) -->
+                        <div id="zipButtonWrapper">
+                            <button type="button" class="btn btn-secondary w-100 fw-bold py-2.5 rounded-3 disabled opacity-75" id="btnLockedZip" disabled>
+                                <i class="fa-solid fa-lock text-warning me-1"></i> Unduhan ZIP Terkunci (Menunggu Konfirmasi Admin 1x24 Jam)
+                            </button>
+                        </div>
+
+                        <small class="text-muted d-block text-center mt-1" style="font-size: 0.72rem;">
+                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Notifikasi konfirmasi & file backup juga akan dikirimkan langsung ke nomor WhatsApp Anda.
+                        </small>
                     </div>
                 </div>
 
@@ -1129,16 +1190,42 @@ $seoBreadcrumbs = [
         // Official QRIS Image
         document.getElementById('qrisBarcodeImg').src = 'assets/img/qris_official.jpg';
 
-        // Direct WhatsApp Confirmation Link with Complete Invoice Details
-        const waText = encodeURIComponent(`Halo Admin Skillance Academy, saya sudah melakukan pembayaran QRIS untuk pembelian project kit:
+        // Direct WhatsApp Confirmation Link with Complete Invoice Details (1x24h notice)
+        const waText = encodeURIComponent(`Halo Admin Skillance (0822-9170-0778), saya telah melakukan pembayaran QRIS untuk pembelian project kit:
 
 📦 *${title}*
-🧾 No Invoice: ${randomInv}
-💰 Nominal Tagihan: ${price}
+🧾 No Invoice: *${randomInv}*
+💰 Nominal Tagihan: *${price}*
 🏛️ Merchant Tujuan: ID1026634363422 (Skillance Store)
 
-Berikut saya lampirkan bukti transfer pembayarannya. Mohon dibantu kirimkan link Google Drive / ZIP source code dan lisensi komersialnya ya. Terima kasih!`);
+Berikut saya lampirkan tangkapan layar bukti transfernya. Mohon dikonfirmasi pembayarannya dalam 1x24 jam ya min untuk membuka akses unduhan File ZIP. Terima kasih!`);
         document.getElementById('btnFallbackWa').href = `https://api.whatsapp.com/send?phone=6282291700778&text=${waText}`;
+
+        // Set Invoice input for checking
+        const invInput = document.getElementById('inputCheckInvoice');
+        if (invInput) invInput.value = randomInv;
+
+        // Reset locked download button
+        const btnWrap = document.getElementById('zipButtonWrapper');
+        if (btnWrap) {
+            btnWrap.innerHTML = `
+                <button type="button" class="btn btn-secondary w-100 fw-bold py-2.5 rounded-3 disabled opacity-75" id="btnLockedZip" disabled>
+                    <i class="fa-solid fa-lock text-warning me-1"></i> Unduhan ZIP Terkunci (Menunggu Konfirmasi Admin 1x24 Jam)
+                </button>
+            `;
+        }
+
+        // Register pending order in database
+        fetch('api/order_status.php?action=register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                invoice_no: randomInv,
+                product_id: kitId,
+                product_title: title,
+                nominal: parseInt(price.replace(/[^0-9]/g, '')) || 79000
+            })
+        }).catch(() => {});
 
         // Start Countdown Timer (15 Minutes)
         startQrisTimer(15 * 60);

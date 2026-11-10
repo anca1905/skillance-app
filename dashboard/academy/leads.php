@@ -42,6 +42,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'export_csv') {
     exit();
 }
 
+// Handle Order Approval & ZIP Unlock
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'approve_order') {
+    $inv = trim($_POST['invoice_no'] ?? '');
+    if (!empty($inv)) {
+        $invSafe = $conn->real_escape_string($inv);
+        $conn->query("UPDATE academy_orders SET status = 'verified', verified_at = NOW() WHERE invoice_no = '$invSafe'");
+    }
+    header("Location: leads.php?msg=order_approved");
+    exit();
+}
+
 // Handle Status Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_status') {
     $leadId = intval($_POST['lead_id'] ?? 0);
@@ -95,6 +106,19 @@ if (!empty($params)) {
 }
 $stmt->execute();
 $leads = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+// Fetch Orders for 1x24h Verification Gate
+$recentOrders = [];
+$pendingOrderCount = 0;
+$orderQ = $conn->query("SELECT * FROM academy_orders ORDER BY id DESC LIMIT 15");
+if ($orderQ) {
+    while ($orow = $orderQ->fetch_assoc()) {
+        $recentOrders[] = $orow;
+        if ($orow['status'] === 'pending') {
+            $pendingOrderCount++;
+        }
+    }
+}
 
 // Calculate KPI Metrics
 $totalLeads = count($leads);
@@ -224,6 +248,92 @@ $grandTotal = $conn->query("SELECT COUNT(*) as c FROM academy_leads")->fetch_ass
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- SECTION VERIFIKASI PEMBAYARAN 1X24 JAM -->
+        <div class="card card-custom p-4 mb-4 border-start border-4 border-warning shadow-sm">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                <div>
+                    <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill mb-1">
+                        <i class="fa-solid fa-clock-rotate-left me-1"></i> VERIFIKASI 1X24 JAM
+                    </span>
+                    <h5 class="fw-bold text-navy mb-0">Antrean Konfirmasi Pembayaran QRIS & Akses Download ZIP</h5>
+                    <small class="text-muted">Daftar transaksi masuk yang menunggu validasi admin untuk membuka tautan unduhan File ZIP pembeli.</small>
+                </div>
+                <div>
+                    <span class="badge bg-navy text-gold px-3 py-2 rounded-pill font-monospace fs-6">
+                        <?= $pendingOrderCount ?> Menunggu Verifikasi
+                    </span>
+                </div>
+            </div>
+
+            <?php if (isset($_GET['msg']) && $_GET['msg'] === 'order_approved'): ?>
+                <div class="alert alert-success py-2 px-3 small rounded-3 mb-3">
+                    <i class="fa-solid fa-circle-check text-success me-1"></i> <strong>Pembayaran Berhasil Dikonfirmasi!</strong> Akses unduhan File ZIP pembeli telah dibuka secara otomatis.
+                </div>
+            <?php endif; ?>
+
+            <?php if (empty($recentOrders)): ?>
+                <div class="p-3 bg-light rounded-3 text-center text-muted small">
+                    <i class="fa-solid fa-receipt me-1"></i> Belum ada transaksi QRIS yang tercatat di sistem.
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0 small">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Invoice</th>
+                                <th>Tanggal</th>
+                                <th>Pembeli & Kontak</th>
+                                <th>Produk / Paket</th>
+                                <th>Nominal</th>
+                                <th>Status Pembayaran</th>
+                                <th class="text-end">Aksi Admin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($recentOrders as $ord): 
+                                $isVerified = ($ord['status'] === 'verified');
+                                $ordWa = preg_replace('/[^0-9]/', '', $ord['buyer_whatsapp'] ?? '082291700778');
+                                $waApprovalMsg = rawurlencode("Halo Kak " . ($ord['buyer_name'] ?? 'Pelanggan') . ", pembayaran Anda untuk No. Invoice " . $ord['invoice_no'] . " (" . $ord['product_title'] . ") telah kami konfirmasi! Akses unduh File ZIP Anda sekarang telah dibuka seumur hidup. Silakan cek dan download di https://academy.skillance.cloud/projects.php. Terima kasih!");
+                            ?>
+                                <tr>
+                                    <td><strong class="font-monospace text-navy"><?= htmlspecialchars($ord['invoice_no']) ?></strong></td>
+                                    <td class="text-muted small"><?= date('d/m/Y H:i', strtotime($ord['created_at'])) ?></td>
+                                    <td>
+                                        <div class="fw-bold text-navy"><?= htmlspecialchars($ord['buyer_name'] ?? 'Pelanggan') ?></div>
+                                        <small class="text-muted"><?= htmlspecialchars($ord['buyer_whatsapp'] ?? '-') ?></small>
+                                    </td>
+                                    <td><span class="badge bg-light text-navy border"><?= htmlspecialchars($ord['product_title']) ?></span></td>
+                                    <td class="fw-bold text-primary">Rp <?= number_format($ord['nominal']) ?></td>
+                                    <td>
+                                        <?php if ($isVerified): ?>
+                                            <span class="badge bg-success"><i class="fa-solid fa-circle-check me-1"></i> Terverifikasi</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning text-dark"><i class="fa-solid fa-clock me-1"></i> Menunggu Konfirmasi</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <?php if (!$isVerified): ?>
+                                            <form method="POST" style="display:inline-block;">
+                                                <input type="hidden" name="action" value="approve_order">
+                                                <input type="hidden" name="invoice_no" value="<?= htmlspecialchars($ord['invoice_no']) ?>">
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">
+                                                    <i class="fa-solid fa-check me-1"></i> Approve
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <a href="https://wa.me/<?= $ordWa ?>?text=<?= $waApprovalMsg ?>" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-bold">
+                                                <i class="fa-brands fa-whatsapp me-1"></i> Notif WA
+                                            </a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Filter Form -->

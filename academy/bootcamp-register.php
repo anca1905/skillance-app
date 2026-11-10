@@ -558,25 +558,28 @@ $seoDesc = 'Formulir pendaftaran resmi Online Bootcamp Skillance Academy dengan 
                     </div>
                 </div>
 
-                <!-- STEP 4 CONTENT: SELAMAT BELAJAR (DOWNLOAD ZIP LANGSUNG) -->
+                <!-- STEP 4 CONTENT: SELAMAT BELAJAR (MENUNGGU KONFIRMASI ADMIN 1X24 JAM) -->
                 <div id="stepContent4" style="display: none;">
-                    <div class="step-breadcrumb text-success">Langkah 4</div>
-                    <h2 class="step-heading font-heading text-navy">Selamat Belajar! 🎉</h2>
+                    <div class="step-breadcrumb text-primary">Langkah 4</div>
+                    <h2 class="step-heading font-heading text-navy">Pendaftaran Berhasil Dikirim! 🎉</h2>
                     <p class="step-subtitle">
-                        Pendaftaran Anda telah aktif. Anda dapat segera mengakses materi pembelajaran, mengunduh source code starter kit, dan memulai studi.
+                        Rincian pendaftaran dan bukti transfer Anda telah masuk ke sistem dan diteruskan ke WhatsApp Admin (<strong>0822-9170-0778</strong>).
                     </p>
 
                     <div class="form-registration-card shadow-xs text-center">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle p-3 mb-3" style="width: 72px; height: 72px;">
-                            <i class="fa-solid fa-circle-check fa-3x"></i>
+                        <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning rounded-circle p-3 mb-3" style="width: 72px; height: 72px;">
+                            <i class="fa-solid fa-clock-rotate-left fa-3x"></i>
                         </div>
 
-                        <h4 class="fw-bold text-navy mb-1">Akses Bootcamp Anda Telah Dibuka!</h4>
+                        <div class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill mb-2">
+                            <i class="fa-solid fa-hourglass-half me-1"></i> Menunggu Konfirmasi Admin (Maksimal 1x24 Jam)
+                        </div>
+                        <h4 class="fw-bold text-navy mb-1">Verifikasi Pembayaran Sedang Diproses</h4>
                         <p class="text-muted small max-w-md mx-auto mb-4" style="line-height: 1.8;">
-                            Selamat datang di komunitas developer Skillance Academy! Silakan unduh modul handbook serta source code starter kit di bawah ini.
+                            Admin kami sedang memeriksa mutasi pembayaran Anda. Konfirmasi verifikasi akan dikirimkan otomatis ke WhatsApp Anda dalam waktu maksimal 1x24 jam kerja.
                         </p>
 
-                        <!-- TOMBOL DOWNLOAD UTAMA: LANGSUNG DOWNLOAD ZIP -->
+                        <!-- BOX PAKET BELAJAR & UNDUHAN ZIP -->
                         <div class="p-4 bg-light rounded-4 border mb-4 text-start">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <div>
@@ -587,13 +590,23 @@ $seoDesc = 'Formulir pendaftaran resmi Online Bootcamp Skillance Academy dengan 
                                 <span class="badge bg-success py-2 px-3 rounded-pill fw-bold"><i class="fa-solid fa-infinity me-1"></i> Akses Selamanya</span>
                             </div>
 
-                            <!-- ACTION DOWNLOAD ZIP -->
-                            <a href="downloads/sidesa-bundle-master.zip" download="sidesa-bundle-master.zip" class="btn btn-primary btn-lg w-100 fw-bold py-3 rounded-3 shadow-sm d-flex align-items-center justify-content-center gap-2">
-                                <i class="fa-solid fa-file-zipper fs-4"></i>
-                                <span>Download File ZIP Langsung (Full Source Code & E-Book)</span>
-                            </a>
+                            <!-- Form Cek Status Realtime -->
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text bg-white"><i class="fa-solid fa-receipt text-muted"></i></span>
+                                <input type="text" id="bcCheckInvoiceInput" class="form-control" readonly>
+                                <button class="btn btn-outline-navy fw-bold px-3" type="button" onclick="checkBootcampInvoiceStatus()">
+                                    <i class="fa-solid fa-rotate me-1"></i> Cek Status Sekarang
+                                </button>
+                            </div>
+
+                            <!-- TOMBOL DOWNLOAD (TERKUNCI SEBELUM DIVERIFIKASI) -->
+                            <div id="bcZipButtonWrapper">
+                                <button type="button" class="btn btn-secondary btn-lg w-100 fw-bold py-3 rounded-3 disabled opacity-75" disabled>
+                                    <i class="fa-solid fa-lock text-warning me-2"></i> Download File ZIP Terkunci (Tunggu Konfirmasi Admin 1x24 Jam)
+                                </button>
+                            </div>
                             <small class="text-muted d-block text-center mt-2" style="font-size: 0.75rem;">
-                                <i class="fa-solid fa-lock text-success me-1"></i> Tautan unduhan terverifikasi resmi &bull; Format .ZIP lengkap
+                                <i class="fa-solid fa-shield-halved text-success me-1"></i> Setelah Admin mengonfirmasi, tombol di atas akan otomatis berwarna hijau dan dapat diunduh langsung.
                             </small>
                         </div>
 
@@ -605,8 +618,8 @@ $seoDesc = 'Formulir pendaftaran resmi Online Bootcamp Skillance Academy dengan 
                                 </a>
                             </div>
                             <div class="col-sm-6">
-                                <a href="https://wa.me/6282291700778?text=Halo%20Admin%20Skillance,%20saya%20sudah%20menyelesaikan%20pendaftaran%20bootcamp.%20Mohon%20invite%20ke%20grup%20diskusi." target="_blank" class="btn btn-outline-success w-100 py-2.5 rounded-3 fw-bold small">
-                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> Gabung Grup WhatsApp Siswa
+                                <a id="bcWaFollowupBtn" href="#" target="_blank" class="btn btn-outline-success w-100 py-2.5 rounded-3 fw-bold small">
+                                    <i class="fa-brands fa-whatsapp text-success me-1"></i> Hubungi WhatsApp Admin (0822-9170-0778)
                                 </a>
                             </div>
                         </div>
@@ -750,8 +763,74 @@ $seoDesc = 'Formulir pendaftaran resmi Online Bootcamp Skillance Academy dengan 
         registrationData.pengalaman = document.getElementById('rePengalaman').value;
         registrationData.minat = document.getElementById('reMinat').value;
 
-        // Advance to Step 4 (Congratulations & Direct Download)
+        // Populate invoice check input in step 4
+        const bcInvInput = document.getElementById('bcCheckInvoiceInput');
+        if (bcInvInput) bcInvInput.value = currentInvoice;
+
+        // Set WhatsApp follow up link
+        const bcWaBtn = document.getElementById('bcWaFollowupBtn');
+        if (bcWaBtn) {
+            const msg = encodeURIComponent(`Halo Admin Skillance (0822-9170-0778), saya sudah menyelesaikan pendaftaran bootcamp untuk No. Invoice: *${currentInvoice}*. Mohon dikonfirmasi ya min. Terima kasih!`);
+            bcWaBtn.href = `https://wa.me/6282291700778?text=${msg}`;
+        }
+
+        // Register in orders table as pending
+        fetch('api/order_status.php?action=register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                invoice_no: currentInvoice,
+                product_id: registrationData.pathKey || 'bootcamp',
+                product_title: registrationData.pathTitle || 'Online Bootcamp Skillance',
+                nominal: registrationData.nominal || 149000,
+                buyer_name: registrationData.nama || '',
+                buyer_whatsapp: registrationData.whatsapp || ''
+            })
+        }).catch(() => {});
+
+        // Advance to Step 4 (Pending 1x24h confirmation)
         setStep(4);
+    }
+
+    function checkBootcampInvoiceStatus() {
+        const invInput = document.getElementById('bcCheckInvoiceInput');
+        if (!invInput || !invInput.value) return;
+        const inv = invInput.value.trim();
+        const btnWrap = document.getElementById('bcZipButtonWrapper');
+
+        btnWrap.innerHTML = `<button class="btn btn-secondary w-100 py-3 rounded-3" disabled><i class="fa-solid fa-spinner fa-spin me-2"></i> Memeriksa status verifikasi admin...</button>`;
+
+        fetch('api/order_status.php?action=check&invoice=' + encodeURIComponent(inv))
+            .then(res => res.json())
+            .then(res => {
+                if (res && res.status === 'verified') {
+                    btnWrap.innerHTML = `
+                        <div class="alert alert-success py-2 px-3 small mb-2 rounded-3 text-center">
+                            <i class="fa-solid fa-circle-check text-success me-1"></i> <strong>Pembayaran Terverifikasi!</strong> Akses unduhan Anda telah dibuka seumur hidup.
+                        </div>
+                        <a href="downloads/sidesa-bundle-master.zip" download="sidesa-bundle-master.zip" class="btn btn-success btn-lg w-100 fw-bold py-3 rounded-3 shadow-sm d-flex align-items-center justify-content-center gap-2">
+                            <i class="fa-solid fa-file-zipper fs-4"></i>
+                            <span>Download File ZIP Langsung (Full Source Code & E-Book)</span>
+                        </a>
+                    `;
+                } else {
+                    btnWrap.innerHTML = `
+                        <div class="alert alert-warning py-2 px-3 small mb-2 rounded-3 text-start">
+                            <i class="fa-solid fa-clock text-warning me-1"></i> <strong>Menunggu Konfirmasi Admin:</strong> Invoice <code>${inv}</code> masih dalam antrean verifikasi Admin (Maksimal 1x24 Jam).
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-lg w-100 fw-bold py-3 rounded-3 disabled opacity-75" disabled>
+                            <i class="fa-solid fa-lock text-warning me-2"></i> Download File ZIP Terkunci (Tunggu Konfirmasi Admin 1x24 Jam)
+                        </button>
+                    `;
+                }
+            })
+            .catch(() => {
+                btnWrap.innerHTML = `
+                    <button type="button" class="btn btn-secondary btn-lg w-100 fw-bold py-3 rounded-3 disabled opacity-75" disabled>
+                        <i class="fa-solid fa-lock text-warning me-2"></i> Download File ZIP Terkunci (Tunggu Konfirmasi Admin 1x24 Jam)
+                    </button>
+                `;
+            });
     }
 
     // Initialize display on load
