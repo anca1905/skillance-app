@@ -1,3 +1,5 @@
+let cachedProjects = [];
+
 document.addEventListener("DOMContentLoaded", function () {
     loadPayrolls();
 
@@ -6,6 +8,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const complexityContainer = document.getElementById('complexityContainer');
     const rateInput = document.getElementById('pRate');
     const qtyInput = document.getElementById('pQty');
+    const projectSelect = document.getElementById('pProject');
+
+    // Handle project selection for profit sharing
+    if (projectSelect) {
+        projectSelect.addEventListener('change', function () {
+            const projId = parseInt(this.value) || 0;
+            const infoBox = document.getElementById('projectInfoBox');
+            if (projId > 0) {
+                const proj = cachedProjects.find(p => parseInt(p.id) === projId);
+                if (proj) {
+                    infoBox.classList.remove('d-none');
+                    document.getElementById('projPriceDisplay').innerText = formatRp(proj.price);
+                    
+                    const statusBadge = document.getElementById('projPayStatusDisplay');
+                    statusBadge.innerText = proj.payment_status || 'Belum Bayar';
+                    if (proj.payment_status === 'Lunas') {
+                        statusBadge.className = 'badge bg-success';
+                    } else if (proj.payment_status && proj.payment_status.includes('DP')) {
+                        statusBadge.className = 'badge bg-warning text-dark';
+                    } else {
+                        statusBadge.className = 'badge bg-danger';
+                    }
+
+                    // Auto suggest description and unit
+                    document.getElementById('pUnit').value = 'Software House';
+                    const descInput = document.getElementById('pDesc');
+                    if (!descInput.value || descInput.value.startsWith('Bagi Hasil')) {
+                        descInput.value = `Bagi Hasil Proyek: ${proj.name}`;
+                    }
+                    return;
+                }
+            }
+            infoBox.classList.add('d-none');
+        });
+    }
 
     // Handle role change to set preset rate and show/hide complexity for designer
     roleSelect.addEventListener('change', function () {
@@ -41,10 +78,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function applyProjectShare(pct, label) {
+    const projectSelect = document.getElementById('pProject');
+    const projId = parseInt(projectSelect.value) || 0;
+    const proj = cachedProjects.find(p => parseInt(p.id) === projId);
+    
+    if (!proj) {
+        Swal.fire('Info', 'Pilih proyek terlebih dahulu dari dropdown.', 'info');
+        return;
+    }
+
+    const price = parseFloat(proj.price) || 0;
+    const shareAmount = Math.round(price * pct);
+    const kasShare = price - shareAmount;
+
+    document.getElementById('pRate').value = shareAmount;
+    document.getElementById('pQty').value = 1;
+    calculateEstimasi();
+
+    const pctNum = Math.round(pct * 100);
+    document.getElementById('pDesc').value = `Bagi Hasil (${pctNum}%): ${proj.name}`;
+    document.getElementById('shareNote').innerHTML = `
+        <span class="text-success fw-bold"><i class="fa-solid fa-check me-1"></i>Eksekutor: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
+        <span class="text-navy fw-semibold">Kas PT: ${formatRp(kasShare)} (${100 - pctNum}%)</span>
+    `;
+}
+
 function applyPresetRate() {
     const role = document.getElementById('pRole').value;
     const complexity = document.getElementById('pComplexity').value;
     const rateInput = document.getElementById('pRate');
+
+    // Only apply preset if not linked to a project with a custom share
+    const projId = parseInt(document.getElementById('pProject')?.value) || 0;
+    if (projId > 0) return;
 
     if (role === 'Programmer') {
         rateInput.value = 500000;
@@ -155,6 +222,17 @@ function loadPayrolls() {
                         `;
                     }
 
+                    let projectTag = '';
+                    if (item.project_name) {
+                        projectTag = `
+                            <div class="mt-1">
+                                <span class="badge bg-light text-primary border" style="font-size: 0.68rem;">
+                                    <i class="fa-solid fa-briefcase me-1"></i>Proyek: ${item.project_name}
+                                </span>
+                            </div>
+                        `;
+                    }
+
                     const html = `
                         <tr>
                             <td class="ps-4">
@@ -166,6 +244,7 @@ function loadPayrolls() {
                             <td>
                                 <div class="fw-semibold text-dark">${item.description}</div>
                                 ${item.role_type === 'Designer' ? `<small class="text-muted" style="font-size: 0.72rem;">Tingkat: ${item.complexity}</small>` : ''}
+                                ${projectTag}
                             </td>
                             <td>
                                 <span class="small text-muted">${item.qty} × ${formatRp(rateAmt)}</span>
@@ -186,8 +265,8 @@ function loadPayrolls() {
                         <tr>
                             <td colspan="8" class="text-center py-5 text-muted">
                                 <i class="fa-solid fa-clipboard-check fs-3 d-block mb-2 opacity-50"></i>
-                                Belum ada catatan honorarium tim.<br>
-                                <small class="text-muted">Gunakan tombol <strong>"Tambah Catatan Honor Tim"</strong> di atas untuk mencatat honor programmer, desainer, atau staf.</small>
+                                Belum ada catatan honorarium / bagi hasil tim.<br>
+                                <small class="text-muted">Gunakan tombol <strong>"Tambah Catatan Honor / Bagi Hasil"</strong> di atas untuk mencatat kompensasi per-proyek.</small>
                             </td>
                         </tr>
                     `;
@@ -199,9 +278,19 @@ function loadPayrolls() {
 
                 // Populate user dropdown
                 const userSelect = document.getElementById('pUser');
-                if (userSelect.options.length <= 1 && res.users) {
+                if (userSelect && userSelect.options.length <= 1 && res.users) {
                     res.users.forEach(user => {
                         userSelect.insertAdjacentHTML('beforeend', `<option value="${user.id}">${user.name} (${user.role})</option>`);
+                    });
+                }
+
+                // Populate projects dropdown
+                const projectSelect = document.getElementById('pProject');
+                if (projectSelect && projectSelect.options.length <= 1 && res.projects) {
+                    cachedProjects = res.projects;
+                    res.projects.forEach(p => {
+                        const priceFmt = formatRp(p.price);
+                        projectSelect.insertAdjacentHTML('beforeend', `<option value="${p.id}">${p.name} - ${priceFmt} (${p.payment_status || 'Belum Bayar'})</option>`);
                     });
                 }
             } else {
@@ -217,6 +306,7 @@ function loadPayrolls() {
 function savePayroll() {
     const payload = {
         user_id: document.getElementById('pUser').value,
+        project_id: document.getElementById('pProject') ? document.getElementById('pProject').value : 0,
         unit_bisnis: document.getElementById('pUnit').value,
         role_type: document.getElementById('pRole').value,
         complexity: document.getElementById('pComplexity').value,
@@ -237,6 +327,7 @@ function savePayroll() {
             const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
             modal.hide();
             document.getElementById('payrollForm').reset();
+            document.getElementById('projectInfoBox')?.classList.add('d-none');
             applyPresetRate();
             calculateEstimasi();
             loadPayrolls();
@@ -254,7 +345,7 @@ function savePayroll() {
 function markPaid(id) {
     Swal.fire({
         title: 'Tandai Dibayar?',
-        text: "Honor ini akan ditandai lunas dan otomatis dipotong/dicatat sebagai pengeluaran di Buku Kas PT Skillance.",
+        text: "Honor bagi hasil ini akan ditandai lunas dan otomatis dipotong/dicatat sebagai pengeluaran di Buku Kas PT Skillance.",
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#198754',

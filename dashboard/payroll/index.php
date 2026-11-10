@@ -1,102 +1,107 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../auth/index.php");
-    exit();
-}
-if (($_SESSION['user_role'] ?? '') === 'freelancer') {
-    header("Location: ../freelancer/index.php");
+require_once __DIR__ . '/../../config/config.php';
+
+// Cek hak akses: hanya admin dan bendahara yang boleh mengakses halaman ini
+$currentUserRole = $_SESSION['role'] ?? '';
+if (!isset($_SESSION['user_id']) || !in_array($currentUserRole, ['admin', 'bendahara'])) {
+    header("Location: ../finance/index.php");
     exit();
 }
 
-$currentUserRole = $_SESSION['user_role'] ?? 'admin';
+$pageTitle = "Penggajian & Honorarium Tim";
+$activeMenu = "payroll";
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggajian & Honor Tim | PT Skillance Digital Indonesia</title>
-
-    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+    <title><?= $pageTitle ?> | PT Skillance Digital Indonesia</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    
     <style>
-        body { background-color: #f4f6fa; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-        .sidebar { width: 250px; height: 100vh; position: fixed; top: 0; left: 0; background-color: var(--white); border-right: 1px solid rgba(0,0,0,0.05); padding-top: 20px; z-index: 1000; transition: 0.3s; }
-        .main-content { margin-left: 250px; padding: 24px 30px; transition: 0.3s; }
-        .nav-link { color: var(--text-body); padding: 12px 20px; font-weight: 500; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
-        .nav-link:hover, .nav-link.active { background-color: var(--navy-subtle); color: var(--navy) !important; border-right: 3px solid var(--navy); }
-        .nav-link i { width: 20px; text-align: center; }
-        @media (max-width: 768px) { .sidebar { margin-left: -250px; } .sidebar.active { margin-left: 0; } .main-content { margin-left: 0; padding: 16px 12px; } }
-        .card { border: none; box-shadow: 0 2px 15px rgba(0,0,0,0.04); border-radius: 12px; }
-        
-        .ecosystem-banner {
-            background: linear-gradient(135deg, #0d2e5c 0%, #174276 100%);
-            border-radius: 12px;
-            color: #fff;
-            padding: 20px 24px;
+        :root {
+            --navy: #0d2e5c;
+            --gold: #f59e0b;
+        }
+        .text-navy { color: var(--navy) !important; }
+        .bg-navy { background-color: var(--navy) !important; }
+        .border-navy { border-color: var(--navy) !important; }
+        .role-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .role-badge.programmer { background: #e0e7ff; color: #4338ca; }
+        .role-badge.designer { background: #fce7f3; color: #be185d; }
+        .hover-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .hover-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important;
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <?php
-    $activeMenu = 'payroll';
-    include __DIR__ . '/../includes/sidebar.php';
-    ?>
+    <!-- Sidebar Dynamic (Admin & Bendahara) -->
+    <?php include __DIR__ . '/../includes/sidebar.php'; ?>
 
-    <div class="main-content">
-        <!-- Topbar Mobile -->
-        <div class="d-flex justify-content-between align-items-center mb-4 d-md-none">
-            <button class="btn btn-navy btn-sm sidebar-toggle-btn" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-            <span class="fw-bold text-navy">Penggajian & Honor Tim</span>
-        </div>
-
-        <!-- Banner Ekosistem Holding -->
-        <div class="ecosystem-banner mb-4 shadow-sm">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <div>
-                    <div class="d-flex align-items-center gap-2 mb-1">
-                        <span class="badge bg-gold text-navy fw-bold px-2 py-1" style="font-size: 0.7rem;">
-                            <i class="fa-solid fa-money-check-dollar me-1"></i> PAYROLL & HONORARIUM PT
-                        </span>
-                        <span class="badge bg-success bg-opacity-25 text-white border border-success border-opacity-50 px-2 py-1" style="font-size: 0.7rem;">
-                            Auto-Sync Buku Kas
-                        </span>
-                    </div>
-                    <h4 class="fw-bold mb-1 text-white">Penggajian & Honor Tim Ekosistem PT</h4>
-                    <p class="mb-0 text-white-50 small">
-                        Pencatatan fee programmer, desainer, staf operasional, serta integrasi bagi hasil toko anak usaha (Aquirist Print).
-                    </p>
+    <div class="main-content p-3 p-md-4">
+        <!-- Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="badge bg-gold text-navy fw-bold px-2.5 py-1 small">
+                        <i class="fa-solid fa-coins me-1"></i>S-PAYROLL & PROFIT SHARING
+                    </span>
+                    <span class="badge bg-light text-muted border small">PT Skillance Digital Indonesia</span>
                 </div>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="https://aquiris.skillance.cloud/bagi_hasil.php" target="_blank" class="btn btn-warning text-navy btn-sm fw-bold shadow-sm">
-                        <i class="fa-solid fa-store me-1"></i> Bagi Hasil Aquirist Print
-                    </a>
-                    <button class="btn btn-light text-navy btn-sm fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addPayrollModal">
-                        <i class="fa-solid fa-plus me-1 text-success"></i> Catat Gaji / Honor Baru
-                    </button>
-                </div>
+                <h3 class="fw-bold text-navy mb-0">Penggajian & Bagi Hasil Proyek Tim</h3>
+                <p class="text-muted small mb-0 mt-1">
+                    Kelola pencatatan kompensasi per-proyek (revenue sharing) dan honorarium tim ekosistem PT Skillance Digital Indonesia.
+                </p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="../finance/index.php" class="btn btn-outline-secondary btn-sm shadow-sm py-2 px-3 fw-semibold">
+                    <i class="fa-solid fa-book me-1.5"></i>Buku Kas PT
+                </a>
+                <button class="btn btn-navy text-white btn-sm shadow-sm py-2 px-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#addPayrollModal">
+                    <i class="fa-solid fa-plus me-1.5"></i>Tambah Catatan Honor / Bagi Hasil
+                </button>
             </div>
         </div>
 
-        <!-- Edukasi Integrasi Anakan Usaha -->
+        <!-- Ecosystem Notice Banner: Penjelasan Skema Gaji Per-Proyek & Kas Realistis -->
+        <div class="alert alert-warning border-0 shadow-sm p-3 mb-4 rounded-3 d-flex align-items-start gap-3" style="background-color: #fffbeb; border-left: 5px solid #f59e0b !important;">
+            <i class="fa-solid fa-shield-halved fs-3 text-warning mt-1"></i>
+            <div>
+                <h6 class="fw-bold text-warning-emphasis mb-1">
+                    Prinsip Keuangan: Skema Bagi Hasil Per-Proyek (Cashflow Protection)
+                </h6>
+                <p class="small text-muted mb-0" style="line-height: 1.55;">
+                    Karena kondisi kas rintisan saat ini berbasis perputaran proyek (belum gaji bulanan tetap), pembayaran honor programmer, desainer, dan tim teknis menganut sistem <strong>Bagi Hasil Nilai Proyek (Profit Sharing)</strong>. Honor hanya dicairkan setelah pembayaran/termin dari klien masuk ke rekening PT Skillance untuk menjaga kas perusahaan tetap sehat dan tidak defisit.
+                </p>
+            </div>
+        </div>
+
+        <!-- Dua Pilar Model Pembayaran di Ekosistem Skillance -->
         <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm" style="border-left: 4px solid #f59e0b !important; background: #fffcf0;">
+                <div class="card h-100 border-0 shadow-sm" style="border-left: 4px solid #f59e0b !important;">
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <h6 class="fw-bold mb-0 text-dark">
-                                <i class="fa-solid fa-print text-warning me-1.5"></i> 1. Aquirist Print & Akrilik Studio
+                            <h6 class="fw-bold mb-0 text-navy">
+                                <i class="fa-solid fa-store text-warning me-1.5"></i> 1. Aquirist Print & Acrylic Studio
                             </h6>
-                            <span class="badge bg-warning text-dark small">Toko Fisik</span>
+                            <span class="badge bg-warning-subtle text-warning-emphasis small border border-warning">Anak Usaha Toko</span>
                         </div>
                         <p class="small text-muted mb-2" style="font-size: 0.78rem;">
-                            Sistem kasir dan bagi hasil toko berjalan mandiri di <strong>aquiris.skillance.cloud</strong> dengan skema otomatis: <strong>40% Upah Pekerja Toko</strong>, <strong>20% Kas Cadangan</strong>, dan <strong>40% Setoran ke Pemilik/PT</strong>.
+                            Penggajian kasir/operator toko dihitung otomatis di sistem toko: <strong>40% Pekerja</strong>, <strong>20% Maintenance/Kertas</strong>, dan <strong>40% Setoran Pemilik/PT</strong>.
                         </p>
                         <a href="https://aquiris.skillance.cloud/bagi_hasil.php" target="_blank" class="btn btn-outline-warning btn-sm text-dark py-1 px-2.5 fw-semibold" style="font-size: 0.74rem;">
                             <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Buka Bagi Hasil Aquirist
@@ -109,12 +114,12 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <h6 class="fw-bold mb-0 text-navy">
-                                <i class="fa-solid fa-laptop-code text-primary me-1.5"></i> 2. Tim Internal Skillance & Software House
+                                <i class="fa-solid fa-laptop-code text-primary me-1.5"></i> 2. Tim Software House & Edukasi Skillance
                             </h6>
                             <span class="badge bg-navy text-white small">Holding PT</span>
                         </div>
                         <p class="small text-muted mb-2" style="font-size: 0.78rem;">
-                            Pencatatan fee programmer berbasis project, desainer grafis per konten, dan staf operasional. Saat status ditandai <strong>"Dibayar"</strong>, sistem otomatis memotong saldo dan mencatat pengeluaran di Buku Kas PT Skillance.
+                            Pencatatan bagi hasil programmer/desainer per project. Saat status ditandai <strong>"Dibayar"</strong>, sistem otomatis memotong saldo kas PT dan mencatat pengeluaran di Buku Kas PT Skillance.
                         </p>
                         <button class="btn btn-outline-navy btn-sm py-1 px-2.5 fw-semibold" style="font-size: 0.74rem;" data-bs-toggle="modal" data-bs-target="#addPayrollModal">
                             <i class="fa-solid fa-plus me-1"></i> Tambah Catatan Honor Tim
@@ -130,7 +135,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 <div class="card h-100 shadow-sm border-0" style="border-left: 4px solid #f59e0b !important; background: #fffcf0;">
                     <div class="card-body p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold text-warning-emphasis" style="font-size: 0.7rem;">Tagihan Honor Pending (Belum Ditransfer)</small>
+                            <small class="text-uppercase fw-bold text-warning-emphasis" style="font-size: 0.7rem;">Tagihan Honor Pending (Menunggu Pembayaran Klien/Pencairan)</small>
                             <h3 class="fw-bold mb-0 mt-1" id="totalPending" style="color: #92400e !important;">Rp 0</h3>
                         </div>
                         <i class="fa-solid fa-clock-rotate-left fs-2 text-warning opacity-75"></i>
@@ -141,7 +146,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 <div class="card h-100 shadow-sm border-0" style="border-left: 4px solid #198754 !important;">
                     <div class="card-body p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.7rem;">Total Honor Telah Ditransfer</small>
+                            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.7rem;">Total Honor Telah Ditransfer (Buku Kas PT)</small>
                             <h3 class="fw-bold mb-0 mt-1 text-success" id="totalPaid">Rp 0</h3>
                         </div>
                         <i class="fa-solid fa-check-double fs-2 text-success opacity-75"></i>
@@ -154,7 +159,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
         <div class="card shadow-sm border-0">
             <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
                 <h6 class="fw-bold text-navy mb-0">
-                    <i class="fa-solid fa-list-check me-2"></i>Daftar Penggajian & Honorarium Tim
+                    <i class="fa-solid fa-list-check me-2"></i>Daftar Penggajian & Bagi Hasil Tim
                 </h6>
                 <small class="text-muted">Data otomatis tersinkronisasi dengan Buku Kas PT Skillance</small>
             </div>
@@ -166,7 +171,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                                 <th class="ps-4">KARYAWAN / PENERIMA</th>
                                 <th>UNIT BISNIS</th>
                                 <th>PERAN / TUGAS</th>
-                                <th>RINCIAN TUGAS</th>
+                                <th>RINCIAN TUGAS / PROYEK</th>
                                 <th>QTY x TARIF</th>
                                 <th>TOTAL HONOR</th>
                                 <th>STATUS</th>
@@ -192,7 +197,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-navy text-white">
                     <h6 class="modal-title fw-bold text-white">
-                        <i class="fa-solid fa-file-circle-plus text-gold me-2"></i>Catat Gaji / Honorarium Tim
+                        <i class="fa-solid fa-file-circle-plus text-gold me-2"></i>Catat Honorarium / Bagi Hasil Proyek
                     </h6>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -203,6 +208,38 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                             <select id="pUser" class="form-select" required>
                                 <option value="">-- Pilih Karyawan --</option>
                             </select>
+                        </div>
+
+                        <!-- Hubungkan ke Project untuk Bagi Hasil -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label class="small text-muted fw-bold">HUBUNGKAN DENGAN PROYEK (OPSIONAL)</label>
+                                <span class="badge bg-primary-subtle text-primary border" style="font-size: 0.65rem;">Kalkulator Bagi Hasil</span>
+                            </div>
+                            <select id="pProject" class="form-select">
+                                <option value="0">-- Bukan Terkait Proyek Spesifik (Honor Lepas) --</option>
+                            </select>
+                            
+                            <div id="projectInfoBox" class="p-2.5 mt-2 rounded-3 border bg-light d-none" style="font-size: 0.8rem;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="text-muted">Nilai Kontrak Klien:</span>
+                                    <span class="fw-bold text-navy" id="projPriceDisplay">Rp 0</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted">Status Bayar Klien:</span>
+                                    <span class="badge bg-secondary" id="projPayStatusDisplay">-</span>
+                                </div>
+                                <div class="text-muted small mb-1 fw-bold" style="font-size: 0.72rem;">PILIH SKEMA BAGI HASIL EKSEKUTOR:</div>
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.50, '50% Eksekutor / 50% Kas PT')">50%</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.60, '60% Eksekutor / 40% Kas PT')">60%</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.40, '40% Eksekutor / 60% Kas PT')">40%</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.30, '30% Eksekutor / 70% Kas PT')">30%</button>
+                                </div>
+                                <div class="text-muted mt-1.5" style="font-size: 0.68rem;" id="shareNote">
+                                    * Klik salah satu persentase untuk mengisi tarif honor secara otomatis.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -237,7 +274,7 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                         </div>
 
                         <div class="mb-3">
-                            <label class="small text-muted fw-bold">NAMA PROJECT / DESKRIPSI PEKERJAAN</label>
+                            <label class="small text-muted fw-bold">NAMA PROJECT / RINCIAN TUGAS</label>
                             <input type="text" id="pDesc" class="form-control" placeholder="Contoh: Modul Absensi SIMS / Desain Feed Instagram" required>
                         </div>
 
