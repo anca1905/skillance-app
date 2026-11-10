@@ -292,24 +292,59 @@ $activeMenu = "payroll";
                                 <option value="0">-- Bukan Terkait Proyek Spesifik (Honor Lepas) --</option>
                             </select>
                             
-                            <div id="projectInfoBox" class="p-2.5 mt-2 rounded-3 border bg-light d-none" style="font-size: 0.8rem;">
+                            <div id="projectInfoBox" class="p-3 mt-2 rounded-3 border bg-light d-none" style="font-size: 0.8rem;">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <span class="text-muted">Nilai Kontrak Klien:</span>
-                                    <span class="fw-bold text-navy" id="projPriceDisplay">Rp 0</span>
+                                    <span class="fw-bold fs-6 text-navy" id="projPriceDisplay">Rp 0</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="text-muted">Status Bayar Klien:</span>
                                     <span class="badge bg-secondary" id="projPayStatusDisplay">-</span>
                                 </div>
-                                <div class="text-muted small mb-1 fw-bold" style="font-size: 0.72rem;">PILIH SKEMA BAGI HASIL EKSEKUTOR:</div>
-                                <div class="btn-group w-100" role="group">
-                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.50, '50% Eksekutor / 50% Kas PT')">50%</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.60, '60% Eksekutor / 40% Kas PT')">60%</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.40, '40% Eksekutor / 60% Kas PT')">40%</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm py-1 fw-semibold" onclick="applyProjectShare(0.30, '30% Eksekutor / 70% Kas PT')">30%</button>
+
+                                <!-- Rincian Skema Bagi Hasil PT Skillance (50% Kas PT, 40% Programmer, 10% Bendahara) -->
+                                <div class="card p-2.5 border-0 bg-white shadow-sm mb-2 rounded-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1.5 pb-1 border-bottom">
+                                        <span class="fw-bold text-navy" style="font-size: 0.76rem;">
+                                            <i class="fa-solid fa-chart-pie text-warning me-1"></i>Simulasi Bagi Hasil Proyek:
+                                        </span>
+                                        <span class="badge bg-primary-subtle text-primary fw-bold" style="font-size: 0.65rem;">50% - 40% - 10%</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center py-0.5">
+                                        <span class="text-muted small"><i class="fa-solid fa-building-columns text-navy me-1"></i>Kas PT Skillance (50%):</span>
+                                        <strong class="text-navy" id="calcKasPt">Rp 0</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center py-0.5">
+                                        <span class="text-muted small"><i class="fa-solid fa-code text-primary me-1"></i>Programmer / Tim Teknis (40%):</span>
+                                        <strong class="text-primary" id="calcProg">Rp 0</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center py-0.5">
+                                        <span class="text-muted small"><i class="fa-solid fa-vault text-warning me-1"></i>Bendahara Keuangan (10%):</span>
+                                        <strong class="text-warning-emphasis" id="calcBendahara">Rp 0</strong>
+                                    </div>
+                                </div>
+
+                                <div class="text-muted small mb-1 fw-bold" style="font-size: 0.72rem;">TERAPKAN FEE KE FORM:</div>
+                                <div class="row g-1 mb-1">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-primary btn-sm w-100 py-1.5 fw-bold" onclick="applyRoleShare('Programmer', 0.40)">
+                                            <i class="fa-solid fa-code me-1"></i>40% Programmer
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-warning text-dark btn-sm w-100 py-1.5 fw-bold" onclick="applyRoleShare('Bendahara', 0.10)">
+                                            <i class="fa-solid fa-vault me-1"></i>10% Bendahara
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="btn-group w-100 mt-1" role="group">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.50, '50% Eksekutor / 50% Kas PT')">50%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.35, '35% Programmer / 15% Bendahara')">35%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.15, '15% Bendahara')">15%</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-1" onclick="applyProjectShare(0.30, '30% Fee')">30%</button>
                                 </div>
                                 <div class="text-muted mt-1.5" style="font-size: 0.68rem;" id="shareNote">
-                                    * Klik salah satu persentase untuk mengisi tarif honor secara otomatis.
+                                    * Klik tombol di atas untuk mengisi tarif honor secara otomatis.
                                 </div>
                             </div>
                         </div>
@@ -328,7 +363,8 @@ $activeMenu = "payroll";
                         <div class="mb-3">
                             <label class="small text-muted fw-bold">JENIS PERAN / PEKERJAAN</label>
                             <select id="pRole" class="form-select" required>
-                                <option value="Programmer">Programmer (Preset Rp 500k / project)</option>
+                                <option value="Programmer">Programmer (Tim Teknis / Coding)</option>
+                                <option value="Bendahara">Bendahara (Admin Keuangan & Invoicing)</option>
                                 <option value="Designer">Desainer Grafis (Per Konten / Banner)</option>
                                 <option value="Operator Toko">Operator Toko Cetak / Akrilik (Rp 50k / shift)</option>
                                 <option value="Instruktur">Instruktur / Mentor Bootcamp (Rp 200k / sesi)</option>

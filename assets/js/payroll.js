@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 const proj = cachedProjects.find(p => parseInt(p.id) === projId);
                 if (proj) {
                     infoBox.classList.remove('d-none');
-                    document.getElementById('projPriceDisplay').innerText = formatRp(proj.price);
+                    const price = parseFloat(proj.price) || 0;
+                    document.getElementById('projPriceDisplay').innerText = formatRp(price);
                     
                     const statusBadge = document.getElementById('projPayStatusDisplay');
                     statusBadge.innerText = proj.payment_status || 'Belum Bayar';
@@ -30,6 +31,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     } else {
                         statusBadge.className = 'badge bg-danger';
                     }
+
+                    // Hitung simulasi pembagian 50% Kas PT, 40% Programmer, 10% Bendahara
+                    const kasPt = Math.round(price * 0.50);
+                    const progShare = Math.round(price * 0.40);
+                    const bendaharaShare = price - kasPt - progShare;
+
+                    const elKas = document.getElementById('calcKasPt');
+                    if (elKas) elKas.innerText = formatRp(kasPt);
+                    const elProg = document.getElementById('calcProg');
+                    if (elProg) elProg.innerText = formatRp(progShare);
+                    const elBendahara = document.getElementById('calcBendahara');
+                    if (elBendahara) elBendahara.innerText = formatRp(bendaharaShare);
 
                     // Auto suggest description and unit
                     document.getElementById('pUnit').value = 'Software House';
@@ -77,6 +90,54 @@ document.addEventListener("DOMContentLoaded", function () {
         savePayroll();
     });
 });
+
+function applyRoleShare(role, pct) {
+    const projectSelect = document.getElementById('pProject');
+    const projId = parseInt(projectSelect.value) || 0;
+    const proj = cachedProjects.find(p => parseInt(p.id) === projId);
+    
+    if (!proj) {
+        Swal.fire('Info', 'Pilih proyek terlebih dahulu dari dropdown.', 'info');
+        return;
+    }
+
+    const price = parseFloat(proj.price) || 0;
+    const shareAmount = Math.round(price * pct);
+    const pctNum = Math.round(pct * 100);
+
+    // Set role
+    const roleSelect = document.getElementById('pRole');
+    roleSelect.value = role;
+    document.getElementById('complexityContainer').classList.add('d-none');
+
+    // Set rate & qty
+    document.getElementById('pRate').value = shareAmount;
+    document.getElementById('pQty').value = 1;
+    calculateEstimasi();
+
+    if (role === 'Programmer') {
+        document.getElementById('pDesc').value = `Bagi Hasil Proyek (${pctNum}%): ${proj.name}`;
+        document.getElementById('shareNote').innerHTML = `
+            <span class="text-primary fw-bold"><i class="fa-solid fa-code me-1"></i>Fee Programmer: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
+            <span class="text-navy fw-semibold">Kas PT Cadangan: ${formatRp(price * 0.50)} (50%)</span>
+        `;
+    } else if (role === 'Bendahara') {
+        document.getElementById('pDesc').value = `Fee Penagihan, Invoicing & Pajak (${pctNum}%): ${proj.name}`;
+        document.getElementById('shareNote').innerHTML = `
+            <span class="text-warning-emphasis fw-bold"><i class="fa-solid fa-vault me-1"></i>Fee Bendahara: ${formatRp(shareAmount)} (${pctNum}%)</span> • 
+            <span class="text-navy fw-semibold">Kas PT Cadangan: ${formatRp(price * 0.50)} (50%)</span>
+        `;
+        
+        // Auto select bendahara in user dropdown if exists
+        const userSelect = document.getElementById('pUser');
+        for (let i = 0; i < userSelect.options.length; i++) {
+            if (userSelect.options[i].text.toLowerCase().includes('bendahara')) {
+                userSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+}
 
 function applyProjectShare(pct, label) {
     const projectSelect = document.getElementById('pProject');
@@ -164,6 +225,8 @@ function getUnitBadge(unit) {
 function getRoleBadge(role) {
     if (role === 'Programmer') {
         return '<span class="badge bg-primary px-2 py-1"><i class="fa-solid fa-code me-1"></i>Programmer</span>';
+    } else if (role === 'Bendahara') {
+        return '<span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-vault me-1"></i>Bendahara Proyek</span>';
     } else if (role === 'Designer') {
         return '<span class="badge bg-info text-dark px-2 py-1"><i class="fa-solid fa-palette me-1"></i>Desainer</span>';
     } else if (role === 'Operator Toko') {
