@@ -85,64 +85,36 @@
             </div>
         </div>
 
-        <!-- VISITOR ANALYTICS & GLOBAL REACH WIDGET -->
+        <!-- OFFICIAL FLAG COUNTER & VISITOR ANALYTICS -->
         <div class="visitor-analytics-card rounded-4 p-3 p-md-4 mb-4 border shadow-xs" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%); color: #fff;">
             <div class="row align-items-center g-3">
                 <!-- Col 1: Header & Live Status -->
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-5 col-md-12">
                     <div class="d-flex align-items-center gap-3">
                         <div class="d-inline-flex align-items-center justify-content-center rounded-3 text-warning bg-white bg-opacity-10 p-2" style="width: 44px; height: 44px;">
                             <i class="fa-solid fa-earth-asia fs-4"></i>
                         </div>
                         <div>
-                            <h6 class="fw-bold mb-0 text-white font-heading" style="font-size: 0.95rem;">Statistik Pengunjung & Jangkauan</h6>
-                            <small class="text-white-50" style="font-size: 0.72rem;">Traffic Terverifikasi & Distribusi Global</small>
+                            <h6 class="fw-bold mb-0 text-white font-heading" style="font-size: 0.95rem;">Statistik Pengunjung Global</h6>
+                            <small class="text-white-50" style="font-size: 0.72rem;">Traffic Terverifikasi & Counter Bendera Dunia</small>
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-2 mt-2 pt-1">
                         <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-2.5 py-1 rounded-pill small d-inline-flex align-items-center gap-1.5" style="font-size: 0.72rem;">
                             <span class="spinner-grow spinner-grow-sm text-success" style="width: 7px; height: 7px;" role="status"></span>
-                            <span class="visitorOnlineNow">5 Online</span>
+                            <span>Realtime Tracking</span>
                         </span>
                         <span class="text-white-50 small" style="font-size: 0.75rem;">
-                            <i class="fa-solid fa-eye text-warning me-1"></i><strong class="text-white visitorTodayViews">240+</strong> dilihat hari ini
+                            <i class="fa-solid fa-chart-line text-warning me-1"></i>Official FlagCounter Analytics
                         </span>
                     </div>
                 </div>
 
-                <!-- Col 2: Total Counter -->
-                <div class="col-lg-3 col-md-4 col-6 border-start-lg border-white border-opacity-10 ps-lg-4">
-                    <small class="text-white-50 text-uppercase d-block fw-semibold" style="font-size: 0.68rem; letter-spacing: 0.5px;">Total Kunjungan</small>
-                    <div class="fs-4 fw-bold text-warning font-monospace lh-1 my-1 visitorTotalViews">14,280</div>
-                    <small class="text-white-50" style="font-size: 0.7rem;"><i class="fa-solid fa-chart-line text-success me-1"></i>Realtime & Non-Spam</small>
-                </div>
-
-                <!-- Col 3: Country Flags & Distribution -->
-                <div class="col-lg-5 col-md-8 col-12">
-                    <div class="d-flex align-items-center justify-content-between mb-1.5">
-                        <small class="text-white-50 text-uppercase fw-semibold" style="font-size: 0.68rem; letter-spacing: 0.5px;">Asal Negara Pengunjung:</small>
-                        <small class="text-warning" style="font-size: 0.68rem;"><i class="fa-solid fa-globe me-1"></i>Multi-Country</small>
-                    </div>
-                    <div class="d-flex flex-wrap gap-1.5 visitorCountryBadges">
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Indonesia">
-                            <span>🇮🇩</span> <span class="fw-semibold">ID</span> <span class="text-warning fw-bold">86%</span>
-                        </span>
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Malaysia">
-                            <span>🇲🇾</span> <span class="fw-semibold">MY</span> <span class="text-warning fw-bold">6%</span>
-                        </span>
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Singapura">
-                            <span>🇸🇬</span> <span class="fw-semibold">SG</span> <span class="text-warning fw-bold">3%</span>
-                        </span>
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Amerika Serikat">
-                            <span>🇺🇸</span> <span class="fw-semibold">US</span> <span class="text-warning fw-bold">3%</span>
-                        </span>
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Jepang">
-                            <span>🇯🇵</span> <span class="fw-semibold">JP</span> <span class="text-warning fw-bold">1%</span>
-                        </span>
-                        <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-2 py-1 rounded-pill d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;" title="Negara Lainnya">
-                            <span>🌐</span> <span class="fw-semibold">Lainnya</span> <span class="text-white-50">1%</span>
-                        </span>
-                    </div>
+                <!-- Col 2: Real Flag Counter Image Embed -->
+                <div class="col-lg-7 col-md-12 text-center text-lg-end">
+                    <a href="https://info.flagcounter.com/GIKv" target="_blank" rel="noopener noreferrer" title="Klik untuk melihat statistik lengkap & peta pengunjung di FlagCounter.com" class="d-inline-block hover-opacity">
+                        <img src="https://s05.flagcounter.com/count/GIKv/bg_071A35/txt_FFFFFF/border_1D2D44/columns_4/maxflags_12/viewers_0/labels_1/pageviews_1/flags_0/percent_0/" alt="Flag Counter" class="img-fluid rounded-3 border border-white border-opacity-10" style="max-height: 85px;">
+                    </a>
                 </div>
             </div>
         </div>
