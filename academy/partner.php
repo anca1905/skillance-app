@@ -246,6 +246,51 @@ $seoBreadcrumbs = [
 
     <main class="container py-5">
 
+        <!-- JARINGAN MITRA KAMPUS & KLIEN SISTEM -->
+        <div class="mb-5 p-4 p-md-5 rounded-4 bg-white border shadow-sm">
+            <div class="text-center mb-4">
+                <span class="badge bg-navy-subtle text-navy px-3 py-1 rounded-pill fw-bold small text-uppercase mb-2">
+                    <i class="fa-solid fa-handshake me-1"></i> JEJARING EKOSISTEM PENDIDIKAN & KAMPUS
+                </span>
+                <h3 class="fw-bold text-navy font-heading mb-1">Mitra Akademik & Pengguna Solusi Skillance</h3>
+                <p class="text-muted small mx-auto mb-0" style="max-width: 650px;">
+                    Skillance aktif berkolaborasi dengan fakultas teknologi, komunitas mahasiswa, dan instansi pendidikan dalam akselerasi kompetensi digital.
+                </p>
+            </div>
+
+            <div class="row g-4 align-items-center justify-content-center text-center">
+                <!-- FTI USN -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column align-items-center justify-content-center">
+                        <img src="../assets/img/logo-usn.png" alt="Logo FTI USN Kolaka" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
+                        <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem;">Fakultas Teknologi Informasi (FTI)</h6>
+                        <span class="text-muted small" style="font-size: 0.75rem;">Universitas Sembilanbelas November Kolaka</span>
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle mt-2" style="font-size: 0.65rem;">Mitra Akademik & SKPI</span>
+                    </div>
+                </div>
+
+                <!-- UKM MSC -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column align-items-center justify-content-center">
+                        <img src="../assets/img/logo-msc.svg" alt="Logo UKM MSC" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
+                        <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem;">UKM MSC USN Kolaka</h6>
+                        <span class="text-muted small" style="font-size: 0.75rem;">Multimedia & Software Community</span>
+                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle mt-2" style="font-size: 0.65rem;">Mitra Workshop & Ormawa</span>
+                    </div>
+                </div>
+
+                <!-- SMPN 2 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column align-items-center justify-content-center">
+                        <img src="../assets/img/logo-smpn.png" alt="Logo SMPN 2 Tanggetada" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
+                        <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem;">SMP Negeri 2 Tanggetada</h6>
+                        <span class="text-muted small" style="font-size: 0.75rem;">Sekolah Rujukan Digitalisasi</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle mt-2" style="font-size: 0.65rem;">Klien Sistem PPDB & Profil</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- WHY PARTNER WITH US -->
         <div class="text-center mb-5 mx-auto" style="max-width: 680px;">
             <h2 class="fw-bold text-navy font-heading">Keuntungan Kemitraan Bersama Skillance Academy</h2>
