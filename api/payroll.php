@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-require '../config/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
