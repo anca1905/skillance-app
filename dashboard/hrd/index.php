@@ -116,36 +116,47 @@ if (!isset($_SESSION['user_id'])) {
 
         <!-- Summary KPI Cards -->
         <div class="row g-3 mb-4">
-            <div class="col-4">
+            <div class="col-6 col-md-3">
                 <div class="card bg-navy text-white h-100 shadow-sm border-0">
-                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Administrator</small>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.7rem;">Admin</small>
                             <h3 class="fw-bold mb-0 mt-1 text-white" id="totalAdmin">0</h3>
                         </div>
-                        <i class="fa-solid fa-user-shield fs-1 text-white opacity-50 d-none d-sm-block"></i>
+                        <i class="fa-solid fa-user-shield fs-2 text-white opacity-50 d-none d-sm-block"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card bg-primary text-white h-100 shadow-sm border-0">
-                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
+            <div class="col-6 col-md-3">
+                <div class="card text-dark h-100 shadow-sm border-0" style="background: #fff8e1; border-left: 4px solid #ffb300 !important;">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Staff Internal</small>
+                            <small class="text-uppercase fw-bold text-warning-emphasis" style="font-size: 0.7rem;">Bendahara</small>
+                            <h3 class="fw-bold mb-0 mt-1 text-dark" id="totalBendahara">0</h3>
+                        </div>
+                        <i class="fa-solid fa-coins fs-2 text-warning opacity-75 d-none d-sm-block"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card bg-primary text-white h-100 shadow-sm border-0">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.7rem;">Staff Internal</small>
                             <h3 class="fw-bold mb-0 mt-1 text-white" id="totalStaff">0</h3>
                         </div>
-                        <i class="fa-solid fa-user-tie fs-1 text-white opacity-50 d-none d-sm-block"></i>
+                        <i class="fa-solid fa-user-tie fs-2 text-white opacity-50 d-none d-sm-block"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-6 col-md-3">
                 <div class="card bg-success text-white h-100 shadow-sm border-0">
-                    <div class="card-body p-3 p-md-4 d-flex justify-content-between align-items-center">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.72rem;">Freelancer</small>
+                            <small class="text-uppercase fw-bold text-white-50" style="font-size: 0.7rem;">Freelancer</small>
                             <h3 class="fw-bold mb-0 mt-1 text-white" id="totalFreelancer">0</h3>
                         </div>
-                        <i class="fa-solid fa-laptop-code fs-1 text-white opacity-50 d-none d-sm-block"></i>
+                        <i class="fa-solid fa-laptop-code fs-2 text-white opacity-50 d-none d-sm-block"></i>
                     </div>
                 </div>
             </div>
@@ -176,9 +187,10 @@ if (!isset($_SESSION['user_id'])) {
                                 <label class="form-label small fw-bold text-muted">PERAN (ROLE)</label>
                                 <select class="form-select" id="userRole" required>
                                     <option value="staff" selected>Staff Internal</option>
+                                    <option value="bendahara">Bendahara / Keuangan (Finance)</option>
                                     <option value="admin">Administrator</option>
                                 </select>
-                                <small class="text-muted" style="font-size: 0.72rem;">Freelancer mendaftar otomatis melalui halaman login/register.</small>
+                                <small class="text-muted" style="font-size: 0.72rem;">Role Bendahara memiliki akses khusus ke Keuangan & Rekap Pajak SPT.</small>
                             </div>
                             <button type="submit" class="btn btn-navy w-100 py-2 fw-bold" id="btnSubmit">
                                 <i class="fa-solid fa-save me-1"></i> Simpan Akun Pengguna
@@ -238,6 +250,7 @@ if (!isset($_SESSION['user_id'])) {
                     .then(res => {
                         if (res.status === 'success') {
                             document.getElementById('totalAdmin').textContent = res.summary.admin || 0;
+                            document.getElementById('totalBendahara').textContent = res.summary.bendahara || 0;
                             document.getElementById('totalStaff').textContent = res.summary.staff || 0;
                             document.getElementById('totalFreelancer').textContent = res.summary.freelancer || 0;
 
@@ -261,6 +274,8 @@ if (!isset($_SESSION['user_id'])) {
                     let roleBadge = '';
                     if (item.role === 'admin') {
                         roleBadge = '<span class="badge bg-navy text-white px-2 py-1"><i class="fa-solid fa-shield-halved me-1"></i> Admin</span>';
+                    } else if (item.role === 'bendahara') {
+                        roleBadge = '<span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-coins me-1"></i> Bendahara</span>';
                     } else if (item.role === 'staff') {
                         roleBadge = '<span class="badge bg-primary text-white px-2 py-1"><i class="fa-solid fa-user-tie me-1"></i> Staff</span>';
                     } else {

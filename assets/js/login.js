@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             window.location.href = '../dashboard/investor.php';
                         } else if (data.user.role === 'freelancer') {
                             window.location.href = '../dashboard/freelancer/index.php';
+                        } else if (data.user.role === 'bendahara') {
+                            window.location.href = '../dashboard/finance/index.php';
                         } else if (data.user.role === 'staff') {
                             window.location.href = '../dashboard/index.php';
                         } else {

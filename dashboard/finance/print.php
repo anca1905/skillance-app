@@ -90,8 +90,9 @@
     </div>
 
     <div class="report-header">
-        <div class="company-name">SKILLANCE OFFICE SYSTEM</div>
-        <div class="report-title">Laporan Keuangan: Laba / Rugi</div>
+        <div class="company-name">PT SKILLANCE DIGITAL INDONESIA</div>
+        <div class="small text-muted mb-2">SK Menkumham: AHU-A138609.AH.01.30.Tahun 2026 &bull; NPWP: 100000011940526 &bull; Bombana, Sultra</div>
+        <div class="report-title">Laporan Keuangan: Laba / Rugi Komprehensif</div>
         <div class="report-date" id="reportDate"></div>
     </div>
 

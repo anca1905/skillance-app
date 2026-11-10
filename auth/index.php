@@ -16,6 +16,8 @@ if (isset($_SESSION['user_id'])) {
         header("Location: ../dashboard/investor.php");
     } elseif ($_SESSION['user_role'] === 'freelancer') {
         header("Location: ../dashboard/freelancer/index.php");
+    } elseif ($_SESSION['user_role'] === 'bendahara') {
+        header("Location: ../dashboard/finance/index.php");
     } else {
         header("Location: ../dashboard/index.php");
     }
@@ -237,7 +239,7 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
         </div>
         <div class="card-footer bg-light text-center py-3 border-top-0">
             <small class="text-muted" style="font-size: 0.75rem;">
-                &copy; <?= date('Y') ?> CV Skillance Digital Indonesia.<br>Platform Agency & Kolaborasi Freelance.
+                &copy; <?= date('Y') ?> PT Skillance Digital Indonesia.<br>SK Menkumham: AHU-A138609.AH.01.30.Tahun 2026 &bull; NPWP: 100000011940526
             </small>
         </div>
     </div>

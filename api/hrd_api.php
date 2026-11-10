@@ -15,13 +15,14 @@ if ($method === 'GET') {
     if ($role) {
         $query .= " WHERE role='$role'";
     }
-    $query .= " ORDER BY FIELD(role, 'admin', 'staff', 'freelancer'), created_at DESC";
+    $query .= " ORDER BY FIELD(role, 'admin', 'bendahara', 'staff', 'freelancer'), created_at DESC";
 
     $result = $conn->query($query);
     $users = [];
 
     $countAdmin = 0;
     $countStaff = 0;
+    $countBendahara = 0;
     $countFreelancer = 0;
     $countTotal = 0;
 
@@ -30,6 +31,7 @@ if ($method === 'GET') {
     if ($q_summary) {
         while ($row = $q_summary->fetch_assoc()) {
             if ($row['role'] === 'admin') $countAdmin = (int)$row['total'];
+            if ($row['role'] === 'bendahara') $countBendahara = (int)$row['total'];
             if ($row['role'] === 'staff') $countStaff = (int)$row['total'];
             if ($row['role'] === 'freelancer') $countFreelancer = (int)$row['total'];
             $countTotal += (int)$row['total'];
@@ -47,6 +49,7 @@ if ($method === 'GET') {
         "users" => $users,
         "summary" => [
             "admin" => $countAdmin,
+            "bendahara" => $countBendahara,
             "staff" => $countStaff,
             "freelancer" => $countFreelancer,
             "total" => $countTotal
@@ -62,7 +65,7 @@ if ($method === 'POST') {
     $name = trim($data['name'] ?? '');
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
-    $role = in_array($data['role'] ?? '', ['admin', 'staff']) ? $data['role'] : 'staff';
+    $role = in_array($data['role'] ?? '', ['admin', 'staff', 'bendahara']) ? $data['role'] : 'staff';
     $userType = 'umum';
 
     if (empty($name) || empty($email) || empty($password)) {

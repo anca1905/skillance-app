@@ -21,13 +21,14 @@ if (!isset($dashRoot)) {
 }
 
 $activeMenu = $activeMenu ?? '';
+$currentUserRole = $_SESSION['user_role'] ?? 'admin';
 ?>
 <!-- Mobile Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <!-- Sidebar Admin Navigation -->
 <nav class="sidebar shadow-sm" id="sidebar">
-    <div class="px-3 px-md-4 mb-4 d-flex align-items-center justify-content-between">
+    <div class="px-3 px-md-4 mb-3 d-flex align-items-center justify-content-between">
         <a href="<?= $dashRoot ?>index.php" class="text-decoration-none d-flex align-items-center gap-2">
             <i class="fa-solid fa-code text-gold fs-4"></i>
             <div>
@@ -40,52 +41,86 @@ $activeMenu = $activeMenu ?? '';
         </button>
     </div>
 
+    <?php if ($currentUserRole === 'bendahara'): ?>
+    <div class="px-3 px-md-4 mb-3">
+        <div class="p-2 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-25 text-center">
+            <span class="badge bg-warning text-dark px-2 py-1 small fw-bold mb-1">
+                <i class="fa-solid fa-coins me-1"></i> Bendahara Keuangan
+            </span>
+            <div class="small text-muted" style="font-size: 0.7rem;">PT Skillance Digital Indonesia</div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <ul class="nav flex-column">
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>index.php" class="nav-link <?= $activeMenu === 'dashboard' ? 'active' : '' ?>">
-                <i class="fa-solid fa-chart-line"></i> Dashboard
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>freelance/index.php" class="nav-link <?= $activeMenu === 'freelance' ? 'active fw-bold text-navy' : 'text-success fw-bold' ?>">
-                <i class="fa-solid fa-handshake <?= $activeMenu === 'freelance' ? 'text-gold' : 'text-success' ?>"></i> Bursa Freelance
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>project/index.php" class="nav-link <?= $activeMenu === 'project' ? 'active' : '' ?>">
-                <i class="fa-solid fa-briefcase"></i> Project
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>finance/index.php" class="nav-link <?= $activeMenu === 'finance' ? 'active' : '' ?>">
-                <i class="fa-solid fa-wallet"></i> Keuangan
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>team/index.php" class="nav-link <?= $activeMenu === 'team' ? 'active' : '' ?>">
-                <i class="fa-solid fa-people-group"></i> Manajemen Tim
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>blog/index.php" class="nav-link <?= $activeMenu === 'blog' ? 'active' : '' ?>">
-                <i class="fa-solid fa-newspaper"></i> Kelola Artikel
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>hrd/index.php" class="nav-link <?= ($activeMenu === 'users' || $activeMenu === 'hrd') ? 'active' : 'text-primary' ?>">
-                <i class="fa-solid fa-users-gear text-primary"></i> Manajemen Pengguna
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>academy/leads.php" class="nav-link <?= $activeMenu === 'academy' ? 'active' : 'text-info fw-bold' ?>">
-                <i class="fa-solid fa-graduation-cap <?= $activeMenu === 'academy' ? 'text-gold' : 'text-info' ?>"></i> Academy Leads & CRM
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
-                <i class="fa-solid fa-user-gear"></i> Profil Saya
-            </a>
-        </li>
+        <?php if ($currentUserRole === 'bendahara'): ?>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>finance/index.php" class="nav-link <?= $activeMenu === 'finance' ? 'active fw-bold text-navy' : 'text-primary fw-bold' ?>">
+                    <i class="fa-solid fa-wallet text-gold"></i> Keuangan & SPT Pajak
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>project/index.php" class="nav-link <?= $activeMenu === 'project' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-briefcase"></i> Project & Invoice
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>freelance/index.php" class="nav-link <?= $activeMenu === 'freelance' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-handshake"></i> Bursa Freelance
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-user-gear"></i> Profil Saya
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>index.php" class="nav-link <?= $activeMenu === 'dashboard' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>freelance/index.php" class="nav-link <?= $activeMenu === 'freelance' ? 'active fw-bold text-navy' : 'text-success fw-bold' ?>">
+                    <i class="fa-solid fa-handshake <?= $activeMenu === 'freelance' ? 'text-gold' : 'text-success' ?>"></i> Bursa Freelance
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>project/index.php" class="nav-link <?= $activeMenu === 'project' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-briefcase"></i> Project
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>finance/index.php" class="nav-link <?= $activeMenu === 'finance' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-wallet"></i> Keuangan & SPT
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>team/index.php" class="nav-link <?= $activeMenu === 'team' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-people-group"></i> Manajemen Tim
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>blog/index.php" class="nav-link <?= $activeMenu === 'blog' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-newspaper"></i> Kelola Artikel
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>hrd/index.php" class="nav-link <?= ($activeMenu === 'users' || $activeMenu === 'hrd') ? 'active' : 'text-primary' ?>">
+                    <i class="fa-solid fa-users-gear text-primary"></i> Manajemen Pengguna
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>academy/leads.php" class="nav-link <?= $activeMenu === 'academy' ? 'active' : 'text-info fw-bold' ?>">
+                    <i class="fa-solid fa-graduation-cap <?= $activeMenu === 'academy' ? 'text-gold' : 'text-info' ?>"></i> Academy Leads & CRM
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-user-gear"></i> Profil Saya
+                </a>
+            </li>
+        <?php endif; ?>
 
         <li class="nav-item mt-3 px-3">
             <a href="<?= $dashRoot ?>freelancer/index.php" class="btn btn-sm btn-outline-primary w-100 fw-bold" style="font-size: 0.78rem;">
