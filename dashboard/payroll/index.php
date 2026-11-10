@@ -151,13 +151,39 @@ $activeMenu = "payroll";
         <!-- Ecosystem Notice Banner: Penjelasan Skema Gaji Per-Proyek & Kas Realistis -->
         <div class="alert alert-warning border-0 shadow-sm p-3 mb-4 rounded-3 d-flex align-items-start gap-3" style="background-color: #fffbeb; border-left: 5px solid #f59e0b !important;">
             <i class="fa-solid fa-shield-halved fs-3 text-warning mt-1"></i>
-            <div>
-                <h6 class="fw-bold text-warning-emphasis mb-1">
-                    Prinsip Keuangan: Skema Bagi Hasil Dari Laba Bersih Proyek (Net Profit Sharing)
-                </h6>
-                <p class="small text-muted mb-0" style="line-height: 1.55;">
-                    Perhitungan kompensasi dihitung dari <strong>Laba Bersih Proyek</strong> (Nilai Kontrak Klien dikurangi Biaya Langsung seperti domain, server, atau tool). Dari laba bersih tersebut dibagi: <strong>50% Kas Cadangan PT Skillance</strong>, <strong>40% Programmer / Tim Teknis</strong>, dan <strong>10% Bendahara Keuangan</strong>. Uang biaya langsung tetap diamankan di kas PT untuk menutup biaya operasional riil.
+            <div class="w-100">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-1">
+                    <h6 class="fw-bold text-warning-emphasis mb-0">
+                        Kebijakan Resmi: Skema Hibrida PT Skillance Digital Indonesia (Skema A)
+                    </h6>
+                    <span class="badge bg-gold text-navy fw-bold small">Cashflow Protection</span>
+                </div>
+                <p class="small text-muted mb-2" style="line-height: 1.55;">
+                    Perhitungan kompensasi dihitung dari <strong>Laba Bersih Proyek</strong> (Nilai Kontrak dikurangi biaya langsung seperti domain, server, dll). Skema resmi yang aktif:
                 </p>
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <div class="p-2 rounded bg-white border h-100">
+                            <span class="badge bg-primary px-2 py-0.5 small mb-1">💻 Programmer / Teknis</span>
+                            <div class="small fw-bold text-navy">40% Laba Bersih Proyek</div>
+                            <small class="text-muted" style="font-size: 0.7rem;">Dibayarkan per-proyek selesai & klien lunas.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-2 rounded bg-white border h-100">
+                            <span class="badge bg-warning text-dark px-2 py-0.5 small mb-1">💼 Bendahara Keuangan</span>
+                            <div class="small fw-bold text-navy">Rutin Rp 250k/bln + 10% Proyek</div>
+                            <small class="text-muted" style="font-size: 0.7rem;">Honor rutin kas + bonus tiap proyek cair.</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-2 rounded bg-white border h-100">
+                            <span class="badge bg-success px-2 py-0.5 small mb-1">🏦 Kas PT Skillance</span>
+                            <div class="small fw-bold text-navy">50% Laba Bersih + Beban HPP</div>
+                            <small class="text-muted" style="font-size: 0.7rem;">Cadangan kas, server, dan pajak SPT.</small>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -388,13 +414,14 @@ $activeMenu = "payroll";
                         <div class="mb-3">
                             <label class="small text-muted fw-bold">JENIS PERAN / PEKERJAAN</label>
                             <select id="pRole" class="form-select" required>
-                                <option value="Programmer">Programmer (Tim Teknis / Coding)</option>
-                                <option value="Bendahara">Bendahara (Admin Keuangan & Invoicing)</option>
-                                <option value="Designer">Desainer Grafis (Per Konten / Banner)</option>
-                                <option value="Operator Toko">Operator Toko Cetak / Akrilik (Rp 50k / shift)</option>
-                                <option value="Instruktur">Instruktur / Mentor Bootcamp (Rp 200k / sesi)</option>
-                                <option value="Jurnalis">Jurnalis / Penulis Berita (Rp 35k / artikel)</option>
-                                <option value="Staf Operasional">Staf Operasional / Kustom</option>
+                                <option value="Programmer">1. Programmer (40% Laba Bersih Proyek)</option>
+                                <option value="Bendahara - Fee Proyek">2. Bendahara - Fee Proyek (10% Laba Bersih)</option>
+                                <option value="Bendahara - Rutin Bulanan">3. Bendahara - Tunjangan Rutin Kas (Rp 250.000/bln)</option>
+                                <option value="Designer">4. Desainer Grafis (Per Konten / Banner)</option>
+                                <option value="Operator Toko">5. Operator Toko Cetak / Akrilik (Rp 50k / shift)</option>
+                                <option value="Instruktur">6. Instruktur / Mentor Bootcamp (Rp 200k / sesi)</option>
+                                <option value="Jurnalis">7. Jurnalis / Penulis Berita (Rp 35k / artikel)</option>
+                                <option value="Staf Operasional">8. Staf Operasional / Kustom</option>
                             </select>
                         </div>
 

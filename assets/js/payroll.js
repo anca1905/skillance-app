@@ -135,7 +135,11 @@ function applyRoleShare(role, pct) {
 
     // Set role
     const roleSelect = document.getElementById('pRole');
-    roleSelect.value = role;
+    if (role === 'Bendahara' || role.includes('Bendahara')) {
+        roleSelect.value = 'Bendahara - Fee Proyek';
+    } else {
+        roleSelect.value = 'Programmer';
+    }
     document.getElementById('complexityContainer').classList.add('d-none');
 
     // Set rate & qty
@@ -202,10 +206,55 @@ function applyPresetRate() {
     const role = document.getElementById('pRole').value;
     const complexity = document.getElementById('pComplexity').value;
     const rateInput = document.getElementById('pRate');
+    const descInput = document.getElementById('pDesc');
+    const unitSelect = document.getElementById('pUnit');
+
+    if (role === 'Bendahara - Rutin Bulanan') {
+        rateInput.value = 250000;
+        document.getElementById('pQty').value = 1;
+        unitSelect.value = 'Operasional Kantor';
+        
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const now = new Date();
+        descInput.value = `Tunjangan Rutin Bulanan Bendahara (Pembukuan Kas & Pajak SPT) - ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+        
+        // Auto select bendahara in user dropdown
+        const userSelect = document.getElementById('pUser');
+        for (let i = 0; i < userSelect.options.length; i++) {
+            if (userSelect.options[i].text.toLowerCase().includes('bendahara')) {
+                userSelect.selectedIndex = i;
+                break;
+            }
+        }
+        document.getElementById('pProject').value = '0';
+        document.getElementById('projectInfoBox')?.classList.add('d-none');
+        return;
+    }
+
+    if (role === 'Bendahara - Fee Proyek') {
+        const projId = parseInt(document.getElementById('pProject')?.value) || 0;
+        if (projId > 0) {
+            applyRoleShare('Bendahara', 0.10);
+            return;
+        } else {
+            rateInput.value = 150000;
+        }
+        const userSelect = document.getElementById('pUser');
+        for (let i = 0; i < userSelect.options.length; i++) {
+            if (userSelect.options[i].text.toLowerCase().includes('bendahara')) {
+                userSelect.selectedIndex = i;
+                break;
+            }
+        }
+        return;
+    }
 
     // Only apply preset if not linked to a project with a custom share
     const projId = parseInt(document.getElementById('pProject')?.value) || 0;
-    if (projId > 0) return;
+    if (projId > 0 && role === 'Programmer') {
+        applyRoleShare('Programmer', 0.40);
+        return;
+    }
 
     if (role === 'Programmer') {
         rateInput.value = 500000;
@@ -257,9 +306,12 @@ function getUnitBadge(unit) {
 
 function getRoleBadge(role) {
     if (role === 'Programmer') {
-        return '<span class="badge bg-primary px-2 py-1"><i class="fa-solid fa-code me-1"></i>Programmer</span>';
-    } else if (role === 'Bendahara') {
-        return '<span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-vault me-1"></i>Bendahara Proyek</span>';
+        return '<span class="badge bg-primary px-2 py-1"><i class="fa-solid fa-code me-1"></i>Programmer (40%)</span>';
+    } else if (role.includes('Bendahara')) {
+        if (role.includes('Rutin')) {
+            return '<span class="badge bg-success px-2 py-1"><i class="fa-solid fa-calendar-check me-1"></i>Bendahara (Rutin)</span>';
+        }
+        return '<span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-vault me-1"></i>Bendahara (10%)</span>';
     } else if (role === 'Designer') {
         return '<span class="badge bg-info text-dark px-2 py-1"><i class="fa-solid fa-palette me-1"></i>Desainer</span>';
     } else if (role === 'Operator Toko') {
