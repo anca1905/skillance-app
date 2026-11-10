@@ -222,10 +222,11 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <div class="kop-company-title">SKILLANCE DIGITAL INDONESIA</div>
+                    <div class="kop-company-title">PT SKILLANCE DIGITAL INDONESIA</div>
                     <div class="fw-bold text-navy" style="font-size: 0.85rem; letter-spacing: 0.5px;">SKILLANCE ACADEMY — PUSAT PENGEMBANGAN TALENTA DIGITAL</div>
                     <div class="kop-sub mt-1">
-                        Jl. H. Supu Yusuf No. 18, Kendari, Sulawesi Tenggara &bull; WhatsApp: +62 822-9170-0778<br>
+                        SK Kemenkumham: <strong>AHU-A138609.AH.01.30.Tahun 2026</strong> &bull; NPWP: <strong>100000011940526</strong><br>
+                        Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra &bull; WA: +62 822-9170-0778<br>
                         Portal Resmi: <strong>academy.skillance.cloud</strong> &bull; Website: <strong>skillance.my.id</strong>
                     </div>
                 </div>
