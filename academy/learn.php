@@ -639,6 +639,15 @@ $seoCustomSchemaJson = json_encode([
                 <i class="<?= $courseData['icon'] ?> me-2" style="color: <?= $courseData['color'] ?>;"></i>
                 <?= htmlspecialchars($courseData['name']) ?>
             </div>
+            
+            <!-- SOLOLEARN CERTIFICATE SIDEBAR BADGE -->
+            <div class="px-3 py-2 mx-2 my-2 rounded-3 text-center shadow-sm" style="background: linear-gradient(135deg, #0d2e5c, #071a35); border: 1px solid rgba(252, 163, 17, 0.35);">
+                <div class="small text-warning fw-bold" style="font-size: 0.78rem;"><i class="fa-solid fa-graduation-cap me-1"></i> Sertifikat Resmi <?= htmlspecialchars($courseData['short_name'] ?? $courseData['name']) ?></div>
+                <div class="text-white-50 my-1" style="font-size: 0.72rem;">Khusus Mahasiswa: <strong class="text-warning">Rp 19.000</strong></div>
+                <a href="exam.php?track=<?= urlencode($currentCourse) ?>" class="btn btn-warning btn-sm w-100 fw-bold rounded-pill text-navy py-1" style="font-size: 0.74rem;">
+                    Ambil Sertifikat &raquo;
+                </a>
+            </div>
             <nav>
                 <?php if (!empty($courseData['categories'])): ?>
                     <?php foreach ($courseData['categories'] as $catName => $catTopics): ?>
@@ -705,22 +714,28 @@ $seoCustomSchemaJson = json_encode([
             </div>
 
             <!-- Top Nav Buttons -->
-            <div class="nav-buttons-bar">
-                <?php if ($prevTopicKey): ?>
-                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($prevTopicKey) ?>" class="btn-w3-nav">
-                        &laquo; Sebelumnya
-                    </a>
-                <?php else: ?>
-                    <span class="btn-w3-nav disabled">&laquo; Sebelumnya</span>
-                <?php endif; ?>
+            <div class="nav-buttons-bar d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <?php if ($prevTopicKey): ?>
+                        <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($prevTopicKey) ?>" class="btn-w3-nav">
+                            &laquo; Sebelumnya
+                        </a>
+                    <?php else: ?>
+                        <span class="btn-w3-nav disabled">&laquo; Sebelumnya</span>
+                    <?php endif; ?>
 
-                <?php if ($nextTopicKey): ?>
-                    <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($nextTopicKey) ?>" class="btn-w3-nav">
-                        Berikutnya &raquo;
-                    </a>
-                <?php else: ?>
-                    <span class="btn-w3-nav disabled">Berikutnya &raquo;</span>
-                <?php endif; ?>
+                    <?php if ($nextTopicKey): ?>
+                        <a href="learn.php?c=<?= urlencode($currentCourse) ?>&p=<?= urlencode($nextTopicKey) ?>" class="btn-w3-nav ms-1">
+                            Berikutnya &raquo;
+                        </a>
+                    <?php else: ?>
+                        <span class="btn-w3-nav disabled ms-1">Berikutnya &raquo;</span>
+                    <?php endif; ?>
+                </div>
+
+                <a href="exam.php?track=<?= urlencode($currentCourse) ?>" class="btn btn-sm btn-outline-warning text-dark fw-bold rounded-pill px-3 py-1 shadow-sm d-inline-flex align-items-center gap-1" style="background-color: #fffbeb; border-color: #fca311;" title="Ambil Ujian & Sertifikat Resmi SoloLearn-Style">
+                    <i class="fa-solid fa-graduation-cap text-warning"></i> <span>Sertifikat Kelulusan Resmi (Rp 19.000)</span>
+                </a>
             </div>
 
             <hr class="text-muted my-3">
@@ -886,6 +901,43 @@ $seoCustomSchemaJson = json_encode([
                     <a href="projects.php" target="_blank" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm flex-shrink-0 align-self-start align-self-md-center" style="background-color: #0d2e5c !important;">
                         <i class="fa-solid fa-laptop-code text-warning me-1"></i> Buka Project Kit &raquo;
                     </a>
+                </div>
+            </div>
+
+            <!-- SOLOLEARN-STYLE CERTIFICATE CLAIM CARD (FEATURE: PAID OFFICIAL CERTIFICATE PER COURSE) -->
+            <div class="card border-0 rounded-4 shadow-sm mb-4 p-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 60%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 position-relative" style="z-index: 2;">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                            <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold small shadow-sm">
+                                <i class="fa-solid fa-graduation-cap me-1"></i> SERTIFIKAT KELULUSAN RESMI
+                            </span>
+                            <span class="badge bg-white bg-opacity-15 text-white px-2 py-1 rounded-pill small">
+                                <i class="fa-solid fa-bolt text-warning me-1"></i> Standar SoloLearn
+                            </span>
+                            <span class="badge bg-success bg-opacity-25 text-white border border-success border-opacity-50 px-2 py-1 rounded-pill small">
+                                Materi Belajar 100% Gratis
+                            </span>
+                        </div>
+                        <h4 class="fw-bold mb-2 text-white font-heading">
+                            Ingin Mengantongi Sertifikat Resmi <?= htmlspecialchars($courseData['name']) ?>?
+                        </h4>
+                        <p class="text-white-50 small mb-0" style="max-width: 620px; line-height: 1.7;">
+                            Materi tutorial ini sepenuhnya <strong>Gratis</strong> untuk dipelajari dan dipraktikkan kapan saja. Jika Anda ingin mendapatkan <strong>Sertifikat Kompetensi Digital Ber-QR Code Resmi</strong> untuk portofolio SKPI kampus dan CV kerja profesional, ikuti <strong>Ujian Evaluasi 10 Soal</strong> terstandarisasi.
+                        </p>
+                    </div>
+                    <div class="text-lg-end flex-shrink-0 bg-white bg-opacity-10 p-3 rounded-4 border border-white border-opacity-15">
+                        <div class="small text-white-50 mb-1">Biaya Ujian & Administrasi SKPI:</div>
+                        <div class="d-flex align-items-center justify-content-lg-end gap-2 mb-1">
+                            <span class="text-white-50 text-decoration-line-through small">Rp 49.000</span>
+                            <span class="fs-4 fw-bold text-warning font-heading">Rp 19.000</span>
+                            <span class="badge bg-danger rounded-pill small fw-bold">HEMAT 60%</span>
+                        </div>
+                        <div class="small text-white-50 mb-3"><i class="fa-solid fa-user-graduate text-info me-1"></i> Khusus Mahasiswa & Pelajar</div>
+                        <a href="exam.php?track=<?= urlencode($currentCourse) ?>" class="btn btn-warning text-navy fw-bold px-4 py-2 rounded-pill shadow w-100" style="background-color: #fca311 !important; color: #071a35 !important;">
+                            <i class="fa-solid fa-award me-1"></i> Ambil Ujian & Sertifikat &raquo;
+                        </a>
+                    </div>
                 </div>
             </div>
 

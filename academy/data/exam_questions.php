@@ -1,10 +1,1212 @@
 <?php
 // Bank Soal Ujian Sertifikasi Kompetensi Resmi - Skillance Academy Indonesia
+// Mode SoloLearn: Sertifikat Resmi Per Materi Belajar (HTML, CSS, JS, PHP, SQL, Python, dll) & Jalur Spesialisasi Karir
 
 return [
+    // =========================================================================
+    // 1. SERTIFIKAT MODUL MATERI BELAJAR INDIVIDUAL (SOLOLEARN-STYLE - RP 19.000)
+    // =========================================================================
+
+    'html' => [
+        'title' => 'Sertifikat Kompetensi HTML5 & Modern Semantic Web',
+        'code' => 'HTML',
+        'course_id' => 'html',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'HTML5 Semantic Elements, Document Object Structure, Web Forms & Validation, Accessibility (a11y) & ARIA, SEO & Meta Viewport, Audio & Video Elements',
+        'questions' => [
+            [
+                'q' => 'Elemen HTML5 semantik manakah yang paling tepat digunakan untuk membungkus blok navigasi utama situs web?',
+                'options' => ['<menu>', '<nav>', '<header>', '<section>'],
+                'ans' => 1,
+                'exp' => '<nav> dirancang khusus untuk menandai kelompok tautan navigasi utama pada halaman web.'
+            ],
+            [
+                'q' => 'Apa perbedaan utama antara atribut `defer` dan `async` pada tag <script src="...">?',
+                'options' => [
+                    'defer mengunduh skrip secara asinkron tetapi menunda eksekusi sampai parsing HTML selesai secara urut, sedangkan async mengeksekusi skrip segera setelah selesai diunduh',
+                    'async hanya dapat digunakan pada skrip inline, sedangkan defer untuk skrip eksternal',
+                    'defer memblokir rendering halaman, sedangkan async tidak',
+                    'Kedua atribut tersebut memiliki fungsi yang persis sama di semua browser modern'
+                ],
+                'ans' => 0,
+                'exp' => 'Atribut defer mengeksekusi skrip setelah seluruh dokumen HTML selesai di-parse dengan tetap mempertahankan urutan script, sedangkan async langsung mengeksekusi script seketika unduhan selesai tanpa menjamin urutan.'
+            ],
+            [
+                'q' => 'Atribut wajib manakah pada elemen <img> yang sangat krusial bagi pembaca layar (screen reader) tunanetra dan optimasi SEO?',
+                'options' => ['title', 'alt', 'caption', 'desc'],
+                'ans' => 1,
+                'exp' => 'Atribut alt (alternative text) menyediakan deskripsi tekstual gambar untuk teknologi asistif (a11y) serta mesin pencari web.'
+            ],
+            [
+                'q' => 'Elemen HTML5 manakah yang digunakan untuk memutar video secara native di peramban tanpa plugin pihak ketiga?',
+                'options' => ['<media>', '<movie>', '<video>', '<embed>'],
+                'ans' => 2,
+                'exp' => 'Elemen <video> adalah standar HTML5 native untuk menyematkan konten video lengkap dengan kontrol play, pause, dan volume.'
+            ],
+            [
+                'q' => 'Manakah pasangan elemen formulir yang tepat untuk mengelompokkan beberapa opsi radio/checkbox terkait beserta judul kelompoknya?',
+                'options' => [
+                    '<fieldset> dan <legend>',
+                    '<group> dan <label>',
+                    '<form-group> dan <title>',
+                    '<div> dan <caption>'
+                ],
+                'ans' => 0,
+                'exp' => '<fieldset> digunakan untuk membungkus kontrol formulir terkait secara semantik, dan <legend> menyediakan judul keterangan grup tersebut.'
+            ],
+            [
+                'q' => 'Tag semantic HTML5 manakah yang paling sesuai untuk konten sampingan seperti artikel terkait, iklan, atau sidebar profil penulis?',
+                'options' => ['<aside>', '<sidebar>', '<section>', '<div>'],
+                'ans' => 0,
+                'exp' => '<aside> merepresentasikan porsi dokumen yang kontennya berhubungan secara tidak langsung dengan konten utama di sekitarnya.'
+            ],
+            [
+                'q' => 'Apa tujuan penulisan deklarasi `<!DOCTYPE html>` di baris paling pertama dokumen HTML?',
+                'options' => [
+                    'Mengaktifkan fitur kompilasi JavaScript otomatis',
+                    'Menginstruksikan browser agar me-render halaman dalam standar mode modern (Standard Mode), bukan Quirks Mode',
+                    'Menyambungkan dokumen secara langsung ke server CDN W3C',
+                    'Menentukan jenis enkripsi file dokumen'
+                ],
+                'ans' => 1,
+                'exp' => '<!DOCTYPE html> memberi tahu peramban untuk menggunakan spesifikasi HTML5 standar modern tanpa beralih ke quirks mode.'
+            ],
+            [
+                'q' => 'Atribut keamanan `rel` apakah yang wajib dipasangkan saat menggunakan tautan `<a target="_blank">` untuk mencegah eksploitasi tabnabbing?',
+                'options' => [
+                    'rel="noopener noreferrer"',
+                    'rel="secure external"',
+                    'rel="nofollow hidden"',
+                    'rel="safe newtab"'
+                ],
+                'ans' => 0,
+                'exp' => 'Atribut rel="noopener noreferrer" mencegah tab baru mengakses objek window.opener tab asal sehingga aman dari pembajakan halaman.'
+            ],
+            [
+                'q' => 'Tag meta apakah yang wajib disertakan di bagian <head> untuk memastikan halaman web dapat menyesuaikan skala tampilan secara responsif di ponsel mobile?',
+                'options' => [
+                    '<meta name="responsive" content="true">',
+                    '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+                    '<meta screen="mobile-first">',
+                    '<meta device="smartphone">'
+                ],
+                'ans' => 1,
+                'exp' => 'Meta viewport mengontrol dimensi dan penskalaan area pandang peramban terhadap lebar fisik perangkat.'
+            ],
+            [
+                'q' => 'Tipe input HTML5 manakah yang secara otomatis menyediakan validasi format alamat surel pada browser sebelum formulir dikirim?',
+                'options' => ['<input type="text" check="email">', '<input type="email">', '<input type="mail">', '<input type="address">'],
+                'ans' => 1,
+                'exp' => 'Input dengan type="email" memvalidasi pola alamat email secara otomatis sesuai spesifikasi RFC sebelum form disubmit.'
+            ]
+        ]
+    ],
+
+    'css' => [
+        'title' => 'Sertifikat Kompetensi CSS3 Styling & Responsive Layout',
+        'code' => 'CSS',
+        'course_id' => 'css',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'CSS3 Box Model, Flexbox Architecture, CSS Grid 2D, Responsive Breakpoints, Transitions & Keyframe Animations, Specificity & Custom Properties (Variables)',
+        'questions' => [
+            [
+                'q' => 'Model kotak CSS (Box Model) secara berurutan dari lapisan paling dalam ke luar terdiri dari komponen apa saja?',
+                'options' => [
+                    'Content -> Padding -> Border -> Margin',
+                    'Content -> Border -> Padding -> Margin',
+                    'Margin -> Border -> Padding -> Content',
+                    'Content -> Margin -> Border -> Padding'
+                ],
+                'ans' => 0,
+                'exp' => 'Box model tersusun dari: Content (isi teks/gambar) -> Padding (ruang dalam) -> Border (garis tepi) -> Margin (ruang luar).'
+            ],
+            [
+                'q' => 'Apa keuntungan utama menerapkan `box-sizing: border-box;` pada seluruh elemen web?',
+                'options' => [
+                    'Mengubah elemen inline menjadi block secara otomatis',
+                    'Nilai lebar (width) dan tinggi (height) elemen sudah mencakup padding dan border, sehingga ukuran total tidak bertambah besar saat padding ditambahkan',
+                    'Menghapus margin bawaan browser pada elemen body',
+                    'Membuat border menjadi berbentuk rounded tanpa border-radius'
+                ],
+                'ans' => 1,
+                'exp' => 'Dengan border-box, padding dan border dihitung di dalam nilai width/height yang ditentukan, memudahkan perancangan layout presisi.'
+            ],
+            [
+                'q' => 'Properti CSS Flexbox manakah yang digunakan untuk mengatur perataan elemen anak (items) di sepanjang sumbu silang (cross-axis)?',
+                'options' => ['justify-content', 'align-items', 'flex-direction', 'align-content'],
+                'ans' => 1,
+                'exp' => 'align-items mengatur posisi item di sepanjang cross axis, sementara justify-content mengatur perataan di sepanjang main axis.'
+            ],
+            [
+                'q' => 'Bagaimanakah perilaku elemen yang diberi deklarasi `position: absolute;`?',
+                'options' => [
+                    'Elemen selalu diposisikan relatif terhadap jendela browser (viewport)',
+                    'Elemen keluar dari alur dokumen normal dan diposisikan relatif terhadap elemen induk terdekat yang memiliki position bukan static',
+                    'Elemen tidak dapat digeser menggunakan properti top, right, bottom, left',
+                    'Elemen tetap menempati ruang aslinya di layout dokumen'
+                ],
+                'ans' => 1,
+                'exp' => 'Elemen absolute mencari leluhur terdekat dengan position selain static (seperti relative/absolute/fixed) sebagai titik acuan koordinatnya.'
+            ],
+            [
+                'q' => 'Sintaks media query CSS manakah yang paling tepat untuk menargetkan perangkat dengan lebar layar maksimal 768px (tablet dan ponsel)?',
+                'options' => [
+                    '@media (max-width: 768px) { ... }',
+                    '@media screen and (min-width: 768px) { ... }',
+                    '@screen (device-width: 768px) { ... }',
+                    '@query (width <= 768) { ... }'
+                ],
+                'ans' => 0,
+                'exp' => '@media (max-width: 768px) menerapkan gaya CSS hanya jika lebar area pandang layar sama dengan atau lebih kecil dari 768 piksel.'
+            ],
+            [
+                'q' => 'Urutan spesifisitas selektor CSS dari yang paling tinggi ke terendah adalah:',
+                'options' => [
+                    'Inline style > ID selector > Class/Attribute/Pseudo-class > Tag/Element selector',
+                    'ID selector > Inline style > Tag selector > Class selector',
+                    'Class selector > ID selector > Inline style > Universal (*)',
+                    'Inline style > Tag selector > Class selector > ID selector'
+                ],
+                'ans' => 0,
+                'exp' => 'Tingkat kekuatan spesifisitas: Inline Style (1000) > ID (100) > Class/Attribute/Pseudo-class (10) > Elemen/Pseudo-element (1).'
+            ],
+            [
+                'q' => 'Dalam CSS Grid, perintah singkat manakah yang membuat tata letak 3 kolom dengan proporsi lebar yang sama rata?',
+                'options' => [
+                    'grid-template-columns: repeat(3, 1fr);',
+                    'grid-columns: 3 auto;',
+                    'grid-template-rows: 3 equal;',
+                    'columns: 3fr 3fr 3fr;'
+                ],
+                'ans' => 0,
+                'exp' => 'repeat(3, 1fr) menginstruksikan kontainer CSS Grid untuk membagi ruang menjadi 3 kolom berukuran 1 fraction sama besar.'
+            ],
+            [
+                'q' => 'Deklarasi transisi CSS manakah yang mengubah warna latar (background-color) dengan durasi 0.3 detik menggunakan percepatan halus?',
+                'options' => [
+                    'transition: background-color 0.3s ease;',
+                    'animate: background 300ms smooth;',
+                    'transform: background-color in 0.3s;',
+                    'change: bg-color 0.3s;'
+                ],
+                'ans' => 0,
+                'exp' => 'Properti shorthand transition menerima nama properti, durasi transisi, dan timing-function (misalnya ease atau linear).'
+            ],
+            [
+                'q' => 'Syarat utama agar properti `z-index` dapat berfungsi mengatur tumpukan lapisan elemen adalah:',
+                'options' => [
+                    'Elemen harus memiliki float: left',
+                    'Elemen harus memiliki nilai position selain `static` (misal relative, absolute, fixed, atau sticky)',
+                    'Elemen harus berada di dalam tag <nav>',
+                    'Elemen harus memiliki display: flex'
+                ],
+                'ans' => 1,
+                'exp' => 'z-index hanya efektif pada elemen yang posisinya diposisikan (positioned element) dengan nilai position bukan static.'
+            ],
+            [
+                'q' => 'Kombinasi tiga properti CSS manakah yang digunakan untuk memotong teks satu baris yang terlalu panjang dan menggantinya dengan titik-titik elipsis (...)?',
+                'options' => [
+                    'white-space: nowrap; overflow: hidden; text-overflow: ellipsis;',
+                    'text-wrap: none; display: hidden; ellipsis: true;',
+                    'word-break: break-all; max-lines: 1; text-clip: dots;',
+                    'overflow: scroll; text-overflow: clip; nowrap: active;'
+                ],
+                'ans' => 0,
+                'exp' => 'Trik standar CSS untuk ellipsis 1 baris membutuhkan white-space: nowrap (mencegah wrap), overflow: hidden (sembunyikan luapan), dan text-overflow: ellipsis.'
+            ]
+        ]
+    ],
+
+    'javascript' => [
+        'title' => 'Sertifikat Kompetensi Modern JavaScript ES6+ & DOM',
+        'code' => 'JS',
+        'course_id' => 'javascript',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'JavaScript ES6+ Syntax, Block Scoping & Immutability, DOM Manipulation & Event Handling, Array Higher-Order Functions, Async/Await & Promises, LocalStorage API',
+        'questions' => [
+            [
+                'q' => 'Perbedaan mendasar antara deklarasi variabel menggunakan `const` dan `let` dalam JavaScript modern adalah:',
+                'options' => [
+                    'const memiliki function scope sedangkan let memiliki block scope',
+                    'const tidak dapat di-reassign nilai referensinya setelah dideklarasikan, sedangkan let nilainya dapat diubah kembali',
+                    'let tidak dapat digunakan di dalam loop for',
+                    'const hanya dapat menyimpan nilai berupa angka integer'
+                ],
+                'ans' => 1,
+                'exp' => 'Keduanya memiliki block scope, tetapi variabel const tidak dapat di-reassign ke referensi nilai baru setelah inisialisasi.'
+            ],
+            [
+                'q' => 'Mengapa operator kesetaraan ketat `===` lebih disarankan dibanding operator kesetaraan longgar `==`?',
+                'options' => [
+                    '=== melakukan konversi tipe data implisit (type coercion) otomatis',
+                    '=== membandingkan baik nilai maupun tipe data operan tanpa melakukan type coercion yang berisiko',
+                    '== hanya bekerja untuk membandingkan objek',
+                    '=== bekerja lebih lambat di browser lama'
+                ],
+                'ans' => 1,
+                'exp' => 'Operator === membandingkan kesetaraan nilai dan tipe data sekaligus tanpa type juggling tersembunyi sehingga mencegah bug logika.'
+            ],
+            [
+                'q' => 'Metode Array manakah yang mengembalikan array baru hasil transformasi setiap elemen tanpa mengubah isi array asli?',
+                'options' => ['map()', 'forEach()', 'push()', 'splice()'],
+                'ans' => 0,
+                'exp' => 'map() mengiterasi seluruh elemen array dan mengembalikan array baru berisi hasil eksekusi fungsi callback pada masing-masing elemen.'
+            ],
+            [
+                'q' => 'Apa yang dimaksud dengan konsep Closure dalam bahasa JavaScript?',
+                'options' => [
+                    'Proses penutupan peramban saat tab ditutup',
+                    'Sebuah fungsi yang mempertahankan akses ke variabel-variabel di lingkup lexical scope induknya, bahkan setelah fungsi induk selesai dieksekusi',
+                    'Metode untuk menghapus variabel dari memori browser',
+                    'Cara membungkus kode JavaScript dalam file minifikasi'
+                ],
+                'ans' => 1,
+                'exp' => 'Closure memberikan fungsi dalam kemampuan mengingat dan mengakses variabel dari lexical environment tempat fungsi tersebut didefinisikan.'
+            ],
+            [
+                'q' => 'Keyword `await` hanya dapat digunakan di dalam blok fungsi yang memiliki kata kunci apa?',
+                'options' => ['sync', 'defer', 'async', 'promise'],
+                'ans' => 2,
+                'exp' => 'await hanya dapat disematkan di dalam fungsi yang diawali dengan deklarasi async.'
+            ],
+            [
+                'q' => 'Teknik mendengarkan event pada satu elemen induk untuk menangani event dari banyak elemen anak yang dibuat secara dinamis disebut:',
+                'options' => ['Event Bubbling', 'Event Delegation', 'Event Hijacking', 'Event Polling'],
+                'ans' => 1,
+                'exp' => 'Event Delegation memanfaatkan bubbling dengan memasang listener tunggal pada elemen parent lalu memeriksa event.target.'
+            ],
+            [
+                'q' => 'Manakah sifat khusus dari Arrow Function `() => {}` terkait nilai `this`?',
+                'options' => [
+                    'Arrow function tidak memiliki konteks `this` sendiri, melainkan mewarisi (lexically bound) `this` dari scope luar tempat ia dibuat',
+                    'Arrow function selalu membuat binding `this` ke window global',
+                    'Arrow function dapat digunakan sebagai constructor fungsi dengan kata kunci `new`',
+                    'Arrow function tidak dapat menerima parameter fungsi'
+                ],
+                'ans' => 0,
+                'exp' => 'Arrow function tidak memiliki binding this sendiri, melainkan mengadopsi nilai this dari lexical enclosing environment.'
+            ],
+            [
+                'q' => 'Metode manakah yang paling tepat untuk mengubah sebuah objek JavaScript menjadi string JSON yang valid?',
+                'options' => ['JSON.parse()', 'JSON.stringify()', 'JSON.toString()', 'Object.toJSON()'],
+                'ans' => 1,
+                'exp' => 'JSON.stringify() mengonversi objek atau nilai JavaScript menjadi string representasi JSON standar.'
+            ],
+            [
+                'q' => 'Bagaimanakah cara menyimpan pasangan data key-value di peramban yang tetap tersimpan meskipun peramban ditutup dan dibuka kembali?',
+                'options' => [
+                    'sessionStorage.setItem("key", "value")',
+                    'localStorage.setItem("key", "value")',
+                    'window.cookieStore("key", "value")',
+                    'document.saveItem("key", "value")'
+                ],
+                'ans' => 1,
+                'exp' => 'localStorage menyimpan data tanpa batas waktu kedaluwarsa (persistent), sedangkan sessionStorage terhapus ketika tab peramban ditutup.'
+            ],
+            [
+                'q' => 'Metode DOM modern manakah yang memilih seluruh elemen di halaman yang cocok dengan selektor CSS tertentu dalam bentuk NodeList?',
+                'options' => ['document.querySelectorAll()', 'document.getElementBySelector()', 'document.find()', 'document.all()'],
+                'ans' => 0,
+                'exp' => 'document.querySelectorAll() menerima string selektor CSS apapun dan mengembalikan seluruh elemen yang cocok sebagai static NodeList.'
+            ]
+        ]
+    ],
+
+    'php' => [
+        'title' => 'Sertifikat Kompetensi Backend PHP 8 & Web Application',
+        'code' => 'PHP',
+        'course_id' => 'php',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'PHP 8 Modern Syntax, Array Manipulation, Secure Database PDO / MySQLi Prepared Statements, Session & Cookie Management, Object-Oriented PHP, Error Handling',
+        'questions' => [
+            [
+                'q' => 'Bagaimanakah sintaks yang valid untuk mendeklarasikan array asosiatif di PHP 8 modern?',
+                'options' => [
+                    '$user = ["nama" => "Faisal", "role" => "Admin"];',
+                    '$user = {"nama": "Faisal", "role": "Admin"};',
+                    '$user = array["nama" = "Faisal"];',
+                    '$user = ("nama" -> "Faisal");'
+                ],
+                'ans' => 0,
+                'exp' => 'Di PHP, short array syntax menggunakan tanda kurung siku `["kunci" => "nilai"]` dengan operator fat-arrow =>.'
+            ],
+            [
+                'q' => 'Apa perbedaan utama antara perintah `require` dan `include` saat memuat file eksternal yang tidak ditemukan?',
+                'options' => [
+                    'include menghentikan script dengan Fatal Error, require hanya memunculkan Warning',
+                    'require memunculkan Fatal Error (E_COMPILE_ERROR) dan langsung menghentikan eksekusi script, sedangkan include hanya memunculkan Warning (E_WARNING) dan script tetap berlanjut',
+                    'require hanya memuat file berekstensi .inc',
+                    'Tidak ada perbedaan antara keduanya di PHP 8'
+                ],
+                'ans' => 1,
+                'exp' => 'require bersifat wajib (fatal error jika file hilang), sedangkan include bersifat opsional (peringatan warning saja).'
+            ],
+            [
+                'q' => 'Metode terbaik dan paling standar dalam PHP untuk mencegah serangan kerentanan SQL Injection pada query database adalah:',
+                'options' => [
+                    'Menggunakan fungsi addslashes() pada setiap string input',
+                    'Menggunakan Prepared Statements dengan parameter binding (PDO atau MySQLi)',
+                    'Mengubah tanda kutip tunggal menjadi tanda kutip ganda',
+                    'Menggunakan fungsi strip_tags()'
+                ],
+                'ans' => 1,
+                'exp' => 'Prepared statements memisahkan struktur query SQL dari data masukan pengguna sehingga karakter berbahaya tidak dieksekusi sebagai perintah SQL.'
+            ],
+            [
+                'q' => 'Variabel superglobal manakah di PHP yang digunakan untuk menangkap data formulir HTTP yang dikirim dengan metode POST?',
+                'options' => ['$_GET', '$_POST', '$_REQUEST_DATA', '$_SERVER_POST'],
+                'ans' => 1,
+                'exp' => '$_POST adalah array asosiatif yang menyimpan parameter yang dikirim melalui HTTP POST method.'
+            ],
+            [
+                'q' => 'Di dalam Object-Oriented Programming (OOP) PHP, properti dengan visibilitas `protected` dapat diakses oleh siapa saja?',
+                'options' => [
+                    'Hanya oleh class itu sendiri',
+                    'Oleh class itu sendiri dan seluruh class turunannya (subclass/inheritance)',
+                    'Oleh semua kode di luar class secara bebas',
+                    'Hanya oleh interface yang bersangkutan'
+                ],
+                'ans' => 1,
+                'exp' => 'Modifier protected mengizinkan akses dari dalam kelas pendefinisi serta kelas-kelas yang mewarisinya (children classes).'
+            ],
+            [
+                'q' => 'Syarat utama pemanggilan fungsi `session_start()` di PHP agar tidak memicu error "Headers already sent" adalah:',
+                'options' => [
+                    'Harus dipanggil setelah seluruh tag HTML selesai ditulis',
+                    'Harus dipanggil sebelum ada output data apapun (spasi, teks, atau tag HTML) yang dikirim ke peramban',
+                    'Harus dipanggil di dalam method constructor class',
+                    'Hanya boleh dipanggil di file footer.php'
+                ],
+                'ans' => 1,
+                'exp' => 'session_start() mengirim cookie session melalui HTTP header, sehingga harus dieksekusi sebelum ada konten output ke browser.'
+            ],
+            [
+                'q' => 'Fungsi bawaan PHP 8 manakah yang paling aman dan disarankan untuk mengenkripsi kata sandi (password hashing)?',
+                'options' => ['md5()', 'sha1()', 'password_hash()', 'base64_encode()'],
+                'ans' => 2,
+                'exp' => 'password_hash() menggunakan algoritma bcrypt/argon2 yang sangat aman dan mengelola salt secara otomatis.'
+            ],
+            [
+                'q' => 'Apa hasil dari operator null coalescing `$name = $username ?? "Tamu";` jika variabel `$username` bernilai `null` atau belum didefinisikan?',
+                'options' => [
+                    'Akan menghasilkan PHP Fatal Error',
+                    'Variabel $name akan berisi string "Tamu"',
+                    'Variabel $name akan bernilai false',
+                    'Variabel $name akan bernilai kosong (empty string)'
+                ],
+                'ans' => 1,
+                'exp' => 'Operator ?? mengembalikan operan kanan jika operan kiri berstatus null atau tidak terdefinisi (isset).'
+            ],
+            [
+                'q' => 'Bagaimanakah penanganan pengecualian (Exception Handling) yang benar di PHP modern?',
+                'options' => [
+                    'try { // kode berisiko } catch (Throwable $e) { // penanganan error }',
+                    'test { // kode } onError { // tangkap }',
+                    'if (error) { catch(); }',
+                    'guard { // kode } handle (Exception $e)'
+                ],
+                'ans' => 0,
+                'exp' => 'Blok try...catch digunakan dengan menangkap instance Throwable atau Exception untuk penanganan error terkendali.'
+            ],
+            [
+                'q' => 'Operator apakah yang digunakan untuk mengakses properti atau method non-static dari sebuah objek di PHP?',
+                'options' => ['.', '->', '::', '=>'],
+                'ans' => 1,
+                'exp' => 'Operator panah `->` digunakan untuk mengakses properti dan method instance objek di PHP.'
+            ]
+        ]
+    ],
+
+    'sql' => [
+        'title' => 'Sertifikat Kompetensi Database SQL & Relational Architecture',
+        'code' => 'SQL',
+        'course_id' => 'sql',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'ANSI SQL Queries, Relational Joins (INNER, LEFT, RIGHT), Aggregate Functions & Grouping (HAVING), Data Integrity & Constraints, Database Indexing, ACID Transactions',
+        'questions' => [
+            [
+                'q' => 'Klausa SQL manakah yang digunakan untuk menyaring data agregat yang dihasilkan setelah pengelompokan `GROUP BY`?',
+                'options' => ['WHERE', 'HAVING', 'FILTER', 'ORDER BY'],
+                'ans' => 1,
+                'exp' => 'WHERE menyaring baris individual sebelum diagregasi, sedangkan HAVING menyaring kelompok data hasil fungsi agregasi setelah GROUP BY.'
+            ],
+            [
+                'q' => 'Perbedaan hasil antara `INNER JOIN` dan `LEFT JOIN` adalah:',
+                'options' => [
+                    'INNER JOIN menampilkan semua baris dari tabel kiri terlepas ada kecocokan atau tidak',
+                    'INNER JOIN hanya menampilkan baris yang memiliki nilai cocok di kedua tabel, sedangkan LEFT JOIN menampilkan semua baris tabel kiri dan mengisi NULL pada tabel kanan jika tidak cocok',
+                    'LEFT JOIN menghapus baris duplikat secara otomatis',
+                    'INNER JOIN hanya dapat digunakan pada primary key bertipe integer'
+                ],
+                'ans' => 1,
+                'exp' => 'LEFT JOIN mempertahankan seluruh data dari tabel sebelah kiri dan memadankan nilai tabel kanan atau mengembalikan NULL jika tiada relasi.'
+            ],
+            [
+                'q' => 'Perintah DDL manakah yang digunakan untuk menghapus seluruh isi data sebuah tabel secara cepat dan mengulang nilai auto-increment ke angka 1?',
+                'options' => ['DELETE FROM table_name;', 'TRUNCATE TABLE table_name;', 'DROP TABLE table_name;', 'REMOVE TABLE table_name;'],
+                'ans' => 1,
+                'exp' => 'TRUNCATE TABLE mengosongkan seluruh baris tabel secara cepat tanpa pencatatan logging per-baris dan me-reset sequence/auto-increment.'
+            ],
+            [
+                'q' => 'Fungsi agregasi SQL manakah yang menghitung total jumlah baris data yang ada pada sebuah query?',
+                'options' => ['SUM()', 'COUNT()', 'TOTAL()', 'ROWS()'],
+                'ans' => 1,
+                'exp' => 'COUNT() mengembalikan jumlah record atau nilai non-null yang sesuai kriteria query.'
+            ],
+            [
+                'q' => 'Dalam pencarian dengan operator `LIKE`, karakter wildcard manakah yang mewakili nol atau lebih karakter sembarang?',
+                'options' => ['_', '%', '*', '?'],
+                'ans' => 1,
+                'exp' => 'Simbol persen (%) mewakili deretan nol, satu, atau banyak karakter bebas, sedangkan garis bawah (_) mewakili tepat satu karakter tunggal.'
+            ],
+            [
+                'q' => 'Apa keuntungan dan potensi kerugian penggunaan Index pada kolom tabel database relasional?',
+                'options' => [
+                    'Mempercepat query SELECT secara signifikan, namun dapat memperlambat proses INSERT/UPDATE/DELETE dan memakan ruang disk tambahan',
+                    'Mengurangi ukuran memori database hingga 50%',
+                    'Menghapus kebutuhan normalisasi database',
+                    'Membuat data tabel terenkripsi secara otomatis'
+                ],
+                'ans' => 0,
+                'exp' => 'Index membuat struktur B-Tree yang mempercepat pencarian (SELECT), tetapi memerlukan overhead pemeliharaan saat data dimodifikasi (CUD).'
+            ],
+            [
+                'q' => 'Manakah perbedaan utama antara constraint `PRIMARY KEY` dan `UNIQUE KEY`?',
+                'options' => [
+                    'Tabel dapat memiliki banyak PRIMARY KEY tetapi hanya satu UNIQUE KEY',
+                    'PRIMARY KEY tidak memperbolehkan nilai NULL sama sekali, sedangkan UNIQUE KEY memperbolehkan nilai NULL (tergantung DBMS)',
+                    'UNIQUE KEY tidak dapat dihubungkan sebagai Foreign Key',
+                    'PRIMARY KEY hanya berlaku untuk kolom tipe teks'
+                ],
+                'ans' => 1,
+                'exp' => 'Sebuah tabel hanya memiliki satu PRIMARY KEY dan kolomnya wajib NOT NULL, sedangkan UNIQUE KEY menjamin keunikan dan dapat mengizinkan nilai NULL.'
+            ],
+            [
+                'q' => 'Klausa SQL manakah di MySQL/PostgreSQL yang digunakan untuk membatasi jumlah data yang diambil ke peramban (misalnya hanya 10 data teratas)?',
+                'options' => ['TOP 10', 'LIMIT 10', 'ROWNUM <= 10', 'FETCH 10 ONLY'],
+                'ans' => 1,
+                'exp' => 'LIMIT digunakan dalam dialek MySQL, SQLite, dan PostgreSQL untuk membatasi jumlah record output.'
+            ],
+            [
+                'q' => 'Dalam mekanisme Transaksi Database (ACID), perintah apakah yang digunakan untuk membatalkan seluruh operasi query jika terjadi kegagalan sistem sebelum tersimpan permanen?',
+                'options' => ['COMMIT', 'ROLLBACK', 'REVERT', 'CANCEL'],
+                'ans' => 1,
+                'exp' => 'ROLLBACK mengembalikan status database ke posisi awal sebelum transaksi dimulai jika ada query yang gagal.'
+            ],
+            [
+                'q' => 'Bentuk Normal Pertama (1NF) dalam normalisasi database relasional mensyaratkan bahwa:',
+                'options' => [
+                    'Setiap kolom harus memiliki nilai tunggal yang atomik (tidak boleh ada multivalue/array) dan setiap baris harus unik',
+                    'Seluruh kolom non-key harus bergantung secara fungsional penuh pada primary key',
+                    'Tidak boleh ada dependensi transitif antar kolom',
+                    'Tabel harus memiliki minimal 3 relasi foreign key'
+                ],
+                'ans' => 0,
+                'exp' => '1NF mensyaratkan setiap sel data bersifat atomik (tidak dapat dibagi lagi) dan tidak memiliki repeating groups.'
+            ]
+        ]
+    ],
+
+    'flutter' => [
+        'title' => 'Sertifikat Kompetensi Mobile Apps Flutter & Dart',
+        'code' => 'FLT',
+        'course_id' => 'flutter',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'Dart 3 OOP & Null Safety, Flutter Widget Architecture (Stateless vs Stateful), Reactive UI & setState(), Material Design & Scaffold, Navigation & Routing, HTTP API Integration with FutureBuilder',
+        'questions' => [
+            [
+                'q' => 'Perbedaan paling mendasar antara StatelessWidget dan StatefulWidget dalam arsitektur Flutter adalah:',
+                'options' => [
+                    'StatelessWidget hanya untuk teks, sedangkan StatefulWidget untuk gambar',
+                    'StatelessWidget bersifat statis dan datanya tidak dapat berubah saat runtime setelah dibangun, sedangkan StatefulWidget memiliki State internal yang dapat berubah secara dinamis merespons interaksi pengguna',
+                    'StatefulWidget tidak dapat dirender di platform iOS',
+                    'StatelessWidget membutuhkan izin root perangkat'
+                ],
+                'ans' => 1,
+                'exp' => 'StatelessWidget adalah widget immutable tanpa state internal dinamis, sedangkan StatefulWidget mempertahankan state yang dapat dimutasi sepanjang siklus hidupnya.'
+            ],
+            [
+                'q' => 'Metode manakah yang wajib dipanggil di dalam State sebuah StatefulWidget untuk memberitahu framework Flutter agar merender ulang (rebuild) antarmuka UI?',
+                'options' => ['notifyListeners()', 'setState(() { ... })', 'rebuildUI()', 'updateState()'],
+                'ans' => 1,
+                'exp' => 'setState memberitahu framework Flutter bahwa kondisi internal widget telah berubah, memicu eksekusi ulang method build() untuk memperbarui tampilan layar.'
+            ],
+            [
+                'q' => 'File konfigurasi manakah pada proyek Flutter yang digunakan untuk mengatur dependensi pustaka pihak ketiga, aset gambar, dan versi aplikasi?',
+                'options' => ['config.xml', 'pubspec.yaml', 'flutter.json', 'build.gradle'],
+                'ans' => 1,
+                'exp' => 'pubspec.yaml adalah file manifest utama proyek Flutter dan Dart untuk mengelola packages, fonts, dan assets.'
+            ],
+            [
+                'q' => 'Widget layout dasar manakah di Flutter yang menyusun elemen-elemen anaknya secara berurutan dari atas ke bawah (vertikal)?',
+                'options' => ['Row', 'Column', 'Stack', 'Wrap'],
+                'ans' => 1,
+                'exp' => 'Column menyusun daftar widget anak di sepanjang sumbu vertikal, sedangkan Row menyusunnya secara horizontal.'
+            ],
+            [
+                'q' => 'Widget standar Material Design apakah yang menyediakan kerangka visual dasar seperti AppBar, Drawer, FloatingActionButton, dan Body?',
+                'options' => ['Container', 'Scaffold', 'Card', 'MaterialApp'],
+                'ans' => 1,
+                'exp' => 'Scaffold mengimplementasikan struktur layout visual Material Design dasar yang menyediakan slot AppBar, Body, BottomNavigationBar, dan FAB.'
+            ],
+            [
+                'q' => 'Perintah manakah yang digunakan untuk berpindah ke rute halaman baru di Flutter dengan menumpuk halaman tersebut di atas navigation stack?',
+                'options' => [
+                    'Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage()))',
+                    'Navigator.go(context, DetailPage())',
+                    'Route.open(DetailPage())',
+                    'context.navigate(DetailPage())'
+                ],
+                'ans' => 0,
+                'exp' => 'Navigator.push menambahkan rute baru ke atas tumpukan navigasi yang dikelola oleh Navigator.'
+            ],
+            [
+                'q' => 'Widget manakah yang paling direkomendasikan dan efisien untuk menampilkan daftar ribuan data secara dinamis tanpa membebani memori smartphone?',
+                'options' => ['SingleChildScrollView + Column', 'ListView.builder', 'Table', 'Wrap.builder'],
+                'ans' => 1,
+                'exp' => 'ListView.builder membuat widget anak hanya saat item tersebut mendekati layar yang terlihat (lazy loading / on-demand recycling).'
+            ],
+            [
+                'q' => 'Widget manakah yang secara khusus dirancang untuk menangani pembangunan antarmuka berdasarkan status asinkron dari sebuah objek Future (seperti response HTTP REST API)?',
+                'options' => ['StreamBuilder', 'FutureBuilder', 'AsyncView', 'PromiseBuilder'],
+                'ans' => 1,
+                'exp' => 'FutureBuilder mengamati proses objek Future dan membangun UI berdasarkan ConnectionState (waiting, done, atau error).'
+            ],
+            [
+                'q' => 'Dalam fitur Sound Null Safety bahasa Dart, simbol tanda tanya (?) setelah nama tipe data (misal: `String? name`) mengindikasikan bahwa:',
+                'options' => [
+                    'Variabel tersebut bertipe boolean',
+                    'Variabel tersebut dapat menerima nilai null (nullable)',
+                    'Variabel tersebut bersifat konstan',
+                    'Variabel tersebut belum dikompilasi'
+                ],
+                'ans' => 1,
+                'exp' => 'Tanda tanya (?) menandai tipe nullable yang mengizinkan variabel tersebut memiliki kemungkinan bernilai null secara eksplisit.'
+            ],
+            [
+                'q' => 'Filosofi desain utama dalam pengembangan aplikasi dengan Flutter yang membedakannya dari framework lain adalah:',
+                'options' => [
+                    'Everything is a Widget (Segala elemen antarmuka, layout, hingga padding adalah widget deklaratif)',
+                    'Kompilasi kode hanya dilakukan via JavaScript Web View',
+                    'Tidak memerlukan bahasa pemrograman khusus',
+                    'Harus menulis dua basis kode terpisah untuk iOS dan Android'
+                ],
+                'ans' => 0,
+                'exp' => 'Flutter menerapkan prinsip "Everything is a widget", di mana struktur, gaya visual, animasi, dan perataan tersusun dari komposisi widget deklaratif.'
+            ]
+        ]
+    ],
+
+    'java' => [
+        'title' => 'Sertifikat Kompetensi Pemrograman Java 21 LTS & Enterprise OOP',
+        'code' => 'JAVA',
+        'course_id' => 'java',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'Java 21 Syntax & Virtual Threads, 4 Pillars of OOP, Collections Framework (List, Map, Set), Exception Handling & Generics, JVM Memory Management, Multithreading',
+        'questions' => [
+            [
+                'q' => 'Empat pilar utama dalam konsep Pemrograman Berorientasi Objek (OOP) di Java adalah:',
+                'options' => [
+                    'Compilation, Interpretation, Garbage Collection, Execution',
+                    'Encapsulation, Inheritance, Polymorphism, Abstraction',
+                    'Public, Private, Protected, Default',
+                    'Class, Object, Method, Attribute'
+                ],
+                'ans' => 1,
+                'exp' => 'Empat pilar dasar OOP adalah Enkapsulasi (pembungkusan data), Pewarisan (Inheritance), Polimorfisme (banyak bentuk), dan Abstraksi.'
+            ],
+            [
+                'q' => 'Apa arti kata kunci `static` pada sebuah method atau variabel di Java?',
+                'options' => [
+                    'Method atau variabel tersebut tidak dapat diubah nilainya',
+                    'Method atau variabel tersebut milik kelas itu sendiri dan dapat diakses langsung tanpa harus membuat objek instance terlebih dahulu',
+                    'Method tersebut hanya dapat dipanggil di dalam package yang sama',
+                    'Variabel tersebut dialokasikan di dalam memori Heap secara dinamis'
+                ],
+                'ans' => 1,
+                'exp' => 'Member static terikat ke class level, bukan instance level, sehingga dapat dipanggil langsung melalui ClassName.methodName().'
+            ],
+            [
+                'q' => 'Mengapa kelas `String` di Java disebut bersifat `immutable`?',
+                'options' => [
+                    'Karena String tidak dapat dicetak ke layar',
+                    'Karena sekali objek String dibuat di memori String Pool, isi karakternya tidak dapat diubah; setiap modifikasi akan menghasilkan objek String baru',
+                    'Karena String tidak mendukung karakter Unicode',
+                    'Karena String hanya dapat menampung maksimal 255 karakter'
+                ],
+                'ans' => 1,
+                'exp' => 'Immutability berarti nilai objek String tidak dapat dimodifikasi di tempat; operasi penggabungan membuat objek baru di memori.'
+            ],
+            [
+                'q' => 'Manakah perbedaan utama antara `abstract class` dan `interface` di Java modern?',
+                'options' => [
+                    'Interface dapat memiliki method konstruktor, sedangkan abstract class tidak',
+                    'Sebuah class hanya dapat meng-extend satu abstract class (single inheritance), tetapi dapat mengimplementasikan banyak interface (multiple inheritance)',
+                    'Interface tidak dapat memiliki konstanta',
+                    'Abstract class tidak boleh memiliki method konkret yang memiliki implementasi body'
+                ],
+                'ans' => 1,
+                'exp' => 'Java mendukung multiple inheritance melalui implementasi multi-interface, namun hanya mendukung single class inheritance via extends.'
+            ],
+            [
+                'q' => 'Dalam Java Collections Framework, struktur data manakah yang tidak memperbolehkan adanya elemen duplikat dan tidak menjamin urutan indeks?',
+                'options' => ['ArrayList', 'HashSet', 'LinkedList', 'Vector'],
+                'ans' => 1,
+                'exp' => 'Set (seperti HashSet) menerapkan koleksi elemen unik tanpa duplikasi berdasarkan perbandingan hashCode() dan equals().'
+            ],
+            [
+                'q' => 'Komponen runtime manakah di dalam Java Virtual Machine (JVM) yang bertugas membersihkan memori heap dari objek-objek yang sudah tidak lagi memiliki referensi aktif?',
+                'options' => ['Class Loader', 'Garbage Collector (GC)', 'JIT Compiler', 'Bytecode Verifier'],
+                'ans' => 1,
+                'exp' => 'Garbage Collector secara otomatis mengidentifikasi dan membebaskan memori objek yang sudah tidak terjangkau (unreachable).'
+            ],
+            [
+                'q' => 'Kata kunci `final` jika diterapkan pada sebuah deklarasi class memiliki efek apa?',
+                'options' => [
+                    'Class tersebut tidak dapat diinstansiasi',
+                    'Class tersebut tidak dapat diwarisi (cannot be subclassed/extended)',
+                    'Semua method di dalamnya wajib static',
+                    'Class tersebut menjadi thread-safe secara otomatis'
+                ],
+                'ans' => 1,
+                'exp' => 'Sebuah final class dicegah dari proses pewarisan/subclassing (contohnya kelas java.lang.String).'
+            ],
+            [
+                'q' => 'Dalam penanganan blok exception `try-catch-finally`, kapan blok `finally` akan dieksekusi?',
+                'options' => [
+                    'Hanya jika terjadi error/exception di blok try',
+                    'Hanya jika tidak ada error sama sekali',
+                    'Selalu dieksekusi terlepas apakah exception terjadi atau tidak, sangat cocok untuk menutup resource (koneksi/file stream)',
+                    'Hanya dieksekusi jika dipanggil oleh System.exit()'
+                ],
+                'ans' => 2,
+                'exp' => 'Blok finally dijamin selalu berjalan baik saat alur program normal maupun ketika terjadi exception, ideal untuk cleanup resource.'
+            ],
+            [
+                'q' => 'Signature method manakah yang merupakan titik awal eksekusi (entry point) aplikasi Java standar?',
+                'options' => [
+                    'public void main(String args)',
+                    'public static void main(String[] args)',
+                    'private static int main(String[] args)',
+                    'public abstract void start(String[] args)'
+                ],
+                'ans' => 1,
+                'exp' => 'JVM mencari method tepat dengan tanda public static void main(String[] args) sebagai titik masuk program.'
+            ],
+            [
+                'q' => 'Apa manfaat utama penggunaan fitur Generics (misalnya `List<String>`) dalam bahasa Java?',
+                'options' => [
+                    'Meningkatkan keamanan tipe data saat waktu kompilasi (compile-time type safety) dan menghilangkan kebutuhan type casting eksplisit',
+                    'Mempercepat proses kompilasi javac sebesar 80%',
+                    'Mengubah tipe data primitif menjadi pointer memori C',
+                    'Membuat kode Java dapat berjalan di browser tanpa JVM'
+                ],
+                'ans' => 0,
+                'exp' => 'Generics memungkinkan programmer menentukan tipe data yang valid sehingga kesalahan tipe terdeteksi saat compile time, bukan runtime ClassCastException.'
+            ]
+        ]
+    ],
+
+    'cpp' => [
+        'title' => 'Sertifikat Kompetensi Pemrograman C++20 & STL High Performance',
+        'code' => 'CPP',
+        'course_id' => 'cpp',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'C++20 Core & Syntax, Memory Pointers & References, Dynamic Memory Allocation (new/delete), RAII & Smart Pointers, STL Containers (vector, map), OOP & Virtual Polymorphism',
+        'questions' => [
+            [
+                'q' => 'Perbedaan fundamental antara Pointer (`int* ptr`) dan Reference (`int& ref`) dalam C++ adalah:',
+                'options' => [
+                    'Pointer tidak dapat bernilai NULL, sedangkan reference dapat bernilai NULL',
+                    'Pointer menyimpan alamat memori dan dapat di-reassign menunjuk ke variabel lain atau bernilai nullptr, sedangkan reference adalah alias konstan yang wajib diinisialisasi saat dibuat dan tidak dapat dipindah rujukannya',
+                    'Reference memakan alokasi memori heap sebesar 16 byte',
+                    'Tidak ada perbedaan antara keduanya di standar C++20'
+                ],
+                'ans' => 1,
+                'exp' => 'Reference bertindak sebagai alias tetap bagi variabel asli dan tidak bisa null, sedangkan pointer menyimpan alamat memori independen yang fleksibel dimanipulasi.'
+            ],
+            [
+                'q' => 'Pasangan operator manakah yang digunakan untuk mengalokasikan dan mendealokasikan memori dinamis di heap dalam C++?',
+                'options' => ['malloc() dan free()', 'new dan delete', 'alloc dan dealloc', 'create dan destroy'],
+                'ans' => 1,
+                'exp' => 'Operator new mengalokasikan memori dan memanggil constructor objek, sedangkan delete memanggil destructor dan membebaskan memori heap.'
+            ],
+            [
+                'q' => 'Simbol apakah yang digunakan untuk mendeklarasikan fungsi Destructor pada sebuah class C++?',
+                'options' => ['!ClassName()', '~ClassName()', '#ClassName()', '^ClassName()'],
+                'ans' => 1,
+                'exp' => 'Destructor dideklarasikan dengan menambahkan karakter tilde (~) di depan nama class dan dipanggil otomatis saat objek keluar dari scope.'
+            ],
+            [
+                'q' => 'Kontainer standar dari Standard Template Library (STL) C++ manakah yang menyimpan elemen secara berurutan dalam memori contiguous dan ukurannya dapat bertambah secara dinamis?',
+                'options' => ['std::list', 'std::vector', 'std::map', 'std::set'],
+                'ans' => 1,
+                'exp' => 'std::vector mengimplementasikan dynamic array berkinerja tinggi dengan memori kontigu serta akses acak instan O(1).'
+            ],
+            [
+                'q' => 'Kata kunci apakah yang wajib dipasangkan pada deklarasi method kelas dasar (base class) untuk mengaktifkan mekanisme Runtime Polymorphism (Late Binding) di C++?',
+                'options' => ['override', 'virtual', 'dynamic', 'polymorphic'],
+                'ans' => 1,
+                'exp' => 'Kata kunci virtual memastikan bahwa pemanggilan fungsi melalui pointer/referensi kelas dasar merujuk ke implementasi fungsi di kelas turunan via virtual table (vtable).'
+            ],
+            [
+                'q' => 'Jenis Smart Pointer modern dalam C++ standar yang memiliki kepemilikan eksklusif (tidak dapat disalin/copy, hanya dapat dipindah/move) terhadap objek heap adalah:',
+                'options' => ['std::shared_ptr', 'std::unique_ptr', 'std::weak_ptr', 'std::auto_ptr'],
+                'ans' => 1,
+                'exp' => 'std::unique_ptr menerapkan filosofi kepemilikan tunggal eksklusif; objek dihancurkan otomatis saat unique_ptr keluar dari scope.'
+            ],
+            [
+                'q' => 'Perintah standar I/O C++ manakah yang digunakan untuk mencetak teks output ke layar konsol dengan aman?',
+                'options' => ['std::cin >> ...', 'std::cout << ...', 'printf_s(...)', 'System.out.print(...)'],
+                'ans' => 1,
+                'exp' => 'std::cout dipadukan dengan stream insertion operator (<<) adalah standar output stream di C++.'
+            ],
+            [
+                'q' => 'Fitur apakah di C++ yang memungkinkan penulisan fungsi atau class generik yang dapat bekerja dengan tipe data apapun tanpa menduplikasi kode?',
+                'options' => ['Preprocessor Macros', 'Templates (`template <typename T>`)', 'Inheritance', 'Lambdas'],
+                'ans' => 1,
+                'exp' => 'Templates menyediakan generic programming di C++ yang diinstansiasi menjadi kode konkret oleh kompiler saat compile time.'
+            ],
+            [
+                'q' => 'Mengapa parameter fungsi bertipe objek besar disarankan dilewatkan dengan `const ClassName& param` daripada `ClassName param` (pass-by-value)?',
+                'options' => [
+                    'Mencegah terjadinya proses copy overhead yang mahal pada memori sekaligus melindungi objek agar tidak diubah secara tidak sengaja di dalam fungsi',
+                    'Mengubah objek menjadi bertipe pointer',
+                    'Membuat fungsi tersebut dapat diakses secara multi-thread',
+                    'Menghemat penggunaan CPU cache level 1'
+                ],
+                'ans' => 0,
+                'exp' => 'Pass-by-const-reference menghindari biaya pembuatan salinan objek (copy constructor) yang lambat tanpa mengorbankan keamanan data.'
+            ],
+            [
+                'q' => 'Namespace standar tempat seluruh fungsi, kelas, dan variabel library bawaan C++ didefinisikan adalah:',
+                'options' => ['core', 'sys', 'std', 'cpp'],
+                'ans' => 2,
+                'exp' => 'Pustaka standar C++ diisolasi di dalam namespace `std` (misalnya std::string, std::cout, std::vector).'
+            ]
+        ]
+    ],
+
+    'vue' => [
+        'title' => 'Sertifikat Kompetensi Vue.js 3 Reaktif SPA & Komponen',
+        'code' => 'VUE',
+        'course_id' => 'vue',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'Vue 3 Composition API (<script setup>), Reactivity System (ref vs reactive), Two-way Data Binding (v-model), Conditional & List Rendering (v-if, v-for), Component Props & Emits, Computed Properties',
+        'questions' => [
+            [
+                'q' => 'Dalam Vue.js 3 Composition API, fungsi reaktif manakah yang paling ideal digunakan untuk membuat variabel state reaktif dari tipe data primitif seperti string, number, atau boolean?',
+                'options' => ['reactive()', 'ref()', 'state()', 'computed()'],
+                'ans' => 1,
+                'exp' => 'ref() membungkus nilai primitif ke dalam objek reaktif yang nilainya diakses melalui properti `.value` di bagian script dan langsung diakses tanpa .value di template.'
+            ],
+            [
+                'q' => 'Perbedaan perilaku teknis antara direktif `v-if` dan `v-show` pada elemen antarmuka Vue adalah:',
+                'options' => [
+                    'v-if hanya bekerja pada teks, v-show untuk gambar',
+                    'v-if merender atau menghancurkan elemen secara fisik dari DOM dokumen, sedangkan v-show selalu merender elemen di DOM dan hanya melakukan toggle gaya CSS `display: none`',
+                    'v-show memiliki biaya inisialisasi yang lebih berat dibanding v-if',
+                    'Tidak ada perbedaan keduanya di Vue 3'
+                ],
+                'ans' => 1,
+                'exp' => 'v-if adalah kondisional render sejati (memasang/melepas elemen dari DOM), sedangkan v-show hanya mengubah style CSS display.'
+            ],
+            [
+                'q' => 'Direktif bawaan Vue.js manakah yang digunakan untuk mewujudkan two-way data binding (pengikatan dua arah) pada input formulir?',
+                'options' => ['v-bind', 'v-model', 'v-on', 'v-slot'],
+                'ans' => 1,
+                'exp' => 'v-model menyederhanakan sinkronisasi dua arah antara nilai input formulir pengguna dengan variabel reaktif state.'
+            ],
+            [
+                'q' => 'Lifecycle hook manakah di Vue 3 Composition API yang dieksekusi tepat setelah komponen selesai dipasang (mounted) ke struktur DOM halaman?',
+                'options' => ['onCreated()', 'onMounted()', 'onBeforeMount()', 'onUpdated()'],
+                'ans' => 1,
+                'exp' => 'onMounted() dijalankan saat komponen sudah terpasang di DOM, waktu yang ideal untuk memanggil API HTTP atau inisialisasi library pihak ketiga.'
+            ],
+            [
+                'q' => 'Cara standar di Vue 3 `<script setup>` untuk menerima data properti yang dikirimkan oleh komponen induk (parent) adalah menggunakan compiler macro:',
+                'options' => ['defineProps()', 'receiveProps()', 'inject()', 'useProps()'],
+                'ans' => 0,
+                'exp' => 'defineProps() adalah compiler macro bawaan dalam <script setup> untuk mendefinisikan prop yang diterima tanpa perlu di-import eksplisit.'
+            ],
+            [
+                'q' => 'Bagaimanakah cara komponen anak (child component) mengirimkan event kustom beserta payload data kembali ke komponen induk?',
+                'options' => ['defineEmits() / emit()', 'broadcast()', 'parent.send()', 'dispatch()'],
+                'ans' => 0,
+                'exp' => 'defineEmits() mendeklarasikan event kustom yang dapat dipancarkan komponen anak ke komponen induknya.'
+            ],
+            [
+                'q' => 'Keunggulan utama penggunaan fungsi `computed()` dibanding memanggil method fungsi biasa di template Vue adalah:',
+                'options' => [
+                    'Computed properties memiliki fitur caching otomatis dan hanya dievaluasi ulang jika dependensi reaktifnya mengalami perubahan nilai',
+                    'Computed properties berjalan di thread Web Worker terpisah',
+                    'Computed properties tidak memerlukan return value',
+                    'Computed properties dapat mengubah state secara langsung'
+                ],
+                'ans' => 0,
+                'exp' => 'Computed property meng-cache hasilnya dan hanya melakukan kalkulasi ulang jika state yang menjadi dependensinya mengalami mutasi.'
+            ],
+            [
+                'q' => 'Saat merender daftar elemen berulang menggunakan `v-for`, mengapa atribut `:key` yang unik wajib disertakan?',
+                'options' => [
+                    'Untuk memberikan nomor urut pada daftar',
+                    'Membantu algoritma Virtual DOM Vue melacak identitas masing-masing node secara efisien saat terjadi mutasi susunan atau penghapusan item',
+                    'Agar elemen tersebut memiliki style CSS unik',
+                    'Sebagai syarat validasi HTML W3C'
+                ],
+                'ans' => 1,
+                'exp' => 'Key unik bertindak sebagai petunjuk bagi Virtual DOM untuk mengidentifikasi node mana yang berubah tanpa merender ulang seluruh list.'
+            ],
+            [
+                'q' => 'Tiga blok tag utama yang menyusun sebuah file Single File Component (SFC) berekstensi `.vue` adalah:',
+                'options' => [
+                    '<template>, <script>, dan <style>',
+                    '<html>, <body>, dan <head>',
+                    '<view>, <model>, dan <controller>',
+                    '<layout>, <logic>, dan <css>'
+                ],
+                'ans' => 0,
+                'exp' => 'File SFC Vue (.vue) merangkum logika (<script>), tampilan (<template>), dan styling (<style>) dalam satu file modular.'
+            ],
+            [
+                'q' => 'Library perutean resmi (official routing) yang digunakan untuk membangun navigasi Single Page Application (SPA) pada ekosistem Vue adalah:',
+                'options' => ['Vuex', 'Pinia', 'Vue Router', 'Vue Navigation'],
+                'ans' => 2,
+                'exp' => 'Vue Router adalah router resmi untuk Vue.js yang menyinkronkan URL browser dengan komponen tampilan tanpa reload halaman.'
+            ]
+        ]
+    ],
+
+    'jquery' => [
+        'title' => 'Sertifikat Kompetensi jQuery DOM & AJAX Manipulation',
+        'code' => 'JQR',
+        'course_id' => 'jquery',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'jQuery Core Selectors, Document Ready Event, DOM Manipulation & Traversal, Event Listeners, CSS & Class Modifications, Asynchronous AJAX Requests',
+        'questions' => [
+            [
+                'q' => 'Sintaks selektor jQuery manakah yang digunakan untuk memilih elemen HTML dengan atribut `id="btnSubmit"`?',
+                'options' => ["$('.btnSubmit')", "$('#btnSubmit')", "$('btnSubmit')", "$('@btnSubmit')"],
+                'ans' => 1,
+                'exp' => 'Tanda pagar (#) digunakan sebagai selektor id di jQuery, persis seperti selektor CSS.'
+            ],
+            [
+                'q' => 'Metode manakah di jQuery yang memastikan seluruh kode JavaScript baru dijalankan setelah struktur pohon DOM selesai dimuat sempurna?',
+                'options' => [
+                    '$(window).on("load", fn)',
+                    '$(document).ready(function() { ... })',
+                    '$(document).start(fn)',
+                    '$.init(fn)'
+                ],
+                'ans' => 1,
+                'exp' => '$(document).ready() mengeksekusi fungsi callback segera setelah struktur DOM dokumen siap tanpa menunggu file gambar selesai diunduh.'
+            ],
+            [
+                'q' => 'Metode singkat bawaan jQuery manakah yang digunakan untuk mengirim permintaan data HTTP GET secara asinkron (AJAX)?',
+                'options' => ['$.get()', '$.fetch()', '$.read()', '$.httpGet()'],
+                'ans' => 0,
+                'exp' => '$.get() adalah fungsi shorthand AJAX di jQuery untuk mengambil data dari server menggunakan HTTP GET request.'
+            ],
+            [
+                'q' => 'Perbedaan antara metode `.html()` dan `.text()` pada manipulasi konten elemen di jQuery adalah:',
+                'options' => [
+                    '.html() hanya mengubah atribut tag, .text() mengubah warna tulisan',
+                    '.html() mengatur atau mengambil konten beserta tag elemen HTML di dalamnya, sedangkan .text() hanya memproses string teks murni dengan melakukan escape pada tag HTML',
+                    '.text() hanya bekerja pada elemen input',
+                    'Tidak ada perbedaan antara keduanya'
+                ],
+                'ans' => 1,
+                'exp' => '.html() mengolah markup HTML termasuk tag, sedangkan .text() memproses teks murni sehingga aman dari injeksi HTML.'
+            ],
+            [
+                'q' => 'Metode jQuery manakah yang menambahkan class CSS baru ke elemen yang dipilih tanpa menghapus class yang sudah ada sebelumnya?',
+                'options' => ['.setClass()', '.addClass()', '.appendClass()', '.insertClass()'],
+                'ans' => 1,
+                'exp' => '.addClass("nama-kelas") menambahkan satu atau lebih class ke sekumpulan elemen yang cocok.'
+            ],
+            [
+                'q' => 'Metode manakah di jQuery yang digunakan untuk mengambil atau menetapkan nilai (value) dari elemen input form seperti textbox atau dropdown?',
+                'options' => ['.val()', '.value()', '.getVal()', '.text()'],
+                'ans' => 0,
+                'exp' => '.val() digunakan khusus untuk membaca atau mengatur properti value pada elemen formulir.'
+            ],
+            [
+                'q' => 'Cara modern dan paling direkomendasikan untuk memasang event handler klik pada elemen menggunakan jQuery adalah:',
+                'options' => [
+                    '$("button").on("click", function() { ... });',
+                    '$("button").bindClick(function() { ... });',
+                    '$("button").listen("click", fn);',
+                    '$("button").clickEvent(fn);'
+                ],
+                'ans' => 0,
+                'exp' => 'Metode .on("event", handler) adalah standar modern di jQuery untuk event handling, mendukung event delegation dengan sangat fleksibel.'
+            ],
+            [
+                'q' => 'Mengapa teknik Method Chaining (seperti `$("#box").fadeIn().css("color", "red").slideUp();`) dapat berjalan di jQuery?',
+                'options' => [
+                    'Karena browser modern mengizinkan chaining secara otomatis',
+                    'Karena sebagian besar metode manipulasi jQuery selalu mengembalikan objek jQuery itu sendiri (this)',
+                    'Karena jQuery ditulis dalam bahasa WebAssembly',
+                    'Karena jQuery menggunakan thread asynchronous tersembunyi'
+                ],
+                'ans' => 1,
+                'exp' => 'Metode jQuery mengembalikan referensi objek jQuery yang sedang diproses sehingga metode lain dapat langsung disambung.'
+            ],
+            [
+                'q' => 'Metode manakah yang menampilkan elemen HTML yang tersembunyi dengan efek animasi transisi memudar (fade)?',
+                'options' => ['.slideDown()', '.fadeIn()', '.showFast()', '.display()'],
+                'ans' => 1,
+                'exp' => '.fadeIn() menganimasikan opacity elemen dari 0 hingga terlihat penuh.'
+            ],
+            [
+                'q' => 'Di dalam sebuah event handler jQuery, perintah apakah yang digunakan untuk mencegah aksi bawaan peramban (misalnya mencegah submit form otomatis atau reload halaman saat klik link)?',
+                'options' => ['event.stopPropagation()', 'event.preventDefault()', 'event.stop()', 'return true'],
+                'ans' => 1,
+                'exp' => 'event.preventDefault() membatalkan tindakan default bawaan browser yang dipicu oleh event tersebut.'
+            ]
+        ]
+    ],
+
+    'python' => [
+        'title' => 'Sertifikat Kompetensi Pemrograman Python 3 & Otomasi',
+        'code' => 'PY',
+        'course_id' => 'python',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'Python 3.12 Core Syntax, Data Structures (Lists, Dictionaries, Tuples, Sets), List Comprehensions, Functions & Lambdas, OOP & Dunder Methods, Exception Handling & File I/O',
+        'questions' => [
+            [
+                'q' => 'Manakah struktur data bawaan Python yang bersifat ordered, mutable, dan mengizinkan adanya elemen duplikat?',
+                'options' => ['Tuple', 'List', 'Set', 'Dictionary Keys'],
+                'ans' => 1,
+                'exp' => 'List (dibuat dengan kurung siku `[]`) bersifat terurut (ordered), dapat diubah isinya (mutable), dan mengizinkan duplikat.'
+            ],
+            [
+                'q' => 'Apa output dari sintaks list comprehension `[x * 2 for x in range(4) if x % 2 == 0]` di Python?',
+                'options' => ['[0, 4]', '[0, 2, 4, 6]', '[2, 4]', '[0, 2]'],
+                'ans' => 0,
+                'exp' => 'range(4) menghasilkan 0, 1, 2, 3. Nilai genap adalah 0 dan 2. Dikalikan 2 menghasilkan [0, 4].'
+            ],
+            [
+                'q' => 'Dalam konsep Object-Oriented Programming Python, parameter pertama dari setiap method instansiasi di dalam class secara konvensi dinamakan apa?',
+                'options' => ['this', 'self', 'cls', 'obj'],
+                'ans' => 1,
+                'exp' => 'self mewakili instance objek yang sedang diproses dan wajib disertakan sebagai argumen pertama method.'
+            ],
+            [
+                'q' => 'Blok penanganan error apakah yang digunakan di Python untuk menangkap kesalahan saat runtime?',
+                'options' => [
+                    'try ... catch ... finally',
+                    'try ... except ... finally',
+                    'test ... onError ... done',
+                    'guard ... rescue ... ensure'
+                ],
+                'ans' => 1,
+                'exp' => 'Python menggunakan pasangan kata kunci try ... except untuk penanganan exception.'
+            ],
+            [
+                'q' => 'Pernyataan `with open("data.txt", "r") as f:` sangat disarankan saat membaca file karena:',
+                'options' => [
+                    'Otomatis mengenkripsi isi file teks',
+                    'Secara otomatis menutup file stream (context management) bahkan jika terjadi error di tengah pembacaan',
+                    'Membaca file dengan kecepatan dua kali lipat',
+                    'Mengubah file menjadi format JSON secara instan'
+                ],
+                'ans' => 1,
+                'exp' => 'Context manager with memastikan resource file ditutup dengan aman dan otomatis setelah blok with selesai.'
+            ],
+            [
+                'q' => 'Fungsi anonim satu baris (inline anonymous function) di Python dideklarasikan menggunakan kata kunci:',
+                'options' => ['def', 'lambda', 'func', 'inline'],
+                'ans' => 1,
+                'exp' => 'lambda arguments: expression digunakan untuk membuat fungsi anonim kecil satu baris.'
+            ],
+            [
+                'q' => 'Perbedaan fundamental antara Tuple dan List di Python adalah:',
+                'options' => [
+                    'Tuple bersifat immutable (tidak dapat diubah setelah dibuat), sedangkan List bersifat mutable',
+                    'Tuple hanya dapat menyimpan angka',
+                    'List tidak memiliki indeks urutan',
+                    'Tuple dibuat dengan kurung kurawal `{}`'
+                ],
+                'ans' => 0,
+                'exp' => 'Tuple ditulis dengan tanda kurung biasa `()` dan bersifat immutable (isi nilainya tidak dapat ditambah/diubah/dihapus).'
+            ],
+            [
+                'q' => 'Metode dictionary manakah yang mengembalikan nilai dari kunci tertentu dan tidak memicu error KeyError jika kunci tersebut tidak ada?',
+                'options' => ['dict.get(key, default)', 'dict[key]', 'dict.fetch(key)', 'dict.find(key)'],
+                'ans' => 0,
+                'exp' => 'metode .get() mengembalikan nilai default (atau None) jika kunci tidak ditemukan tanpa memicu KeyError crash.'
+            ],
+            [
+                'q' => 'Panduan gaya penulisan kode resmi (style guide) standar yang diakui secara global untuk bahasa Python adalah:',
+                'options' => ['ISO-9001', 'PEP 8', 'RFC-2616', 'Python Standard Guidelines 2026'],
+                'ans' => 1,
+                'exp' => 'PEP 8 (Python Enhancement Proposal 8) adalah panduan gaya penulisan kode Python yang menjadi acuan standar industri.'
+            ],
+            [
+                'q' => 'Fungsi bawaan manakah yang mengembalikan panjang jumlah item dalam sebuah koleksi (string, list, tuple, dict)?',
+                'options' => ['count()', 'size()', 'len()', 'length()'],
+                'ans' => 2,
+                'exp' => 'len() adalah built-in function Python untuk menghitung jumlah elemen dalam objek kontainer.'
+            ]
+        ]
+    ],
+
+    'uiux' => [
+        'title' => 'Sertifikat Kompetensi Desain UI/UX & Prototyping Figma',
+        'code' => 'UIUX',
+        'course_id' => 'uiux',
+        'type' => 'course',
+        'price' => 19000,
+        'original_price' => 49000,
+        'duration_minutes' => 15,
+        'passing_score' => 70,
+        'competencies' => 'Design Thinking Process, Figma Auto-Layout & Constraints, Design Systems & Component Variants, Information Architecture, Heuristic Usability Evaluation, Interactive Prototyping',
+        'questions' => [
+            [
+                'q' => 'Lima tahapan utama dalam metodologi Design Thinking yang berpusat pada pengguna (User-Centered) secara berurutan adalah:',
+                'options' => [
+                    'Empathize -> Define -> Ideate -> Prototype -> Test',
+                    'Ideate -> Design -> Code -> Test -> Deploy',
+                    'Research -> Wireframe -> Visual -> Launch -> Maintain',
+                    'Define -> Sketch -> Prototype -> Feedback -> Finalize'
+                ],
+                'ans' => 0,
+                'exp' => 'Model Design Thinking standar d.school Stanford: Empathize (Memahami) -> Define (Merumuskan) -> Ideate (Menggagas ide) -> Prototype (Membuat purwarupa) -> Test (Uji coba pengguna).'
+            ],
+            [
+                'q' => 'Fitur apakah di Figma yang memungkinkan tata letak tombol atau card bertambah atau menyusut secara otomatis menyesuaikan ukuran konten teks di dalamnya?',
+                'options' => ['Smart Animate', 'Auto Layout', 'Component Sets', 'Vector Networks'],
+                'ans' => 1,
+                'exp' => 'Auto Layout di Figma (serupa dengan CSS Flexbox) memungkinkan frame secara dinamis menyesuaikan ukuran kontennya lengkap dengan padding dan spacing.'
+            ],
+            [
+                'q' => 'Representasi fiktif terperinci mengenai calon pengguna ideal yang dibuat berdasarkan riset kualitatif dan kuantitatif disebut:',
+                'options' => ['User Persona', 'Wireframe', 'Customer Journey Map', 'Moodboard'],
+                'ans' => 0,
+                'exp' => 'User Persona adalah profil representatif pengguna yang mencakup demografi, motivasi, pain points, dan tujuan penggunaan produk.'
+            ],
+            [
+                'q' => 'Perbedaan utama antara Wireframe (Low-Fidelity) dan Mockup (High-Fidelity) adalah:',
+                'options' => [
+                    'Wireframe fokus pada hierarki informasi dan struktur tata letak tanpa warna atau aset visual detail, sedangkan Mockup menyajikan visualisasi realistis dengan palet warna, tipografi, dan aset grafis final',
+                    'Wireframe dibuat setelah aplikasi selesai di-coding',
+                    'Mockup hanya berupa sketsa pensil di kertas',
+                    'Tidak ada perbedaan antara keduanya dalam desain produk'
+                ],
+                'ans' => 0,
+                'exp' => 'Wireframe mengutamakan fungsi dan struktur dasar arsitektur informasi, sedangkan Mockup fokus pada estetika visual mendalam.'
+            ],
+            [
+                'q' => 'Tujuan pembuatan Design System (Komponen, Typography, Color Palette, Token) dalam tim produk digital adalah:',
+                'options' => [
+                    'Mengurangi ukuran file figma menjadi nol kilobyte',
+                    'Menjaga konsistensi visual di seluruh modul produk serta mempercepat kolaborasi antara desainer UI dan tim engineer/developer',
+                    'Menggantikan peran pengujian usability testing',
+                    'Menghindari penggunaan software selain Figma'
+                ],
+                'ans' => 1,
+                'exp' => 'Design System menciptakan satu sumber kebenaran (single source of truth) yang menjamin konsistensi visual dan efisiensi kerja tim.'
+            ],
+            [
+                'q' => 'Prinsip Heuristik Nielsen manakah yang menyatakan bahwa sistem harus selalu memberi tahu pengguna mengenai apa yang sedang terjadi melalui umpan balik tepat waktu (misal progress bar saat loading)?',
+                'options' => [
+                    'Visibility of System Status',
+                    'Match Between System and Real World',
+                    'User Control and Freedom',
+                    'Error Prevention'
+                ],
+                'ans' => 0,
+                'exp' => 'Visibility of System Status memastikan pengguna selalu mendapat feedback instan mengenai status operasi sistem (seperti status loading atau berhasil disimpan).'
+            ],
+            [
+                'q' => 'Dalam fitur Component Figma, apa fungsi dari `Variants`?',
+                'options' => [
+                    'Menghapus layer yang tidak terpakai',
+                    'Mengelompokkan berbagai variasi status dari komponen yang sama (misal Button: Default, Hover, Active, Disabled) ke dalam satu wadah terpadu',
+                    'Mengekspor aset langsung ke format APK',
+                    'Membuat salinan file proyek baru'
+                ],
+                'ans' => 1,
+                'exp' => 'Variants menyatukan berbagai variasi state, ukuran, dan tema dari satu komponen ke dalam satu kesatuan teratur.'
+            ],
+            [
+                'q' => 'Standar rasio kontras warna teks terhadap latar belakang minimal menurut pedoman aksesibilitas WCAG 2.1 level AA untuk teks normal adalah:',
+                'options' => ['2:1', '3:1', '4.5:1', '7:1'],
+                'ans' => 2,
+                'exp' => 'WCAG level AA menetapkan rasio kontras minimal 4.5:1 untuk teks biasa dan 3:1 untuk teks berukuran besar agar nyaman dibaca semua kalangan.'
+            ],
+            [
+                'q' => 'Metode pengujian interaksi antarmuka kepada pengguna nyata untuk mengukur kemudahan, kecepatan, dan hambatan pengguna dalam menyelesaikan tugas tertentu disebut:',
+                'options' => ['A/B Testing', 'Usability Testing', 'Card Sorting', 'Heuristic Evaluation'],
+                'ans' => 1,
+                'exp' => 'Usability Testing melibatkan observasi langsung terhadap user saat berinteraksi dengan purwarupa untuk menemukan friksi desain.'
+            ],
+            [
+                'q' => 'Transisi animasi di Figma Prototype yang secara cerdas mendeteksi layer dengan nama yang sama untuk menghasilkan pergerakan transisi halus antar-frame disebut:',
+                'options' => ['Dissolve', 'Smart Animate', 'Move In', 'Push'],
+                'ans' => 1,
+                'exp' => 'Smart Animate mencocokkan layer identik antar-frame dan menginterpolasi perubahan posisi, rotasi, ukuran, dan opacity secara mulus.'
+            ]
+        ]
+    ],
+
+    // =========================================================================
+    // 2. JALUR SPESIALISASI KARIR UTAMA (CAREER TRACKS - 25 SOAL KOMPREHENSIF)
+    // =========================================================================
+
     'frontend' => [
         'title' => 'Jalur Frontend Web Developer Modern',
         'code' => 'FE',
+        'type' => 'career',
+        'price' => 29000,
+        'original_price' => 79000,
+        'duration_minutes' => 30,
+        'passing_score' => 80,
         'competencies' => 'HTML5 Semantics, CSS3 Flexbox & Grid, JavaScript ES6+, DOM Manipulation, Bootstrap 5, Vue.js 3 SPA Component Architecture',
         'questions' => [
             [
@@ -98,114 +1300,109 @@ return [
                 'options' => [
                     'display: none menyembunyikan elemen tetapi tetap menyisakan ruang fisiknya di layout, sedangkan visibility: hidden menghapus ruangnya',
                     'display: none menghapus elemen sepenuhnya dari alur layout tanpa menyisakan ruang, sedangkan visibility: hidden menyembunyikan visual tetapi ruang fisiknya tetap dipertahankan',
-                    'Keduanya bekerja secara identik tanpa ada perbedaan performa',
-                    'visibility: hidden hanya bekerja pada elemen SVG'
+                    'Keduanya menghasilkan perilaku yang persis sama',
+                    'visibility: hidden hanya bekerja pada elemen link <a>'
                 ],
                 'ans' => 1,
-                'exp' => 'display: none membuat elemen tidak memakan tempat fisik sama sekali, sedangkan visibility: hidden elemen menjadi transparan namun tempatnya tetap dipertahankan.'
+                'exp' => 'display: none me-remove elemen dari alur layout rendering, sedangkan visibility: hidden tetap memakan ruang dimensi yang ada.'
             ],
             [
-                'q' => 'Dalam Vue.js 3, apa fungsi dari lifecycle hook `onMounted()`?',
+                'q' => 'Apa output dari ekspresi JavaScript `typeof NaN`?',
+                'options' => ['"undefined"', '"number"', '"NaN"', '"null"'],
+                'ans' => 1,
+                'exp' => 'Dalam spesifikasi ECMAScript standar, tipe data dari NaN (Not-a-Number) adalah "number".'
+            ],
+            [
+                'q' => 'Dalam Bootstrap 5, class grid manakah yang digunakan untuk membuat kolom yang menghabiskan 6 dari 12 kolom pada layar medium ke atas (>=768px)?',
+                'options' => ['col-sm-6', 'col-md-6', 'col-lg-6', 'col-6-md'],
+                'ans' => 1,
+                'exp' => 'col-md-6 membagi grid menjadi 6 kolom pada breakpoint medium (>= 768px).'
+            ],
+            [
+                'q' => 'Fitur modern JavaScript ES6 manakah yang digunakan untuk mengekstrak properti objek ke dalam variabel tersendiri secara ringkas?',
+                'options' => ['Object Clustering', 'Destructuring Assignment', 'Spread Operator', 'Rest Parameters'],
+                'ans' => 1,
+                'exp' => 'Destructuring assignment (misal const { name, age } = user) mengekstrak nilai properti dari objek langsung ke variabel lokal.'
+            ],
+            [
+                'q' => 'Bagaimanakah cara mencegah perilaku bawaan (default behavior) dari sebuah event, misalnya mencegah form melakukan reload halaman saat tombol submit diklik?',
+                'options' => ['event.stopPropagation()', 'event.preventDefault()', 'event.cancelBubble()', 'return false;'],
+                'ans' => 1,
+                'exp' => 'event.preventDefault() membatalkan aksi default peramban untuk event yang sedang berlangsung.'
+            ],
+            [
+                'q' => 'Di Vue.js 3, lifecycle hook manakah yang dieksekusi tepat setelah komponen selesai dirender dan dipasang ke DOM?',
+                'options' => ['onCreated', 'onMounted', 'onBeforeMount', 'onUpdated'],
+                'ans' => 1,
+                'exp' => 'onMounted dieksekusi saat komponen sudah terpasang secara fisik di DOM peramban.'
+            ],
+            [
+                'q' => 'Properti CSS `position: sticky;` berperilaku seperti apa?',
                 'options' => [
-                    'Dijalankan sebelum template DOM dikompilasi',
-                    'Dijalankan setelah komponen selesai dirender dan disisipkan ke dalam DOM nyata di browser',
-                    'Dijalankan ketika komponen hendak dihancurkan (unmounted)',
-                    'Dijalankan setiap kali ada perubahan data prop dari parent'
+                    'Selalu menempel di layar seperti position: fixed sejak awal',
+                    'Diperlakukan seperti position: relative hingga mencapai ambang batas offset tertentu saat di-scroll, lalu menjadi seperti fixed di dalam elemen induknya',
+                    'Hanya menempel jika browser diperkecil',
+                    'Sama persis dengan position: absolute'
                 ],
                 'ans' => 1,
-                'exp' => 'onMounted() dieksekusi setelah komponen selesai dipasang ke DOM, cocok untuk fetch data awal API atau inisialisasi plugin pihak ketiga.'
+                'exp' => 'position: sticky beralih antara relative dan fixed tergantung posisi scroll pengguna terhadap scroll parent-nya.'
             ],
             [
-                'q' => 'Di Bootstrap 5, class utility manakah yang digunakan untuk membuat teks berada tepat di tengah secara horizontal?',
-                'options' => ['text-center', 'align-center', 'justify-center', 'content-center'],
+                'q' => 'Dalam JavaScript, apa perbedaan antara `==` (loose equality) dan `===` (strict equality)?',
+                'options' => [
+                    '== memeriksa tipe dan nilai tanpa konversi, sedangkan === melakukan konversi tipe',
+                    '=== memeriksa kesamaan nilai dan kesamaan tipe data tanpa type coercion, sedangkan == melakukan konversi tipe implisit sebelum membandingkan',
+                    '=== hanya dapat digunakan untuk objek',
+                    '== lebih cepat dibanding ==='
+                ],
+                'ans' => 1,
+                'exp' => '=== membandingkan nilai dan tipe secara ketat tanpa pemaksaan tipe (coercion).'
+            ],
+            [
+                'q' => 'Elemen HTML5 manakah yang tepat untuk menampilkan konten teks yang diformat sebelumnya dengan spasi dan line break tetap utuh?',
+                'options' => ['<code>', '<pre>', '<samp>', '<blockquote>'],
+                'ans' => 1,
+                'exp' => 'Tag <pre> menampilkan teks dengan font monospace dan mempertahankan spasi ganda serta perpindahan baris.'
+            ],
+            [
+                'q' => 'Dalam CSS Flexbox, bagaimana cara termudah untuk membuat suatu item fleksibel menempati sisa ruang yang tersedia di kontainer?',
+                'options' => ['flex-grow: 1;', 'flex-shrink: 0;', 'align-self: stretch;', 'width: 100%;'],
                 'ans' => 0,
-                'exp' => 'Class text-center di Bootstrap digunakan untuk membuat text alignment berada di tengah.'
+                'exp' => 'flex-grow: 1 memberikan kemampuan pada flex item untuk tumbuh mengisi seluruh ruang kosong yang tersisa.'
             ],
             [
-                'q' => 'Metode JSON manakah yang digunakan untuk mengubah objek JavaScript menjadi format string JSON?',
-                'options' => ['JSON.parse()', 'JSON.stringify()', 'JSON.encode()', 'JSON.toString()'],
-                'ans' => 1,
-                'exp' => 'JSON.stringify() mengubah objek atau nilai JavaScript menjadi string teks JSON.'
-            ],
-            [
-                'q' => 'Dalam JavaScript modern, operator `??` (Nullish Coalescing) akan mengembalikan operand di sisi kanan hanya jika operand di sisi kiri bernilai apa?',
+                'q' => 'Bagaimanakah cara mengimpor modul JavaScript yang diekspor sebagai default export?',
                 'options' => [
-                    'Falsy (false, 0, "", null, undefined, NaN)',
-                    'null atau undefined saja',
-                    'Nilai angka 0 saja',
-                    'Tipe data boolean false'
+                    'import { Component } from "./Component.js";',
+                    'import Component from "./Component.js";',
+                    'require("./Component.js").default;',
+                    'include Component from "./Component.js";'
                 ],
                 'ans' => 1,
-                'exp' => 'Nullish Coalescing (??) hanya memeriksa nilai null atau undefined, sehingga angka 0 atau string kosong "" tetap dianggap valid di sisi kiri.'
+                'exp' => 'Default export diimpor tanpa tanda kurung kurawal kurawal (curly braces).'
             ],
             [
-                'q' => 'Dalam HTML5, atribut manakah pada tag <input> yang membuat inputan wajib diisi sebelum form dapat disubmit?',
-                'options' => ['validate', 'required', 'mandatory', 'not-null'],
+                'q' => 'Di peramban modern, di manakah kita dapat menyimpan data teks secara persisten di sisi klien tanpa batasan masa kedaluwarsa sesi?',
+                'options' => ['sessionStorage', 'localStorage', 'cookies tanpa max-age', 'cacheStorage memory only'],
                 'ans' => 1,
-                'exp' => 'Atribut required menandai bahwa kolom input tersebut tidak boleh dibiarkan kosong saat form disubmit.'
+                'exp' => 'localStorage menyimpan data key-value di browser tanpa batas kadaluwarsa (tetap tersimpan meski browser ditutup).'
             ],
             [
-                'q' => 'Dalam CSS Box Model, urutan layer dari bagian paling dalam ke paling luar adalah?',
-                'options' => [
-                    'Content -> Padding -> Border -> Margin',
-                    'Content -> Border -> Padding -> Margin',
-                    'Content -> Margin -> Padding -> Border',
-                    'Padding -> Content -> Border -> Margin'
-                ],
+                'q' => 'Dalam Bootstrap 5, class utilitas manakah yang digunakan untuk membuat sudut elemen menjadi bulat melingkar sempurna (lingkaran/pill)?',
+                'options' => ['rounded-circle', 'rounded-full', 'border-radius-100', 'circle-box'],
                 'ans' => 0,
-                'exp' => 'Box Model terdiri dari: Content (isi) -> Padding (jarak dalam) -> Border (garis tepi) -> Margin (jarak luar).'
+                'exp' => 'Bootstrap 5 menyediakan rounded-circle untuk lingkaran sempurna dan rounded-pill untuk bentuk kapsul.'
             ],
             [
-                'q' => 'Dalam JavaScript, apa output dari ekspresi: `typeof NaN`?',
-                'options' => ['"undefined"', '"number"', '"nan"', '"object"'],
-                'ans' => 1,
-                'exp' => 'Di JavaScript, NaN (Not a Number) secara teknis bertipe data "number" (numerik tidak valid).'
-            ],
-            [
-                'q' => 'Bagaimanakah cara menghentikan aksi bawaan browser (misalnya reload halaman saat submit form) menggunakan JavaScript Event Listener?',
-                'options' => ['event.stopPropagation()', 'event.preventDefault()', 'event.stopImmediatePropagation()', 'return true'],
-                'ans' => 1,
-                'exp' => 'event.preventDefault() membatalkan aksi bawaan (default action) browser tanpa menghentikan penyebaran event.'
-            ],
-            [
-                'q' => 'Properti CSS manakah yang digunakan untuk membuat bayangan halus di sekeliling kotak kontainer elemen?',
-                'options' => ['text-shadow', 'box-shadow', 'drop-shadow', 'outline-shadow'],
-                'ans' => 1,
-                'exp' => 'box-shadow digunakan untuk menambahkan efek bayangan pada kotak elemen HTML.'
-            ],
-            [
-                'q' => 'Dalam CSS Flexbox, properti manakah yang memungkinkan flex items berpindah ke baris baru ketika ruang kontainer tidak mencukupi?',
-                'options' => ['flex-wrap: wrap', 'flex-flow: row', 'flex-break: true', 'flex-direction: column'],
-                'ans' => 0,
-                'exp' => 'flex-wrap: wrap memungkinkan elemen anak membungkus ke baris berikutnya jika ruang tidak cukup.'
-            ],
-            [
-                'q' => 'Di Vue.js 3, apa perbedaan antara `v-if` dan `v-show`?',
+                'q' => 'Apa keuntungan utama penggunaan CSS Custom Properties (CSS Variables) dibanding nilai statis?',
                 'options' => [
-                    'v-if hanya menyembunyikan dengan CSS display:none, sedangkan v-show merender ulang DOM',
-                    'v-if menambah atau menghapus elemen sesungguhnya dari DOM, sedangkan v-show selalu merender elemen namun mengontrol visibilitasnya melalui CSS display:none',
-                    'v-show tidak mendukung ekspresi kondisi boolean',
-                    'Keduanya memiliki mekanisme kerja yang identik'
+                    'Meningkatkan kecepatan render browser sebesar 10x lipat',
+                    'Dapat diwarisi dalam cascading tree dan nilainya dapat dimanipulasi secara dinamis saat runtime melalui JavaScript',
+                    'Menghilangkan kebutuhan file CSS eksternal',
+                    'Mengubah CSS menjadi bahasa kompilasi'
                 ],
                 'ans' => 1,
-                'exp' => 'v-if adalah "real" conditional rendering yang menyisipkan/menghapus node dari DOM, sedangkan v-show hanya melakukan toggle CSS display: none.'
-            ],
-            [
-                'q' => 'Manakah sintaks yang benar untuk destructuring assignment objek di JavaScript ES6?',
-                'options' => [
-                    'const [name, age] = user;',
-                    'const {name, age} = user;',
-                    'const (name, age) = user;',
-                    'const {name: age} <- user;'
-                ],
-                'ans' => 1,
-                'exp' => 'Sintaks destructuring objek menggunakan kurung kurawal const { name, age } = user;.'
-            ],
-            [
-                'q' => 'Metode JavaScript manakah yang digunakan untuk mengirimkan HTTP request asinkron modern berbasis Promise?',
-                'options' => ['fetch()', 'XMLHttpRequest()', 'http.request()', 'ajax()'],
-                'ans' => 0,
-                'exp' => 'Fetch API (fetch()) adalah antarmuka modern bawaan browser untuk melakukan HTTP request asinkron berbasis Promise.'
+                'exp' => 'CSS variables (misal --primary-color) mendukung inheritance CSS cascading dan dapat diubah secara dinamis saat runtime dengan JS.'
             ]
         ]
     ],
@@ -213,197 +1410,237 @@ return [
     'backend' => [
         'title' => 'Jalur Backend & Database API Developer',
         'code' => 'BE',
-        'competencies' => 'PHP 8.3 OOP, MySQL Relational Database, SQL Indexing, Prepared Statements, RESTful API Architecture, JWT/Session Security',
+        'type' => 'career',
+        'price' => 29000,
+        'original_price' => 79000,
+        'duration_minutes' => 30,
+        'passing_score' => 80,
+        'competencies' => 'PHP 8 OOP & PDO, MySQL Relational Database, RESTful API Architecture, JWT Authentication, Security (SQLi & XSS Prevention), MVC Framework Patterns',
         'questions' => [
             [
-                'q' => 'Dalam PHP dan MySQLi/PDO, teknik manakah yang paling efektif dan wajib digunakan untuk mencegah serangan SQL Injection?',
+                'q' => 'Klausul SQL manakah yang digunakan untuk menyaring data agregasi setelah pengelompokan menggunakan `GROUP BY`?',
+                'options' => ['WHERE', 'HAVING', 'FILTER', 'ORDER BY'],
+                'ans' => 1,
+                'exp' => 'HAVING digunakan untuk memfilter baris agregat setelah GROUP BY, sedangkan WHERE menyaring baris sebelum agregasi dilakukan.'
+            ],
+            [
+                'q' => 'Dalam arsitektur RESTful API, HTTP method manakah yang bersifat idempoten dan digunakan untuk memperbarui seluruh representasi sumber daya (resource)?',
+                'options' => ['POST', 'PUT', 'PATCH', 'CONNECT'],
+                'ans' => 1,
+                'exp' => 'PUT bersifat idempoten dan digunakan untuk menggantikan atau memperbarui seluruh representasi resource target.'
+            ],
+            [
+                'q' => 'Metode manakah di PHP PDO / MySQLi yang paling tepat digunakan untuk mengamankan query dari kerentanan SQL Injection?',
                 'options' => [
                     'Menggunakan fungsi addslashes()',
-                    'Menggunakan Prepared Statements dengan parameter binding terpisah',
-                    'Melakukan enkripsi MD5 pada setiap input query',
-                    'Mengubah semua input menjadi huruf kapital'
+                    'Menggunakan Prepared Statements dengan parameter binding',
+                    'Melakukan escape string manual dengan htmlspecialchars()',
+                    'Mengenkripsi query menggunakan md5()'
                 ],
                 'ans' => 1,
-                'exp' => 'Prepared Statements memisahkan instruksi SQL dari parameter data pengguna, sehingga parameter tidak akan pernah dieksekusi sebagai perintah SQL.'
+                'exp' => 'Prepared statements memisahkan query SQL dari data masukan sehingga karakter berbahaya tidak dieksekusi sebagai perintah SQL.'
             ],
             [
-                'q' => 'HTTP Status Code manakah yang paling tepat dikembalikan oleh RESTful API ketika data sumber daya baru berhasil dibuat di database?',
-                'options' => ['200 OK', '201 Created', '204 No Content', '302 Found'],
-                'ans' => 1,
-                'exp' => 'Status 201 Created adalah kode standar HTTP yang menandakan bahwa request berhasil dan sumber daya baru telah berhasil dibuat di server.'
-            ],
-            [
-                'q' => 'Klausul SQL manakah yang digunakan untuk memfilter baris data hasil pengelompokan fungsi agregasi (seperti COUNT, SUM, AVG) yang menggunakan GROUP BY?',
-                'options' => ['WHERE', 'HAVING', 'ORDER BY', 'LIMIT'],
-                'ans' => 1,
-                'exp' => 'HAVING digunakan untuk memfilter kondisi hasil agregasi GROUP BY, sedangkan WHERE memfilter baris sebelum pengelompokan.'
-            ],
-            [
-                'q' => 'Fungsi PHP bawaan manakah yang digunakan untuk melakukan hashing password secara aman menggunakan algoritma kuat seperti Bcrypt atau Argon2?',
-                'options' => ['md5()', 'sha1()', 'password_hash()', 'crypt()'],
-                'ans' => 2,
-                'exp' => 'password_hash() secara otomatis menghasilkan salt acak dan menggunakan algoritma enkripsi modern (Bcrypt/Argon2) yang aman terhadap serangan brute force.'
-            ],
-            [
-                'q' => 'Perintah JOIN SQL manakah yang mengembalikan semua baris dari tabel kiri, serta baris yang cocok dari tabel kanan (atau NULL jika tidak ada kecocokan)?',
-                'options' => ['INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'CROSS JOIN'],
-                'ans' => 1,
-                'exp' => 'LEFT JOIN (atau LEFT OUTER JOIN) mengembalikan seluruh baris dari tabel kiri dan baris yang cocok dari tabel kanan.'
-            ],
-            [
-                'q' => 'Dalam arsitektur REST API, HTTP Method manakah yang paling tepat digunakan untuk memperbarui sebagian (partial update) data pada suatu sumber daya?',
-                'options' => ['GET', 'POST', 'PATCH', 'DELETE'],
-                'ans' => 2,
-                'exp' => 'PATCH digunakan untuk partial update (memperbarui sebagian atribut), sedangkan PUT biasanya digunakan untuk replace data seutuhnya.'
-            ],
-            [
-                'q' => 'Dalam pemrograman berorientasi objek (OOP) di PHP, hak akses `protected` pada properti atau metode class berarti apa?',
+                'q' => 'Apa perbedaan utama antara status kode HTTP `401 Unauthorized` dan `403 Forbidden`?',
                 'options' => [
-                    'Hanya dapat diakses dari dalam class itu sendiri',
-                    'Dapat diakses dari dalam class itu sendiri dan class turunannya (subclass/inheritance)',
-                    'Dapat diakses secara bebas dari luar class manapun',
-                    'Tidak dapat diubah sama sekali nilainya'
+                    '401 berarti server sedang sibuk, 403 berarti URL tidak ada',
+                    '401 menandakan permintaan membutuhkan autentikasi identitas yang valid, sedangkan 403 berarti klien telah diautentikasi tetapi tidak memiliki hak akses/izin (permission) ke sumber daya tersebut',
+                    '403 hanya untuk request mobile, 401 untuk desktop',
+                    'Keduanya dapat digunakan bergantian tanpa perbedaan'
                 ],
                 'ans' => 1,
-                'exp' => 'Hak akses protected mengizinkan akses dari dalam class pendefinisi serta class anak yang mewarisinya (inheritance).'
+                'exp' => '401 Unauthorized berarti "siapa Anda tidak diketahui / belum login", 403 Forbidden berarti "identitas Anda diketahui, tetapi Anda dilarang mengakses".'
             ],
             [
-                'q' => 'Karakteristik ACID dalam sistem basis data relasional (RDBMS) yang memastikan bahwa sebuah transaksi harus selesai secara utuh atau dibatalkan sama sekali (all-or-nothing) disebut?',
-                'options' => ['Atomicity', 'Consistency', 'Isolation', 'Durability'],
-                'ans' => 0,
-                'exp' => 'Atomicity menjamin prinsip all-or-nothing: seluruh rangkaian operasi dalam satu transaksi harus sukses semua, atau jika ada satu yang gagal, seluruhnya di-rollback.'
-            ],
-            [
-                'q' => 'Header HTTP response manakah yang wajib dikirimkan oleh backend API agar browser mengetahui bahwa respon berisi data berformat JSON dengan encoding UTF-8?',
-                'options' => [
-                    'Content-Type: text/html; charset=utf-8',
-                    'Content-Type: application/json; charset=utf-8',
-                    'Accept: application/json',
-                    'Content-Encoding: json'
-                ],
-                'ans' => 1,
-                'exp' => 'Content-Type: application/json; charset=utf-8 memberi tahu client/browser bahwa payload response bertipe JSON.'
-            ],
-            [
-                'q' => 'Dalam PHP 8+, operator `?->` (Nullsafe operator) memiliki kegunaan untuk apa?',
-                'options' => [
-                    'Menghapus properti objek jika bernilai null',
-                    'Mengakses properti atau method objek tanpa memicu error fatal jika objek tersebut bernilai null',
-                    'Memaksa tipe data menjadi null',
-                    'Melakukan cloning objek secara mendalam'
-                ],
-                'ans' => 1,
-                'exp' => 'Nullsafe operator (?->) memungkinkan pemanggilan chain method/property objek; jika salah satu bernilai null, eksekusi berhenti dan mengembalikan null tanpa error.'
-            ],
-            [
-                'q' => 'Dalam SQL, tipe constraint manakah yang menjamin bahwa nilai dalam suatu kolom tidak boleh ada yang kembar/duplikat dan secara otomatis mengindeks kolom tersebut?',
-                'options' => ['NOT NULL', 'UNIQUE', 'DEFAULT', 'CHECK'],
-                'ans' => 1,
-                'exp' => 'Constraint UNIQUE memastikan seluruh nilai dalam kolom tersebut berbeda satu sama lain dalam satu tabel.'
-            ],
-            [
-                'q' => 'Dalam arsitektur basis data, apa fungsi utama dari pembuatan Index (B-Tree Index) pada kolom tabel yang sering dijadikan parameter WHERE?',
-                'options' => [
-                    'Mengurangi ukuran file database di harddisk',
-                    'Mempercepat proses pencarian dan pengambilan data dengan menghindari Full Table Scan',
-                    'Melakukan enkripsi data otomatis pada kolom tersebut',
-                    'Mencegah data dari query DELETE'
-                ],
-                'ans' => 1,
-                'exp' => 'Index membuat struktur data penunjuk (pointer) terurut yang mempercepat eksekusi pencarian query secara drastis dibanding full table scan.'
-            ],
-            [
-                'q' => 'Fungsi superglobal di PHP yang digunakan untuk membaca payload data raw JSON yang dikirimkan melalui metode POST/PUT pada RESTful API adalah?',
-                'options' => ['$_POST', 'file_get_contents("php://input")', '$_REQUEST', '$_SERVER["RAW_DATA"]'],
-                'ans' => 1,
-                'exp' => 'Untuk membaca raw JSON body pada request API di PHP, digunakan file_get_contents("php://input") kemudian didecode dengan json_decode().'
-            ],
-            [
-                'q' => 'Dalam keamanan autentikasi web, token JWT (JSON Web Token) terdiri dari 3 bagian yang dipisahkan oleh tanda titik (.), yaitu?',
+                'q' => 'Struktur token JWT (JSON Web Token) terdiri dari tiga bagian yang dipisahkan oleh tanda titik (.), yaitu:',
                 'options' => [
                     'Header.Payload.Signature',
-                    'Key.Data.Hash',
-                    'Algorithm.Claim.Cert',
-                    'Username.Role.Expiry'
+                    'Metadata.Body.Hash',
+                    'Header.Data.Encryption',
+                    'Claim.Identity.Key'
                 ],
                 'ans' => 0,
-                'exp' => 'Struktur JWT adalah Header (tipe dan algoritma), Payload (klaim/data), dan Signature (tanda tangan kriptografi verifikasi).'
+                'exp' => 'JWT tersusun dari tiga segmen base64url: Header (algoritma), Payload (klaim/data), dan Signature (verifikasi tanda tangan kriptografi).'
             ],
             [
-                'q' => 'Perintah SQL manakah yang digunakan untuk menghapus semua data dalam tabel secara cepat serta mereset nilai auto_increment kembali ke 1?',
-                'options' => ['DELETE FROM table_name', 'TRUNCATE TABLE table_name', 'DROP TABLE table_name', 'RESET table_name'],
-                'ans' => 1,
-                'exp' => 'TRUNCATE TABLE mengosongkan seluruh data tabel secara efisien dan mereset counter AUTO_INCREMENT kembali ke nilai awal.'
-            ],
-            [
-                'q' => 'Di PHP, magic method manakah yang otomatis dieksekusi saat sebuah objek baru dibuat dari suatu class (instansiasi)?',
-                'options' => ['__destruct()', '__construct()', '__init()', '__invoke()'],
-                'ans' => 1,
-                'exp' => '__construct() adalah metode konstruktor yang otomatis dijalankan saat instansiasi objek (new ClassName).'
-            ],
-            [
-                'q' => 'HTTP Status Code manakah yang menandakan bahwa client belum terautentikasi (belum login atau token tidak valid)?',
-                'options' => ['400 Bad Request', '401 Unauthorized', '403 Forbidden', '404 Not Found'],
-                'ans' => 1,
-                'exp' => '401 Unauthorized berarti request membutuhkan autentikasi pengguna, sedangkan 403 Forbidden berarti client terautentikasi namun tidak memiliki hak akses.'
-            ],
-            [
-                'q' => 'Dalam MySQL, jenis relasi tabel di mana satu mahasiswa dapat mengambil banyak mata kuliah, dan satu mata kuliah dapat diambil oleh banyak mahasiswa diimplementasikan melalui?',
+                'q' => 'Dalam normalisasi database relasional, apa syarat utama sebuah tabel memenuhi Bentuk Normal Kedua (2NF)?',
                 'options' => [
-                    'Foreign Key langsung di tabel Mahasiswa',
-                    'Tabel Pivot / Junction (tabel perantara berisi dua Foreign Key)',
-                    'Menyimpan deretan ID mata kuliah dalam satu kolom string teks',
-                    'Self-referencing Foreign Key'
+                    'Harus sudah memenuhi 1NF dan tidak memiliki ketergantungan parsial (seluruh atribut non-kunci bergantung penuh pada Primary Key)',
+                    'Harus memiliki minimal 5 kolom bertipe foreign key',
+                    'Harus sudah memenuhi 3NF terlebih dahulu',
+                    'Semua kolom bertipe varchar harus memiliki panjang sama'
                 ],
-                'ans' => 1,
-                'exp' => 'Relasi Many-to-Many diimplementasikan menggunakan tabel perantara (pivot table) yang menampung relasi foreign key dari kedua tabel.'
-            ],
-            [
-                'q' => 'Manakah fungsi bawaan PHP yang digunakan untuk mengecek apakah sebuah variabel telah didefinisikan dan nilainya bukan NULL?',
-                'options' => ['empty()', 'isset()', 'is_null()', 'defined()'],
-                'ans' => 1,
-                'exp' => 'isset() memeriksa apakah variabel sudah dideklarasikan dan nilainya tidak sama dengan NULL.'
-            ],
-            [
-                'q' => 'Dalam mekanisme Session PHP, di manakah data sesi pengguna secara default disimpan secara fisik?',
-                'options' => [
-                    'Di browser pengguna dalam bentuk cookie terenkripsi',
-                    'Di file penyimpanan server lokal (server-side storage)',
-                    'Di dalam database cloud secara otomatis',
-                    'Di dalam memori RAM browser'
-                ],
-                'ans' => 1,
-                'exp' => 'Data session PHP disimpan di sisi server (biasanya di direktori temporary server), sementara browser hanya menyimpan Session ID (PHPSESSID) di cookie.'
-            ],
-            [
-                'q' => 'Perintah SQL manakah yang digunakan untuk memodifikasi struktur tabel yang sudah ada (misal menambah kolom baru)?',
-                'options' => ['UPDATE TABLE', 'ALTER TABLE', 'MODIFY TABLE', 'CHANGE TABLE'],
-                'ans' => 1,
-                'exp' => 'ALTER TABLE digunakan untuk mengubah skema atau struktur tabel (menambah, mengubah, atau menghapus kolom/indeks).'
-            ],
-            [
-                'q' => 'Dalam PHP, teknik menangani runtime error atau kegagalan query secara elegan tanpa menghentikan aplikasi menggunakan konstruksi apa?',
-                'options' => ['if...else statement', 'try...catch...finally block', 'switch...case statement', 'guard statement'],
-                'ans' => 1,
-                'exp' => 'Blok try...catch digunakan untuk exception handling (menangkap dan menangani kesalahan runtime secara terkendali).'
-            ],
-            [
-                'q' => 'Mekanisme keamanan HTTP Header `Access-Control-Allow-Origin` berhubungan dengan kebijakan browser apa?',
-                'options' => ['Content Security Policy (CSP)', 'Cross-Origin Resource Sharing (CORS)', 'Strict-Transport-Security (HSTS)', 'X-Frame-Options'],
-                'ans' => 1,
-                'exp' => 'CORS (Cross-Origin Resource Sharing) mengontrol domain asal mana saja yang diizinkan memanggil API dari domain yang berbeda.'
-            ],
-            [
-                'q' => 'Di PHP, fungsi manakah yang digunakan untuk memeriksa kecocokan password plaintext dengan hash yang tersimpan di database?',
-                'options' => ['password_verify()', 'password_check()', 'password_match()', 'hash_equals()'],
                 'ans' => 0,
-                'exp' => 'password_verify($password, $hash) memvalidasi apakah password teks biasa cocok dengan hash Bcrypt/Argon2 yang tersimpan.'
+                'exp' => '2NF mensyaratkan 1NF terpenuhi dan menghapus ketergantungan parsial di mana setiap kolom non-key harus bergantung fungsional penuh pada primary key komposit.'
             ],
             [
-                'q' => 'Dalam SQL, klausa manakah yang digunakan untuk mengurutkan hasil query dari nilai terbesar ke terkecil?',
-                'options' => ['ORDER BY column ASC', 'ORDER BY column DESC', 'SORT BY column MAX', 'GROUP BY column DESC'],
+                'q' => 'Dalam PHP 8, fungsi hashing bawaan manakah yang paling aman dan direkomendasikan untuk menyimpan kata sandi pengguna ke database?',
+                'options' => ['md5()', 'sha1()', 'password_hash()', 'crypt()'],
+                'ans' => 2,
+                'exp' => 'password_hash() menggunakan algoritma bcrypt atau argon2 yang kuat dan secara otomatis mengelola salt kriptografi yang aman.'
+            ],
+            [
+                'q' => 'Perintah SQL manakah yang menghapus seluruh data di dalam tabel secara cepat dan mereset nilai auto-increment, tanpa mencatat logging per-baris?',
+                'options' => ['DELETE FROM table_name;', 'TRUNCATE TABLE table_name;', 'DROP TABLE table_name;', 'REMOVE TABLE table_name;'],
                 'ans' => 1,
-                'exp' => 'ORDER BY column DESC mengurutkan data secara descending (menurun: dari terbesar ke terkecil atau Z ke A).'
+                'exp' => 'TRUNCATE TABLE mengosongkan isi tabel secara instan (DDL) dan me-reset nilai urutan auto-increment.'
+            ],
+            [
+                'q' => 'Apa fungsi dari middleware dalam kerangka kerja backend web modern?',
+                'options' => [
+                    'Merender file CSS di sisi server',
+                    'Menjembatani dan memproses permintaan HTTP masuk (inbound) sebelum mencapai handler controller utama (misalnya untuk verifikasi auth, logging, atau CORS)',
+                    'Menggantikan fungsi web server seperti Nginx',
+                    'Mempercepat kompilasi bahasa C++'
+                ],
+                'ans' => 1,
+                'exp' => 'Middleware bertindak sebagai filter perantara yang mencegat HTTP request untuk validasi token, rate limiting, logging, atau modifikasi response.'
+            ],
+            [
+                'q' => 'Dalam database relasional MySQL, tipe relasi antar tabel manakah yang memerlukan sebuah "Junction Table" (Pivot Table)?',
+                'options' => ['One-to-One (1:1)', 'One-to-Many (1:N)', 'Many-to-Many (N:M)', 'Self-Referencing'],
+                'ans' => 2,
+                'exp' => 'Relasi Many-to-Many diselesaikan dengan memecahnya menjadi tabel perantara (pivot table) yang menyimpan foreign key dari kedua tabel.'
+            ],
+            [
+                'q' => 'Prinsip ACID dalam transaksi database adalah singkatan dari:',
+                'options' => [
+                    'Atomicity, Consistency, Isolation, Durability',
+                    'Accuracy, Concurrency, Integrity, Dependability',
+                    'Authentication, Cryptography, Identity, Data',
+                    'Authorization, Compression, Indexing, Delivery'
+                ],
+                'ans' => 0,
+                'exp' => 'ACID menjamin keandalan transaksi database: Atomicity (semua atau tidak sama sekali), Consistency, Isolation, dan Durability (permanen).'
+            ],
+            [
+                'q' => 'Header HTTP manakah yang dikirim oleh server untuk mengizinkan aplikasi frontend dari domain lain melakukan request API (CORS)?',
+                'options' => [
+                    'Access-Control-Allow-Origin',
+                    'Allow-Cross-Domain-Access',
+                    'X-Frame-Options: SAMEORIGIN',
+                    'Content-Security-Origin'
+                ],
+                'ans' => 0,
+                'exp' => 'Header Access-Control-Allow-Origin memberitahu browser domain mana saja yang diizinkan mengakses sumber daya API tersebut.'
+            ],
+            [
+                'q' => 'Perbedaan utama antara `JOIN` tipe `INNER JOIN` dan `LEFT JOIN` pada SQL adalah:',
+                'options' => [
+                    'INNER JOIN hanya menghasilkan baris yang memiliki pasangan cocok di kedua tabel, sedangkan LEFT JOIN menghasilkan seluruh baris dari tabel kiri terlepas apakah ada pasangannya di tabel kanan',
+                    'LEFT JOIN menghapus baris duplikat otomatis',
+                    'INNER JOIN hanya bisa memadankan kolom integer',
+                    'LEFT JOIN menghasilkan data lebih sedikit dibanding INNER JOIN'
+                ],
+                'ans' => 0,
+                'exp' => 'LEFT JOIN mempertahankan semua data tabel kiri, dan memberi nilai NULL pada kolom tabel kanan jika tidak ditemukan kecocokan relasi.'
+            ],
+            [
+                'q' => 'Apa keuntungan utama menggunakan pola desain MVC (Model-View-Controller) dalam rekayasa perangkat lunak backend?',
+                'options' => [
+                    'Membuat kode tidak dapat didekompilasi',
+                    'Memisahkan pemisahan tanggung jawab (Separation of Concerns) antara logika bisnis data (Model), antarmuka presentasi (View), dan kontrol alur routing (Controller)',
+                    'Menghilangkan kebutuhan konfigurasi basis data',
+                    'Menjadikan aplikasi otomatis berjalan di arsitektur microservices'
+                ],
+                'ans' => 1,
+                'exp' => 'MVC memisahkan logika aplikasi secara rapi sehingga pemeliharaan, pengujian, dan pengembangan fitur baru menjadi modular.'
+            ],
+            [
+                'q' => 'Bagaimanakah cara kerja mekanisme connection pooling pada koneksi database backend?',
+                'options' => [
+                    'Menyimpan query dalam format zip di memori',
+                    'Memelihara sejumlah koneksi database yang sudah terbuka sebelumnya untuk digunakan kembali oleh berbagai request tanpa overhead membuka/menutup koneksi TCP berulang kali',
+                    'Membuat replikasi database baru setiap menit',
+                    'Menghubungkan database ke cloud storage secara otomatis'
+                ],
+                'ans' => 1,
+                'exp' => 'Connection pooling mendaur ulang koneksi database aktif sehingga menghemat latensi dan beban server akibat handshake koneksi baru yang berulang.'
+            ],
+            [
+                'q' => 'Dalam keamanan web, serangan manakah yang mengeksploitasi kepercayaan situs web terhadap peramban pengguna yang telah login untuk mengeksekusi aksi yang tidak sah?',
+                'options' => ['Cross-Site Scripting (XSS)', 'Cross-Site Request Forgery (CSRF)', 'SQL Injection', 'Man-in-the-Middle (MITM)'],
+                'ans' => 1,
+                'exp' => 'CSRF memaksa peramban pengguna mengirimkan perintah HTTP yang tidak diinginkan ke aplikasi web yang dipercaya saat sesi login sedang aktif.'
+            ],
+            [
+                'q' => 'Jenis indeks database manakah yang paling umum digunakan pada kolom bertipe data berurutan (B-Tree Index)?',
+                'options' => ['Hash Index', 'B-Tree Index', 'Spatial Index', 'Fulltext Index'],
+                'ans' => 1,
+                'exp' => 'B-Tree Index adalah struktur indeks default di MySQL InnoDB yang sangat efisien untuk pencarian exact match maupun range search (<, >, BETWEEN).'
+            ],
+            [
+                'q' => 'Dalam PHP, apa fungsi dari magic method `__construct()`?',
+                'options' => [
+                    'Method yang dipanggil secara otomatis saat sebuah instance objek baru dari class tersebut dibuat',
+                    'Method untuk menghapus objek dari memori',
+                    'Method untuk mengubah objek menjadi string JSON',
+                    'Method untuk menggandakan class'
+                ],
+                'ans' => 0,
+                'exp' => '__construct() adalah constructor method yang dieksekusi saat pembuatan objek baru (new ClassName()).'
+            ],
+            [
+                'q' => 'Apa kegunaan dari HTTP status code `204 No Content`?',
+                'options' => [
+                    'Server gagal menemukan konten yang dicari',
+                    'Permintaan berhasil diproses oleh server, tetapi sengaja tidak mengembalikan konten apapun dalam response body (misalnya setelah operasi DELETE sukses)',
+                    'Koneksi internet klien terputus',
+                    'Data di database telah terhapus otomatis oleh server'
+                ],
+                'ans' => 1,
+                'exp' => '204 No Content menunjukkan request berhasil tetapi response body sengaja dikosongkan.'
+            ],
+            [
+                'q' => 'Perintah CLI git manakah yang memadukan perubahan dari cabang lain ke dalam cabang yang sedang aktif?',
+                'options' => ['git push', 'git merge', 'git branch -c', 'git fetch --all'],
+                'ans' => 1,
+                'exp' => 'git merge menggabungkan commit histories dari branch target ke branch yang saat ini aktif.'
+            ],
+            [
+                'q' => 'Karakteristik database bertipe NoSQL Dokumen (seperti MongoDB) dibanding Relational SQL adalah:',
+                'options' => [
+                    'Menyimpan data dalam struktur dokumen berformat fleksibel (BSON/JSON) tanpa memerlukan skema tabel statis yang kaku',
+                    'Tidak mendukung pembacaan data secara paralel',
+                    'Hanya dapat dijalankan pada sistem operasi Linux',
+                    'Wajib menggunakan query bahasa SQL standar'
+                ],
+                'ans' => 0,
+                'exp' => 'NoSQL Document Store menyimpan record sebagai dokumen JSON/BSON fleksibel tanpa skema tabel yang baku.'
+            ],
+            [
+                'q' => 'Bagaimanakah penanganan concurrency race condition yang efektif pada pengurangan stok barang di database backend?',
+                'options' => [
+                    'Menggunakan locking transaksi (misal: SELECT ... FOR UPDATE) atau atomic update query (UPDATE produk SET stok = stok - 1 WHERE id = 1 AND stok >= 1)',
+                    'Menjalankan query di sisi frontend browser',
+                    'Menghapus indeks pada tabel produk',
+                    'Menonaktifkan transaksi database'
+                ],
+                'ans' => 0,
+                'exp' => 'Atomic update query atau pessimistic locking (FOR UPDATE) mencegah race conditions saat banyak request masuk bersamaan.'
+            ],
+            [
+                'q' => 'Dalam arsitektur microservices, pola komunikasi asinkron antar layanan sering memanfaatkan Message Broker seperti:',
+                'options' => ['RabbitMQ / Apache Kafka', 'Apache Tomcat', 'SQLite', 'Postman'],
+                'ans' => 0,
+                'exp' => 'RabbitMQ dan Kafka adalah message broker terkemuka untuk asynchronous decoupled messaging antar microservices.'
+            ],
+            [
+                'q' => 'Format kompresi response HTTP manakah yang paling banyak digunakan server untuk mempercepat transmisi data ke klien?',
+                'options' => ['Gzip / Brotli', 'TAR.GZ', '7z', 'RAR'],
+                'ans' => 0,
+                'exp' => 'Kompresi Gzip dan Brotli secara signifikan mengecilkan ukuran transfer HTTP payload sebelum dikirimkan ke client.'
+            ],
+            [
+                'q' => 'Apa tujuan penggunaan variabel lingkungan (Environment Variables, misalnya file `.env`) dalam proyek backend?',
+                'options' => [
+                    'Menyimpan konfigurasi sensitif (kredensial database, API keys, JWT secret) di luar basis kode agar tidak terekspos ke repositori git publik',
+                    'Menambah kecepatan kompilasi PHP',
+                    'Membuat server kebal terhadap serangan virus',
+                    'Menyediakan tampilan antarmuka administrasi otomatis'
+                ],
+                'ans' => 0,
+                'exp' => 'File .env memisahkan credential sensitif dari source code, mendukung prinsip Twelve-Factor App.'
             ]
         ]
     ],
@@ -411,405 +1648,237 @@ return [
     'fullstack' => [
         'title' => 'Jalur Fullstack Web Developer',
         'code' => 'FS',
-        'competencies' => 'Fullstack Architecture, PHP/Laravel, Vue.js Frontend, MySQL Database, RESTful API Integration, Git Version Control, Cloud Deployment',
+        'type' => 'career',
+        'price' => 35000,
+        'original_price' => 99000,
+        'duration_minutes' => 30,
+        'passing_score' => 80,
+        'competencies' => 'Fullstack Architecture, SPA & API Integration, Database Performance & Indexing, Web Security (OWASP Top 10), CI/CD & Cloud Deployment, Server Side & Client Side State Management',
         'questions' => [
             [
-                'q' => 'Dalam pola arsitektur MVC (Model-View-Controller), komponen manakah yang bertanggung jawab mengelola logika interaksi data basis data dan aturan bisnis?',
-                'options' => ['View', 'Controller', 'Model', 'Router'],
+                'q' => 'Dalam arsitektur Single Page Application (SPA) modern yang berkomunikasi dengan REST API, di manakah penyimpanan JWT access token yang paling aman dari ancaman XSS?',
+                'options' => [
+                    'Di localStorage browser',
+                    'Di sessionStorage browser',
+                    'Di cookie dengan flag HttpOnly, Secure, dan SameSite=Strict',
+                    'Di atribut data-* elemen HTML'
+                ],
                 'ans' => 2,
-                'exp' => 'Model bertanggung jawab mengelola data, relasi basis data, validasi model, dan logika bisnis inti aplikasi.'
+                'exp' => 'Cookie HttpOnly tidak dapat diakses atau dicuri oleh skrip JavaScript di browser, sehingga aman dari pencurian token lewat serangan XSS.'
             ],
             [
-                'q' => 'Apa keuntungan utama arsitektur Single Page Application (SPA) dibanding aplikasi web multi-halaman tradisional (MPA)?',
+                'q' => 'Perbedaan utama antara Server-Side Rendering (SSR) dan Client-Side Rendering (CSR) adalah:',
                 'options' => [
-                    'SPA tidak memerlukan server web sama sekali untuk berjalan',
-                    'Transisi halaman berlangsung instan tanpa reload penuh seluruh browser karena hanya data (JSON) yang dimuat ulang',
-                    'SPA secara default memiliki optimasi SEO yang lebih mudah dibanding web statis',
-                    'SPA tidak menggunakan kode JavaScript sama sekali di browser'
+                    'SSR hanya bisa dijalankan di server Windows, CSR di Linux',
+                    'Pada SSR, server menghasilkan HTML lengkap beserta konten data sebelum dikirim ke peramban (baik untuk SEO dan initial load), sedangkan CSR mengirim shell HTML minimal lalu peramban mengunduh JS untuk merender konten',
+                    'CSR selalu lebih aman dibanding SSR',
+                    'SSR tidak mendukung interaktivitas pengguna'
                 ],
                 'ans' => 1,
-                'exp' => 'SPA hanya memuat halaman HTML sekali; pergantian tampilan berikutnya dilakukan secara reaktif via JavaScript tanpa reload halaman utuh.'
+                'exp' => 'SSR mengompilasi HTML siap tampil di server demi SEO dan kecepatan visual pertama, sedangkan CSR mengandalkan browser untuk merender DOM via JS.'
             ],
             [
-                'q' => 'Dalam manajemen versi Git, perintah manakah yang digunakan untuk menggabungkan perubahan dari branch lain ke branch yang sedang aktif saat ini?',
-                'options' => ['git pull', 'git merge', 'git push', 'git checkout'],
-                'ans' => 1,
-                'exp' => 'git merge [branch-name] menggabungkan commit riwayat dari cabang target ke dalam cabang aktif saat ini.'
+                'q' => 'Kerentanan OWASP Top 10 manakah yang terjadi ketika aplikasi menerima data yang disediakan pengguna tanpa validasi memadai lalu mengeksekusinya sebagai bagian dari perintah sistem atau query database?',
+                'options' => ['Injection (SQLi / Command Injection)', 'Cryptographic Failures', 'Security Misconfiguration', 'Software and Data Integrity Failures'],
+                'ans' => 0,
+                'exp' => 'Injection terjadi ketika input tidak terpercaya dikirimkan ke interpreter sebagai bagian dari perintah atau query.'
             ],
             [
-                'q' => 'Di Laravel / framework PHP modern, apa fungsi dari file `.env`?',
+                'q' => 'Fitur HTTP/2 manakah yang memungkinkan server mengirimkan sumber daya (seperti CSS dan JS) ke peramban sebelum peramban secara eksplisit memintanya?',
+                'options' => ['Server Push', 'Multiplexing', 'Header Compression', 'Stream Prioritization'],
+                'ans' => 0,
+                'exp' => 'HTTP/2 Server Push mengizinkan server mengirimkan asset kritis ke cache browser sebelum diminta oleh dokumen HTML.'
+            ],
+            [
+                'q' => 'Metode HTTP caching manakah yang menggunakan nilai hash representasi konten untuk memvalidasi apakah sumber daya di browser masih up-to-date?',
+                'options' => ['ETag (Entity Tag)', 'Expires header', 'Cache-Control: public', 'Last-Modified saja'],
+                'ans' => 0,
+                'exp' => 'ETag adalah token identifier unik (biasanya checksum hash) yang digunakan untuk validasi cache kondisional (If-None-Match: 304 Not Modified).'
+            ],
+            [
+                'q' => 'Dalam konteks CI/CD (Continuous Integration / Continuous Deployment), apa tujuan tahap "Integration"?',
                 'options' => [
-                    'Menyimpan file cache template blade',
-                    'Menyimpan konfigurasi variabel lingkungan yang spesifik per environment (seperti kredensial database dan API key) yang tidak boleh di-commit ke Git',
-                    'Menyimpan daftar rute URL publik',
-                    'Menyimpan seluruh tabel database lokal'
+                    'Menagih pembayaran otomatis kepada klien',
+                    'Menggabungkan perubahan kode dari berbagai developer ke repository pusat secara berkala yang diverifikasi oleh automated build dan unit/integration testing',
+                    'Mengubah bahasa pemrograman secara otomatis',
+                    'Menghapus cabang git yang tidak aktif'
                 ],
                 'ans' => 1,
-                'exp' => 'File .env menyimpan konfigurasi sensitif (koneksi DB, secret key, environment) yang berbeda di lokal vs server produksi.'
+                'exp' => 'CI memastikan penggabungan kode secara teratur yang diverifikasi oleh uji otomatis agar bug terdeteksi sedini mungkin.'
             ],
             [
-                'q' => 'Teknik komunikasi data dua arah realtime antara browser dan server dengan koneksi persisten berlatensi rendah disebut?',
-                'options' => ['Polling HTTP', 'WebSockets', 'Server-Sent Events (SSE)', 'REST GET Request'],
-                'ans' => 1,
-                'exp' => 'WebSocket menyediakan saluran komunikasi dua arah (full-duplex) yang persisten melalui satu koneksi TCP.'
+                'q' => 'Strategi caching di memory tingkat tinggi (in-memory caching) untuk mengurangi beban query database berulang biasanya menggunakan:',
+                'options' => ['Redis atau Memcached', 'SQLite file memory', 'IndexedDB browser', 'Apache Lucene'],
+                'ans' => 0,
+                'exp' => 'Redis adalah in-memory key-value data store berkecepatan sub-milidetik yang sangat populer untuk caching server-side.'
             ],
             [
-                'q' => 'Serangan keamanan web di mana penyerang menyisipkan skrip berbahaya (biasanya JavaScript) ke halaman web yang kemudian dieksekusi di browser korban disebut?',
-                'options' => ['SQL Injection', 'Cross-Site Scripting (XSS)', 'Cross-Site Request Forgery (CSRF)', 'DDoS Attack'],
-                'ans' => 1,
-                'exp' => 'XSS (Cross-Site Scripting) terjadi ketika aplikasi memasukkan data yang tidak divalidasi/diescape ke dalam output halaman web.'
+                'q' => 'Teknologi komunikasi full-duplex dua arah secara realtime persisten antara browser dan server tanpa overhead polling berulang adalah:',
+                'options' => ['WebSockets', 'HTTP Long Polling', 'Server-Sent Events (SSE)', 'AJAX GET interval'],
+                'ans' => 0,
+                'exp' => 'WebSockets menyediakan saluran komunikasi dua arah (bidirectional) terus menerus melalui satu koneksi TCP tunggal.'
             ],
             [
-                'q' => 'Mekanisme token rahasia yang disisipkan pada formulir HTML untuk memastikan bahwa permintaan formulir benar-benar berasal dari pengguna yang sah dan bukan dari situs pihak ketiga disebut token apa?',
-                'options' => ['XSS Token', 'CSRF Token', 'JWT Token', 'CORS Token'],
-                'ans' => 1,
-                'exp' => 'CSRF Token mencegah serangan Cross-Site Request Forgery dengan memvalidasi bahwa permintaan POST/PUT berasal dari domain aplikasi yang sah.'
-            ],
-            [
-                'q' => 'Dalam pengembangan Fullstack, apa fungsi utama dari Web Server (seperti Nginx atau Apache) dalam arsitektur produksi?',
+                'q' => 'Apa keuntungan penerapan prinsip Micro-Frontend dalam skala aplikasi web besar?',
                 'options' => [
-                    'Mengeksekusi query database MySQL',
-                    'Menerima request HTTP masuk, menyajikan file statis (HTML/CSS/JS/Gambar), dan meneruskan request dinamis ke PHP-FPM / aplikasi backend (Reverse Proxy)',
-                    'Menggantikan fungsi sistem operasi Linux',
-                    'Mengompilasi source code JavaScript ke bytecode'
-                ],
-                'ans' => 1,
-                'exp' => 'Nginx/Apache bertindak sebagai web server dan reverse proxy yang menyajikan asset statis dengan cepat dan mem-proxy request dinamis ke runtime PHP.'
-            ],
-            [
-                'q' => 'Dalam Git, perintah manakah yang digunakan untuk membatalkan modifikasi yang belum di-stage pada suatu file dan mengembalikannya ke versi commit terakhir?',
-                'options' => ['git commit --amend', 'git restore <file>', 'git rm <file>', 'git branch -d <file>'],
-                'ans' => 1,
-                'exp' => 'git restore <file> mengembalikan file yang belum di-stage ke kondisi commit terakhir di repository.'
-            ],
-            [
-                'q' => 'Pada arsitektur API modern, apa fungsi dari layer Middleware?',
-                'options' => [
-                    'Menggantikan fungsi database server',
-                    'Menjembatani dan menyaring request HTTP sebelum mencapai controller (misal: cek login, cek role, log akses, atau CORS)',
-                    'Membuat antarmuka visual grafik di browser',
-                    'Menghapus session pengguna secara acak'
-                ],
-                'ans' => 1,
-                'exp' => 'Middleware bertindak sebagai filter/lapisan perantara yang memeriksa dan memproses request sebelum sampai ke controller utama.'
-            ],
-            [
-                'q' => 'Sertifikat SSL/TLS (HTTPS) mengenkripsi komunikasi data antara client dan server pada layer jaringan mana?',
-                'options' => ['Physical Layer', 'Transport Layer Security', 'Data Link Layer', 'Network Layer IP'],
-                'ans' => 1,
-                'exp' => 'TLS/SSL mengenkripsi data di antara Transport Layer (TCP) dan Application Layer (HTTP), menjamin kerahasiaan dan integritas data.'
-            ],
-            [
-                'q' => 'Dalam database relasional, prinsip Normalisasi Database bertujuan utama untuk apa?',
-                'options' => [
-                    'Memperbanyak jumlah tabel secara acak',
-                    'Mengurangi redundansi (duplikasi data) dan menjaga integritas konsistensi data',
-                    'Mengubah format database menjadi NoSQL',
-                    'Menonaktifkan batasan Primary Key'
-                ],
-                'ans' => 1,
-                'exp' => 'Normalisasi data mengorganisir kolom dan tabel untuk meminimalkan duplikasi data dan anomali saat insert, update, atau delete.'
-            ],
-            [
-                'q' => 'Metode HTTP caching yang menggunakan validator berupa hash konten unik yang dikirimkan server melalui header disebut?',
-                'options' => ['Expires', 'ETag', 'Cache-Control', 'Pragma'],
-                'ans' => 1,
-                'exp' => 'ETag (Entity Tag) adalah penanda unik (hash) dari versi spesifik suatu sumber daya yang digunakan browser untuk validasi cache.'
-            ],
-            [
-                'q' => 'Dalam ekosistem Node.js/Vite untuk frontend, apa fungsi file `package.json`?',
-                'options' => [
-                    'Menyimpan konfigurasi database MySQL',
-                    'Mendefinisikan metadata proyek, daftar dependensi library (dependencies), dan script build yang dapat dijalankan',
-                    'Menyimpan password server',
-                    'Menyimpan log error aplikasi'
-                ],
-                'ans' => 1,
-                'exp' => 'package.json adalah file manifest proyek JavaScript/Node.js yang mencatat dependencies, devDependencies, versi, dan script.'
-            ],
-            [
-                'q' => 'Di arsitektur database, apa fungsi dari Database Migration (seperti di Laravel atau Prisma)?',
-                'options' => [
-                    'Memindahkan server database ke hosting lain',
-                    'Manajemen versi untuk skema database (version control for database schema) yang dapat dijalankan secara konsisten oleh seluruh tim pengembang',
-                    'Mengompresi data SQL menjadi format ZIP',
-                    'Menghapus seluruh relasi foreign key'
-                ],
-                'ans' => 1,
-                'exp' => 'Migration memungkinkan tim mendefinisikan dan memodifikasi skema basis data menggunakan kode terstruktur yang dapat di-rollback dan dilacak riwayatnya.'
-            ],
-            [
-                'q' => 'Dalam REST API, jika client meminta sumber daya yang tidak ditemukan di server, status kode HTTP yang harus dikembalikan adalah?',
-                'options' => ['400 Bad Request', '403 Forbidden', '404 Not Found', '500 Internal Server Error'],
-                'ans' => 2,
-                'exp' => '404 Not Found adalah kode standar HTTP jika sumber daya/endpoint yang diminta tidak ditemukan di server.'
-            ],
-            [
-                'q' => 'Apa keuntungan menggunakan ORM (Object-Relational Mapping) seperti Eloquent atau Hibernate dibanding raw query SQL?',
-                'options' => [
-                    'Meniadakan kebutuhan database sama sekali',
-                    'Memungkinkan manipulasi data database menggunakan objek dan method pemrograman berorientasi objek yang lebih ekspresif dan aman',
-                    'Pasti selalu lebih cepat 100 kali lipat dibanding query SQL murni',
-                    'Mengubah semua database menjadi MongoDB'
-                ],
-                'ans' => 1,
-                'exp' => 'ORM memetakan tabel database ke class model OOP, memudahkan penulisan query, relasi data, dan mengurangi risiko kesalahan sintaks.'
-            ],
-            [
-                'q' => 'Di Git, perintah apa yang digunakan untuk membuat branch baru sekaligus berpindah ke branch tersebut?',
-                'options' => ['git branch new-branch', 'git checkout -b new-branch (atau git switch -c new-branch)', 'git merge new-branch', 'git push new-branch'],
-                'ans' => 1,
-                'exp' => 'git checkout -b <name> atau git switch -c <name> membuat cabang baru dan langsung berpindah ke cabang tersebut.'
-            ],
-            [
-                'q' => 'Format pertukaran data standar yang paling umum digunakan dalam integrasi RESTful API modern adalah?',
-                'options' => ['CSV', 'XML', 'JSON', 'YAML'],
-                'ans' => 2,
-                'exp' => 'JSON (JavaScript Object Notation) adalah format pertukaran data yang ringan, mudah dibaca manusia, dan didukung oleh hampir semua bahasa pemrograman.'
-            ],
-            [
-                'q' => 'Dalam keamanan web, praktik "Sanitasi Input" dan "Output Encoding" sangat penting untuk mencegah serangan apa?',
-                'options' => ['DDoS', 'XSS dan Injection', 'Phishing email', 'DNS spoofing'],
-                'ans' => 1,
-                'exp' => 'Sanitasi input dan output encoding memastikan data berbahaya dinetralkan sehingga tidak dapat dieksekusi sebagai perintah jahat di server maupun browser.'
-            ],
-            [
-                'q' => 'Perbedaan utama antara penyimpanan LocalStorage dan SessionStorage di browser web adalah?',
-                'options' => [
-                    'LocalStorage hanya menyimpan 1 KB, sedangkan SessionStorage 5 MB',
-                    'LocalStorage datanya bertahan permanen sampai dihapus manual/oleh skrip, sedangkan SessionStorage datanya terhapus otomatis saat tab/jendela browser ditutup',
-                    'SessionStorage otomatis dikirimkan ke server pada setiap request HTTP',
-                    'LocalStorage tidak dapat dibaca oleh JavaScript'
-                ],
-                'ans' => 1,
-                'exp' => 'LocalStorage bertahan melintasi sesi browser (tidak terhapus saat tab ditutup), sedangkan SessionStorage hanya bertahan selama tab tersebut aktif.'
-            ],
-            [
-                'q' => 'Apa tujuan dari proses "Minifikasi" (Minification) pada file CSS dan JavaScript saat proses build produksi?',
-                'options' => [
-                    'Mengubah bahasa pemrograman menjadi C++',
-                    'Menghapus spasi kosong, komentar, dan memperpendek nama variabel untuk memperkecil ukuran file dan mempercepat waktu unduh di browser',
-                    'Menyisipkan enkripsi antivirus ke dalam file',
-                    'Memperbesar ukuran gambar'
-                ],
-                'ans' => 1,
-                'exp' => 'Minifikasi memadatkan ukuran berkas asset dengan menghilangkan whitespace dan karakter yang tidak perlu demi efisiensi transfer jaringan.'
-            ],
-            [
-                'q' => 'Dalam sistem arsitektur berbasis API, konsep "Stateless" pada REST berarti apa?',
-                'options' => [
-                    'Server menyimpan state setiap pengguna di file lokal server',
-                    'Setiap request dari client ke server harus berisi seluruh informasi yang diperlukan untuk memahami dan mengeksekusi request tersebut tanpa bergantung pada sesi yang disimpan di server',
-                    'Aplikasi tidak boleh menggunakan database',
-                    'Data di database tidak pernah berubah'
-                ],
-                'ans' => 1,
-                'exp' => 'Stateless berarti server tidak menyimpan konteks sesi client di antara request; setiap request membawa informasi autentikasi sendiri (misal bearer token).'
-            ],
-            [
-                'q' => 'Dalam Git, file manakah yang digunakan untuk memberi tahu Git file atau folder apa saja yang tidak boleh dilacak (untracked)?',
-                'options' => ['.gitkeep', '.gitignore', '.gitconfig', 'README.md'],
-                'ans' => 1,
-                'exp' => '.gitignore memuat daftar pola file atau direktori (seperti node_modules, .env, vendor) yang diabaikan oleh Git.'
-            ],
-            [
-                'q' => 'Perintah HTTP POST biasanya bersifat "Non-Idempotent". Apa arti istilah tersebut?',
-                'options' => [
-                    'Request dapat dijalankan berkali-kali tanpa menghasilkan perubahan apapun di server',
-                    'Mengirimkan request yang sama berulang kali dapat menghasilkan efek samping tambahan (misal: membuat data transaksi baru ganda setiap kali dikirim)',
-                    'Request tidak memerlukan parameter body',
-                    'Request hanya boleh dijalankan di localhost'
-                ],
-                'ans' => 1,
-                'exp' => 'Non-idempotent berarti pemanggilan berulang kali dengan parameter sama dapat menghasilkan perubahan status tambahan di server (misal duplikasi order).'
-            ]
-        ]
-    ],
-
-    'python' => [
-        'title' => 'Jalur Python, Data Science & AI Developer',
-        'code' => 'PY',
-        'competencies' => 'Python 3.12 Core, OOP, Data Structures & Algorithms, Pandas, NumPy, Matplotlib, Machine Learning Fundamentals',
-        'questions' => [
-            [
-                'q' => 'Struktur data bawaan Python manakah yang bersifat terurut (ordered), dapat diubah nilainya (mutable), dan mengizinkan elemen duplikat?',
-                'options' => ['Tuple', 'List', 'Set', 'Dictionary'],
-                'ans' => 1,
-                'exp' => 'List dalam Python bersifat ordered, mutable (dapat dimodifikasi), dan mengizinkan item bernilai duplikat.'
-            ],
-            [
-                'q' => 'Apa perbedaan mendasar antara Tuple dan List dalam bahasa Python?',
-                'options' => [
-                    'Tuple mutable sedangkan List immutable',
-                    'Tuple immutable (tidak dapat diubah setelah dibuat) sedangkan List mutable',
-                    'Tuple hanya dapat menyimpan angka',
-                    'List tidak mendukung operasi indexing'
-                ],
-                'ans' => 1,
-                'exp' => 'Tuple bersifat immutable (elemennya tidak dapat ditambah, dihapus, atau diubah setelah inisialisasi).'
-            ],
-            [
-                'q' => 'Dalam Python, apa output dari potongan kode berikut: `[x**2 for x in range(4)]`?',
-                'options' => ['[1, 4, 9, 16]', '[0, 1, 4, 9]', '[0, 2, 4, 6]', '[1, 2, 3, 4]'],
-                'ans' => 1,
-                'exp' => 'range(4) menghasilkan 0, 1, 2, 3. Kuadrat masing-masing adalah 0**2=0, 1**2=1, 2**2=4, 3**2=9. Sehingga hasilnya [0, 1, 4, 9].'
-            ],
-            [
-                'q' => 'Fungsi atau keyword manakah di Python yang digunakan untuk mendefinisikan anonymous function (fungsi satu baris tanpa nama)?',
-                'options' => ['def', 'lambda', 'func', 'inline'],
-                'ans' => 1,
-                'exp' => 'lambda digunakan untuk membuat fungsi anonim ringkas satu baris (contoh: lambda x: x * 2).'
-            ],
-            [
-                'q' => 'Dalam class OOP Python, parameter pertama yang wajib didefinisikan pada setiap instance method untuk mereferensikan objek instans saat ini secara konvensi dinamakan?',
-                'options' => ['this', 'self', 'cls', 'instance'],
-                'ans' => 1,
-                'exp' => 'Konvensi resmi Python menggunakan self sebagai parameter pertama setiap instance method untuk mengakses atribut dan method objek.'
-            ],
-            [
-                'q' => 'Di Python, konstruksi `with open("file.txt", "r") as f:` sangat dianjurkan karena alasan apa?',
-                'options' => [
-                    'Mempercepat kecepatan baca file 10 kali lipat',
-                    'Menggunakan Context Manager yang secara otomatis menutup file (f.close()) bahkan jika terjadi runtime exception',
-                    'Mengenkripsi file secara otomatis',
-                    'Menghapus file setelah dibaca'
-                ],
-                'ans' => 1,
-                'exp' => 'Pernyataan with menggunakan protokol context manager yang menjamin berkas akan ditutup secara aman saat keluar dari blok with.'
-            ],
-            [
-                'q' => 'Library Python manakah yang menjadi standar industri untuk manipulasi data tabular (DataFrames) dan analisis data?',
-                'options' => ['Flask', 'Pandas', 'Pygame', 'Requests'],
-                'ans' => 1,
-                'exp' => 'Pandas adalah library utama untuk manipulasi, pembersihan, dan analisis data berstruktur tabel (DataFrame/Series).'
-            ],
-            [
-                'q' => 'Dalam modul NumPy, apa keunggulan utama `numpy.ndarray` dibanding list bawaan Python dalam pemrosesan data numerik?',
-                'options' => [
-                    'Mengonsumsi memori lebih hemat dan mengeksekusi operasi vektor/matriks secara teroptimasi pada level bahasa C (vectorization)',
-                    'Dapat menyimpan elemen HTML secara langsung',
-                    'Tidak memerlukan instalasi pip',
-                    'Dapat dijalankan tanpa RAM'
+                    'Mengizinkan berbagai tim independen membangun, menguji, dan men-deploy modul UI frontend tersendiri menggunakan teknologi berbeda tanpa saling memblokir',
+                    'Menghapus kode JavaScript dari aplikasi',
+                    'Mempercepat instalasi Node.js',
+                    'Membuat CSS dapat berjalan di server'
                 ],
                 'ans' => 0,
-                'exp' => 'NumPy array menyimpan data secara kontigu di memori dengan tipe homogen sehingga kalkulasi numerik berjalan jauh lebih cepat (vectorized operations).'
+                'exp' => 'Micro-Frontend memecah monolit frontend menjadi aplikasi-aplikasi mikro yang dikelola tim independen secara otonom.'
             ],
             [
-                'q' => 'Apa hasil dari ekspresi boolean Python: `bool([])`?',
-                'options' => ['True', 'False', 'None', 'Error'],
-                'ans' => 1,
-                'exp' => 'Di Python, koleksi kosong (list kosong [], string kosong "", dict kosong {}) dievaluasi sebagai nilai Falsy (False).'
-            ],
-            [
-                'q' => 'Di Python, dekorator (decorator) ditandai dengan simbol apa di atas definisi fungsi?',
-                'options' => ['#', '@', '$', '&'],
-                'ans' => 1,
-                'exp' => 'Dekorator diawali dengan simbol @ (contoh: @staticmethod, @property, @app.route).'
-            ],
-            [
-                'q' => 'Dalam penanganan error di Python, blok kode manakah yang akan selalu dieksekusi terlepas dari apakah terjadi exception atau tidak?',
-                'options' => ['try', 'except', 'else', 'finally'],
-                'ans' => 3,
-                'exp' => 'Blok finally selalu dijalankan di akhir blok try-except, sangat cocok untuk proses clean-up resources.'
-            ],
-            [
-                'q' => 'Metode Dictionary manakah yang digunakan untuk mengambil nilai kunci tertentu dengan aman tanpa memicu `KeyError` jika kunci tidak ada?',
-                'options' => ['dict[key]', 'dict.get(key, default)', 'dict.find(key)', 'dict.search(key)'],
-                'ans' => 1,
-                'exp' => 'dict.get(key, default) mengembalikan nilai jika kunci ditemukan atau nilai default (None) jika kunci tidak ada tanpa melempar KeyError.'
-            ],
-            [
-                'q' => 'Dalam algoritma Machine Learning, teknik pembelajaran yang menggunakan data berlabel (features dan target ground truth) disebut?',
-                'options' => ['Supervised Learning', 'Unsupervised Learning', 'Reinforcement Learning', 'Zero-shot Learning'],
+                'q' => 'Bagaimanakah penanganan serangan Cross-Site Scripting (XSS) tipe Reflected atau Stored pada output web?',
+                'options' => [
+                    'Melakukan context-aware output encoding (escaping) terhadap seluruh data tak terpercaya sebelum dirender ke HTML, serta menerapkan Content Security Policy (CSP)',
+                    'Hanya menggunakan metode POST untuk semua link',
+                    'Menonaktifkan cookie peramban',
+                    'Menggunakan firewall hardware saja'
+                ],
                 'ans' => 0,
-                'exp' => 'Supervised Learning melatih model menggunakan pasangan input data dan label jawaban yang sudah diketahui (misal: klasifikasi dan regresi).'
+                'exp' => 'Output encoding dan CSP (Content Security Policy) mencegah injeksi dan eksekusi skrip berbahaya di konteks peramban korban.'
             ],
             [
-                'q' => 'Di Python 3, apa fungsi dari keyword `yield` di dalam sebuah fungsi?',
+                'q' => 'Dalam protokol SSL/TLS HTTPS, apa peran dari Certificate Authority (CA) pihak ketiga yang terpercaya (misal Let\'s Encrypt)?',
                 'options' => [
-                    'Menghentikan eksekusi program seketika',
-                    'Mengubah fungsi menjadi sebuah Generator yang menghasilkan nilai secara bertahap (lazy evaluation)',
-                    'Mengimpor package dari cloud',
-                    'Mengubah tipe data variabel menjadi integer'
+                    'Memverifikasi kepemilikan domain dan menandatangani sertifikat digital publik untuk membuktikan keaslian identitas server ke browser',
+                    'Menyimpan seluruh basis data pengguna secara terenkripsi',
+                    'Mempercepat bandwidth jaringan internet pelanggan',
+                    'Menghapus log akses web server'
                 ],
-                'ans' => 1,
-                'exp' => 'yield menghasilkan iterator generator yang mengembalikan nilai satu per satu saat diminta, menghemat memori untuk dataset besar.'
+                'ans' => 0,
+                'exp' => 'CA bertindak sebagai entitas tepercaya yang memvalidasi identitas pemilik website dan menerbitkan sertifikat digital terotentikasi.'
             ],
             [
-                'q' => 'Fungsi bawaan Python manakah yang menggabungkan dua atau lebih iterable menjadi pasangan tuple?',
-                'options' => ['enumerate()', 'zip()', 'map()', 'concat()'],
-                'ans' => 1,
-                'exp' => 'zip(*iterables) menggabungkan elemen dari masing-masing iterable berdasarkan indeks posisinya menjadi kumpulan tuple.'
-            ],
-            [
-                'q' => 'Dalam modul Scikit-Learn, metode manakah yang digunakan untuk melatih (training) model machine learning terhadap data latih?',
-                'options' => ['model.predict(X, y)', 'model.fit(X, y)', 'model.train(X, y)', 'model.execute(X, y)'],
-                'ans' => 1,
-                'exp' => 'Metode fit(X, y) adalah API standar di Scikit-Learn untuk melatih parameter model terhadap data input X dan target y.'
-            ],
-            [
-                'q' => 'Operator perbandingan manakah di Python yang digunakan untuk menguji apakah dua variabel mereferensikan objek yang persis sama di memori (identity comparison)?',
-                'options' => ['==', 'is', 'in', 'equals'],
-                'ans' => 1,
-                'exp' => 'is menguji identitas objek (apakah berada di alamat memori id() yang sama), sedangkan == menguji kesetaraan nilai konten.'
-            ],
-            [
-                'q' => 'Metode string Python manakah yang membagi teks string menjadi list berdasarkan tanda pemisah (delimiter)?',
-                'options' => ['join()', 'split()', 'slice()', 'divide()'],
-                'ans' => 1,
-                'exp' => 'string.split(delimiter) memecah teks menjadi potongan list string.'
-            ],
-            [
-                'q' => 'Di Python, keyword manakah yang digunakan untuk membuat blok placeholder kosong tanpa aksi agar tidak memicu IndentationError?',
-                'options' => ['void', 'pass', 'null', 'skip'],
-                'ans' => 1,
-                'exp' => 'pass adalah pernyataan null operation yang digunakan sebagai placeholder sintaks pada fungsi atau loop yang belum diimplementasikan.'
-            ],
-            [
-                'q' => 'Struktur data Set di Python secara otomatis menjamin sifat apa?',
+                'q' => 'Dalam arsitektur basis data, apa yang dimaksud dengan teknik "Database Sharding"?',
                 'options' => [
-                    'Seluruh elemen terurut dari A ke Z',
-                    'Seluruh elemen unik tanpa ada duplikasi',
-                    'Seluruh elemen harus bertipe integer',
-                    'Dapat diakses menggunakan indeks angka'
+                    'Pemisahan horizontal baris-baris data besar ke dalam beberapa mesin server database independen untuk mendistribusikan beban penyimpanan dan komputasi',
+                    'Pembuatan backup data ke CD-ROM',
+                    'Penggabungan dua database MySQL menjadi satu',
+                    'Penghapusan indeks yang sudah usang'
                 ],
-                'ans' => 1,
-                'exp' => 'Set adalah kumpulan elemen tidak terurut yang secara matematis tidak mengizinkan adanya elemen duplikat.'
+                'ans' => 0,
+                'exp' => 'Sharding adalah partisi horizontal data ke beberapa instance server terpisah untuk mendukung horizontal scaling skala raksasa.'
             ],
             [
-                'q' => 'Di modul Matplotlib, fungsi manakah yang digunakan untuk menampilkan jendela grafik visualisasi ke layar?',
-                'options' => ['plt.render()', 'plt.show()', 'plt.display()', 'plt.plot()'],
-                'ans' => 1,
-                'exp' => 'plt.show() menampilkan seluruh figur grafik yang telah dikonfigurasi ke layar.'
-            ],
-            [
-                'q' => 'Dalam Python OOP, method khusus `__str__()` berfungsi untuk apa?',
+                'q' => 'Karakteristik dari GraphQL dibanding REST API adalah:',
                 'options' => [
-                    'Mengonversi angka menjadi float',
-                    'Mengembalikan representasi teks string yang ramah dibaca manusia ketika objek dicetak dengan fungsi print()',
-                    'Menghapus objek dari memori',
-                    'Menyimpan objek ke harddisk'
+                    'Klien dapat menentukan secara persis data spesifik apa saja yang dibutuhkannya dalam satu request query, mencegah over-fetching dan under-fetching',
+                    'Hanya mendukung pertukaran data dalam format XML',
+                    'Tidak menggunakan protokol HTTP',
+                    'Tidak memerlukan validasi autentikasi'
                 ],
-                'ans' => 1,
-                'exp' => '__str__ mendefinisikan representasi string informal yang mudah dibaca saat objek di-print atau di-str().'
+                'ans' => 0,
+                'exp' => 'GraphQL memberikan kemampuan query deklaratif di mana client meminta data spesifik yang diperlukan tanpa data berlebih (over-fetching).'
             ],
             [
-                'q' => 'Apa output dari ekspresi: `type(3 / 2)` di Python 3?',
-                'options' => ['<class "int">', '<class "float">', '<class "double">', '<class "number">'],
-                'ans' => 1,
-                'exp' => 'Di Python 3, pembagian tunggal (/) selalu menghasilkan tipe data float (3 / 2 = 1.5). Pembagian integer menggunakan (//).'
+                'q' => 'Alat orkestrasi kontainer open-source yang paling populer untuk mengotomatisasi deployment, scaling, dan manajemen aplikasi terkontainerisasi di cloud adalah:',
+                'options' => ['Kubernetes (K8s)', 'Docker Swarm legacy', 'Vagrant', 'VirtualBox'],
+                'ans' => 0,
+                'exp' => 'Kubernetes adalah platform standar industri untuk orkestrasi dan skalabilitas kluster kontainer aplikasi modern.'
             ],
             [
-                'q' => 'Fungsi bawaan Python manakah yang mengembalikan pasangan (indeks, elemen) saat melakukan iterasi dalam perulangan loop?',
-                'options' => ['range()', 'enumerate()', 'index()', 'counter()'],
-                'ans' => 1,
-                'exp' => 'enumerate(iterable) menghasilkan pasangan counter indeks dan nilai item selama iterasi perulangan.'
+                'q' => 'Dalam web performance optimization, apa arti metrik Core Web Vitals "LCP" (Largest Contentful Paint)?',
+                'options' => [
+                    'Waktu yang dibutuhkan untuk merender elemen konten visual terbesar (misal banner gambar atau blok teks utama) yang terlihat di viewport pengguna',
+                    'Total jumlah file gambar yang diunduh',
+                    'Ukuran file CSS dalam kilobyte',
+                    'Kecepatan koneksi internet server'
+                ],
+                'ans' => 0,
+                'exp' => 'LCP mengukur waktu render elemen visual utama terbesar di layar; skor baik adalah di bawah 2.5 detik.'
             ],
             [
-                'q' => 'Di Python, library standar manakah yang digunakan untuk bekerja dengan ekspresi reguler (Regular Expressions)?',
-                'options' => ['regex_lib', 're', 'pattern', 'matcher'],
+                'q' => 'Apa keuntungan utama penggunaan Docker container dibanding Virtual Machine tradisional?',
+                'options' => [
+                    'Kontainer berbagi kernel host OS yang sama dan lebih ringan (lightweight) dengan startup instan serta penggunaan memori yang jauh lebih efisien',
+                    'Kontainer selalu memiliki ukuran 10x lebih besar dari VM',
+                    'Kontainer tidak dapat dijalankan di cloud',
+                    'Kontainer tidak mendukung jaringan TCP/IP'
+                ],
+                'ans' => 0,
+                'exp' => 'Container mengisolasi aplikasi di tingkat user-space menggunakan kernel host tanpa overhead emulasi hardware OS lengkap seperti VM.'
+            ],
+            [
+                'q' => 'Pola arsitektur Event-Driven Architecture (EDA) sangat cocok diterapkan ketika:',
+                'options' => [
+                    'Sistem membutuhkan kopling longgar (loose coupling) antar layanan dengan pemrosesan kejadian bisnis secara asynchronous realtime berkecepatan tinggi',
+                    'Aplikasi hanya memiliki satu tabel database',
+                    'Semua operasi harus dieksekusi secara synchronous blocking',
+                    'Aplikasi tidak membutuhkan jaringan internet'
+                ],
+                'ans' => 0,
+                'exp' => 'EDA memungkinkan produser dan konsumen event beroperasi secara mandiri tanpa saling bergantung langsung (loosely coupled).'
+            ],
+            [
+                'q' => 'Header keamanan HTTP manakah yang menginstruksikan peramban agar hanya berkomunikasi dengan server melalui koneksi aman HTTPS?',
+                'options' => ['Strict-Transport-Security (HSTS)', 'X-Content-Type-Options: nosniff', 'Content-Security-Policy', 'X-XSS-Protection'],
+                'ans' => 0,
+                'exp' => 'HSTS memaksa browser hanya menggunakan koneksi terenkripsi HTTPS untuk melindungi terhadap serangan SSL-stripping.'
+            ],
+            [
+                'q' => 'Dalam perancangan REST API yang baik, kode status HTTP manakah yang paling tepat dikembalikan saat sumber daya berhasil dibuat (misalnya registrasi user baru)?',
+                'options' => ['200 OK', '201 Created', '202 Accepted', '204 No Content'],
                 'ans' => 1,
-                'exp' => 'Modul re adalah modul bawaan standar Python untuk pemrosesan regular expression (re.search, re.findall, dll).'
+                'exp' => '201 Created mengindikasikan bahwa request telah berhasil dan menghasilkan satu atau lebih resource baru di server.'
+            ],
+            [
+                'q' => 'Fungsi utama dari reverse proxy seperti Nginx dalam arsitektur produksi web skala besar adalah:',
+                'options' => [
+                    'Bertindak sebagai pintu gerbang lalu lintas untuk load balancing, terminasi SSL/TLS, kompresi Gzip/Brotli, dan melayani file statis berkecepatan tinggi',
+                    'Menggantikan kebutuhan sistem database',
+                    'Menulis kode JavaScript otomatis',
+                    'Mendeteksi pengguna tunanetra'
+                ],
+                'ans' => 0,
+                'exp' => 'Nginx sangat efisien sebagai reverse proxy penyeimbang beban (load balancer) dan melayani aset statis secara asynchronous event-driven.'
+            ],
+            [
+                'q' => 'Metodologi Git branching manakah yang memisahkan branch `main` untuk produksi stabil, `develop` untuk integrasi fitur, dan branch `feature/*` untuk pengerjaan per-fitur?',
+                'options' => ['Git Flow', 'Trunk-Based Development', 'GitHub Flow murni', 'Linear History Flow'],
+                'ans' => 0,
+                'exp' => 'Git Flow adalah model percabangan terstruktur dengan rilis terjadwal yang membagi lifecycle pengembangan ke berbagai branch khusus.'
+            ],
+            [
+                'q' => 'Tujuan utama dari teknik "Tree Shaking" pada JavaScript bundler modern (seperti Vite atau Webpack) adalah:',
+                'options' => [
+                    'Menghapus kode JavaScript yang tidak terpakai (dead code) dari hasil bundel akhir untuk memperkecil ukuran file unduhan aplikasi',
+                    'Mengubah file JS menjadi bahasa Python',
+                    'Mengacak variabel kode agar tidak bisa dibaca orang',
+                    'Menyusun file CSS berdasarkan abjad'
+                ],
+                'ans' => 0,
+                'exp' => 'Tree shaking mengeliminasi kode tak terpakai (dead-code elimination) dengan memanfaatkan analisis statis ES6 module imports/exports.'
+            ],
+            [
+                'q' => 'Dalam arsitektur basis data, apa perbedaan teknik Read Replica dibanding Multi-Master replication?',
+                'options' => [
+                    'Read replica hanya melayani query pembacaan (SELECT) untuk meringankan beban master, sedangkan operasi penulisan data (INSERT/UPDATE/DELETE) tetap diarahkan ke database master utama',
+                    'Read replica dapat menulis data lebih cepat dari master',
+                    'Multi-master tidak dapat menggunakan transaksi ACID',
+                    'Read replica mematikan master saat traffic tinggi'
+                ],
+                'ans' => 0,
+                'exp' => 'Read replica menduplikasi data dari primary server untuk menangani lonjakan query pembacaan baca (read-heavy workload).'
+            ],
+            [
+                'q' => 'Untuk mencegah serangan DoS (Denial of Service) dan penyalahgunaan endpoint API publik, mekanisme pembatasan frekuensi request yang umum diterapkan adalah:',
+                'options' => ['Rate Limiting / Throttling', 'Data Sanitization', 'SQL Parameterization', 'Minification'],
+                'ans' => 0,
+                'exp' => 'Rate limiting membatasi jumlah request per IP/klien dalam rentang waktu tertentu (misal algoritma Token Bucket atau Leaky Bucket).'
+            ],
+            [
+                'q' => 'Sifat Stateless pada protokol REST API mewajibkan bahwa:',
+                'options' => [
+                    'Setiap HTTP request dari klien harus memuat seluruh konteks dan informasi yang diperlukan oleh server untuk memprosesnya, tanpa server menyimpan status sesi klien di memori server antar request',
+                    'Server tidak boleh menggunakan database',
+                    'Klien tidak diperkenankan menggunakan cookie',
+                    'API tidak boleh mengembalikan data JSON'
+                ],
+                'ans' => 0,
+                'exp' => 'Statelessness mewajibkan seluruh informasi autentikasi dan konteks dikirim lengkap pada setiap request terpisah.'
             ]
         ]
     ],
@@ -817,316 +1886,198 @@ return [
     'mobile' => [
         'title' => 'Jalur Mobile Developer (Flutter & Dart Cross-Platform)',
         'code' => 'MOB',
-        'competencies' => 'Dart 3 Sound Null Safety, Flutter Widget Tree Architecture, Material 3 Design, GoRouter Navigation, BLoC/Riverpod State Management, REST API & Offline SQLite, Impeller Engine, Google Play AAB Deployment',
+        'type' => 'career',
+        'price' => 29000,
+        'original_price' => 79000,
+        'duration_minutes' => 30,
+        'passing_score' => 80,
+        'competencies' => 'Dart 3.x OOP & Sound Null Safety, Flutter Widget Architecture (Stateless vs Stateful), State Management (Provider, Bloc, Riverpod), RESTful API Integration & JSON Serialization, Local Storage (Hive / SQLite), App Lifecycle & Native Permissions',
         'questions' => [
             [
-                'q' => 'Fitur bahasa Dart apa yang menjamin variabel tidak dapat bernilai null kecuali secara eksplisit dideklarasikan dengan tanda tanya (?)?',
-                'options' => ['Dynamic Typing', 'Sound Null Safety', 'Late Initialization', 'Nullable Inference'],
+                'q' => 'Perbedaan fundamental antara `StatelessWidget` dan `StatefulWidget` dalam arsitektur Flutter adalah:',
+                'options' => [
+                    'StatelessWidget hanya untuk teks, sedangkan StatefulWidget untuk gambar',
+                    'StatelessWidget bersifat statis dan konfigurasinya tidak dapat berubah setelah dibangun, sedangkan StatefulWidget mempertahankan State internal dinamis yang dapat berubah sepanjang siklus hidup widget',
+                    'StatefulWidget tidak dapat dirender di platform Android',
+                    'StatelessWidget membutuhkan izin root perangkat'
+                ],
                 'ans' => 1,
-                'exp' => 'Sound Null Safety mencegah runtime NullPointerExceptions dengan mewajibkan tanda tanya (?) untuk tipe yang boleh bernilai null.'
+                'exp' => 'StatelessWidget adalah widget immutable tanpa mutable state, sedangkan StatefulWidget memiliki objek State terpisah yang dapat dimutasi.'
             ],
             [
-                'q' => 'Fungsi apakah yang bertugas mengikat Widget akar aplikasi Flutter ke jendela tampilan perangkat fisik?',
-                'options' => ['main()', 'startFlutter()', 'runApp()', 'renderWidget()'],
-                'ans' => 2,
-                'exp' => 'runApp() menginstansiasi widget akar dan menempelkannya ke layar perangkat.'
-            ],
-            [
-                'q' => 'Apa perbedaan utama antara StatelessWidget dan StatefulWidget di Flutter?',
-                'options' => ['StatelessWidget lebih lambat', 'StatefulWidget memiliki objek State internal yang dapat berubah selama runtime via setState()', 'StatelessWidget hanya untuk teks', 'StatefulWidget tidak dapat menerima parameter'],
+                'q' => 'Metode manakah yang wajib dipanggil di dalam State sebuah StatefulWidget untuk memberitahu framework Flutter agar merender ulang (rebuild) antarmuka UI?',
+                'options' => ['notifyListeners()', 'setState(() { ... })', 'rebuildUI()', 'updateState()'],
                 'ans' => 1,
-                'exp' => 'StatefulWidget mengelola state yang dapat bermutasi dan memicu rebuild UI saat setState() dipanggil.'
+                'exp' => 'setState memberitahu framework Flutter bahwa kondisi internal widget telah berubah, memicu eksekusi ulang method build() untuk memperbarui tampilan layar.'
             ],
             [
-                'q' => 'Widget apa yang menyediakan struktur dasar visual layar aplikasi seperti AppBar, FloatingActionButton, dan Drawer?',
-                'options' => ['MaterialApp', 'Scaffold', 'Container', 'Card'],
+                'q' => 'File konfigurasi manakah pada proyek Flutter yang digunakan untuk mengatur dependensi pustaka pihak ketiga, aset gambar, dan versi aplikasi?',
+                'options' => ['config.xml', 'pubspec.yaml', 'flutter.json', 'build.gradle'],
                 'ans' => 1,
-                'exp' => 'Scaffold mengimplementasikan layout dasar visual arsitektur Material Design.'
+                'exp' => 'pubspec.yaml adalah file manifest utama proyek Flutter dan Dart untuk mengelola packages, fonts, dan assets.'
             ],
             [
-                'q' => 'Bagaimanakah bunyi 3 aturan emas penentuan tata letak (constraints) pada Flutter?',
-                'options' => ['Widgets go left, sizes go right, parent sets color', 'Constraints go down, sizes go up, parents set position', 'Sizes go down, constraints go up, screen sets position', 'Layout goes deep, children set constraints, root renders'],
+                'q' => 'Widget layout dasar manakah di Flutter yang menyusun elemen-elemen anaknya secara berurutan dari atas ke bawah (vertikal)?',
+                'options' => ['Row', 'Column', 'Stack', 'Wrap'],
                 'ans' => 1,
-                'exp' => 'Aturan resmi Flutter: Constraints go down, sizes go up, parents set position.'
+                'exp' => 'Column menyusun daftar widget anak di sepanjang sumbu vertikal, sedangkan Row menyusunnya secara horizontal.'
             ],
             [
-                'q' => 'Widget apakah yang digunakan di dalam Row atau Column untuk mengambil seluruh sisa ruang kosong yang tersedia?',
-                'options' => ['SizedBox', 'Padding', 'Expanded', 'SpacerBox'],
-                'ans' => 2,
-                'exp' => 'Expanded membagi dan mengisi seluruh sisa ruang kosong pada sumbu utama flex.'
+                'q' => 'Widget standar Material Design apakah yang menyediakan kerangka visual dasar seperti AppBar, Drawer, FloatingActionButton, dan Body?',
+                'options' => ['Container', 'Scaffold', 'Card', 'MaterialApp'],
+                'ans' => 1,
+                'exp' => 'Scaffold mengimplementasikan struktur layout visual Material Design dasar yang menyediakan slot AppBar, Body, BottomNavigationBar, dan FAB.'
             ],
             [
-                'q' => 'Error garis loreng kuning-hitam pada Flutter (RenderFlex overflowed by X pixels) biasanya diatasi dengan membungkus anak Row/Column dengan widget?',
-                'options' => ['Expanded atau SingleChildScrollView', 'Material', 'Card', 'Center'],
+                'q' => 'Perintah manakah yang digunakan untuk berpindah ke rute halaman baru di Flutter dengan menumpuk halaman tersebut di atas navigation stack?',
+                'options' => [
+                    'Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage()))',
+                    'Navigator.go(context, DetailPage())',
+                    'Route.open(DetailPage())',
+                    'context.navigate(DetailPage())'
+                ],
                 'ans' => 0,
-                'exp' => 'Expanded membatasi ukuran anak pada sumbu flex, atau SingleChildScrollView memungkinkan konten digulir jika melampaui layar.'
+                'exp' => 'Navigator.push menambahkan rute baru ke atas tumpukan navigasi yang dikelola oleh Navigator.'
             ],
             [
-                'q' => 'Widget apa yang digunakan untuk menumpuk elemen visual secara berlapis di atas sumbu Z (seperti meletakkan badge di atas foto)?',
-                'options' => ['Column', 'Row', 'Stack', 'Wrap'],
-                'ans' => 2,
-                'exp' => 'Stack menumpuk elemen secara bertingkat di atas sumbu kedalaman Z menggunakan Positioned.'
-            ],
-            [
-                'q' => 'Properti apa pada MaterialApp yang wajib diatur bernilai true untuk mengaktifkan spesifikasi Material Design 3 terbaru?',
-                'options' => ['materialDesign: 3', 'useMaterial3: true', 'enableM3: true', 'version: 3'],
+                'q' => 'Widget manakah yang paling direkomendasikan dan efisien untuk menampilkan daftar ribuan data secara dinamis tanpa membebani memori smartphone?',
+                'options' => ['SingleChildScrollView + Column', 'ListView.builder', 'Table', 'Wrap.builder'],
                 'ans' => 1,
-                'exp' => 'useMaterial3: true mengaktifkan spesifikasi desain Material 3 terbaru.'
+                'exp' => 'ListView.builder membuat widget anak hanya saat item tersebut mendekati layar yang terlihat (lazy loading / on-demand recycling).'
             ],
             [
-                'q' => 'Metode apa di dalam State yang digunakan untuk memberi tahu framework bahwa data telah berubah dan UI perlu di-render ulang?',
-                'options' => ['update()', 'notify()', 'setState()', 'rebuild()'],
-                'ans' => 2,
-                'exp' => 'setState() menandai elemen kotor dan menjadwalkan metode build() untuk dieksekusi ulang.'
-            ],
-            [
-                'q' => 'Apa perbedaan utama antara GestureDetector dan InkWell?',
-                'options' => ['GestureDetector lebih cepat', 'InkWell memberikan efek riak air (splash ripple effect) khas Material Design saat disentuh', 'InkWell hanya untuk teks', 'GestureDetector tidak mendukung sentuhan'],
+                'q' => 'Widget manakah yang secara khusus dirancang untuk menangani pembangunan antarmuka berdasarkan status asinkron dari sebuah objek Future (seperti response HTTP REST API)?',
+                'options' => ['StreamBuilder', 'FutureBuilder', 'AsyncView', 'PromiseBuilder'],
                 'ans' => 1,
-                'exp' => 'InkWell membungkus aksi sentuhan dengan animasi riak visual (ripple).'
+                'exp' => 'FutureBuilder mengamati proses objek Future dan membangun UI berdasarkan ConnectionState (waiting, done, atau error).'
             ],
             [
-                'q' => 'Berkas konfigurasi apakah pada proyek Flutter yang digunakan untuk mendaftarkan aset gambar, file font, dan paket dependensi eksternal?',
-                'options' => ['build.gradle', 'AndroidManifest.xml', 'pubspec.yaml', 'flutter.json'],
-                'ans' => 2,
-                'exp' => 'pubspec.yaml adalah berkas konfigurasi utama proyek Flutter dan Dart.'
-            ],
-            [
-                'q' => 'Package routing resmi yang sangat direkomendasikan untuk navigasi deklaratif dan dukungan deep linking di Flutter adalah?',
-                'options' => ['go_router', 'flutter_route', 'easy_nav', 'router_kit'],
-                'ans' => 0,
-                'exp' => 'go_router adalah solusi routing deklaratif standar industri yang didukung resmi oleh tim Flutter.'
-            ],
-            [
-                'q' => 'Widget animasi implisit apa yang dapat menganimasikan transisi ukuran, warna, dan border radius secara otomatis hanya dengan mengubah nilainya?',
-                'options' => ['SmoothContainer', 'AnimatedContainer', 'DynamicBox', 'MorphCard'],
+                'q' => 'Dalam fitur Sound Null Safety bahasa Dart, simbol tanda tanya (?) setelah nama tipe data (misal: `String? name`) mengindikasikan bahwa:',
+                'options' => [
+                    'Variabel tersebut bertipe boolean',
+                    'Variabel tersebut dapat menerima nilai null (nullable)',
+                    'Variabel tersebut bersifat konstan',
+                    'Variabel tersebut belum dikompilasi'
+                ],
                 'ans' => 1,
-                'exp' => 'AnimatedContainer secara otomatis menginterpolasi properti geometris dan visualnya selama durasi tertentu.'
+                'exp' => 'Tanda tanya (?) menandai tipe nullable yang mengizinkan variabel tersebut memiliki kemungkinan bernilai null secara eksplisit.'
             ],
             [
-                'q' => 'Widget apa yang digunakan untuk menyediakan label verbal dan informasi ramah aksesibilitas bagi aplikasi pembaca layar (TalkBack / VoiceOver)?',
-                'options' => ['Accessible', 'ScreenReader', 'Semantics', 'VoiceTag'],
-                'ans' => 2,
-                'exp' => 'Semantics membungkus elemen dan memberikan informasi deskriptif untuk Screen Reader.'
-            ],
-            [
-                'q' => 'Format berkas standar lokalisasi multi-bahasa resmi yang digunakan pada Flutter adalah?',
-                'options' => ['.json', '.arb', '.xml', '.po'],
-                'ans' => 1,
-                'exp' => '.arb (Application Resource Bundle) adalah format JSON standar Google untuk lokalisasi Flutter.'
-            ],
-            [
-                'q' => 'Package HTTP client di Dart yang sangat populer dan mendukung fitur canggih seperti Interceptors, Global Configuration, dan FormData adalah?',
-                'options' => ['dio', 'axios_dart', 'fetch', 'network_io'],
+                'q' => 'Filosofi desain utama dalam pengembangan aplikasi dengan Flutter yang membedakannya dari framework lain adalah:',
+                'options' => [
+                    'Everything is a Widget (Segala elemen antarmuka, layout, hingga padding adalah widget deklaratif)',
+                    'Kompilasi kode hanya dilakukan via JavaScript Web View',
+                    'Tidak memerlukan bahasa pemrograman khusus',
+                    'Harus menulis dua basis kode terpisah untuk iOS dan Android'
+                ],
                 'ans' => 0,
-                'exp' => 'Dio adalah HTTP client tingkat lanjut yang sangat kuat di Dart.'
+                'exp' => 'Flutter menerapkan prinsip "Everything is a widget", di mana struktur, gaya visual, animasi, dan perataan tersusun dari komposisi widget deklaratif.'
             ],
             [
-                'q' => 'Pola State Management apa yang memisahkan logika bisnis menggunakan konsep Events dan States berbasis Reactive Streams?',
-                'options' => ['BLoC (Business Logic Component)', 'MVC Murni', 'SharedPreferences', 'Singleton Pattern'],
+                'q' => 'Dalam arsitektur state management BLoC (Business Logic Component), dua komponen utama yang saling berinteraksi dengan Bloc adalah:',
+                'options' => ['Events (Input) dan States (Output)', 'Actions dan Reducers saja', 'Models dan Views', 'Listeners dan Notifiers'],
                 'ans' => 0,
-                'exp' => 'BLoC menerima Event dari UI dan memancarkan State baru secara reaktif.'
+                'exp' => 'BLoC menerima Events dari UI sebagai masukan, memproses logika bisnis, dan memancarkan States sebagai keluaran reaktif.'
             ],
             [
-                'q' => 'Mekanisme apa di Flutter yang digunakan untuk berkomunikasi dua arah antara kode Dart dan kode native Android (Kotlin) / iOS (Swift)?',
-                'options' => ['Platform Channels (MethodChannel)', 'JNI Bridge', 'WebSocket Local', 'Bluetooth Channel'],
+                'q' => 'Widget manakah yang digunakan untuk menumpuk elemen-elemen anak di atas satu sama lain dalam lapisan sumbu z (overlap layout)?',
+                'options' => ['Stack (bersama Positioned)', 'Layer', 'OverlayBox', 'Group'],
                 'ans' => 0,
-                'exp' => 'MethodChannel memfasilitasi pertukaran pesan dan pemanggilan metode antara Dart dan kode native host.'
+                'exp' => 'Stack menumpuk widget anaknya di lapisan z-axis dan mengizinkan pemosisian mutlak melalui Positioned widget.'
             ],
             [
-                'q' => 'Plugin resmi apa yang digunakan untuk mengimplementasikan otentikasi biometrik sidik jari (Fingerprint) dan Face ID di Flutter?',
-                'options' => ['local_auth', 'fingerprint_scanner', 'biometric_flutter', 'device_security'],
+                'q' => 'Manakah metode siklus hidup (lifecycle) pada State Flutter yang hanya dipanggil satu kali saat widget pertama kali dimasukkan ke dalam widget tree?',
+                'options' => ['initState()', 'build()', 'didUpdateWidget()', 'dispose()'],
                 'ans' => 0,
-                'exp' => 'local_auth adalah plugin resmi Flutter untuk autentikasi biometrik lokal di Android dan iOS.'
+                'exp' => 'initState() dijalankan tepat satu kali pada saat inisialisasi awal objek State sebelum method build().'
             ],
             [
-                'q' => 'Jenis pengujian otomatis di Flutter yang memverifikasi antarmuka visual dan respons simulasi klik tombol secara terisolasi tanpa emulator fisik disebut?',
-                'options' => ['Unit Test', 'Widget Test', 'Integration Test', 'Stress Test'],
-                'ans' => 1,
-                'exp' => 'Widget Test menguji komponen UI secara terisolasi dengan kecepatan tinggi menggunakan WidgetTester.'
-            ],
-            [
-                'q' => 'Nama rendering engine grafis generasi baru di Flutter 3.x yang membasmi shader compilation jank adalah?',
-                'options' => ['Impeller', 'Skia', 'VulkanCore', 'DirectFlutter'],
+                'q' => 'Pustaka basis data lokal NoSQL key-value yang sangat cepat dan ditulis murni dalam bahasa Dart adalah:',
+                'options' => ['Hive', 'Room', 'CoreData', 'Realm C++'],
                 'ans' => 0,
-                'exp' => 'Impeller adalah mesin rendering grafis generasi terbaru di Flutter yang menggantikan Skia.'
+                'exp' => 'Hive adalah embedded key-value database murni Dart berkinerja sangat tinggi tanpa dependensi library native C++.'
             ],
             [
-                'q' => 'Format biner rilis apakah yang diwajibkan oleh Google Play Store saat mempublikasikan aplikasi Android produksi?',
-                'options' => ['APK Debug', 'AAB (Android App Bundle)', 'JAR', 'DEX'],
-                'ans' => 1,
-                'exp' => 'Google Play mewajibkan format Android App Bundle (AAB) untuk pengiriman unduhan aplikasi teroptimasi.'
-            ],
-            [
-                'q' => 'Arsitektur apakah yang memungkinkan modul Flutter ditanamkan ke dalam aplikasi native Android/iOS yang sudah ada di perusahaan?',
-                'options' => ['Add-to-App', 'Flutter Plugin', 'Hybrid Webview', 'Micro-Frontend'],
+                'q' => 'Widget manakah yang digunakan untuk mendeteksi gestur interaksi pengguna (seperti tap, double-tap, long-press, atau drag) pada widget non-interaktif?',
+                'options' => ['GestureDetector / InkWell', 'TouchListener', 'ClickBox', 'PointerEvent'],
                 'ans' => 0,
-                'exp' => 'Add-to-App adalah fitur resmi untuk menanamkan modul Flutter ke dalam host native app yang telah berjalan.'
+                'exp' => 'GestureDetector mengenali aneka gestur pengguna, dan InkWell menambahkan efek visual ripple sentuhan Material Design.'
             ],
             [
-                'q' => 'Pohon manakah pada arsitektur internal Flutter yang bertanggung jawab langsung menghitung tata letak geometris dan menggambar piksel ke layar?',
-                'options' => ['Widget Tree', 'Element Tree', 'RenderObject Tree', 'State Tree'],
-                'ans' => 2,
-                'exp' => 'RenderObject Tree bertugas menghitung ukuran dan menggambar piksel langsung ke GPU perangkat.'
+                'q' => 'Di Dart, apa fungsi dari keyword `late` pada deklarasi variabel non-nullable?',
+                'options' => [
+                    'Memberitahu compiler bahwa variabel tersebut akan diinisialisasi sebelum digunakan pada saat runtime, meskipun nilainya tidak diisi saat deklarasi awal',
+                    'Menunda eksekusi aplikasi selama 5 detik',
+                    'Menjadikan variabel tersebut bertipe dinamis',
+                    'Mengubah variabel menjadi stream data'
+                ],
+                'ans' => 0,
+                'exp' => 'Keyword late menjamin lazy initialization pada variabel non-null sebelum dibaca pertama kali.'
+            ],
+            [
+                'q' => 'Widget layout manakah yang memotong anak-anaknya agar memiliki sudut membulat atau bentuk kurva tertentu?',
+                'options' => ['ClipRRect', 'RoundedBox', 'CornerCutter', 'BorderRadiusWidget'],
+                'ans' => 0,
+                'exp' => 'ClipRRect (Clip Rounded Rectangle) memotong widget anaknya dengan sudut kurva border radius tertentu.'
+            ],
+            [
+                'q' => 'Bagaimanakah cara mengoptimalkan performa Flutter list agar widget item yang statis tidak di-rebuild berulang kali secara sia-sia?',
+                'options' => [
+                    'Menggunakan keyword `const` pada widget constructor yang parameter nilainya bersifat konstan',
+                    'Menghapus seluruh animasi aplikasi',
+                    'Mengurangi resolusi layar ponsel',
+                    'Menonaktifkan garbage collection'
+                ],
+                'ans' => 0,
+                'exp' => 'Menggunakan const constructor mencegah instansiasi dan rebuild ulang widget pohon yang identik.'
+            ],
+            [
+                'q' => 'Dalam penanganan jaringan HTTP di Flutter/Dart, package resmi atau standar yang paling populer untuk melakukan request REST API adalah:',
+                'options' => ['http / dio', 'axios', 'fetch-dart', 'requests'],
+                'ans' => 0,
+                'exp' => 'Package `http` dan `dio` adalah client HTTP paling andal untuk Flutter dengan fitur interceptor, file upload, dan timeout.'
+            ],
+            [
+                'q' => 'Perintah CLI manakah yang digunakan untuk menganalisis kode Flutter dan memeriksa apakah ada potensi bug, warning, atau pelanggaran linter?',
+                'options' => ['flutter analyze', 'flutter check', 'flutter doctor --code', 'dart verify'],
+                'ans' => 0,
+                'exp' => 'flutter analyze menjalankan Dart static analysis engine terhadap seluruh codebase proyek.'
+            ],
+            [
+                'q' => 'Widget manakah yang digunakan untuk menyematkan animasi Loading indikator berputar khas Material Design?',
+                'options' => ['CircularProgressIndicator', 'LinearProgressIndicator', 'LoadingSpinner', 'ActivityIndicatorIOS'],
+                'ans' => 0,
+                'exp' => 'CircularProgressIndicator adalah widget Material standar untuk indikator kemajuan proses melingkar.'
+            ],
+            [
+                'q' => 'Dalam arsitektur Flutter, apa yang dimaksud dengan "RenderTree"?',
+                'options' => [
+                    'Pohon objek visual (RenderObject) tingkat rendah yang menangani kalkulasi layout geometri, ukuran, dan lukisan (painting) langsung ke layar',
+                    'Pohon widget deklaratif',
+                    'Struktur data basis data lokal',
+                    'Skema JSON dari server API'
+                ],
+                'ans' => 0,
+                'exp' => 'Flutter memiliki tiga pohon: WidgetTree (konfigurasi), ElementTree (lifecycle), dan RenderTree (tata letak geometris & rendering nyata).'
+            ],
+            [
+                'q' => 'Metode manakah pada objek State yang dipanggil saat widget akan dibersihkan dan dihapus secara permanen dari memori (misal untuk menutup controller/stream)?',
+                'options' => ['dispose()', 'deactivate()', 'destroy()', 'unmount()'],
+                'ans' => 0,
+                'exp' => 'dispose() adalah callback pembersihan akhir untuk melepas controller teks, timer, atau stream listener agar tidak terjadi kebocoran memori (memory leak).'
+            ],
+            [
+                'q' => 'Untuk mengizinkan aplikasi Flutter mengakses kamera atau lokasi GPS pada platform Android, perizinan (permission) harus didaftarkan pada file:',
+                'options' => ['AndroidManifest.xml', 'build.gradle', 'Info.plist saja', 'settings.gradle'],
+                'ans' => 0,
+                'exp' => 'Izin akses perangkat pada platform Android wajib didaftarkan di dalam file AndroidManifest.xml.'
+            ],
+            [
+                'q' => 'Fitur Flutter manakah yang memungkinkan developer melihat perubahan kode UI di emulator/perangkat fisik dalam hitungan sub-detik tanpa kehilangan state aplikasi?',
+                'options' => ['Stateful Hot Reload', 'Hot Restart', 'Full Recompile', 'Live Debugging'],
+                'ans' => 0,
+                'exp' => 'Stateful Hot Reload menyuntikkan kode Dart baru ke Dart VM yang sedang berjalan secara instan tanpa me-reset state aplikasi.'
             ]
         ]
-    ],
-
-    'uiux' => [
-        'title' => 'Jalur UI/UX & Product Designer (Figma)',
-        'code' => 'UX',
-        'competencies' => 'Design Thinking Process, User Persona & Journey Mapping, Information Architecture, 8-Point Grid Layout, Figma Auto-Layout Mastery, Design Systems & Variables, Interactive Smart Animate Prototyping, Usability Testing (SUS), Figma Dev Mode Handoff',
-        'questions' => [
-            [
-                'q' => 'Tahapan pertama dalam proses Design Thinking yang berfokus pada memahami kendala dan motivasi pengguna adalah?',
-                'options' => ['Define', 'Empathize', 'Ideate', 'Prototype'],
-                'ans' => 1,
-                'exp' => 'Empathize adalah langkah awal untuk menggali empati terhadap pengguna melalui wawancara dan observasi.'
-            ],
-            [
-                'q' => 'Profil fiktif namun realistis yang mewakili target pengguna utama berdasarkan data riset kualitatif/kuantitatif disebut?',
-                'options' => ['User Persona', 'System Actor', 'Stakeholder Blueprint', 'Target Profile'],
-                'ans' => 0,
-                'exp' => 'User Persona adalah profil representatif dari pengguna sasaran produk digital.'
-            ],
-            [
-                'q' => 'Bentuk simbol apakah yang digunakan dalam diagram User Flow standar untuk melambangkan titik percabangan logika atau keputusan (Decision Point)?',
-                'options' => ['Lingkaran', 'Persegi Panjang', 'Belah Ketupat (Diamond)', 'Jajar Genjang'],
-                'ans' => 2,
-                'exp' => 'Belah ketupat (diamond) melambangkan titik keputusan dengan dua atau lebih cabang aksi (Ya/Tidak).'
-            ],
-            [
-                'q' => 'Metode riset apakah di mana pengguna mengelompokkan label topik untuk membantu menyusun struktur menu navigasi yang intuitif?',
-                'options' => ['Tree Testing', 'Card Sorting', 'A/B Testing', 'Eye Tracking'],
-                'ans' => 1,
-                'exp' => 'Card Sorting adalah metode andalan dalam Information Architecture untuk mengungkap model mental pengguna.'
-            ],
-            [
-                'q' => 'Mengapa wireframe awal (Low-Fidelity) sengaja dirancang hitam-putih dan tanpa gambar dekoratif?',
-                'options' => ['Agar menghemat kuota internet', 'Agar diskusi fokus pada fungsionalitas dan tata letak struktur tanpa terdistraksi warna', 'Karena Figma tidak mendukung warna di wireframe', 'Sebagai syarat sertifikasi'],
-                'ans' => 1,
-                'exp' => 'Tampilan hitam-putih menjaga fokus tim pada fungsionalitas, alur navigasi, dan letak tombol aksi.'
-            ],
-            [
-                'q' => 'Nilai padding manakah yang sesuai dengan standar 8-Point Grid System?',
-                'options' => ['14px', '21px', '24px', '19px'],
-                'ans' => 2,
-                'exp' => '24px adalah kelipatan 8 (8 x 3 = 24), menjadikannya nilai yang valid dalam 8-point grid system.'
-            ],
-            [
-                'q' => 'Kombinasi apakah yang paling efektif untuk menciptakan hierarki visual (Visual Hierarchy) yang tegas antara judul dan teks tubuh?',
-                'options' => ['Menggunakan font yang sama tanpa beda ukuran', 'Membedakan ukuran font lebih besar dan bobot lebih tebal pada judul serta kontras warna yang tepat', 'Memberikan huruf kapital pada seluruh teks', 'Membuat warna teks menjadi merah semua'],
-                'ans' => 1,
-                'exp' => 'Perbedaan skala ukuran, ketebalan (weight), dan kontras warna secara instan memandu alur pandang pengguna.'
-            ],
-            [
-                'q' => 'Berapakah rasio kontras minimum antara teks normal dan warna latarnya menurut standar aksesibilitas WCAG 2.1 Level AA?',
-                'options' => ['2.0 : 1', '3.0 : 1', '4.5 : 1', '7.0 : 1'],
-                'ans' => 2,
-                'exp' => 'Pedoman WCAG 2.1 Level AA mewajibkan rasio kontras minimal 4.5:1 untuk teks normal agar mudah dibaca.'
-            ],
-            [
-                'q' => 'Dalam aturan proporsi warna 60-30-10, warna apakah yang menempati proporsi 10%?',
-                'options' => ['Warna latar belakang putih', 'Warna sekunder kartu konten', 'Warna aksen khusus tombol aksi utama (Call-to-Action)', 'Warna border garis'],
-                'ans' => 2,
-                'exp' => '10% dialokasikan khusus untuk warna aksen yang kontras dan menarik perhatian ke tombol CTA penting.'
-            ],
-            [
-                'q' => 'Mengapa desainer profesional selalu menggunakan Frame (F) alih-alih Rectangle (R) untuk membuat kontainer layar di Figma?',
-                'options' => ['Karena Frame lebih ringan', 'Karena Frame mendukung Auto-Layout, layout grid, dan penataan komponen anak responsif', 'Karena Rectangle tidak bisa diberi warna', 'Karena Frame otomatis mengompilasi CSS'],
-                'ans' => 1,
-                'exp' => 'Frame memiliki kemampuan layouting dinamis seperti Auto-Layout dan constraints responsif.'
-            ],
-            [
-                'q' => 'Pintasan keyboard (shortcut) apa di Figma yang digunakan untuk mengaktifkan Auto-Layout pada elemen terpilih?',
-                'options' => ['Ctrl + G', 'Shift + A', 'Alt + L', 'Ctrl + B'],
-                'ans' => 1,
-                'exp' => 'Shift + A adalah shortcut resmi Figma untuk membungkus elemen ke dalam Auto-Layout Frame.'
-            ],
-            [
-                'q' => 'Perilaku resizing Auto-Layout apakah yang membuat ukuran bingkai otomatis menyusut pas mengikuti panjang teks di dalamnya?',
-                'options' => ['Fixed Width', 'Fill Container', 'Hug Contents', 'Scale Fit'],
-                'ans' => 2,
-                'exp' => 'Hug Contents menyesuaikan ukuran kontainer secara dinamis mengikuti dimensi konten di dalamnya.'
-            ],
-            [
-                'q' => 'Simbol apakah di panel lapisan Figma yang menandakan sebuah elemen adalah Master Component?',
-                'options' => ['Belah ketupat tunggal berongga (◇)', 'Empat belah ketupat padat ungu (❖)', 'Lingkaran bertitik', 'Segitiga emas'],
-                'ans' => 1,
-                'exp' => 'Simbol ❖ (empat belah ketupat ungu) menandai Master Component di Figma.'
-            ],
-            [
-                'q' => 'Apakah fungsi dari fitur Component Variants di Figma?',
-                'options' => ['Mengubah format file', 'Mengelompokkan variasi komponen serupa (tipe, ukuran, state) dalam satu wadah komponen tunggal', 'Menghapus lapisan yang tidak terpakai', 'Mengatur resolusi layar'],
-                'ans' => 1,
-                'exp' => 'Variants mengorganisir berbagai kondisi (state/size) dari komponen yang sama ke dalam satu Component Set.'
-            ],
-            [
-                'q' => 'Apakah manfaat utama penggunaan Design Tokens dalam kolaborasi tim desainer dan programmer?',
-                'options' => ['Mengganti kode program', 'Menyeragamkan penamaan variabel gaya (warna, radius, jarak) di Figma dan kode aplikasi', 'Menghapus kebutuhan pengujian aplikasi', 'Membuat ukuran aplikasi lebih kecil'],
-                'ans' => 1,
-                'exp' => 'Design Tokens menjembatani komunikasi sehingga penamaan variabel di desain dan kode persis sama.'
-            ],
-            [
-                'q' => 'Syarat mutlak apakah yang harus dipenuhi agar fitur Smart Animate di Figma dapat menganimasikan transisi antar frame secara otomatis?',
-                'options' => ['Kedua frame harus berwarna sama', 'Nama layer dan hierarki elemen pada frame asal dan tujuan harus sama persis', 'Elemen harus bertipe gambar SVG', 'Durasi animasi harus di atas 1 detik'],
-                'ans' => 1,
-                'exp' => 'Figma melacak objek antar frame berdasarkan kecocokan nama layer identik untuk menginterpolasi animasinya.'
-            ],
-            [
-                'q' => 'Contoh dari micro-interaction pada antarmuka aplikasi adalah?',
-                'options' => ['Membaca artikel 500 kata', 'Tombol yang menampilkan animasi spinner loading dan berubah menjadi centang hijau saat data tersimpan', 'Menutup browser', 'Mengunduh sistem operasi'],
-                'ans' => 1,
-                'exp' => 'Micro-interaction adalah detail animasi mikro yang memberikan umpan balik langsung atas aksi pengguna.'
-            ],
-            [
-                'q' => 'Apakah tujuan psikologis penggunaan animasi shimmer skeleton loading saat data sedang dimuat?',
-                'options' => ['Menghemat kuota pengguna', 'Memberikan gambaran struktur konten yang akan datang sehingga mengurangi persepsi waktu tunggu pengguna', 'Mematikan prosesor HP', 'Mencegah virus'],
-                'ans' => 1,
-                'exp' => 'Skeleton loading memberi ilusi kecepatan proses dan kepastian bentuk konten yang sedang diunduh.'
-            ],
-            [
-                'q' => 'Mengapa pola antarmuka mobile modern cenderung meletakkan menu penting di bagian bawah layar (Bottom Navigation / Bottom Sheet)?',
-                'options' => ['Aturan resmi toko aplikasi', 'Agar mudah dijangkau oleh ibu jari tangan satu pengguna (Thumb Zone)', 'Karena bagian atas layar tidak merespons sentuhan', 'Agar layar terlihat lebih penuh'],
-                'ans' => 1,
-                'exp' => 'Prinsip Thumb Zone menuntut kontrol penting berada dalam jangkauan alami ibu jari pengguna smartphone satu tangan.'
-            ],
-            [
-                'q' => 'Berapa skor minimum pada skala System Usability Scale (SUS) untuk dikategorikan sebagai produk yang memiliki tingkat kegunaan di atas rata-rata industri?',
-                'options' => ['50.0', '68.0', '85.0', '95.0'],
-                'ans' => 1,
-                'exp' => 'Skor SUS rata-rata industri adalah 68. Skor di atas 68 menunjukkan tingkat usability yang baik.'
-            ],
-            [
-                'q' => 'Menurut riset Jakob Nielsen, berapa jumlah partisipan uji coba minimum yang optimal untuk menemukan mayoritas (~85%) masalah kegunaan produk?',
-                'options' => ['5 pengguna', '50 pengguna', '100 pengguna', '1 pengguna'],
-                'ans' => 0,
-                'exp' => 'Riset Nielsen Norman Group membuktikan bahwa 5 pengguna sudah cukup untuk menemukan 85% masalah usability utama.'
-            ],
-            [
-                'q' => 'Fitur ruang kerja khusus di Figma yang membantu programmer menginspeksi nilai padding, menyalin kode CSS/Flutter, dan mengunduh aset disebut?',
-                'options' => ['Figma Dev Mode', 'Presentation Mode', 'Vector Trace', 'Style Guide Mirror'],
-                'ans' => 0,
-                'exp' => 'Figma Dev Mode menyediakan fitur inspeksi kode, token, dan ekspor aset presisi untuk developer.'
-            ],
-            [
-                'q' => 'Format file vektor apakah yang paling direkomendasikan untuk diekspor dari Figma untuk ikon antarmuka web karena skalabilitas tanpa pecah?',
-                'options' => ['JPG', 'SVG', 'GIF', 'BMP'],
-                'ans' => 1,
-                'exp' => 'SVG (Scalable Vector Graphics) berbasis vektor XML sehingga tidak pecah di resolusi layar berapapun dan berukuran sangat kecil.'
-            ],
-            [
-                'q' => 'Bagian manakah dalam studi kasus portofolio UI/UX yang paling krusial untuk membuktikan kompetensi seorang Product Designer kepada rekruter?',
-                'options' => ['Jumlah layer yang ada di file Figma', 'Penjelasan proses pemecahan masalah (Problem-Solving) berbasis riset pengguna dan dampak bisnis nyata', 'Daftar plugin favorit', 'Tangkapan layar wallpaper laptop'],
-                'ans' => 1,
-                'exp' => 'Rekruter mencari kemampuan desainer dalam menghubungkan kebutuhan pengguna dengan sasaran bisnis melalui data.'
-            ],
-            [
-                'q' => 'Heuristik Usability Nielsen ke-1 "Visibility of system status" menekankan bahwa sistem harus?',
-                'options' => ['Menyembunyikan informasi teknis', 'Selalu memberi tahu pengguna tentang apa yang sedang terjadi melalui umpan balik tepat waktu', 'Mengabaikan error pengguna', 'Membuat tampilan selalu berwarna hijau'],
-                'ans' => 1,
-                'exp' => 'Visibility of system status mewajibkan sistem memberi feedback yang jelas atas proses yang sedang berlangsung (misal: progress bar atau status tersimpan).'
-            ]
-        ]
-    ],
+    ]
 ];

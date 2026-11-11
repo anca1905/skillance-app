@@ -11,15 +11,101 @@ $defaultEmail = $_SESSION['user_email'] ?? '';
 $userId = $_SESSION['user_id'] ?? null;
 
 $action = $_POST['action'] ?? $_GET['action'] ?? 'welcome';
-$trackKey = $_POST['track'] ?? $_GET['track'] ?? 'frontend';
+$trackKey = $_POST['track'] ?? $_GET['track'] ?? 'html';
 if (!array_key_exists($trackKey, $examQuestionsData)) {
-    $trackKey = 'frontend';
+    $trackKey = 'html';
 }
 
 $trackInfo = $examQuestionsData[$trackKey];
 $resultData = null;
+$errorMsg = '';
+$paymentNotice = '';
 
-// Handle Exam Submission
+// Allowed instant access demo / student vouchers
+$validVouchers = ['MAHASISWA', 'SKILLANCE2026', 'DEMO19K', 'SOLOLEARN', 'SKPI2026', 'GRATISUJIAN'];
+
+// Separate tracks into Modular Courses (SoloLearn Style) and Career Tracks
+$modularCourseTracks = [];
+$careerTracks = [];
+foreach ($examQuestionsData as $k => $info) {
+    if (($info['type'] ?? 'course') === 'course') {
+        $modularCourseTracks[$k] = $info;
+    } else {
+        $careerTracks[$k] = $info;
+    }
+}
+
+// =========================================================================
+// ACTION: START EXAM (VERIFY PAYMENT / VOUCHER GATE)
+// =========================================================================
+if ($action === 'start_exam') {
+    $recipientName = trim($_POST['recipient_name'] ?? $_GET['recipient_name'] ?? $defaultName);
+    $recipientEmail = trim($_POST['recipient_email'] ?? $_GET['recipient_email'] ?? $defaultEmail);
+    $invoiceNo = strtoupper(trim($_POST['invoice_no'] ?? $_GET['invoice_no'] ?? ''));
+    $voucherCode = strtoupper(trim($_POST['voucher_code'] ?? $_GET['voucher_code'] ?? ''));
+
+    if (empty($recipientName)) {
+        $recipientName = $defaultName ?: 'Peserta Skillance Academy';
+    }
+
+    $isUnlocked = false;
+
+    // 1. Check Voucher Code
+    if (!empty($voucherCode) && in_array($voucherCode, $validVouchers)) {
+        $isUnlocked = true;
+        $_SESSION['unlocked_tracks'][$trackKey] = true;
+    }
+
+    // 2. Check Session Cache
+    if (!empty($_SESSION['unlocked_tracks'][$trackKey])) {
+        $isUnlocked = true;
+    }
+
+    // 3. Check Invoice Status in Database
+    if (!$isUnlocked && !empty($invoiceNo) && $conn) {
+        $invSafe = $conn->real_escape_string($invoiceNo);
+        $chkOrder = $conn->query("SELECT * FROM academy_orders WHERE invoice_no = '$invSafe' LIMIT 1");
+        if ($chkOrder && $orderRow = $chkOrder->fetch_assoc()) {
+            if ($orderRow['status'] === 'verified') {
+                $isUnlocked = true;
+                $_SESSION['unlocked_tracks'][$trackKey] = true;
+            } else {
+                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> berstatus <em>PENDING</em> (Menunggu konfirmasi admin 1x24 jam). Jika Anda telah transfer, silakan konfirmasi ke WhatsApp Admin atau gunakan Kode Voucher Mahasiswa.";
+                $action = 'welcome';
+            }
+        } else {
+            // Check if invoice matches pattern INV-2026-CERT-
+            if (strpos($invoiceNo, 'INV-2026-CERT-') === 0) {
+                // Auto register pending invoice if not yet in DB
+                $tPrice = intval($trackInfo['price'] ?? 19000);
+                $pTitle = $trackInfo['title'];
+                $stmt = $conn->prepare("INSERT IGNORE INTO academy_orders (invoice_no, product_id, product_title, nominal, buyer_name, status) VALUES (?, ?, ?, ?, ?, 'pending')");
+                if ($stmt) {
+                    $pid = 'cert_' . $trackKey;
+                    $stmt->bind_param("sssis", $invoiceNo, $pid, $pTitle, $tPrice, $recipientName);
+                    $stmt->execute();
+                    $stmt->close();
+                }
+                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> baru saja tercatat dan sedang dalam antrean verifikasi Admin (1x24 Jam). Silakan kirimkan bukti bayar ke WA Admin atau masukkan Voucher Mahasiswa untuk akses instan.";
+                $action = 'welcome';
+            } else {
+                $errorMsg = "Nomor Invoice atau Kode Voucher <strong>" . htmlspecialchars($invoiceNo) . "</strong> tidak valid.";
+                $action = 'welcome';
+            }
+        }
+    }
+
+    // If still not unlocked and user directly navigated, show payment gate
+    if (!$isUnlocked && empty($errorMsg)) {
+        // If track has a price and no unlock provided, route back to welcome with selection
+        $action = 'welcome';
+        $paymentNotice = 'Silakan lakukan pembayaran administrasi ujian via QRIS atau gunakan Kode Voucher Mahasiswa di bawah ini.';
+    }
+}
+
+// =========================================================================
+// ACTION: SUBMIT EXAM & GENERATE OFFICIAL CERTIFICATE
+// =========================================================================
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam') {
     $recipientName = trim($_POST['recipient_name'] ?? '');
     $recipientEmail = trim($_POST['recipient_email'] ?? '');
@@ -51,15 +137,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
     }
 
     $finalScore = ($totalQuestions > 0) ? round(($correctCount / $totalQuestions) * 100) : 0;
-    $passed = ($finalScore >= 80);
+    $passingThreshold = $trackInfo['passing_score'] ?? 70;
+    $passed = ($finalScore >= $passingThreshold);
     $certificateNo = '';
 
     // If passed, issue official digital certificate into database
     if ($passed) {
-        // Generate unique certificate serial
-        $randomSuffix = strtoupper(bin2hex(random_bytes(2))); // 4 hex chars e.g. 7A9B
+        // Generate unique certificate serial e.g. SKL-2026-HTML-8821
+        $trackCode = $trackInfo['code'] ?? 'SKL';
         $randomNum = rand(1000, 9999);
-        $certificateNo = 'SKL-2026-' . $trackInfo['code'] . '-' . $randomNum;
+        $certificateNo = 'SKL-2026-' . $trackCode . '-' . $randomNum;
 
         if ($conn) {
             // Check uniqueness
@@ -68,7 +155,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
                 $chk->bind_param('s', $certificateNo);
                 $chk->execute();
                 if ($chk->get_result()->num_rows > 0) {
-                    $certificateNo = 'SKL-2026-' . $trackInfo['code'] . '-' . rand(10000, 99999);
+                    $certificateNo = 'SKL-2026-' . $trackCode . '-' . rand(10000, 99999);
                 }
                 $chk->close();
             }
@@ -106,20 +193,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
         'certificate_no' => $certificateNo,
         'recipient_name' => $recipientName,
         'track_title' => $trackInfo['title'],
+        'passing_score' => $passingThreshold,
         'breakdown' => $breakdown
     ];
 }
 
 // Master SEO Configuration
-$seoTitle = 'Ujian Sertifikasi Kompetensi & Portofolio SKPI - Skillance Academy';
-$seoDesc = 'Uji kompetensi pemrograman Anda dengan ujian interaktif berstandar industri. Dapatkan sertifikat kelulusan resmi ber-QR Code untuk portofolio SKPI mahasiswa dan pencari kerja.';
+$seoTitle = 'Ujian Sertifikasi Kompetensi Resmi SoloLearn-Style - Skillance Academy';
+$seoDesc = 'Ujian evaluasi koding interaktif untuk menerbitkan Sertifikat Kelulusan Resmi ber-QR Code untuk portofolio SKPI mahasiswa dan pencari kerja profesional.';
 $seoKeywords = 'ujian koding online, sertifikat skpi koding, tes kompetensi web developer, sertifikasi flutter, skillance academy exam';
 $seoOgImage = 'https://academy.skillance.cloud/assets/img/og-exam.png';
 $seoCanonical = 'https://academy.skillance.cloud/exam.php';
 $seoType = 'website';
 $seoBreadcrumbs = [
     ['name' => 'Beranda', 'url' => 'https://academy.skillance.cloud/index.php'],
-    ['name' => 'Ujian SKPI', 'url' => 'https://academy.skillance.cloud/exam.php']
+    ['name' => 'Ujian Sertifikasi SKPI', 'url' => 'https://academy.skillance.cloud/exam.php']
 ];
 ?>
 <!DOCTYPE html>
@@ -142,6 +230,7 @@ $seoBreadcrumbs = [
             --navy: #0d2e5c;
             --navy-dark: #071a35;
             --gold: #fca311;
+            --gold-hover: #e5930e;
             --w3-green: #04AA6D;
             --w3-green-hover: #038d5a;
         }
@@ -168,9 +257,7 @@ $seoBreadcrumbs = [
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Navbar */
-        
-        /* Modern Clean Academy Navbar */
+        /* Academy Navbar */
         .academy-navbar {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e8f0;
@@ -192,159 +279,170 @@ $seoBreadcrumbs = [
             gap: 6px;
         }
 
-        .nav-menu-link:hover {
-            color: #0d2e5c;
-            background-color: #f1f5f9;
-        }
-
-        .nav-menu-link.active {
+        .nav-menu-link:hover, .nav-menu-link.active {
             color: #0d2e5c;
             font-weight: 700;
             background-color: #f1f5f9;
-        }
-
-        @media (max-width: 1199.98px) {
-            .nav-menu-link {
-                display: flex;
-                padding: 10px 14px;
-                border-radius: 8px;
-            }
-        }
-
-        .academy-navbar {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 1020;
-        }
-
-        /* Subnav */
-        .course-subnav {
-            background-color: var(--navy);
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .course-subnav::-webkit-scrollbar {
-            display: none;
-        }
-        .course-nav-item {
-            display: inline-block;
-            padding: 10px 18px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            transition: all 0.2s;
-        }
-        .course-nav-item:hover, .course-nav-item.active {
-            color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Exam Hero */
         .exam-hero {
             background: linear-gradient(135deg, #071a35 0%, #0d2e5c 60%, #00758f 100%);
             color: white;
-            padding: 55px 0 45px;
+            padding: 45px 0 35px;
             text-align: center;
+            border-bottom: 3px solid var(--gold);
         }
 
-        /* Card Styles */
         .exam-card {
             background: #ffffff;
+            border-radius: 16px;
             border: 1px solid #e2e8f0;
-            border-radius: 18px;
-            padding: 30px;
+            padding: 28px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
 
-        /* Option Radio Card */
+        /* Course Radio Card */
+        .track-selector-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .track-selector-card:hover {
+            border-color: #fca311;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(13, 46, 92, 0.08);
+        }
+
+        .track-selector-card.selected {
+            border-color: #0d2e5c;
+            background: #f0f7ff;
+            box-shadow: 0 0 0 3px rgba(13, 46, 92, 0.15);
+        }
+
+        .track-radio-input {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            accent-color: #0d2e5c;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Nav Pills Modern */
+        .nav-pills-custom .nav-link {
+            color: #475569;
+            font-weight: 700;
+            border-radius: 50px;
+            padding: 10px 22px;
+            font-size: 0.92rem;
+            transition: all 0.2s ease;
+        }
+        .nav-pills-custom .nav-link.active {
+            background-color: #0d2e5c;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(13, 46, 92, 0.25);
+        }
+
+        /* QRIS Gateway Card */
+        .qris-box {
+            background: #ffffff;
+            border: 2px dashed #0d2e5c;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        /* Question Options */
         .option-label {
             display: flex;
             align-items: flex-start;
             gap: 12px;
             padding: 14px 18px;
-            background: #ffffff;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 12px;
-            font-size: 0.92rem;
-            line-height: 1.5;
+            transition: all 0.15s ease;
+            background: #ffffff;
         }
         .option-label:hover {
+            background: #f8fafc;
             border-color: #cbd5e1;
-            background-color: #f8fafc;
         }
         .option-label.selected {
-            border-color: #0d2e5c;
-            background-color: #f0f7ff;
-            box-shadow: 0 2px 8px rgba(13, 46, 92, 0.1);
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e3a8a;
+            font-weight: 600;
         }
         .option-radio {
-            margin-top: 3px;
-            accent-color: #0d2e5c;
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
+            accent-color: #2563eb;
+            margin-top: 4px;
+            width: 17px;
+            height: 17px;
         }
 
         /* Number Grid Navigation */
         .q-number-btn {
             width: 38px;
             height: 38px;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-            background: #ffffff;
-            font-weight: 700;
+            border-radius: 10px;
             font-size: 0.85rem;
+            font-weight: 700;
+            border: 2px solid #e2e8f0;
+            background: #ffffff;
             color: #475569;
+            transition: all 0.15s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.15s;
         }
         .q-number-btn:hover {
-            border-color: #0d2e5c;
-            color: #0d2e5c;
+            border-color: #94a3b8;
         }
         .q-number-btn.answered {
-            background: #e0f2fe;
-            border-color: #0284c7;
-            color: #0369a1;
+            background-color: #04AA6D;
+            color: #ffffff;
+            border-color: #04AA6D;
         }
         .q-number-btn.active {
-            background: #0d2e5c;
-            border-color: #0d2e5c;
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(13, 46, 92, 0.3);
+            border-color: #fca311;
+            box-shadow: 0 0 0 2px #fca311;
         }
 
         /* Sticky Timer Bar */
         .exam-timer-bar {
-            background: #071a35;
-            color: #ffffff;
-            padding: 10px 20px;
+            background: var(--navy-dark);
+            color: white;
+            padding: 12px 20px;
             border-radius: 12px;
+            margin-bottom: 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            align-items: center;
+            position: sticky;
+            top: 70px;
+            z-index: 1010;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
+
         .timer-display {
-            font-family: 'Cinzel', monospace, serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 1.35rem;
+            font-weight: 800;
             color: #fca311;
+            letter-spacing: 1px;
+            font-family: monospace;
         }
+
         .timer-warning {
             color: #ef4444 !important;
             animation: pulseWarning 1s infinite;
@@ -378,111 +476,326 @@ $seoBreadcrumbs = [
     <!-- ========================================== -->
     <!-- STATE 1: WELCOME & TRACK SELECTION -->
     <!-- ========================================== -->
-    <?php if ($action === 'welcome' && !$resultData): ?>
+    <?php if ($action === 'welcome' && !$resultData): 
+        // Unique random invoice for payment checkout
+        $generatedInv = 'INV-2026-CERT-' . rand(1000, 9999);
+    ?>
         <header class="exam-hero">
             <div class="container">
-                <span class="badge bg-white bg-opacity-10 text-gold px-3 py-2 rounded-pill fw-bold mb-3 border border-warning border-opacity-25">
-                    <i class="fa-solid fa-file-signature me-1"></i> Ujian Kompetensi Mandiri Terstandar
+                <span class="badge bg-white bg-opacity-10 text-gold px-3 py-2 rounded-pill fw-bold mb-3 border border-warning border-opacity-25" style="color: #fca311;">
+                    <i class="fa-solid fa-graduation-cap me-1"></i> Standar SoloLearn & Portofolio SKPI Kampus
                 </span>
-                <h1 class="display-6 fw-bold font-heading mb-3 text-white">Ujian Kelulusan & Sertifikasi Digital</h1>
-                <p class="lead mx-auto mb-4" style="max-width: 720px; color: #cbd5e1; font-size: 1rem; line-height: 1.8;">
-                    Uji pemahaman Anda melalui <strong>25 butir soal komprehensif</strong>. Raih nilai minimal <strong>80%</strong> untuk secara otomatis menerbitkan <strong>Sertifikat Digital Ber-QR Code Resmi</strong> yang dapat dilampirkan pada berkas SKPI kampus maupun portofolio kerja profesional.
+                <h1 class="display-6 fw-bold font-heading mb-3 text-white">Ujian Kelulusan & Sertifikasi Digital Resmi</h1>
+                <p class="lead mx-auto mb-3" style="max-width: 760px; color: #cbd5e1; font-size: 1rem; line-height: 1.8;">
+                    Materi pembelajaran koding di Skillance Academy <strong>100% Gratis</strong>. Setelah memahami materi, Anda dapat mengikuti <strong>Ujian Evaluasi Berstandar Industri</strong> dan menerbitkan <strong>Sertifikat Digital Ber-QR Code Resmi</strong> yang terverifikasi publik seumur hidup di <code>verify.php</code>.
                 </p>
+                <div class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 px-3 py-2 rounded-pill small text-warning border border-warning border-opacity-25">
+                    <i class="fa-solid fa-circle-check"></i> <span>Biaya Terjangkau Khusus Mahasiswa: <strong>Rp 19.000</strong> per materi (Diskon 60%)</span>
+                </div>
             </div>
         </header>
 
         <main class="container py-5">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <!-- TRYOUT KILAT BANNER (FEATURE 3) -->
-                    <div class="card border-0 rounded-4 shadow-sm mb-4 p-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #0d2e5c 0%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
+                <div class="col-lg-10">
+
+                    <?php if (!empty($errorMsg)): ?>
+                        <div class="alert alert-danger rounded-4 p-3 mb-4 shadow-sm d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-circle-exclamation fs-3 text-danger"></i>
+                            <div><?= $errorMsg ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($paymentNotice)): ?>
+                        <div class="alert alert-warning rounded-4 p-3 mb-4 shadow-sm d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-bell fs-3 text-warning"></i>
+                            <div><?= htmlspecialchars($paymentNotice) ?></div>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- TRYOUT KILAT BANNER (FEATURE PEMANASAN) -->
+                    <div class="card border-0 rounded-4 shadow-sm mb-5 p-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #0d2e5c 0%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                             <div>
                                 <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold mb-2 small shadow-sm">
                                     <i class="fa-solid fa-bolt me-1 text-danger"></i> PEMANASAN UJIAN CEPAT
                                 </span>
                                 <h4 class="fw-bold mb-1 text-white">Simulasi Tryout Kilat 5 Soal (2 Menit)</h4>
-                                <p class="text-white-50 small mb-0" style="max-width: 480px; line-height: 1.6;">
-                                    Ingin uji kemampuan awal sebelum ujian 25 butir? Kerjakan 5 soal interaktif kilat dengan pembahasan langsung dan peroleh <strong>+30 XP</strong>!
+                                <p class="text-white-50 small mb-0" style="max-width: 520px; line-height: 1.6;">
+                                    Ingin uji kemampuan awal secara gratis sebelum ujian sertifikasi? Kerjakan 5 soal interaktif kilat dengan pembahasan kunci jawaban instan dan peroleh <strong>+30 XP</strong>!
                                 </p>
                             </div>
-                            <button type="button" class="btn btn-warning text-navy fw-bold px-4 py-3 rounded-pill shadow-sm align-self-start align-self-md-center flex-shrink-0" onclick="openQuickTryoutModal()" style="font-size: 0.95rem;">
+                            <button type="button" class="btn btn-warning text-navy fw-bold px-4 py-3 rounded-pill shadow-sm align-self-start align-self-md-center flex-shrink-0" onclick="openQuickTryoutModal()" style="font-size: 0.95rem; background-color: #fca311 !important; color: #071a35 !important;">
                                 <i class="fa-solid fa-play me-1"></i> Mulai Tryout Kilat &raquo;
                             </button>
                         </div>
                     </div>
 
-                    <div class="exam-card">
-                        <form action="exam.php" method="GET">
-                            <input type="hidden" name="action" value="start_exam">
-                            
-                            <h4 class="fw-bold text-navy font-heading mb-4">
-                                <i class="fa-solid fa-clipboard-list text-warning me-2"></i> Konfigurasi Ujian Kompetensi
-                            </h4>
-
-                            <!-- IDENTITAS PESERTA -->
-                            <div class="mb-4 p-3 bg-light rounded-3 border">
-                                <h6 class="fw-bold text-navy mb-3"><i class="fa-solid fa-id-card me-1 text-primary"></i> Data Penerima Sertifikat:</h6>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold text-navy">Nama Lengkap Anda <span class="text-danger">*</span></label>
-                                        <input type="text" name="recipient_name" class="form-control" value="<?= htmlspecialchars($defaultName) ?>" placeholder="Contoh: Muhammad Rian Pratama" required>
-                                        <small class="text-muted" style="font-size: 0.72rem;">*Nama ini yang akan dicetak pada sertifikat resmi kelulusan.</small>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold text-navy">Alamat Email Aktif <span class="text-danger">*</span></label>
-                                        <input type="email" name="recipient_email" class="form-control" value="<?= htmlspecialchars($defaultEmail) ?>" placeholder="email@contoh.com" required>
-                                        <small class="text-muted" style="font-size: 0.72rem;">*Untuk arsip database kredensial kelulusan.</small>
-                                    </div>
-                                </div>
+                    <!-- STEP 1 & 2: KATALOG SERTIFIKASI & PEMBAYARAN -->
+                    <div class="exam-card mb-5">
+                        
+                        <!-- TAB NAVIGASI KATALOG -->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4 pb-3 border-bottom">
+                            <div>
+                                <h4 class="fw-bold text-navy font-heading mb-1">
+                                    <i class="fa-solid fa-award text-warning me-2"></i> Pilih Materi Ujian & Sertifikat
+                                </h4>
+                                <small class="text-muted">Pilih sertifikat spesifik per-materi (Gaya SoloLearn) atau Jalur Karir Komprehensif:</small>
                             </div>
 
-                            <!-- PILIHAN JALUR UJIAN -->
-                            <div class="mb-4">
-                                <label class="form-label fw-bold text-navy mb-2"><i class="fa-solid fa-route me-1 text-warning"></i> Pilih Jalur Spesialisasi yang Ingin Diuji:</label>
+                            <ul class="nav nav-pills nav-pills-custom" id="trackTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="tab-course-btn" data-bs-toggle="pill" data-bs-target="#tab-course-pane" type="button" role="tab">
+                                        <i class="fa-solid fa-graduation-cap me-1 text-warning"></i> Per Materi (SoloLearn - Rp 19rb)
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="tab-career-btn" data-bs-toggle="pill" data-bs-target="#tab-career-pane" type="button" role="tab">
+                                        <i class="fa-solid fa-briefcase me-1"></i> Jalur Karir (Rp 29rb - 35rb)
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TAB CONTENT -->
+                        <div class="tab-content mb-4" id="trackTabsContent">
+                            
+                            <!-- TAB 1: MODULAR COURSE TRACKS (SOLOLEARN STYLE) -->
+                            <div class="tab-pane fade show active" id="tab-course-pane" role="tabpanel">
                                 <div class="row g-3">
-                                    <?php foreach ($examQuestionsData as $k => $info): ?>
-                                        <div class="col-md-6">
-                                            <label class="option-label h-100 <?= ($k === $trackKey) ? 'selected' : '' ?>">
-                                                <input type="radio" name="track" value="<?= $k ?>" class="option-radio" <?= ($k === $trackKey) ? 'checked' : '' ?> onchange="document.querySelectorAll('.option-label').forEach(el=>el.classList.remove('selected')); this.closest('label').classList.add('selected');">
+                                    <?php foreach ($modularCourseTracks as $k => $info): ?>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
+                                                <input type="radio" name="track_choice" value="<?= $k ?>" class="track-radio-input" <?= ($k === $trackKey) ? 'checked' : '' ?>>
                                                 <div>
-                                                    <strong class="d-block text-navy font-heading" style="font-size: 0.95rem;"><?= htmlspecialchars($info['title']) ?></strong>
-                                                    <small class="text-muted d-block mt-1" style="font-size: 0.76rem;"><?= htmlspecialchars($info['competencies']) ?></small>
+                                                    <div class="d-flex justify-content-between align-items-center mb-2 pe-4">
+                                                        <span class="badge bg-navy text-white px-2 py-1 rounded small" style="background-color: #0d2e5c; font-size: 0.72rem;"><?= $info['code'] ?></span>
+                                                        <span class="badge bg-danger rounded-pill small">HEMAT 60%</span>
+                                                    </div>
+                                                    <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem; line-height: 1.4;"><?= htmlspecialchars($info['title']) ?></h6>
+                                                    <p class="text-muted small mb-2" style="font-size: 0.74rem; line-height: 1.5;"><?= htmlspecialchars($info['competencies']) ?></p>
                                                 </div>
-                                            </label>
+                                                <div class="pt-2 border-top mt-2 d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <small class="text-muted text-decoration-line-through" style="font-size: 0.72rem;">Rp <?= number_format($info['original_price'], 0, ',', '.') ?></small>
+                                                        <div class="fw-bold text-warning" style="font-size: 0.95rem; color: #d97706 !important;">Rp <?= number_format($info['price'], 0, ',', '.') ?></div>
+                                                    </div>
+                                                    <span class="small text-secondary" style="font-size: 0.74rem;"><i class="fa-regular fa-clock me-1"></i> <?= $info['duration_minutes'] ?>m / 10 Soal</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
 
-                            <!-- INFORMASI KETENTUAN UJIAN -->
-                            <div class="p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50 mb-4 small">
-                                <strong class="text-navy"><i class="fa-solid fa-circle-exclamation me-1 text-warning"></i> Ketentuan Pelaksanaan Ujian:</strong>
-                                <ul class="mb-0 mt-2 ps-3 text-secondary" style="line-height: 1.8;">
-                                    <li>Durasi pengerjaan: <strong>30 Menit</strong> (timer otomatis dimulai saat klik tombol Mulai).</li>
-                                    <li>Jumlah soal: <strong>25 Soal Pilihan Ganda</strong> berbasis pemahaman & studi kasus industri.</li>
-                                    <li>Syarat Kelulusan: Skor minimal <strong>80% (20 soal benar)</strong>.</li>
-                                    <li>Jika lulus, nomor seri sertifikat langsung diterbitkan dan terdaftar resmi di <code>verify.php</code>.</li>
-                                    <li>Jika belum lulus, Anda dapat mempelajari kembali materi dan mengulang ujian kapan saja tanpa biaya.</li>
-                                </ul>
+                            <!-- TAB 2: CAREER TRACKS -->
+                            <div class="tab-pane fade" id="tab-career-pane" role="tabpanel">
+                                <div class="row g-3">
+                                    <?php foreach ($careerTracks as $k => $info): ?>
+                                        <div class="col-md-6">
+                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
+                                                <input type="radio" name="track_choice" value="<?= $k ?>" class="track-radio-input" <?= ($k === $trackKey) ? 'checked' : '' ?>>
+                                                <div>
+                                                    <div class="d-flex justify-content-between align-items-center mb-2 pe-4">
+                                                        <span class="badge bg-warning text-dark fw-bold px-2 py-1 rounded small"><?= $info['code'] ?> CAREER</span>
+                                                        <span class="badge bg-success rounded-pill small">25 Soal Komprehensif</span>
+                                                    </div>
+                                                    <h5 class="fw-bold text-navy mb-2"><?= htmlspecialchars($info['title']) ?></h5>
+                                                    <p class="text-muted small mb-3"><?= htmlspecialchars($info['competencies']) ?></p>
+                                                </div>
+                                                <div class="pt-2 border-top mt-2 d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <small class="text-muted text-decoration-line-through">Rp <?= number_format($info['original_price'], 0, ',', '.') ?></small>
+                                                        <div class="fw-bold text-danger fs-5">Rp <?= number_format($info['price'], 0, ',', '.') ?></div>
+                                                    </div>
+                                                    <span class="small text-secondary"><i class="fa-regular fa-clock me-1"></i> <?= $info['duration_minutes'] ?> Menit (Passing 80%)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
 
-                            <button type="submit" class="btn btn-warning btn-lg fw-bold w-100 py-3 rounded-pill text-navy shadow">
-                                <i class="fa-solid fa-play me-2"></i> Mulai Ujian Sekarang (30 Menit) &raquo;
-                            </button>
-                        </form>
+                        </div>
+
+                        <!-- GATEWAY PEMBAYARAN & AKTIVASI UJIAN (BAYAR DULU) -->
+                        <div class="p-4 rounded-4 bg-light border border-2 mt-4" style="border-color: #e2e8f0 !important;" id="checkoutGateBox">
+                            
+                            <div class="row g-4 align-items-start">
+                                
+                                <!-- LEFT COL: FORM PESERTA -->
+                                <div class="col-lg-7">
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <div class="p-2 bg-navy text-white rounded-3 d-flex align-items-center justify-content-center" style="background-color: #0d2e5c; width: 36px; height: 36px;">
+                                            <i class="fa-solid fa-id-card text-warning"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold text-navy font-heading mb-0">Formulir Peserta & Penerima Sertifikat</h5>
+                                            <small class="text-muted">Nama ini akan dicetak permanen di sertifikat fisik & digital</small>
+                                        </div>
+                                    </div>
+
+                                    <form id="startExamForm" action="exam.php" method="POST">
+                                        <input type="hidden" name="action" value="start_exam">
+                                        <input type="hidden" name="track" id="formTrackKey" value="<?= htmlspecialchars($trackKey) ?>">
+                                        <input type="hidden" name="invoice_no" id="formInvoiceNo" value="<?= $generatedInv ?>">
+
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold text-navy">Nama Lengkap Mahasiswa / Peserta <span class="text-danger">*</span></label>
+                                            <input type="text" name="recipient_name" id="inputRecipientName" class="form-control form-control-lg rounded-3" value="<?= htmlspecialchars($defaultName) ?>" placeholder="Contoh: Muhammad Rian Pratama, S.Kom" required>
+                                            <small class="text-muted" style="font-size: 0.74rem;">*Pastikan ejaan nama sesuai KTP / KTM untuk keabsahan SKPI kampus.</small>
+                                        </div>
+
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-navy">Alamat Email Aktif <span class="text-danger">*</span></label>
+                                                <input type="email" name="recipient_email" id="inputRecipientEmail" class="form-control rounded-3" value="<?= htmlspecialchars($defaultEmail) ?>" placeholder="email@mahasiswa.ac.id" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-navy">Nomor WhatsApp Aktif <span class="text-danger">*</span></label>
+                                                <input type="tel" name="recipient_wa" id="inputRecipientWa" class="form-control rounded-3" placeholder="Contoh: 082291700778" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- SELECTED TRACK BADGE -->
+                                        <div class="p-3 rounded-3 bg-white border mb-3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <small class="text-muted d-block" style="font-size: 0.74rem;">Sertifikat yang Dipilih:</small>
+                                                    <strong class="text-navy" id="selectedTrackTitleDisplay"><?= htmlspecialchars($trackInfo['title']) ?></strong>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill" id="selectedTrackPriceDisplay">Rp <?= number_format($trackInfo['price'], 0, ',', '.') ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- VOUCHER / BYPASS INPUT -->
+                                        <div class="mb-4 p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50">
+                                            <label class="form-label small fw-bold text-navy d-flex justify-content-between align-items-center mb-1">
+                                                <span><i class="fa-solid fa-ticket text-warning me-1"></i> Punya Kode Voucher / Akses Instan?</span>
+                                                <span class="badge bg-navy text-white small" style="background: #0d2e5c; font-size: 0.68rem;">Khusus Mahasiswa: MAHASISWA</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" name="voucher_code" id="inputVoucherCode" class="form-control text-uppercase font-monospace" placeholder="Masukkan kode voucher atau no. invoice" value="">
+                                                <button type="submit" class="btn btn-warning text-navy fw-bold px-4" style="background-color: #fca311 !important; color: #071a35 !important;">
+                                                    <i class="fa-solid fa-unlock me-1"></i> Buka Ujian &raquo;
+                                                </button>
+                                            </div>
+                                            <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">*Mahasiswa/penguji dapat mengetik kode <code>MAHASISWA</code> atau <code>DEMO19K</code> untuk aktivasi instan tanpa menunggu konfirmasi manual.</small>
+                                        </div>
+
+                                        <!-- START EXAM BUTTON -->
+                                        <button type="submit" class="btn btn-navy btn-lg fw-bold w-100 py-3 rounded-pill text-white shadow-sm" style="background-color: #0d2e5c !important;">
+                                            <i class="fa-solid fa-play me-2 text-warning"></i> Masuk Ruang Ujian Kompetensi &raquo;
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- RIGHT COL: QRIS BOX -->
+                                <div class="col-lg-5">
+                                    <div class="qris-box shadow-sm">
+                                        <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2 small shadow-xs">
+                                            <i class="fa-solid fa-qrcode me-1"></i> QRIS SKILLANCE STORE
+                                        </span>
+                                        <h6 class="fw-bold text-navy mb-1" id="qrisTitleLabel">Pembayaran Biaya Administrasi</h6>
+                                        <div class="text-muted small mb-2 font-monospace" style="font-size: 0.76rem;">No. Invoice: <strong class="text-dark" id="displayInvoiceNo"><?= $generatedInv ?></strong></div>
+
+                                        <div class="my-2 p-2 bg-light rounded-3 d-inline-block border">
+                                            <img src="assets/img/qris_official.jpg" alt="QRIS Skillance Store" class="img-fluid rounded" style="max-width: 210px; height: auto;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=00020101021126580014ID.LINKAJA.WWW01189360091100266343635204581253033605802ID5915Skillance Store6013Kota Kendari61059311162070703A0163047A9B';">
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded-3 my-2 border">
+                                            <span class="small text-muted">Total Pembayaran:</span>
+                                            <strong class="text-danger fs-5" id="displayPriceTag">Rp <?= number_format($trackInfo['price'], 0, ',', '.') ?></strong>
+                                        </div>
+
+                                        <div class="small text-muted mb-3" style="font-size: 0.72rem; line-height: 1.5;">
+                                            Dapat discan dengan <strong>GoPay, OVO, DANA, ShopeePay, BCA, Mandiri, BRImo</strong>, atau m-Banking manapun.
+                                        </div>
+
+                                        <!-- WHATSAPP CONFIRM BUTTON -->
+                                        <a href="https://wa.me/6282291700778?text=<?= urlencode("Halo Admin Skillance Academy (0822-9170-0778),
+
+Saya ingin konfirmasi pembayaran Ujian Sertifikasi Resmi:
+- No. Invoice: " . $generatedInv . "
+- Materi: " . $trackInfo['title'] . "
+- Nominal: Rp " . number_format($trackInfo['price'], 0, ',', '.') . "
+- Nama: [Nama Anda]
+
+Mohon diverifikasi agar akses ujian terbuka. Terima kasih!") ?>" target="_blank" id="btnWaConfirm" class="btn btn-success fw-bold w-100 rounded-pill py-2 shadow-xs mb-2">
+                                            <i class="fa-brands fa-whatsapp fs-5 me-1"></i> Konfirmasi ke WA Admin (0822-9170-0778)
+                                        </a>
+
+                                        <small class="text-muted d-block" style="font-size: 0.7rem;">
+                                            <i class="fa-solid fa-shield-halved text-success me-1"></i> Verifikasi Admin maksimal 1x24 Jam kerja.
+                                        </small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
+
                 </div>
             </div>
         </main>
+
+        <script>
+            function selectTrack(trackKey, trackTitle, price, code, duration, qCount, el) {
+                // Update selected styles
+                document.querySelectorAll('.track-selector-card').forEach(c => c.classList.remove('selected'));
+                el.classList.add('selected');
+                el.querySelector('input[type="radio"]').checked = true;
+
+                // Update form inputs
+                document.getElementById('formTrackKey').value = trackKey;
+                document.getElementById('selectedTrackTitleDisplay').innerText = trackTitle;
+                
+                const formattedPrice = 'Rp ' + price.toLocaleString('id-ID');
+                document.getElementById('selectedTrackPriceDisplay').innerText = formattedPrice;
+                document.getElementById('displayPriceTag').innerText = formattedPrice;
+
+                // Update WA link
+                const inv = document.getElementById('formInvoiceNo').value;
+                const name = document.getElementById('inputRecipientName').value || 'Peserta Mahasiswa';
+                const waMsg = `Halo Admin Skillance Academy (0822-9170-0778),
+
+Saya ingin konfirmasi pembayaran Ujian Sertifikasi Resmi:
+- No. Invoice: ${inv}
+- Materi: ${trackTitle}
+- Nominal: ${formattedPrice}
+- Nama: ${name}
+
+Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
+                document.getElementById('btnWaConfirm').href = 'https://wa.me/6282291700778?text=' + encodeURIComponent(waMsg);
+
+                // Auto register order in background
+                fetch('api/order_status.php?action=register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        invoice_no: inv,
+                        product_id: 'cert_' + trackKey,
+                        product_title: 'Sertifikat Resmi ' + trackTitle,
+                        nominal: price,
+                        buyer_name: name
+                    })
+                }).catch(() => {});
+            }
+        </script>
 
     <!-- ========================================== -->
     <!-- STATE 2: EXAM SESSION (ACTIVE TEST) -->
     <!-- ========================================== -->
     <?php elseif ($action === 'start_exam' && !$resultData): 
-        $recipientName = trim($_GET['recipient_name'] ?? $defaultName ?: 'Peserta Ujian');
-        $recipientEmail = trim($_GET['recipient_email'] ?? $defaultEmail ?: '');
+        $recipientName = trim($_POST['recipient_name'] ?? $_GET['recipient_name'] ?? $defaultName ?: 'Peserta Ujian');
+        $recipientEmail = trim($_POST['recipient_email'] ?? $_GET['recipient_email'] ?? $defaultEmail ?: '');
         $questions = $trackInfo['questions'];
+        $totalQuestions = count($questions);
+        $durationMinutes = $trackInfo['duration_minutes'] ?? 15;
     ?>
         <main class="container py-4">
             
@@ -495,106 +808,113 @@ $seoBreadcrumbs = [
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex align-items-center gap-2">
                         <i class="fa-regular fa-clock text-warning fs-5"></i>
-                        <span id="examTimerDisplay" class="timer-display">30:00</span>
+                        <span id="examTimerDisplay" class="timer-display"><?= sprintf('%02d:00', $durationMinutes) ?></span>
                     </div>
                 </div>
             </div>
 
-            <form id="examForm" action="exam.php" method="POST">
-                <input type="hidden" name="action" value="submit_exam">
-                <input type="hidden" name="track" value="<?= htmlspecialchars($trackKey) ?>">
-                <input type="hidden" name="recipient_name" value="<?= htmlspecialchars($recipientName) ?>">
-                <input type="hidden" name="recipient_email" value="<?= htmlspecialchars($recipientEmail) ?>">
+            <div class="row g-4">
+                
+                <!-- LEFT COLUMN: QUESTION PANES -->
+                <div class="col-lg-8">
+                    <form id="examForm" action="exam.php" method="POST">
+                        <input type="hidden" name="action" value="submit_exam">
+                        <input type="hidden" name="track" value="<?= htmlspecialchars($trackKey) ?>">
+                        <input type="hidden" name="recipient_name" value="<?= htmlspecialchars($recipientName) ?>">
+                        <input type="hidden" name="recipient_email" value="<?= htmlspecialchars($recipientEmail) ?>">
 
-                <div class="row g-4">
-                    <!-- LEFT COLUMN: QUESTION CONTENT -->
-                    <div class="col-lg-8">
-                        <div class="exam-card">
-                            
-                            <?php foreach ($questions as $idx => $q): ?>
-                                <div class="question-pane" id="pane-<?= $idx ?>" style="<?= ($idx === 0) ? 'display: block;' : 'display: none;' ?>">
-                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                                        <span class="badge bg-navy text-white px-3 py-1 rounded-pill fw-bold" style="background: #0d2e5c;">
-                                            Soal Nomor <?= ($idx + 1) ?> dari <?= count($questions) ?>
-                                        </span>
-                                        <small class="text-muted"><i class="fa-solid fa-list-check me-1"></i> Pilihan Ganda</small>
-                                    </div>
-
-                                    <h5 class="fw-bold text-navy mb-4" style="line-height: 1.6; font-size: 1.15rem;">
-                                        <?= htmlspecialchars($q['q']) ?>
-                                    </h5>
-
-                                    <!-- OPTIONS -->
-                                    <div class="mb-4">
-                                        <?php 
-                                        $letters = ['A', 'B', 'C', 'D'];
-                                        foreach ($q['options'] as $optIdx => $optText): 
-                                        ?>
-                                            <label class="option-label" id="opt-label-<?= $idx ?>-<?= $optIdx ?>">
-                                                <input type="radio" name="answers[<?= $idx ?>]" value="<?= $optIdx ?>" class="option-radio" onchange="markAnswered(<?= $idx ?>, <?= $optIdx ?>)">
-                                                <div>
-                                                    <span class="badge bg-light text-navy border me-1 fw-bold"><?= $letters[$optIdx] ?></span>
-                                                    <span><?= htmlspecialchars($optText) ?></span>
-                                                </div>
-                                            </label>
-                                        <?php endforeach; ?>
-                                    </div>
-
-                                    <!-- NAVIGATION BUTTONS -->
-                                    <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4 fw-bold" onclick="goToQuestion(<?= $idx - 1 ?>)" <?= ($idx === 0) ? 'disabled' : '' ?>>
-                                            &laquo; Sebelumnya
-                                        </button>
-
-                                        <?php if ($idx < count($questions) - 1): ?>
-                                            <button type="button" class="btn btn-navy text-white rounded-pill px-4 fw-bold" style="background: #0d2e5c;" onclick="goToQuestion(<?= $idx + 1 ?>)">
-                                                Selanjutnya &raquo;
-                                            </button>
-                                        <?php else: ?>
-                                            <button type="button" class="btn btn-success rounded-pill px-4 fw-bold text-white shadow-sm" onclick="confirmSubmitExam()">
-                                                <i class="fa-solid fa-paper-plane me-1"></i> Kumpulkan Jawaban Ujian &raquo;
-                                            </button>
-                                        <?php endif; ?>
-                                    </div>
+                        <?php foreach ($questions as $qIdx => $q): ?>
+                            <div class="exam-card question-pane" id="pane-<?= $qIdx ?>" style="<?= ($qIdx === 0) ? '' : 'display: none;' ?>">
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                    <span class="badge bg-navy text-white px-3 py-1 rounded-pill small" style="background-color: #0d2e5c !important;">
+                                        Soal <?= ($qIdx + 1) ?> dari <?= $totalQuestions ?>
+                                    </span>
+                                    <small class="text-muted"><i class="fa-solid fa-list-check me-1"></i> Pilihan Ganda Tunggal</small>
                                 </div>
-                            <?php endforeach; ?>
 
-                        </div>
-                    </div>
+                                <h5 class="fw-bold text-navy mb-4 font-heading" style="line-height: 1.6;">
+                                    <?= htmlspecialchars($q['q']) ?>
+                                </h5>
 
-                    <!-- RIGHT COLUMN: NUMBER GRID & SUBMIT BUTTON -->
-                    <div class="col-lg-4">
-                        <div class="exam-card sticky-top" style="top: 85px;">
-                            <h6 class="fw-bold text-navy mb-3 d-flex justify-content-between align-items-center">
-                                <span><i class="fa-solid fa-grid-2 me-1 text-warning"></i> Lembar Soal</span>
-                                <span id="answeredCounter" class="badge bg-light text-navy border">0 / <?= count($questions) ?> Terjawab</span>
-                            </h6>
+                                <div class="d-flex flex-column gap-2 mb-4">
+                                    <?php 
+                                    $optLetters = ['A', 'B', 'C', 'D'];
+                                    foreach ($q['options'] as $optIdx => $optText): 
+                                    ?>
+                                        <label class="option-label" id="opt-label-<?= $qIdx ?>-<?= $optIdx ?>" onclick="markAnswered(<?= $qIdx ?>, <?= $optIdx ?>)">
+                                            <input type="radio" name="answers[<?= $qIdx ?>]" value="<?= $optIdx ?>" class="option-radio">
+                                            <div class="d-flex align-items-start gap-2">
+                                                <span class="badge bg-light text-navy border px-2 py-1 rounded small fw-bold"><?= $optLetters[$optIdx] ?></span>
+                                                <span style="font-size: 0.95rem; line-height: 1.5;"><?= htmlspecialchars($optText) ?></span>
+                                            </div>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
 
-                            <div class="d-flex flex-wrap gap-2 mb-4">
-                                <?php for ($i = 0; $i < count($questions); $i++): ?>
-                                    <button type="button" id="grid-btn-<?= $i ?>" class="q-number-btn <?= ($i === 0) ? 'active' : '' ?>" onclick="goToQuestion(<?= $i ?>)">
-                                        <?= ($i + 1) ?>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="goToQuestion(<?= ($qIdx - 1) ?>)" <?= ($qIdx === 0) ? 'disabled' : '' ?>>
+                                        &laquo; Soal Sebelumnya
                                     </button>
-                                <?php endfor; ?>
-                            </div>
 
-                            <div class="d-flex flex-column gap-2 border-top pt-3">
-                                <button type="button" class="btn btn-success fw-bold py-2 rounded-pill text-white shadow-sm" onclick="confirmSubmitExam()">
-                                    <i class="fa-solid fa-check-double me-1"></i> Selesaikan Ujian
-                                </button>
-                                <a href="exam.php" class="btn btn-link text-muted small text-decoration-none text-center" onclick="return confirm('Apakah Anda yakin ingin membatalkan ujian ini? Kemajuan ujian saat ini akan hilang.')">
-                                    Batalkan Ujian
-                                </a>
+                                    <?php if ($qIdx < $totalQuestions - 1): ?>
+                                        <button type="button" class="btn btn-navy text-white btn-sm rounded-pill px-4 py-2 fw-bold" style="background-color: #0d2e5c !important;" onclick="goToQuestion(<?= ($qIdx + 1) ?>)">
+                                            Soal Berikutnya &raquo;
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" class="btn btn-success btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm" onclick="confirmSubmitExam()">
+                                            <i class="fa-solid fa-check-circle me-1"></i> Kumpulkan Jawaban Ujian
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+
                             </div>
+                        <?php endforeach; ?>
+
+                    </form>
+                </div>
+
+                <!-- RIGHT COLUMN: NUMBER NAVIGATION GRID -->
+                <div class="col-lg-4">
+                    <div class="exam-card position-sticky" style="top: 150px;">
+                        <h6 class="fw-bold text-navy font-heading mb-3 pb-2 border-bottom">
+                            <i class="fa-solid fa-border-all text-warning me-1"></i> Navigasi Nomor Soal
+                        </h6>
+
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <?php for ($i = 0; $i < $totalQuestions; $i++): ?>
+                                <button type="button" class="q-number-btn <?= ($i === 0) ? 'active' : '' ?>" id="grid-btn-<?= $i ?>" onclick="goToQuestion(<?= $i ?>)">
+                                    <?= ($i + 1) ?>
+                                </button>
+                            <?php endfor; ?>
+                        </div>
+
+                        <div class="p-3 bg-light rounded-3 small mb-3">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="badge bg-success rounded-circle" style="width: 10px; height: 10px; padding: 0;">&nbsp;</span>
+                                <span class="text-muted">Hijau: Sudah Dijawab</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-white border border-secondary rounded-circle" style="width: 10px; height: 10px; padding: 0;">&nbsp;</span>
+                                <span class="text-muted">Putih: Belum Dijawab</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="small fw-bold text-navy mb-2" id="answeredCounter">0 / <?= $totalQuestions ?> Terjawab</div>
+                            <button type="button" class="btn btn-success fw-bold w-100 py-2 rounded-pill shadow-sm" onclick="confirmSubmitExam()">
+                                <i class="fa-solid fa-cloud-arrow-up me-1"></i> Selesaikan Ujian Sekarang
+                            </button>
                         </div>
                     </div>
                 </div>
-            </form>
+
+            </div>
         </main>
 
         <script>
+            const totalQ = <?= $totalQuestions ?>;
             let currentQuestionIdx = 0;
-            const totalQ = <?= count($questions) ?>;
             let answeredMap = {};
 
             function goToQuestion(idx) {
@@ -609,15 +929,12 @@ $seoBreadcrumbs = [
 
             function markAnswered(qIdx, optIdx) {
                 answeredMap[qIdx] = optIdx;
-                // Highlight option
                 document.querySelectorAll('#pane-' + qIdx + ' .option-label').forEach(lbl => lbl.classList.remove('selected'));
                 document.getElementById('opt-label-' + qIdx + '-' + optIdx).classList.add('selected');
 
-                // Mark grid button
                 const btn = document.getElementById('grid-btn-' + qIdx);
                 btn.classList.add('answered');
 
-                // Update counter
                 const count = Object.keys(answeredMap).length;
                 document.getElementById('answeredCounter').textContent = count + ' / ' + totalQ + ' Terjawab';
             }
@@ -634,14 +951,14 @@ $seoBreadcrumbs = [
                 }
             }
 
-            // 30 Minutes Timer
-            let durationSeconds = 30 * 60;
+            // Timer Countdown
+            let durationSeconds = <?= $durationMinutes ?> * 60;
             const timerEl = document.getElementById('examTimerDisplay');
             const timerInterval = setInterval(() => {
                 durationSeconds--;
                 if (durationSeconds <= 0) {
                     clearInterval(timerInterval);
-                    alert('Waktu ujian 30 menit telah berakhir! Jawaban Anda akan otomatis dikumpulkan.');
+                    alert('Waktu ujian telah berakhir! Jawaban Anda akan otomatis dikumpulkan.');
                     document.getElementById('examForm').submit();
                     return;
                 }
@@ -650,7 +967,7 @@ $seoBreadcrumbs = [
                 const seconds = durationSeconds % 60;
                 timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-                if (durationSeconds <= 300) { // < 5 mins
+                if (durationSeconds <= 180) { // < 3 mins
                     timerEl.classList.add('timer-warning');
                 }
             }, 1000);
@@ -672,44 +989,41 @@ $seoBreadcrumbs = [
                             </span>
                             <h1 class="display-5 fw-bold font-heading mb-2 text-white">Sertifikat Kelulusan Resmi Diterbitkan</h1>
                             <p class="mx-auto mb-4" style="max-width: 650px; color: #e2e8f0; font-size: 1.05rem; line-height: 1.7;">
-                                Selamat kepada <strong><?= htmlspecialchars($resultData['recipient_name']) ?></strong>! Anda berhasil lulus Ujian Kompetensi Standar Industri pada <strong><?= htmlspecialchars($resultData['track_title']) ?></strong> dengan hasil sangat memuaskan.
+                                Selamat kepada <strong><?= htmlspecialchars($resultData['recipient_name']) ?></strong>! Anda berhasil lulus Ujian Kompetensi Standar Industri pada materi <strong><?= htmlspecialchars($resultData['track_title']) ?></strong> dengan hasil sangat memuaskan.
                             </p>
 
                             <!-- SCORE AND CERT NO BADGES -->
                             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                                <div class="bg-white bg-opacity-15 p-3 rounded-3 text-white border border-white border-opacity-25" style="min-width: 140px;">
-                                    <small class="d-block text-white-50 text-uppercase fw-bold" style="font-size: 0.72rem;">Nilai Ujian</small>
-                                    <span class="fs-2 fw-bold text-warning font-heading"><?= $resultData['score'] ?></span> / 100
+                                <div class="bg-white bg-opacity-15 p-3 rounded-4 border border-white border-opacity-25 text-start" style="min-width: 170px;">
+                                    <small class="text-white-50 d-block">Nilai Kelulusan:</small>
+                                    <div class="display-6 fw-bold text-warning" style="color: #fca311 !important;"><?= $resultData['score'] ?><span class="fs-5 text-white-50">/100</span></div>
+                                    <small class="text-white-50"><?= $resultData['correct'] ?> dari <?= $resultData['total'] ?> Soal Benar</small>
                                 </div>
-                                <div class="bg-white bg-opacity-15 p-3 rounded-3 text-white border border-white border-opacity-25" style="min-width: 140px;">
-                                    <small class="d-block text-white-50 text-uppercase fw-bold" style="font-size: 0.72rem;">Soal Benar</small>
-                                    <span class="fs-2 fw-bold text-success font-heading"><?= $resultData['correct'] ?></span> / <?= $resultData['total'] ?>
-                                </div>
-                                <div class="bg-white bg-opacity-15 p-3 rounded-3 text-white border border-white border-opacity-25" style="min-width: 180px;">
-                                    <small class="d-block text-white-50 text-uppercase fw-bold" style="font-size: 0.72rem;">Nomor Registrasi Kredensial</small>
-                                    <span class="fs-5 fw-bold text-gold font-monospace"><?= htmlspecialchars($resultData['certificate_no']) ?></span>
+                                <div class="bg-white bg-opacity-15 p-3 rounded-4 border border-white border-opacity-25 text-start" style="min-width: 260px;">
+                                    <small class="text-white-50 d-block">No. Seri Sertifikat Digital Resmi:</small>
+                                    <div class="fs-4 fw-bold font-monospace text-white mt-1"><?= htmlspecialchars($resultData['certificate_no']) ?></div>
+                                    <small class="text-white-50"><i class="fa-solid fa-circle-check text-success me-1"></i> Terdaftar di Basis Data SKPI</small>
                                 </div>
                             </div>
 
-                            <!-- CTA BUTTON TO CERTIFICATE -->
+                            <!-- ACTION BUTTONS -->
                             <div class="d-flex flex-wrap justify-content-center gap-3">
-                                <a href="verify.php?cert=<?= urlencode($resultData['certificate_no']) ?>" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow">
+                                <a href="verify.php?cert=<?= urlencode($resultData['certificate_no']) ?>" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow" style="background-color: #fca311 !important; color: #071a35 !important;">
                                     <i class="fa-solid fa-certificate me-2 fs-5"></i> Buka & Cetak Sertifikat Digital SKPI &raquo;
                                 </a>
                                 <a href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=<?= urlencode($resultData['track_title'] . ' Competence') ?>&organizationName=<?= urlencode('Skillance Digital Indonesia') ?>&issueYear=<?= date('Y') ?>&issueMonth=<?= date('n') ?>&certUrl=<?= urlencode('https://academy.skillance.cloud/verify.php?cert=' . $resultData['certificate_no']) ?>&certId=<?= urlencode($resultData['certificate_no']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill shadow-sm">
                                     <i class="fa-brands fa-linkedin me-2 text-info fs-5"></i> Tambah ke LinkedIn
                                 </a>
                                 <a href="exam.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-3 rounded-pill">
-                                    <i class="fa-solid fa-rotate-right me-1"></i> Ambil Ujian Jalur Lain
+                                    <i class="fa-solid fa-rotate-right me-1"></i> Ambil Ujian Materi Lain
                                 </a>
                             </div>
                         </div>
 
                         <script>
-                            // Confetti celebration animation
                             confetti({
-                                particleCount: 120,
-                                spread: 80,
+                                particleCount: 140,
+                                spread: 90,
                                 origin: { y: 0.6 }
                             });
                         </script>
@@ -720,20 +1034,20 @@ $seoBreadcrumbs = [
                             <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-circle-xmark"></i></div>
                             <h2 class="fw-bold text-navy font-heading mb-2">Nilai Belum Mencapai Standar Kelulusan</h2>
                             <p class="text-muted mx-auto mb-4" style="max-width: 600px; line-height: 1.7;">
-                                Nilai perolehan Anda adalah <strong class="text-danger fs-5"><?= $resultData['score'] ?>/100</strong> (<?= $resultData['correct'] ?> benar dari <?= $resultData['total'] ?> soal). Standar minimal kelulusan untuk penerbitan sertifikat resmi adalah <strong>80%</strong>.
+                                Nilai perolehan Anda adalah <strong class="text-danger fs-5"><?= $resultData['score'] ?>/100</strong> (<?= $resultData['correct'] ?> benar dari <?= $resultData['total'] ?> soal). Standar minimal kelulusan untuk penerbitan sertifikat resmi pada jalur ini adalah <strong><?= $resultData['passing_score'] ?>%</strong>.
                             </p>
 
                             <div class="p-3 rounded-3 bg-light border d-inline-block mx-auto mb-4 text-start small" style="max-width: 500px;">
                                 <i class="fa-solid fa-lightbulb text-warning me-1"></i> <strong>Saran untuk Anda:</strong>
-                                <span class="text-secondary d-block mt-1">Jangan berkecil hati! Silakan pelajari kembali modul materi pada jalur ini, baca penjelasan kunci jawaban di bawah, dan Anda dapat mengulang ujian ini kembali kapan saja.</span>
+                                <span class="text-secondary d-block mt-1">Jangan berkecil hati! Silakan pelajari kembali modul materi gratis pada jalur ini, baca penjelasan kunci jawaban di bawah, dan Anda dapat mengulang ujian ini kembali kapan saja.</span>
                             </div>
 
                             <div>
-                                <a href="exam.php?action=start_exam&track=<?= urlencode($trackKey) ?>&recipient_name=<?= urlencode($resultData['recipient_name']) ?>" class="btn btn-navy text-white fw-bold px-4 py-3 rounded-pill shadow-sm" style="background: #0d2e5c;">
+                                <a href="exam.php?track=<?= urlencode($trackKey) ?>" class="btn btn-navy text-white fw-bold px-4 py-3 rounded-pill shadow-sm" style="background: #0d2e5c;">
                                     <i class="fa-solid fa-rotate-left me-1 text-warning"></i> Ulangi Ujian Ini &raquo;
                                 </a>
                                 <a href="learn.php?c=<?= urlencode($trackKey) ?>" class="btn btn-outline-secondary fw-bold px-4 py-3 rounded-pill ms-2">
-                                    <i class="fa-solid fa-book-open me-1"></i> Buka Modul Belajar
+                                    <i class="fa-solid fa-book-open me-1"></i> Buka Modul Belajar Gratis
                                 </a>
                             </div>
                         </div>
@@ -795,32 +1109,31 @@ $seoBreadcrumbs = [
                     <!-- STEP 1: PILIH TRACK -->
                     <div id="tryoutSetupStep">
                         <div class="text-center mb-4">
-                            <h5 class="fw-bold text-navy">Pilih Jalur Soal Tryout</h5>
-                            <p class="text-muted small">Pilih salah satu spesialisasi koding yang ingin Anda uji coba:</p>
+                            <h5 class="fw-bold text-navy">Pilih Materi Soal Tryout</h5>
+                            <p class="text-muted small">Pilih salah satu materi yang ingin Anda coba evaluasi secara kilat:</p>
                         </div>
-                        <div class="row g-2 mb-4">
+                        <div class="row g-2 mb-4" style="max-height: 280px; overflow-y: auto;">
                             <?php foreach ($examQuestionsData as $k => $info): ?>
                                 <div class="col-6 col-md-4">
-                                    <button type="button" class="btn btn-outline-navy w-100 p-3 rounded-3 text-start h-100 track-tryout-btn" onclick="selectTryoutTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', this)">
-                                        <div class="fw-bold text-navy small mb-1"><?= htmlspecialchars($info['title']) ?></div>
-                                        <small class="text-muted" style="font-size: 0.72rem;"><?= count($info['questions']) ?> butir bank soal</small>
+                                    <button type="button" class="btn btn-outline-secondary w-100 p-2 rounded-3 text-start h-100 track-tryout-btn" onclick="selectTryoutTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', this)">
+                                        <div class="fw-bold text-navy small mb-1" style="font-size: 0.8rem;"><?= htmlspecialchars($info['title']) ?></div>
+                                        <small class="text-muted" style="font-size: 0.7rem;"><?= count($info['questions']) ?> butir bank soal</small>
                                     </button>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                         <div class="text-center">
-                            <button type="button" id="btnStartTryoutQuiz" class="btn btn-warning text-navy fw-bold px-5 py-2 rounded-pill shadow-sm disabled" onclick="launchTryoutQuiz()">
-                                <i class="fa-solid fa-rocket me-1"></i> Mulai Kuis (2 Menit)
+                            <button type="button" id="btnStartTryoutQuiz" class="btn btn-warning text-navy fw-bold px-5 py-2 rounded-pill shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important;" disabled onclick="launchTryoutQuiz()">
+                                Mulai Kuis Kilat (5 Soal) &raquo;
                             </button>
                         </div>
                     </div>
 
-                    <!-- STEP 2: KUIS INTERAKTIF -->
+                    <!-- STEP 2: ACTIVE TRYOUT QUESTION -->
                     <div id="tryoutQuizStep" style="display: none;">
-                        <!-- PROGRESS & TIMER BAR -->
-                        <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-white rounded-3 border">
-                            <span class="small fw-bold text-navy" id="tryoutTrackBadge">HTML & CSS Specialist</span>
-                            <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-navy text-white px-3 py-1 rounded-pill small" id="tryoutTrackBadge" style="background-color: #0d2e5c !important;">Jalur Koding</span>
+                            <div class="d-flex align-items-center gap-2">
                                 <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold font-monospace" id="tryoutTimer">
                                     <i class="fa-regular fa-clock me-1"></i> 02:00
                                 </span>
@@ -831,12 +1144,8 @@ $seoBreadcrumbs = [
                         <!-- QUESTION CARD -->
                         <div class="card border-0 shadow-sm rounded-3 p-4 mb-3 bg-white">
                             <h6 class="fw-bold text-navy mb-3" id="tryoutQuestionText">Memuat pertanyaan...</h6>
-                            <div id="tryoutOptionsList" class="d-flex flex-column gap-2 mb-3">
-                                <!-- Options rendered via JS -->
-                            </div>
-                            <div id="tryoutFeedbackBox" style="display: none;" class="p-3 rounded-3 small mb-2">
-                                <!-- Feedback rendered via JS -->
-                            </div>
+                            <div id="tryoutOptionsList" class="d-flex flex-column gap-2 mb-3"></div>
+                            <div id="tryoutFeedbackBox" style="display: none;" class="p-3 rounded-3 small mb-2"></div>
                         </div>
 
                         <!-- CONTROLS -->
@@ -867,7 +1176,7 @@ $seoBreadcrumbs = [
                         </div>
 
                         <p class="small text-muted mb-4" style="max-width: 450px; margin: 0 auto;">
-                            Kemampuan dasar Anda sudah sangat baik! Ambil Ujian Sertifikasi 25 Soal Resmi sekarang untuk menerbitkan sertifikat SKPI bertanda tangan digital.
+                            Kemampuan dasar Anda sudah sangat baik! Ambil Ujian Sertifikasi Resmi sekarang untuk menerbitkan sertifikat SKPI bertanda tangan digital.
                         </p>
 
                         <div class="d-flex justify-content-center gap-2">
@@ -875,7 +1184,7 @@ $seoBreadcrumbs = [
                                 Tutup
                             </button>
                             <button type="button" class="btn btn-success fw-bold rounded-pill px-4 shadow-sm" onclick="proceedToFullExam()">
-                                <i class="fa-solid fa-award me-1"></i> Lanjut Ujian 25 Soal &raquo;
+                                <i class="fa-solid fa-award me-1"></i> Lanjut Ambil Sertifikat &raquo;
                             </button>
                         </div>
                     </div>
@@ -898,66 +1207,67 @@ $seoBreadcrumbs = [
         let isQuestionAnswered = false;
 
         function openQuickTryoutModal() {
-            const modalEl = new bootstrap.Modal(document.getElementById('quickTryoutModal'));
-            modalEl.show();
             resetTryoutToSetup();
+            const modal = new bootstrap.Modal(document.getElementById('quickTryoutModal'));
+            modal.show();
         }
 
         function resetTryoutToSetup() {
-            clearInterval(tryoutTimerInterval);
-            document.getElementById('tryoutSetupStep').style.display = 'block';
-            document.getElementById('tryoutQuizStep').style.display = 'none';
-            document.getElementById('tryoutResultStep').style.display = 'none';
-            document.querySelectorAll('.track-tryout-btn').forEach(btn => {
-                btn.classList.remove('btn-navy', 'text-white');
-                btn.classList.add('btn-outline-navy');
-                btn.style.backgroundColor = '';
-            });
-            document.getElementById('btnStartTryoutQuiz').classList.add('disabled');
+            if (tryoutTimerInterval) clearInterval(tryoutTimerInterval);
             selectedTryoutTrackKey = null;
-        }
-
-        function selectTryoutTrack(key, title, btnEl) {
-            selectedTryoutTrackKey = key;
-            selectedTryoutTrackTitle = title;
-            document.querySelectorAll('.track-tryout-btn').forEach(b => {
-                b.classList.remove('btn-navy', 'text-white');
-                b.classList.add('btn-outline-navy');
-                b.style.backgroundColor = '';
-                b.style.color = '#0d2e5c';
-            });
-            btnEl.classList.remove('btn-outline-navy');
-            btnEl.classList.add('btn-navy', 'text-white');
-            btnEl.style.backgroundColor = '#0d2e5c';
-            btnEl.style.color = '#ffffff';
-            document.getElementById('btnStartTryoutQuiz').classList.remove('disabled');
-        }
-
-        function launchTryoutQuiz() {
-            if (!selectedTryoutTrackKey || !ALL_EXAM_DATA[selectedTryoutTrackKey]) return;
-            const fullBank = ALL_EXAM_DATA[selectedTryoutTrackKey].questions;
-            // Shuffle and pick 5
-            const shuffled = [...fullBank].sort(() => 0.5 - Math.random());
-            tryoutQuestions = shuffled.slice(0, 5);
+            selectedTryoutTrackTitle = '';
+            tryoutQuestions = [];
             currentTryoutIdx = 0;
             tryoutScore = 0;
             tryoutTimeRemaining = 120;
             isQuestionAnswered = false;
 
+            document.getElementById('tryoutSetupStep').style.display = 'block';
+            document.getElementById('tryoutQuizStep').style.display = 'none';
+            document.getElementById('tryoutResultStep').style.display = 'none';
+            document.getElementById('btnStartTryoutQuiz').disabled = true;
+
+            document.querySelectorAll('.track-tryout-btn').forEach(b => {
+                b.classList.remove('btn-navy', 'text-white');
+                b.classList.add('btn-outline-secondary');
+            });
+        }
+
+        function selectTryoutTrack(k, title, btnEl) {
+            selectedTryoutTrackKey = k;
+            selectedTryoutTrackTitle = title;
+            document.querySelectorAll('.track-tryout-btn').forEach(b => {
+                b.classList.remove('btn-navy', 'text-white');
+                b.classList.add('btn-outline-secondary');
+            });
+            btnEl.classList.remove('btn-outline-secondary');
+            btnEl.classList.add('btn-navy', 'text-white');
+            document.getElementById('btnStartTryoutQuiz').disabled = false;
+        }
+
+        function launchTryoutQuiz() {
+            if (!selectedTryoutTrackKey || !ALL_EXAM_DATA[selectedTryoutTrackKey]) return;
+            const pool = ALL_EXAM_DATA[selectedTryoutTrackKey].questions;
+            const shuffled = [...pool].sort(() => 0.5 - Math.random());
+            tryoutQuestions = shuffled.slice(0, 5);
+
+            document.getElementById('tryoutTrackBadge').textContent = selectedTryoutTrackTitle;
             document.getElementById('tryoutSetupStep').style.display = 'none';
             document.getElementById('tryoutQuizStep').style.display = 'block';
-            document.getElementById('tryoutTrackBadge').textContent = selectedTryoutTrackTitle;
-
-            renderTryoutQuestion();
+            currentTryoutIdx = 0;
+            tryoutScore = 0;
+            renderTryoutQuestion(0);
             startTryoutTimer();
         }
 
         function startTryoutTimer() {
-            clearInterval(tryoutTimerInterval);
-            updateTimerDisplay();
+            if (tryoutTimerInterval) clearInterval(tryoutTimerInterval);
+            const timerEl = document.getElementById('tryoutTimer');
+            updateTimerDisplay(timerEl, tryoutTimeRemaining);
+
             tryoutTimerInterval = setInterval(() => {
                 tryoutTimeRemaining--;
-                updateTimerDisplay();
+                updateTimerDisplay(timerEl, tryoutTimeRemaining);
                 if (tryoutTimeRemaining <= 0) {
                     clearInterval(tryoutTimerInterval);
                     finishTryout();
@@ -965,143 +1275,110 @@ $seoBreadcrumbs = [
             }, 1000);
         }
 
-        function updateTimerDisplay() {
-            const m = Math.floor(tryoutTimeRemaining / 60);
-            const s = tryoutTimeRemaining % 60;
-            const str = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-            const timerEl = document.getElementById('tryoutTimer');
-            if (timerEl) {
-                timerEl.innerHTML = '<i class="fa-regular fa-clock me-1"></i> ' + str;
-                if (tryoutTimeRemaining <= 30) {
-                    timerEl.className = 'badge bg-danger text-white px-3 py-1 rounded-pill fw-bold font-monospace';
-                }
-            }
+        function updateTimerDisplay(el, seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            el.innerHTML = `<i class="fa-regular fa-clock me-1"></i> ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
 
-        function renderTryoutQuestion() {
+        function renderTryoutQuestion(idx) {
             isQuestionAnswered = false;
-            const q = tryoutQuestions[currentTryoutIdx];
-            document.getElementById('tryoutProgressText').textContent = 'Soal ' + (currentTryoutIdx + 1) + ' / ' + tryoutQuestions.length;
-            document.getElementById('tryoutQuestionText').textContent = (currentTryoutIdx + 1) + '. ' + q.q;
+            const q = tryoutQuestions[idx];
+            document.getElementById('tryoutProgressText').textContent = `Soal ${idx + 1} / 5`;
+            document.getElementById('tryoutQuestionText').textContent = q.q;
 
-            const optList = document.getElementById('tryoutOptionsList');
-            optList.innerHTML = '';
+            const optContainer = document.getElementById('tryoutOptionsList');
+            optContainer.innerHTML = '';
             const feedbackBox = document.getElementById('tryoutFeedbackBox');
             feedbackBox.style.display = 'none';
+            feedbackBox.className = 'p-3 rounded-3 small mb-2';
 
-            const nextBtn = document.getElementById('btnNextTryoutQ');
-            nextBtn.textContent = 'Cek Jawaban »';
-
-            q.options.forEach((opt, idx) => {
-                const label = document.createElement('label');
-                label.className = 'border rounded-3 p-3 d-flex align-items-center gap-2 cursor-pointer bg-white';
-                label.style.cursor = 'pointer';
-                label.innerHTML = `
-                    <input type="radio" name="tryoutRadio" value="${idx}" class="form-check-input mt-0 me-2" style="accent-color: #0d2e5c;">
-                    <span class="small fw-semibold text-dark">${escapeTryoutHtml(opt)}</span>
-                `;
-                label.onclick = () => {
-                    if (!isQuestionAnswered) {
-                        label.querySelector('input').checked = true;
-                    }
-                };
-                optList.appendChild(label);
+            const optLetters = ['A', 'B', 'C', 'D'];
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-outline-secondary text-start p-3 rounded-3 w-100 d-flex align-items-center gap-2 tryout-opt-btn';
+                btn.innerHTML = `<span class="badge bg-light text-navy border px-2 py-1 fw-bold">${optLetters[optIdx]}</span> <span>${escapeTryoutHtml(optText)}</span>`;
+                btn.onclick = () => handleTryoutAnswer(optIdx, btn);
+                optContainer.appendChild(btn);
             });
+
+            document.getElementById('btnNextTryoutQ').textContent = 'Lewati / Lanjut »';
+        }
+
+        function handleTryoutAnswer(selectedIdx, btnEl) {
+            if (isQuestionAnswered) return;
+            isQuestionAnswered = true;
+
+            const q = tryoutQuestions[currentTryoutIdx];
+            const isCorrect = (selectedIdx === q.ans);
+            const allBtns = document.querySelectorAll('.tryout-opt-btn');
+
+            if (isCorrect) {
+                tryoutScore++;
+                btnEl.classList.remove('btn-outline-secondary');
+                btnEl.classList.add('btn-success', 'text-white');
+            } else {
+                btnEl.classList.remove('btn-outline-secondary');
+                btnEl.classList.add('btn-danger', 'text-white');
+                allBtns[q.ans].classList.remove('btn-outline-secondary');
+                allBtns[q.ans].classList.add('btn-success', 'text-white');
+            }
+
+            const feedbackBox = document.getElementById('tryoutFeedbackBox');
+            feedbackBox.style.display = 'block';
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-success', 'bg-opacity-10', 'text-success', 'border', 'border-success');
+                feedbackBox.innerHTML = `<strong><i class="fa-solid fa-circle-check me-1"></i> Benar!</strong> ${escapeTryoutHtml(q.exp)}`;
+            } else {
+                feedbackBox.classList.add('bg-danger', 'bg-opacity-10', 'text-danger', 'border', 'border-danger');
+                feedbackBox.innerHTML = `<strong><i class="fa-solid fa-circle-xmark me-1"></i> Kurang Tepat.</strong> ${escapeTryoutHtml(q.exp)}`;
+            }
+
+            document.getElementById('btnNextTryoutQ').textContent = (currentTryoutIdx < 4) ? 'Soal Berikutnya »' : 'Lihat Hasil Akhir »';
         }
 
         function handleTryoutNext() {
-            const q = tryoutQuestions[currentTryoutIdx];
-            const nextBtn = document.getElementById('btnNextTryoutQ');
-
-            if (!isQuestionAnswered) {
-                const selected = document.querySelector('input[name="tryoutRadio"]:checked');
-                if (!selected) {
-                    alert('Silakan pilih salah satu jawaban terlebih dahulu!');
-                    return;
-                }
-
-                const userAns = parseInt(selected.value);
-                const isCorrect = (userAns === q.correct);
-                if (isCorrect) tryoutScore++;
-
-                isQuestionAnswered = true;
-                const feedbackBox = document.getElementById('tryoutFeedbackBox');
-                feedbackBox.style.display = 'block';
-
-                if (isCorrect) {
-                    feedbackBox.className = 'p-3 rounded-3 small mb-2 bg-success-subtle text-success border border-success';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> <strong>Jawaban Anda Benar!</strong> Sangat tepat.';
-                } else {
-                    feedbackBox.className = 'p-3 rounded-3 small mb-2 bg-danger-subtle text-danger border border-danger';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> <strong>Kurang Tepat.</strong> Jawaban yang benar adalah opsi: <em>' + escapeTryoutHtml(q.options[q.correct]) + '</em>';
-                }
-
-                if (currentTryoutIdx + 1 < tryoutQuestions.length) {
-                    nextBtn.textContent = 'Soal Berikutnya »';
-                } else {
-                    nextBtn.textContent = 'Lihat Hasil Akhir »';
-                }
-            } else {
+            if (currentTryoutIdx < 4) {
                 currentTryoutIdx++;
-                if (currentTryoutIdx < tryoutQuestions.length) {
-                    renderTryoutQuestion();
-                } else {
-                    finishTryout();
-                }
+                renderTryoutQuestion(currentTryoutIdx);
+            } else {
+                finishTryout();
             }
         }
 
         function finishTryout() {
-            clearInterval(tryoutTimerInterval);
+            if (tryoutTimerInterval) clearInterval(tryoutTimerInterval);
             document.getElementById('tryoutQuizStep').style.display = 'none';
             document.getElementById('tryoutResultStep').style.display = 'block';
 
-            const pct = Math.round((tryoutScore / tryoutQuestions.length) * 100);
-            document.getElementById('tryoutScoreDisplay').textContent = tryoutScore + ' / ' + tryoutQuestions.length;
-            document.getElementById('tryoutScorePercentage').textContent = 'Skor ' + pct + '% ' + (pct >= 80 ? '(Sangat Kompeten!)' : '(Perlu Latihan Tambahan)');
-
-            // Award 30 XP in localStorage
-            try {
-                let curXp = parseInt(localStorage.getItem('skillance_user_xp') || '0');
-                curXp += 30;
-                localStorage.setItem('skillance_user_xp', curXp);
-            } catch(e) {}
-        }
-
-        function proceedToFullExam() {
-            const modalEl = bootstrap.Modal.getInstance(document.getElementById('quickTryoutModal'));
-            if (modalEl) modalEl.hide();
-
-            if (selectedTryoutTrackKey) {
-                const radio = document.querySelector(`input[name="track"][value="${selectedTryoutTrackKey}"]`);
-                if (radio) {
-                    radio.checked = true;
-                    document.querySelectorAll('.option-label').forEach(el => el.classList.remove('selected'));
-                    radio.closest('label').classList.add('selected');
-                }
-            }
-            const formEl = document.querySelector('form[action="exam.php"]');
-            if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+            const pct = Math.round((tryoutScore / 5) * 100);
+            document.getElementById('tryoutScoreDisplay').textContent = `${tryoutScore} / 5`;
+            const pctEl = document.getElementById('tryoutScorePercentage');
+            pctEl.textContent = `Skor ${pct}% ` + (pct >= 80 ? '(Sangat Siap Lulus!)' : (pct >= 60 ? '(Cukup Baik)' : '(Perlu Latihan Lagi)'));
         }
 
         function abortTryout() {
-            if (confirm('Yakin ingin membatalkan simulasi tryout kilat?')) {
+            if (confirm('Batalkan sesi simulasi tryout kilat ini?')) {
                 resetTryoutToSetup();
             }
         }
 
-        function escapeTryoutHtml(t) {
-            if (!t) return '';
-            return t.replace(/[&<>"']/g, function(m) {
-                return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
-            });
+        function proceedToFullExam() {
+            const modalEl = document.getElementById('quickTryoutModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            if (selectedTryoutTrackKey) {
+                window.location.href = `exam.php?track=${encodeURIComponent(selectedTryoutTrackKey)}`;
+            }
+        }
+
+        function escapeTryoutHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
 
     <?php include __DIR__ . '/includes/footer.php'; ?>
-
-<?php include_once __DIR__ . '/includes/spotlight_modal.php'; ?>
-<script src="assets/js/spotlight.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
