@@ -69,6 +69,11 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 </a>
             </li>
             <li class="nav-item">
+                <a href="<?= $dashRoot ?>finance/mou.php" class="nav-link <?= $activeMenu === 'mou' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-file-contract text-warning"></i> Dokumen MoU & PKS
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="<?= $dashRoot ?>profile.php" class="nav-link text-warning <?= $activeMenu === 'profile' ? 'active' : '' ?>">
                     <i class="fa-solid fa-user-gear"></i> Profil Saya & Sandi
                 </a>
@@ -128,6 +133,11 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
             <li class="nav-item">
                 <a href="<?= $dashRoot ?>payroll/index.php" class="nav-link <?= $activeMenu === 'payroll' ? 'active fw-bold text-navy' : '' ?>">
                     <i class="fa-solid fa-money-check-dollar text-info"></i> Penggajian & Honor Tim
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $dashRoot ?>finance/mou.php" class="nav-link <?= $activeMenu === 'mou' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-file-contract text-warning"></i> Dokumen MoU & PKS
                 </a>
             </li>
             <li class="nav-item">
