@@ -183,46 +183,85 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && $action === 'submit_exam
     $passed = ($finalScore >= $passingThreshold);
     $certificateNo = '';
 
-    // If passed, issue official digital certificate into database
+    // If passed, issue official digital certificate into database (ANTI-DUPLICATE PROTECTED)
     if ($passed) {
-        // Generate unique certificate serial e.g. SKL-2026-HTML-8821
         $trackCode = $trackInfo['code'] ?? 'SKL';
-        $randomNum = rand(1000, 9999);
-        $certificateNo = 'SKL-2026-' . $trackCode . '-' . $randomNum;
+        $certificateNo = '';
 
         if ($conn) {
-            // Check uniqueness
-            $chk = $conn->prepare("SELECT id FROM `academy_certificates` WHERE `certificate_no` = ? LIMIT 1");
-            if ($chk) {
-                $chk->bind_param('s', $certificateNo);
-                $chk->execute();
-                if ($chk->get_result()->num_rows > 0) {
-                    $certificateNo = 'SKL-2026-' . $trackCode . '-' . rand(10000, 99999);
+            // 1. Check if student ALREADY has an existing certificate for this track (NO DUPLICATES)
+            $existingCert = null;
+            $chkExisting = $conn->prepare("
+                SELECT id, certificate_no, score 
+                FROM `academy_certificates` 
+                WHERE (`user_id` = ? OR (`recipient_email` != '' AND `recipient_email` = ?))
+                  AND (`track_id` = ? OR `track_title` = ?)
+                ORDER BY id DESC LIMIT 1
+            ");
+            if ($chkExisting) {
+                $uIdVal = (int)($userId ?: 0);
+                $chkExisting->bind_param('isss', $uIdVal, $recipientEmail, $trackKey, $trackInfo['title']);
+                $chkExisting->execute();
+                $resEx = $chkExisting->get_result();
+                if ($resEx && $resEx->num_rows > 0) {
+                    $existingCert = $resEx->fetch_assoc();
                 }
-                $chk->close();
+                $chkExisting->close();
             }
 
-            // Insert certificate
-            $issueDate = date('Y-m-d');
-            $status = 'active';
-            $ins = $conn->prepare("INSERT INTO `academy_certificates` 
-                (`certificate_no`, `user_id`, `recipient_name`, `recipient_email`, `track_id`, `track_title`, `competencies`, `score`, `issue_date`, `status`)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($ins) {
-                $ins->bind_param('sisssssiss', 
-                    $certificateNo, 
-                    $userId, 
-                    $recipientName, 
-                    $recipientEmail, 
-                    $trackKey, 
-                    $trackInfo['title'], 
-                    $trackInfo['competencies'], 
-                    $finalScore, 
-                    $issueDate, 
-                    $status
-                );
-                $ins->execute();
-                $ins->close();
+            if ($existingCert) {
+                // Reuse existing certificate number
+                $certificateNo = $existingCert['certificate_no'];
+                $existingScore = (int)$existingCert['score'];
+                $certId = (int)$existingCert['id'];
+
+                // Update score if new score is higher or equal
+                if ($finalScore >= $existingScore) {
+                    $upd = $conn->prepare("UPDATE `academy_certificates` SET `score` = ?, `recipient_name` = ?, `issue_date` = NOW() WHERE `id` = ?");
+                    if ($upd) {
+                        $upd->bind_param('isi', $finalScore, $recipientName, $certId);
+                        $upd->execute();
+                        $upd->close();
+                    }
+                }
+            } else {
+                // Generate new unique certificate serial e.g. SKL-2026-HTML-8821
+                $randomNum = rand(1000, 9999);
+                $certificateNo = 'SKL-2026-' . $trackCode . '-' . $randomNum;
+
+                // Check uniqueness
+                $chk = $conn->prepare("SELECT id FROM `academy_certificates` WHERE `certificate_no` = ? LIMIT 1");
+                if ($chk) {
+                    $chk->bind_param('s', $certificateNo);
+                    $chk->execute();
+                    if ($chk->get_result()->num_rows > 0) {
+                        $certificateNo = 'SKL-2026-' . $trackCode . '-' . rand(10000, 99999);
+                    }
+                    $chk->close();
+                }
+
+                // Insert certificate
+                $issueDate = date('Y-m-d');
+                $status = 'active';
+                $ins = $conn->prepare("INSERT INTO `academy_certificates` 
+                    (`certificate_no`, `user_id`, `recipient_name`, `recipient_email`, `track_id`, `track_title`, `competencies`, `score`, `issue_date`, `status`)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                if ($ins) {
+                    $ins->bind_param('sisssssiss', 
+                        $certificateNo, 
+                        $userId, 
+                        $recipientName, 
+                        $recipientEmail, 
+                        $trackKey, 
+                        $trackInfo['title'], 
+                        $trackInfo['competencies'], 
+                        $finalScore, 
+                        $issueDate, 
+                        $status
+                    );
+                    $ins->execute();
+                    $ins->close();
+                }
             }
         }
     }

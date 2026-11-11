@@ -53,7 +53,7 @@ if (empty($completedModules) && $isDemo) {
 }
 $totalModulesCount = count($completedModules);
 
-// 2. Fetch Certificates
+// 2. Fetch Certificates (Strict deduplication by track to prevent duplicate display)
 $certificates = [];
 if ($isLoggedIn && $conn) {
     $stmtCert = $conn->prepare("SELECT * FROM `academy_certificates` WHERE `user_id` = ? OR `recipient_email` = ? ORDER BY id DESC");
@@ -61,8 +61,13 @@ if ($isLoggedIn && $conn) {
         $stmtCert->bind_param("is", $userId, $userEmail);
         $stmtCert->execute();
         $resCert = $stmtCert->get_result();
+        $uniqueTracks = [];
         while ($row = $resCert->fetch_assoc()) {
-            $certificates[] = $row;
+            $tKey = !empty($row['track_id']) ? $row['track_id'] : $row['track_title'];
+            if (!isset($uniqueTracks[$tKey])) {
+                $uniqueTracks[$tKey] = true;
+                $certificates[] = $row;
+            }
         }
         $stmtCert->close();
     }
@@ -619,6 +624,16 @@ $seoBreadcrumbs = [
                             if ($cKey === 'js') $cKey = 'javascript';
                             $isCert = strpos($pId, 'cert_') === 0 || strpos($vo['product_title'], 'Sertifikat') !== false;
                             $tglVerif = !empty($vo['verified_at']) ? date('d M Y, H:i', strtotime($vo['verified_at'])) : date('d M Y', strtotime($vo['created_at']));
+                            
+                            $isAlreadyCertified = false;
+                            if ($isCert) {
+                                foreach ($certificates as $cRow) {
+                                    if (($cRow['track_id'] ?? '') === $cKey || stripos($cRow['track_title'] ?? '', $vo['product_title']) !== false) {
+                                        $isAlreadyCertified = true;
+                                        break;
+                                    }
+                                }
+                            }
                         ?>
                             <div class="col-12 col-lg-6">
                                 <div class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 p-3 h-100 d-flex flex-column justify-content-between">
@@ -627,7 +642,11 @@ $seoBreadcrumbs = [
                                             <span class="badge bg-white text-navy fw-bold small">
                                                 <i class="fa-solid fa-receipt me-1 text-gold"></i> <?= htmlspecialchars($vo['invoice_no']) ?>
                                             </span>
-                                            <span class="badge bg-success small"><i class="fa-solid fa-lock-open me-1"></i> Lunas & Aktif</span>
+                                            <?php if ($isAlreadyCertified): ?>
+                                                <span class="badge bg-success small"><i class="fa-solid fa-award me-1"></i> Lulus & Bersertifikat</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-success small"><i class="fa-solid fa-lock-open me-1"></i> Lunas & Aktif</span>
+                                            <?php endif; ?>
                                         </div>
                                         <h5 class="fw-bold text-white mb-1" style="font-size: 1.05rem;">
                                             <?= htmlspecialchars($vo['product_title']) ?>
@@ -642,9 +661,15 @@ $seoBreadcrumbs = [
                                             <a href="learn.php?c=<?= urlencode($cKey) ?>" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-navy flex-grow-1" style="background-color: #fca311 !important; color: #071a35 !important;">
                                                 <i class="fa-solid fa-book-open me-1"></i> Pelajari Materi Modul &raquo;
                                             </a>
-                                            <a href="exam.php?action=start_exam&track=<?= urlencode($cKey) ?>&invoice_no=<?= urlencode($vo['invoice_no']) ?>&recipient_name=<?= urlencode($userName) ?>" class="btn btn-success btn-sm rounded-pill px-3 fw-bold flex-grow-1" style="background-color: #04AA6D !important;">
-                                                <i class="fa-solid fa-graduation-cap me-1"></i> Mulai Ujian Sertifikasi &raquo;
-                                            </a>
+                                            <?php if ($isAlreadyCertified): ?>
+                                                <button type="button" onclick="document.getElementById('certs-tab').click();" class="btn btn-success btn-sm rounded-pill px-3 fw-bold flex-grow-1" style="background-color: #04AA6D !important;">
+                                                    <i class="fa-solid fa-award me-1"></i> Sertifikat Telah Terbit &raquo;
+                                                </button>
+                                            <?php else: ?>
+                                                <a href="exam.php?action=start_exam&track=<?= urlencode($cKey) ?>&invoice_no=<?= urlencode($vo['invoice_no']) ?>&recipient_name=<?= urlencode($userName) ?>" class="btn btn-success btn-sm rounded-pill px-3 fw-bold flex-grow-1" style="background-color: #04AA6D !important;">
+                                                    <i class="fa-solid fa-graduation-cap me-1"></i> Mulai Ujian Sertifikasi &raquo;
+                                                </a>
+                                            <?php endif; ?>
                                         <?php else: ?>
                                             <a href="<?= htmlspecialchars($vo['download_url']) ?>" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-navy flex-grow-1" download>
                                                 <i class="fa-solid fa-download me-1"></i> Unduh File Proyek (ZIP) &raquo;
@@ -853,6 +878,16 @@ $seoBreadcrumbs = [
                             if ($cKey === 'js') $cKey = 'javascript';
                             $isCert = strpos($pId, 'cert_') === 0 || strpos($vo['product_title'], 'Sertifikat') !== false;
                             if (!$isCert) continue;
+
+                            // If certificate is ALREADY issued for this track, hide pending ticket banner
+                            $hasCert = false;
+                            foreach ($certificates as $cRow) {
+                                if (($cRow['track_id'] ?? '') === $cKey || stripos($cRow['track_title'] ?? '', $vo['product_title']) !== false) {
+                                    $hasCert = true;
+                                    break;
+                                }
+                            }
+                            if ($hasCert) continue;
                         ?>
                             <div class="col-12 mb-2">
                                 <div class="bg-success-subtle border border-success border-opacity-50 rounded-4 p-4 shadow-sm">
