@@ -183,6 +183,90 @@ if (($_SESSION['user_role'] ?? '') === 'bendahara') {
             </div>
         </div>
 
+        <!-- EXECUTIVE LEGAL & PARTNERSHIP DOCUMENTS (DIREKTUR UTAMA) -->
+        <div class="card border-0 shadow-sm mb-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #0d2e5c 0%, #174276 100%); border-radius: 12px; border-left: 5px solid #fe9800 !important;">
+            <div class="card-body p-4">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-gold text-navy fw-bold px-2 py-1 small">
+                                <i class="fa-solid fa-file-signature me-1"></i> LEGALITAS & KEMITRAAN BISNIS
+                            </span>
+                            <span class="badge bg-white bg-opacity-20 text-white border border-light border-opacity-25 px-2 py-1 small">
+                                Direktur Utama PT Skillance
+                            </span>
+                        </div>
+                        <h4 class="fw-bold mb-1 text-white">Dokumen MoU & Perjanjian Kerja Sama (PKS)</h4>
+                        <p class="text-white-50 small mb-0">
+                            Kelola, buat, dan cetak naskah perjanjian kerja sama resmi anak usaha (Aquirist Print, Software House) dan portal media (XyronNews).
+                        </p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="dokumen/index.php" class="btn btn-warning text-navy btn-sm fw-bold px-3 py-2 shadow-sm">
+                            <i class="fa-solid fa-folder-open me-1.5"></i>Buka Pusat Dokumen & Cetak A4 &raquo;
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-2 pt-2 border-top border-white border-opacity-15">
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/mou-kemitraan-strategis.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-building-columns text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">MoU Strategis</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">Sekolah / Kampus</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/pks-konsinyasi-produk.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-store text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">PKS Konsinyasi</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">Aquirist Print</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/pks-reseller-software.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-laptop-code text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">PKS Reseller IT</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">Software House</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/pks-media-partner.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-newspaper text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">Media Partner</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">XyronNews (Barter)</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/pks-advertorial-media.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-bullhorn text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">PKS Advertorial</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">Media Komersial</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <a href="dokumen/bast-serah-terima.php" class="btn btn-outline-light btn-sm w-100 text-start py-2 px-2.5 d-flex align-items-center gap-2 bg-white bg-opacity-10 border-0">
+                            <i class="fa-solid fa-clipboard-check text-warning"></i>
+                            <div class="overflow-hidden">
+                                <small class="d-block fw-bold text-truncate text-white" style="font-size: 0.75rem;">BAST Serah Terima</small>
+                                <span class="d-block text-white-50 text-truncate" style="font-size: 0.65rem;">Syarat Pencairan</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row g-4 mb-4">
             <div class="col-12 col-md-6">
                 <div class="card h-100 border-start border-5 border-primary shadow-sm bg-white">

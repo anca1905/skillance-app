@@ -2,11 +2,25 @@
 session_start();
 require_once __DIR__ . '/../../config/config.php';
 
-$currentUserRole = $_SESSION['user_role'] ?? $_SESSION['role'] ?? '';
-if (!isset($_SESSION['user_id']) || !in_array($currentUserRole, ['admin', 'bendahara'])) {
-    header("Location: ../finance/index.php");
+$currentUserRole = strtolower(trim($_SESSION['user_role'] ?? $_SESSION['role'] ?? ''));
+$currentUserId = (int)($_SESSION['user_id'] ?? 0);
+$currentUserEmail = strtolower(trim($_SESSION['user_email'] ?? ''));
+$currentUserName = strtolower(trim($_SESSION['user_name'] ?? ''));
+
+$isAuthorized = (
+    in_array($currentUserRole, ['admin', 'direktur', 'director', 'ceo', 'bendahara', 'leader', 'pimpinan'])
+    || in_array($currentUserId, [1, 4])
+    || strpos($currentUserEmail, 'arsyad') !== false
+    || strpos($currentUserName, 'arsyad') !== false
+);
+
+if (!isset($_SESSION['user_id']) || !$isAuthorized) {
+    header("Location: ../../auth/index.php");
     exit();
 }
+
+$backUrl = ($currentUserRole === 'bendahara') ? '../finance/index.php' : '../index.php';
+$backLabel = ($currentUserRole === 'bendahara') ? 'Kembali ke Keuangan' : 'Kembali ke Dashboard Admin';
 
 $pageTitle = "Pusat Dokumen Legal & Kemitraan";
 $activeMenu = "dokumen";
@@ -236,6 +250,9 @@ $activeMenu = "dokumen";
                     </p>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
+                    <a href="<?= $backUrl ?>" class="btn btn-outline-light btn-sm shadow-sm py-2 px-3 fw-semibold">
+                        <i class="fa-solid fa-arrow-left me-1"></i><?= $backLabel ?>
+                    </a>
                     <a href="../finance/index.php" class="btn btn-outline-light btn-sm shadow-sm py-2 px-3 fw-semibold">
                         <i class="fa-solid fa-wallet me-1"></i>Buku Kas PT
                     </a>

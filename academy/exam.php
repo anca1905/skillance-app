@@ -266,6 +266,7 @@ $seoBreadcrumbs = [
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         :root {
@@ -1083,13 +1084,56 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
             function confirmSubmitExam() {
                 const count = Object.keys(answeredMap).length;
                 const unanswered = totalQ - count;
-                let msg = 'Apakah Anda yakin ingin mengakhiri ujian dan mengumpulkan jawaban sekarang?';
+                
+                let warningHtml = '';
                 if (unanswered > 0) {
-                    msg = `Masih terdapat ${unanswered} soal yang belum dijawab. Apakah Anda tetap yakin ingin mengumpulkan ujian?`;
+                    warningHtml = `
+                        <div class="alert alert-warning border-0 rounded-3 text-start small mb-3 py-2 px-3">
+                            <i class="fa-solid fa-triangle-exclamation text-warning me-1"></i>
+                            <strong>Perhatian:</strong> Masih terdapat <strong>${unanswered}</strong> soal yang belum Anda jawab.
+                        </div>
+                    `;
                 }
-                if (confirm(msg)) {
-                    document.getElementById('examForm').submit();
-                }
+
+                Swal.fire({
+                    title: 'Kumpulkan Jawaban Ujian?',
+                    html: `
+                        <div class="py-1">
+                            <p class="text-muted small mb-3">Pastikan Anda telah memeriksa jawaban dengan teliti sebelum mengirimkan lembar evaluasi.</p>
+                            ${warningHtml}
+                            <div class="p-2.5 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+                                <span class="small fw-bold text-muted">Progres Terjawab:</span>
+                                <span class="badge ${unanswered > 0 ? 'bg-warning text-dark' : 'bg-success'} px-2.5 py-1.5 fw-bold">
+                                    ${count} dari ${totalQ} Soal Selesai
+                                </span>
+                            </div>
+                        </div>
+                    `,
+                    icon: unanswered > 0 ? 'warning' : 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fa-solid fa-circle-check me-1.5"></i>Ya, Selesaikan & Kumpulkan',
+                    cancelButtonText: '<i class="fa-solid fa-arrow-left me-1.5"></i>Periksa Kembali',
+                    reverseButtons: true,
+                    customClass: {
+                        popup: 'rounded-4 shadow-lg border-0 p-4',
+                        confirmButton: 'btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm',
+                        cancelButton: 'btn btn-outline-secondary fw-semibold px-4 py-2 rounded-pill me-2'
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Mengirimkan Jawaban...',
+                            html: '<p class="small text-muted mb-0">Sistem sedang menilai jawaban evaluasi dan menyiapkan sertifikat digital kelulusan Anda.</p>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        document.getElementById('examForm').submit();
+                    }
+                });
             }
 
             // Timer Countdown
@@ -1099,8 +1143,20 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
                 durationSeconds--;
                 if (durationSeconds <= 0) {
                     clearInterval(timerInterval);
-                    alert('Waktu ujian telah berakhir! Jawaban Anda akan otomatis dikumpulkan.');
-                    document.getElementById('examForm').submit();
+                    Swal.fire({
+                        title: 'Waktu Ujian Telah Berakhir!',
+                        text: 'Waktu pengerjaan telah habis. Jawaban Anda otomatis dikumpulkan sekarang.',
+                        icon: 'info',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        willClose: () => {
+                            document.getElementById('examForm').submit();
+                        }
+                    });
+                    setTimeout(() => {
+                        document.getElementById('examForm').submit();
+                    }, 2000);
                     return;
                 }
 
@@ -1500,9 +1556,24 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
         }
 
         function abortTryout() {
-            if (confirm('Batalkan sesi simulasi tryout kilat ini?')) {
-                resetTryoutToSetup();
-            }
+            Swal.fire({
+                title: 'Batalkan Simulasi Tryout?',
+                text: 'Sesi latihan tryout kilat ini akan diakhiri dan progres latihan tidak disimpan.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Batalkan Latihan',
+                cancelButtonText: 'Lanjutkan Latihan',
+                customClass: {
+                    popup: 'rounded-4 shadow-lg border-0 p-4',
+                    confirmButton: 'btn btn-danger fw-bold px-3 py-2 rounded-pill shadow-sm',
+                    cancelButton: 'btn btn-outline-secondary fw-semibold px-3 py-2 rounded-pill me-2'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    resetTryoutToSetup();
+                }
+            });
         }
 
         function proceedToFullExam() {
