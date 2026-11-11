@@ -438,11 +438,27 @@ $activeMenu = "dokumen";
                                 Cerita Rakyat ID (www.xyronnews.com)
                             </span>
                         </div>
-                        <h5 class="fw-bold text-navy mb-1">3 Paket Berkas Kerja Sama Media Kedinasan & Mitra Pemda</h5>
+                        <h5 class="fw-bold text-navy mb-1">Paket Berkas & Surat Pengantar Resmi Kemitraan Media</h5>
                         <p class="text-muted small mb-0">
                             Berkas kemitraan resmi penerbit media pers PT Skillance Digital Indonesia, lengkap dengan Kop Surat terstandarisasi dan format tanda tangan fisik (bebas tanda stempel/meterai digital agar siap ditempel meterai Rp 10.000 & cap stempel basah manual).
                         </p>
                     </div>
+                </div>
+
+                <!-- SURAT PENGANTAR UTAMA (WAJIB DIANTAR TERLEBIH DAHULU) -->
+                <div class="p-3 mb-3 rounded-3 border-start border-4 border-primary bg-primary bg-opacity-10 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-primary text-white fw-bold small"><i class="fa-solid fa-paper-plane me-1"></i>TAHAP 1: DIANTAR KE TU / UMUM</span>
+                            <span class="fw-bold text-navy">Surat Pengantar & Permohonan Audiensi Resmi Kedinasan</span>
+                        </div>
+                        <p class="text-muted small mb-0">
+                            Surat resmi pengantar penawaran kemitraan dan permohonan audiensi silaturahmi, dilengkapi lembar bukti tanda terima ekspedisi surat untuk distempel TU instansi penerima.
+                        </p>
+                    </div>
+                    <a href="surat-pengantar-audiensi.php" target="_blank" class="btn btn-primary btn-sm fw-bold px-3 py-2 text-nowrap shadow-sm">
+                        <i class="fa-solid fa-envelope-open-text me-1.5"></i>Buka & Cetak Surat Pengantar &raquo;
+                    </a>
                 </div>
 
                 <div class="row g-2.5">
