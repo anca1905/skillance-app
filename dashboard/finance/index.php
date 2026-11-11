@@ -174,8 +174,8 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                     <a href="../payroll/index.php" class="btn btn-outline-warning text-white btn-sm shadow-sm">
                         <i class="fa-solid fa-money-check-dollar me-1 text-gold"></i> Penggajian & Honor Tim
                     </a>
-                    <a href="mou.php" class="btn btn-outline-warning text-white btn-sm shadow-sm">
-                        <i class="fa-solid fa-file-contract me-1 text-gold"></i> MoU & PKS Kemitraan
+                    <a href="../dokumen/index.php" class="btn btn-outline-warning text-white btn-sm shadow-sm">
+                        <i class="fa-solid fa-folder-closed me-1 text-gold"></i> MoU & Dokumen Kemitraan
                     </a>
                     <a href="print_spt.php" target="_blank" class="btn btn-warning text-navy btn-sm fw-bold shadow-sm">
                         <i class="fa-solid fa-file-invoice-dollar me-1"></i> Cetak Rekap SPT 1771

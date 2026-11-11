@@ -69,8 +69,8 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= $dashRoot ?>finance/mou.php" class="nav-link <?= $activeMenu === 'mou' ? 'active fw-bold text-navy' : '' ?>">
-                    <i class="fa-solid fa-file-contract text-warning"></i> Dokumen MoU & PKS
+                <a href="<?= $dashRoot ?>dokumen/index.php" class="nav-link <?= $activeMenu === 'dokumen' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-folder-closed text-warning"></i> Dokumen MoU & PKS
                 </a>
             </li>
             <li class="nav-item">
@@ -136,8 +136,8 @@ $currentUserRole = $_SESSION['user_role'] ?? 'admin';
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= $dashRoot ?>finance/mou.php" class="nav-link <?= $activeMenu === 'mou' ? 'active fw-bold text-navy' : '' ?>">
-                    <i class="fa-solid fa-file-contract text-warning"></i> Dokumen MoU & PKS
+                <a href="<?= $dashRoot ?>dokumen/index.php" class="nav-link <?= $activeMenu === 'dokumen' ? 'active fw-bold text-navy' : '' ?>">
+                    <i class="fa-solid fa-folder-closed text-warning"></i> Dokumen MoU & PKS
                 </a>
             </li>
             <li class="nav-item">

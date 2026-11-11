@@ -99,6 +99,45 @@ if ($isLoggedIn && $conn) {
     }
 }
 
+// 3b. Fetch Verified / Approved Orders (Paid Courses, Certifications, Project Kits)
+$verifiedOrders = [];
+if ($isLoggedIn && $conn) {
+    // Check if table academy_orders has user_id column
+    $chkCol = $conn->query("SHOW COLUMNS FROM `academy_orders` LIKE 'user_id'");
+    if ($chkCol && $chkCol->num_rows == 0) {
+        $conn->query("ALTER TABLE `academy_orders` ADD COLUMN `user_id` INT NULL AFTER `id`, ADD COLUMN `buyer_email` VARCHAR(150) NULL AFTER `buyer_name`");
+    }
+    
+    // Auto-link any orders that have matching name or email
+    $conn->query("
+        UPDATE `academy_orders` 
+        SET `user_id` = $userId, `buyer_email` = '" . $conn->real_escape_string($userEmail) . "'
+        WHERE `status` = 'verified' AND `user_id` IS NULL AND (
+            LOWER(TRIM(`buyer_name`)) = LOWER(TRIM('" . $conn->real_escape_string($userName) . "'))
+            OR (buyer_email IS NOT NULL AND buyer_email = '" . $conn->real_escape_string($userEmail) . "')
+            " . (!empty($userPhone) ? "OR (buyer_whatsapp IS NOT NULL AND buyer_whatsapp = '" . $conn->real_escape_string($userPhone) . "')" : "") . "
+        )
+    ");
+
+    $sqlOrders = "
+        SELECT * FROM `academy_orders` 
+        WHERE `status` = 'verified' 
+          AND (
+              `user_id` = $userId
+              OR LOWER(TRIM(`buyer_name`)) = LOWER(TRIM('" . $conn->real_escape_string($userName) . "'))
+              OR (`buyer_email` IS NOT NULL AND `buyer_email` != '' AND `buyer_email` = '" . $conn->real_escape_string($userEmail) . "')
+              " . (!empty($userPhone) ? "OR (`buyer_whatsapp` IS NOT NULL AND `buyer_whatsapp` != '' AND `buyer_whatsapp` = '" . $conn->real_escape_string($userPhone) . "')" : "") . "
+          )
+        ORDER BY id DESC
+    ";
+    $resO = $conn->query($sqlOrders);
+    if ($resO) {
+        while ($rowO = $resO->fetch_assoc()) {
+            $verifiedOrders[] = $rowO;
+        }
+    }
+}
+
 // Fallback demo kits
 if (empty($downloadedKits)) {
     $downloadedKits = [
@@ -511,7 +550,11 @@ $seoBreadcrumbs = [
                     </div>
                     <div class="text-muted small fw-semibold">Materi Diselesaikan</div>
                     <div class="fs-3 fw-bold text-navy font-heading"><?= $totalModulesCount ?> <span class="fs-6 text-muted fw-normal">Modul</span></div>
-                    <small class="text-success fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-arrow-trend-up me-1"></i> Aktif Belajar</small>
+                    <?php if (!empty($verifiedOrders)): ?>
+                        <small class="text-success fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-circle-check me-1"></i> <?= count($verifiedOrders) ?> Akses Terbuka</small>
+                    <?php else: ?>
+                        <small class="text-success fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-arrow-trend-up me-1"></i> Aktif Belajar</small>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -522,7 +565,11 @@ $seoBreadcrumbs = [
                     </div>
                     <div class="text-muted small fw-semibold">Sertifikat Kelulusan</div>
                     <div class="fs-3 fw-bold text-navy font-heading"><?= count($certificates) ?> <span class="fs-6 text-muted fw-normal">Sertifikat</span></div>
-                    <small class="text-primary fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-qrcode me-1"></i> Terdaftar SKPI</small>
+                    <?php if (!empty($verifiedOrders) && empty($certificates)): ?>
+                        <small class="text-warning fw-bold text-dark" style="font-size: 0.72rem;"><i class="fa-solid fa-clock me-1 text-warning"></i> <?= count($verifiedOrders) ?> Siap Ujian</small>
+                    <?php else: ?>
+                        <small class="text-primary fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-qrcode me-1"></i> Terdaftar SKPI</small>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -549,16 +596,79 @@ $seoBreadcrumbs = [
             </div>
         </div>
 
+        <?php if (!empty($verifiedOrders)): ?>
+            <!-- BANNER AKSES MATERI & SERTIFIKASI TERVERIFIKASI -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 60%, #1e3a8a 100%);">
+                <div class="p-4 text-white">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-success px-3 py-2 rounded-pill fw-bold" style="background-color: #04AA6D !important;">
+                                <i class="fa-solid fa-circle-check me-1"></i> AKSES MATERI & UJIAN TERVERIFIKASI
+                            </span>
+                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold">
+                                <?= count($verifiedOrders) ?> Paket Aktif
+                            </span>
+                        </div>
+                        <small class="text-white-50"><i class="fa-solid fa-shield-halved me-1 text-warning"></i> Pembayaran QRIS telah diverifikasi oleh Admin Skillance</small>
+                    </div>
+
+                    <div class="row g-3">
+                        <?php foreach ($verifiedOrders as $vo): 
+                            $pId = $vo['product_id'];
+                            $cKey = str_replace('cert_', '', $pId);
+                            if ($cKey === 'js') $cKey = 'javascript';
+                            $isCert = strpos($pId, 'cert_') === 0 || strpos($vo['product_title'], 'Sertifikat') !== false;
+                            $tglVerif = !empty($vo['verified_at']) ? date('d M Y, H:i', strtotime($vo['verified_at'])) : date('d M Y', strtotime($vo['created_at']));
+                        ?>
+                            <div class="col-12 col-lg-6">
+                                <div class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 p-3 h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <span class="badge bg-white text-navy fw-bold small">
+                                                <i class="fa-solid fa-receipt me-1 text-gold"></i> <?= htmlspecialchars($vo['invoice_no']) ?>
+                                            </span>
+                                            <span class="badge bg-success small"><i class="fa-solid fa-lock-open me-1"></i> Lunas & Aktif</span>
+                                        </div>
+                                        <h5 class="fw-bold text-white mb-1" style="font-size: 1.05rem;">
+                                            <?= htmlspecialchars($vo['product_title']) ?>
+                                        </h5>
+                                        <p class="text-white-50 small mb-3" style="font-size: 0.78rem;">
+                                            Diverifikasi: <?= $tglVerif ?> WITA
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap gap-2 pt-2 border-top border-white border-opacity-10">
+                                        <?php if ($isCert): ?>
+                                            <a href="learn.php?c=<?= urlencode($cKey) ?>" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-navy flex-grow-1" style="background-color: #fca311 !important; color: #071a35 !important;">
+                                                <i class="fa-solid fa-book-open me-1"></i> Pelajari Materi Modul &raquo;
+                                            </a>
+                                            <a href="exam.php?action=start_exam&track=<?= urlencode($cKey) ?>&invoice_no=<?= urlencode($vo['invoice_no']) ?>&recipient_name=<?= urlencode($userName) ?>" class="btn btn-success btn-sm rounded-pill px-3 fw-bold flex-grow-1" style="background-color: #04AA6D !important;">
+                                                <i class="fa-solid fa-graduation-cap me-1"></i> Mulai Ujian Sertifikasi &raquo;
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?= htmlspecialchars($vo['download_url']) ?>" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-navy flex-grow-1" download>
+                                                <i class="fa-solid fa-download me-1"></i> Unduh File Proyek (ZIP) &raquo;
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <!-- DASHBOARD NAVIGATION TABS -->
         <ul class="nav dash-nav-pills gap-2 mb-4 bg-white p-2 rounded-3 border shadow-sm" id="dashTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tracks-tab" data-bs-toggle="tab" data-bs-target="#tracks-pane" type="button" role="tab">
-                    <i class="fa-solid fa-bars-progress me-1"></i> Progres Materi Belajar (<?= $totalModulesCount ?>)
+                    <i class="fa-solid fa-bars-progress me-1"></i> Progres Materi Belajar (<?= $totalModulesCount > 0 ? $totalModulesCount : (!empty($verifiedOrders) ? count($verifiedOrders) . ' Terbuka' : '0') ?>)
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="certs-tab" data-bs-toggle="tab" data-bs-target="#certs-pane" type="button" role="tab">
-                    <i class="fa-solid fa-certificate me-1 text-gold"></i> Koleksi Sertifikat SKPI (<?= count($certificates) ?>)
+                    <i class="fa-solid fa-certificate me-1 text-gold"></i> Koleksi Sertifikat SKPI (<?= count($certificates) > 0 ? count($certificates) : (!empty($verifiedOrders) ? count($verifiedOrders) . ' Siap Ujian' : '0') ?>)
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -597,26 +707,103 @@ $seoBreadcrumbs = [
                             </p>
 
                             <div class="list-group list-group-flush">
-                                <?php foreach ($completedModules as $m): ?>
-                                    <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="bg-success bg-opacity-10 text-success rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
-                                                <i class="fa-solid fa-circle-check fs-5"></i>
+                                <?php if (!empty($completedModules)): ?>
+                                    <?php foreach ($completedModules as $m): ?>
+                                        <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="bg-success bg-opacity-10 text-success rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                                    <i class="fa-solid fa-circle-check fs-5"></i>
+                                                </div>
+                                                <div>
+                                                    <strong class="text-navy d-block small fw-bold">
+                                                        <?= htmlspecialchars($m['module_title'] ?? $m['module_id']) ?>
+                                                    </strong>
+                                                    <span class="text-muted" style="font-size: 0.74rem;">
+                                                        <i class="fa-solid fa-layer-group me-1"></i> Jalur: <?= strtoupper(str_replace('_', ' ', $m['track_id'])) ?> &bull; Diselesaikan: <?= date('d M Y, H:i', strtotime($m['completed_at'])) ?>
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <strong class="text-navy d-block small fw-bold">
-                                                    <?= htmlspecialchars($m['module_title'] ?? $m['module_id']) ?>
-                                                </strong>
-                                                <span class="text-muted" style="font-size: 0.74rem;">
-                                                    <i class="fa-solid fa-layer-group me-1"></i> Jalur: <?= strtoupper(str_replace('_', ' ', $m['track_id'])) ?> &bull; Diselesaikan: <?= date('d M Y, H:i', strtotime($m['completed_at'])) ?>
-                                                </span>
-                                            </div>
+                                            <a href="learn.php?c=html" class="btn btn-sm btn-outline-navy rounded-pill px-3" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.78rem;">
+                                                Buka Materi &raquo;
+                                            </a>
                                         </div>
-                                        <a href="learn.php?c=html" class="btn btn-sm btn-outline-navy rounded-pill px-3" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.78rem;">
-                                            Buka Materi &raquo;
+                                    <?php endforeach; ?>
+                                <?php elseif (!empty($verifiedOrders)): ?>
+                                    <div class="py-3">
+                                        <div class="alert alert-success border-0 rounded-3 p-3 mb-3">
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <i class="fa-solid fa-circle-check fs-5 text-success"></i>
+                                                <strong class="text-navy">Akses Materi Resmi Anda Telah Aktif!</strong>
+                                            </div>
+                                            <p class="small text-muted mb-0">
+                                                Admin telah menyetujui transaksi Anda. Silakan mulai pelajari materi modul di bawah ini, kerjakan latihan koding, dan tekan tombol <em>Pahami Materi</em> di setiap akhir modul untuk mencatat progres Anda.
+                                            </p>
+                                        </div>
+
+                                        <?php foreach ($verifiedOrders as $vo): 
+                                            $pId = $vo['product_id'];
+                                            $cKey = str_replace('cert_', '', $pId);
+                                            if ($cKey === 'js') $cKey = 'javascript';
+                                        ?>
+                                            <div class="border rounded-3 p-3 mb-3 bg-light">
+                                                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3">
+                                                    <div>
+                                                        <span class="badge bg-navy text-white px-2 py-1 small"><?= strtoupper($cKey) ?> KURSUS & SERTIFIKASI</span>
+                                                        <h6 class="fw-bold text-navy mb-0 mt-1"><?= htmlspecialchars($vo['product_title']) ?></h6>
+                                                        <small class="text-muted"><i class="fa-solid fa-receipt me-1"></i> <?= $vo['invoice_no'] ?></small>
+                                                    </div>
+                                                    <div class="d-flex gap-2">
+                                                        <a href="learn.php?c=<?= urlencode($cKey) ?>" class="btn btn-warning text-navy btn-sm fw-bold rounded-pill px-3 shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important;">
+                                                            <i class="fa-solid fa-book-open me-1"></i> Buka Modul Kursus &raquo;
+                                                        </a>
+                                                        <a href="exam.php?action=start_exam&track=<?= urlencode($cKey) ?>&invoice_no=<?= urlencode($vo['invoice_no']) ?>&recipient_name=<?= urlencode($userName) ?>" class="btn btn-success btn-sm fw-bold rounded-pill px-3 shadow-sm" style="background-color: #04AA6D !important;">
+                                                            <i class="fa-solid fa-graduation-cap me-1"></i> Mulai Ujian &raquo;
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Topik Inti Modul -->
+                                                <div class="bg-white p-3 rounded-2 border">
+                                                    <small class="fw-bold text-navy d-block mb-2"><i class="fa-solid fa-list-check me-1 text-primary"></i> Modul Pembelajaran Utama:</small>
+                                                    <div class="row g-2 small">
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_intro" class="text-decoration-none text-dark">1. Pengantar & Anatomi Struktur HTML5</a>
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_elements" class="text-decoration-none text-dark">2. Elemen Semantik & Layout Modern</a>
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_forms" class="text-decoration-none text-dark">3. Formulir & Validasi Input User</a>
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_media" class="text-decoration-none text-dark">4. Audio, Video, Canvas & Media Web</a>
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_accessibility" class="text-decoration-none text-dark">5. Standar W3C, SEO & Aksesibilitas Web</a>
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-center gap-2">
+                                                            <i class="fa-regular fa-circle-play text-warning"></i>
+                                                            <a href="learn.php?c=<?= urlencode($cKey) ?>&p=html_summary" class="text-decoration-none text-dark">6. Rangkuman Materi & Ujian Akhir</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="text-center py-4">
+                                        <i class="fa-solid fa-book-open-reader fs-1 text-muted opacity-25 mb-2 d-block"></i>
+                                        <p class="text-muted small mb-3">Belum ada modul yang dicentang selesai. Buka tutorial koding gratis dan tandai pemahaman Anda.</p>
+                                        <a href="learn.php?c=html" class="btn btn-navy text-white btn-sm rounded-pill px-4" style="background: #0d2e5c;">
+                                            Mulai Belajar Materi HTML &raquo;
                                         </a>
                                     </div>
-                                <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -659,19 +846,55 @@ $seoBreadcrumbs = [
                 </div>
 
                 <div class="row g-4">
-                    <?php if (empty($certificates)): ?>
-                        <div class="col-12">
-                            <div class="bg-white border rounded-4 p-5 text-center shadow-sm">
-                                <i class="fa-solid fa-certificate fs-1 text-muted mb-3"></i>
-                                <h5 class="fw-bold text-navy mb-2">Belum Ada Sertifikat yang Diraih</h5>
-                                <p class="text-muted small mb-4" style="max-width: 520px; margin: 0 auto;">
-                                    Anda belum menyelesaikan ujian kompetensi kelulusan. Ikuti ujian 25 soal kuis dengan batas waktu 30 menit (passing grade 80%) untuk menerbitkan sertifikat digital pertama Anda!
-                                </p>
-                                <a href="exam.php" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm">
-                                    <i class="fa-solid fa-award me-1"></i> Mulai Ujian Sertifikasi Sekarang &raquo;
-                                </a>
+                    <?php if (!empty($verifiedOrders)): ?>
+                        <?php foreach ($verifiedOrders as $vo): 
+                            $pId = $vo['product_id'];
+                            $cKey = str_replace('cert_', '', $pId);
+                            if ($cKey === 'js') $cKey = 'javascript';
+                            $isCert = strpos($pId, 'cert_') === 0 || strpos($vo['product_title'], 'Sertifikat') !== false;
+                            if (!$isCert) continue;
+                        ?>
+                            <div class="col-12 mb-2">
+                                <div class="bg-success-subtle border border-success border-opacity-50 rounded-4 p-4 shadow-sm">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                                        <div>
+                                            <span class="badge bg-success px-3 py-1 rounded-pill fw-bold mb-2 small shadow-sm" style="background-color: #04AA6D !important;">
+                                                <i class="fa-solid fa-circle-check me-1"></i> TIKET UJIAN RESMI AKTIF & LUNAS
+                                            </span>
+                                            <h5 class="fw-bold text-navy mb-1"><?= htmlspecialchars($vo['product_title']) ?></h5>
+                                            <p class="text-muted small mb-0">
+                                                Invoice: <strong><?= htmlspecialchars($vo['invoice_no']) ?></strong> &bull; Status: <strong class="text-success">Terverifikasi Admin</strong> (Passing Grade 80% untuk terbitkan nomor seri & QR Code sertifikat).
+                                            </p>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <a href="learn.php?c=<?= urlencode($cKey) ?>" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold">
+                                                <i class="fa-solid fa-book-open me-1"></i> Pelajari Materi
+                                            </a>
+                                            <a href="exam.php?action=start_exam&track=<?= urlencode($cKey) ?>&invoice_no=<?= urlencode($vo['invoice_no']) ?>&recipient_name=<?= urlencode($userName) ?>" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm" style="background-color: #04AA6D !important;">
+                                                <i class="fa-solid fa-graduation-cap me-1"></i> Mulai Ujian Kelulusan &raquo;
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if (empty($certificates)): ?>
+                        <?php if (empty($verifiedOrders)): ?>
+                            <div class="col-12">
+                                <div class="bg-white border rounded-4 p-5 text-center shadow-sm">
+                                    <i class="fa-solid fa-certificate fs-1 text-muted mb-3"></i>
+                                    <h5 class="fw-bold text-navy mb-2">Belum Ada Sertifikat yang Diraih</h5>
+                                    <p class="text-muted small mb-4" style="max-width: 520px; margin: 0 auto;">
+                                        Anda belum menyelesaikan ujian kompetensi kelulusan. Ikuti ujian 25 soal kuis dengan batas waktu 30 menit (passing grade 80%) untuk menerbitkan sertifikat digital pertama Anda!
+                                    </p>
+                                    <a href="exam.php" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm">
+                                        <i class="fa-solid fa-award me-1"></i> Mulai Ujian Sertifikasi Sekarang &raquo;
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     <?php else: ?>
                         <?php foreach ($certificates as $cert): ?>
                             <div class="col-md-6">

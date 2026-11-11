@@ -35,6 +35,39 @@ foreach ($examQuestionsData as $k => $info) {
     }
 }
 
+// Check user verified orders in database (auto link & unlock for logged in student)
+$userVerifiedTracks = [];
+if ($isLoggedIn && $conn) {
+    $uIdSafe = intval($userId);
+    $uNameSafe = $conn->real_escape_string($defaultName);
+    $uEmailSafe = $conn->real_escape_string($defaultEmail);
+
+    $resVo = $conn->query("
+        SELECT invoice_no, product_id, product_title 
+        FROM academy_orders 
+        WHERE status = 'verified' 
+          AND (
+              user_id = $uIdSafe
+              OR LOWER(TRIM(buyer_name)) = LOWER(TRIM('$uNameSafe'))
+              " . (!empty($uEmailSafe) ? "OR buyer_email = '$uEmailSafe'" : "") . "
+          )
+    ");
+    if ($resVo) {
+        while ($voRow = $resVo->fetch_assoc()) {
+            $pId = $voRow['product_id'];
+            $cKey = str_replace('cert_', '', $pId);
+            if ($cKey === 'js') $cKey = 'javascript';
+            $userVerifiedTracks[$cKey] = $voRow['invoice_no'];
+            $userVerifiedTracks[$pId] = $voRow['invoice_no'];
+            if (!isset($_SESSION['unlocked_tracks'])) {
+                $_SESSION['unlocked_tracks'] = [];
+            }
+            $_SESSION['unlocked_tracks'][$cKey] = true;
+            $_SESSION['unlocked_tracks'][$pId] = true;
+        }
+    }
+}
+
 // =========================================================================
 // ACTION: START EXAM (VERIFY PAYMENT / VOUCHER GATE)
 // =========================================================================
@@ -59,6 +92,15 @@ if ($action === 'start_exam') {
     // 2. Check Session Cache
     if (!empty($_SESSION['unlocked_tracks'][$trackKey])) {
         $isUnlocked = true;
+    }
+
+    // 2b. Check User Verified Orders in Database
+    if (!$isUnlocked && !empty($userVerifiedTracks[$trackKey])) {
+        $isUnlocked = true;
+        $_SESSION['unlocked_tracks'][$trackKey] = true;
+        if (empty($invoiceNo)) {
+            $invoiceNo = $userVerifiedTracks[$trackKey];
+        }
     }
 
     // 3. Check Invoice Status in Database
@@ -513,6 +555,21 @@ $seoBreadcrumbs = [
                         </div>
                     <?php endif; ?>
 
+                    <?php if (!empty($userVerifiedTracks[$trackKey])): ?>
+                        <div class="alert alert-success border-0 rounded-4 p-3 mb-4 shadow-sm d-flex flex-wrap justify-content-between align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-circle-check fs-2 text-success"></i>
+                                <div>
+                                    <strong class="d-block text-navy">Akses Ujian & Sertifikasi Telah Terverifikasi!</strong>
+                                    <span class="small text-muted">Invoice <strong><?= htmlspecialchars($userVerifiedTracks[$trackKey]) ?></strong> telah lunas & disetujui Admin. Anda dapat langsung mengerjakan ujian evaluasi sekarang.</span>
+                                </div>
+                            </div>
+                            <a href="exam.php?action=start_exam&track=<?= urlencode($trackKey) ?>&invoice_no=<?= urlencode($userVerifiedTracks[$trackKey]) ?>&recipient_name=<?= urlencode($defaultName) ?>" class="btn btn-success fw-bold px-4 py-2 rounded-pill shadow-sm" style="background-color: #04AA6D !important;">
+                                <i class="fa-solid fa-play me-1"></i> Mulai Ujian Sekarang &raquo;
+                            </a>
+                        </div>
+                    <?php endif; ?>
+
                     <!-- TRYOUT KILAT BANNER (FEATURE PEMANASAN) -->
                     <div class="card border-0 rounded-4 shadow-sm mb-5 p-4 text-white overflow-hidden position-relative" style="background: linear-gradient(135deg, #0d2e5c 0%, #1e3a8a 100%); border-left: 5px solid #fca311 !important;">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
@@ -563,14 +620,20 @@ $seoBreadcrumbs = [
                             <!-- TAB 1: MODULAR COURSE TRACKS (SOLOLEARN STYLE) -->
                             <div class="tab-pane fade show active" id="tab-course-pane" role="tabpanel">
                                 <div class="row g-3">
-                                    <?php foreach ($modularCourseTracks as $k => $info): ?>
+                                    <?php foreach ($modularCourseTracks as $k => $info): 
+                                        $isModVerified = !empty($userVerifiedTracks[$k]);
+                                    ?>
                                         <div class="col-md-6 col-lg-4">
-                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
+                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?> <?= $isModVerified ? 'border-success' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
                                                 <input type="radio" name="track_choice" value="<?= $k ?>" class="track-radio-input" <?= ($k === $trackKey) ? 'checked' : '' ?>>
                                                 <div>
                                                     <div class="d-flex justify-content-between align-items-center mb-2 pe-4">
                                                         <span class="badge bg-navy text-white px-2 py-1 rounded small" style="background-color: #0d2e5c; font-size: 0.72rem;"><?= $info['code'] ?></span>
-                                                        <span class="badge bg-danger rounded-pill small">HEMAT 60%</span>
+                                                        <?php if ($isModVerified): ?>
+                                                            <span class="badge bg-success rounded-pill small"><i class="fa-solid fa-circle-check me-1"></i> TERVERIFIKASI</span>
+                                                        <?php else: ?>
+                                                            <span class="badge bg-danger rounded-pill small">HEMAT 60%</span>
+                                                        <?php endif; ?>
                                                     </div>
                                                     <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem; line-height: 1.4;"><?= htmlspecialchars($info['title']) ?></h6>
                                                     <p class="text-muted small mb-2" style="font-size: 0.74rem; line-height: 1.5;"><?= htmlspecialchars($info['competencies']) ?></p>
@@ -591,14 +654,20 @@ $seoBreadcrumbs = [
                             <!-- TAB 2: CAREER TRACKS -->
                             <div class="tab-pane fade" id="tab-career-pane" role="tabpanel">
                                 <div class="row g-3">
-                                    <?php foreach ($careerTracks as $k => $info): ?>
+                                    <?php foreach ($careerTracks as $k => $info): 
+                                        $isCarVerified = !empty($userVerifiedTracks[$k]);
+                                    ?>
                                         <div class="col-md-6">
-                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
+                                            <div class="track-selector-card <?= ($k === $trackKey) ? 'selected' : '' ?> <?= $isCarVerified ? 'border-success' : '' ?>" onclick="selectTrack('<?= $k ?>', '<?= htmlspecialchars(addslashes($info['title'])) ?>', <?= $info['price'] ?>, '<?= $info['code'] ?>', <?= $info['duration_minutes'] ?>, <?= count($info['questions']) ?>, this)">
                                                 <input type="radio" name="track_choice" value="<?= $k ?>" class="track-radio-input" <?= ($k === $trackKey) ? 'checked' : '' ?>>
                                                 <div>
                                                     <div class="d-flex justify-content-between align-items-center mb-2 pe-4">
                                                         <span class="badge bg-warning text-dark fw-bold px-2 py-1 rounded small"><?= $info['code'] ?> CAREER</span>
-                                                        <span class="badge bg-success rounded-pill small">25 Soal Komprehensif</span>
+                                                        <?php if ($isCarVerified): ?>
+                                                            <span class="badge bg-success rounded-pill small"><i class="fa-solid fa-circle-check me-1"></i> TERVERIFIKASI</span>
+                                                        <?php else: ?>
+                                                            <span class="badge bg-success rounded-pill small">25 Soal Komprehensif</span>
+                                                        <?php endif; ?>
                                                     </div>
                                                     <h5 class="fw-bold text-navy mb-2"><?= htmlspecialchars($info['title']) ?></h5>
                                                     <p class="text-muted small mb-3"><?= htmlspecialchars($info['competencies']) ?></p>
@@ -619,6 +688,10 @@ $seoBreadcrumbs = [
                         </div>
 
                         <!-- GATEWAY PEMBAYARAN & AKTIVASI UJIAN (BAYAR DULU) -->
+                        <?php
+                        $isTrackVerified = !empty($userVerifiedTracks[$trackKey]);
+                        $activeInv = $isTrackVerified ? $userVerifiedTracks[$trackKey] : $generatedInv;
+                        ?>
                         <div class="p-4 rounded-4 bg-light border border-2 mt-4" style="border-color: #e2e8f0 !important;" id="checkoutGateBox">
                             
                             <div class="row g-4 align-items-start">
@@ -635,10 +708,20 @@ $seoBreadcrumbs = [
                                         </div>
                                     </div>
 
+                                    <div class="alert alert-success border-0 rounded-3 p-3 mb-3" id="verifiedNotice" style="<?= $isTrackVerified ? '' : 'display: none;' ?>">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-circle-check fs-5 text-success"></i>
+                                            <strong class="text-navy">Pembayaran Terverifikasi & Akses Ujian Aktif</strong>
+                                        </div>
+                                        <div class="small text-muted">
+                                            No. Invoice: <strong class="text-dark" id="verifiedInvLabel"><?= htmlspecialchars($activeInv) ?></strong>. Anda tidak perlu membayar lagi untuk materi ini. Silakan langsung masuk ke ruang ujian.
+                                        </div>
+                                    </div>
+
                                     <form id="startExamForm" action="exam.php" method="POST">
                                         <input type="hidden" name="action" value="start_exam">
                                         <input type="hidden" name="track" id="formTrackKey" value="<?= htmlspecialchars($trackKey) ?>">
-                                        <input type="hidden" name="invoice_no" id="formInvoiceNo" value="<?= $generatedInv ?>">
+                                        <input type="hidden" name="invoice_no" id="formInvoiceNo" value="<?= htmlspecialchars($activeInv) ?>">
 
                                         <div class="mb-3">
                                             <label class="form-label small fw-bold text-navy">Nama Lengkap Mahasiswa / Peserta <span class="text-danger">*</span></label>
@@ -671,7 +754,7 @@ $seoBreadcrumbs = [
                                         </div>
 
                                         <!-- VOUCHER / BYPASS INPUT -->
-                                        <div class="mb-4 p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50">
+                                        <div class="mb-4 p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50" id="voucherBoxWrapper" style="<?= $isTrackVerified ? 'display: none;' : '' ?>">
                                             <label class="form-label small fw-bold text-navy d-flex justify-content-between align-items-center mb-1">
                                                 <span><i class="fa-solid fa-ticket text-warning me-1"></i> Punya Kode Voucher / Akses Instan?</span>
                                                 <span class="badge bg-navy text-white small" style="background: #0d2e5c; font-size: 0.68rem;">Khusus Mahasiswa: MAHASISWA</span>
@@ -686,15 +769,28 @@ $seoBreadcrumbs = [
                                         </div>
 
                                         <!-- START EXAM BUTTON -->
-                                        <button type="submit" class="btn btn-navy btn-lg fw-bold w-100 py-3 rounded-pill text-white shadow-sm" style="background-color: #0d2e5c !important;">
-                                            <i class="fa-solid fa-play me-2 text-warning"></i> Masuk Ruang Ujian Kompetensi &raquo;
+                                        <button type="submit" class="btn <?= $isTrackVerified ? 'btn-success' : 'btn-navy' ?> btn-lg fw-bold w-100 py-3 rounded-pill text-white shadow-sm" id="btnSubmitExam" style="<?= $isTrackVerified ? 'background-color: #04AA6D !important;' : 'background-color: #0d2e5c !important;' ?>">
+                                            <i class="fa-solid fa-play me-2 <?= $isTrackVerified ? '' : 'text-warning' ?>"></i> <?= $isTrackVerified ? 'Masuk Ruang Ujian (Akses Terverifikasi) &raquo;' : 'Masuk Ruang Ujian Kompetensi &raquo;' ?>
                                         </button>
                                     </form>
                                 </div>
 
-                                <!-- RIGHT COL: QRIS BOX -->
+                                <!-- RIGHT COL: QRIS BOX & VERIFIED STATUS -->
                                 <div class="col-lg-5">
-                                    <div class="qris-box shadow-sm">
+                                    <div id="qrisVerifiedBoxWrapper" style="<?= $isTrackVerified ? '' : 'display: none;' ?>">
+                                        <div class="p-4 bg-white border border-success rounded-4 text-center shadow-sm">
+                                            <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; font-size: 1.6rem; background-color: #04AA6D !important;">
+                                                <i class="fa-solid fa-shield-halved"></i>
+                                            </div>
+                                            <h5 class="fw-bold text-navy mb-1">Akses Ujian Terbuka</h5>
+                                            <p class="text-muted small mb-3">Pesanan Anda telah diverifikasi oleh Admin. Kerjakan ujian kompetensi dengan teliti untuk memperoleh Sertifikat Digital SKPI.</p>
+                                            <div class="p-2 bg-light rounded-3 border small font-monospace text-muted mb-0">
+                                                Invoice: <strong class="text-navy" id="verifiedCardInvDisplay"><?= htmlspecialchars($activeInv) ?></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="qris-box shadow-sm" id="qrisBoxWrapper" style="<?= $isTrackVerified ? 'display: none;' : '' ?>">
                                         <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2 small shadow-xs">
                                             <i class="fa-solid fa-qrcode me-1"></i> QRIS SKILLANCE STORE
                                         </span>
@@ -744,6 +840,9 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!") ?>" target="_blank"
         </main>
 
         <script>
+            const verifiedTracks = <?= json_encode($userVerifiedTracks) ?>;
+            const defaultGeneratedInv = '<?= $generatedInv ?>';
+
             function selectTrack(trackKey, trackTitle, price, code, duration, qCount, el) {
                 // Update selected styles
                 document.querySelectorAll('.track-selector-card').forEach(c => c.classList.remove('selected'));
@@ -758,8 +857,45 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!") ?>" target="_blank"
                 document.getElementById('selectedTrackPriceDisplay').innerText = formattedPrice;
                 document.getElementById('displayPriceTag').innerText = formattedPrice;
 
+                const userVerifInv = verifiedTracks[trackKey] || '';
+                const inv = userVerifInv || defaultGeneratedInv;
+                document.getElementById('formInvoiceNo').value = inv;
+
+                const verifiedNotice = document.getElementById('verifiedNotice');
+                const voucherBoxWrapper = document.getElementById('voucherBoxWrapper');
+                const qrisBoxWrapper = document.getElementById('qrisBoxWrapper');
+                const qrisVerifiedBoxWrapper = document.getElementById('qrisVerifiedBoxWrapper');
+                const btnSubmitExam = document.getElementById('btnSubmitExam');
+
+                if (userVerifInv) {
+                    if (verifiedNotice) {
+                        verifiedNotice.style.display = 'block';
+                        document.getElementById('verifiedInvLabel').innerText = userVerifInv;
+                    }
+                    if (voucherBoxWrapper) voucherBoxWrapper.style.display = 'none';
+                    if (qrisBoxWrapper) qrisBoxWrapper.style.display = 'none';
+                    if (qrisVerifiedBoxWrapper) {
+                        qrisVerifiedBoxWrapper.style.display = 'block';
+                        document.getElementById('verifiedCardInvDisplay').innerText = userVerifInv;
+                    }
+                    if (btnSubmitExam) {
+                        btnSubmitExam.className = 'btn btn-success btn-lg fw-bold w-100 py-3 rounded-pill text-white shadow-sm';
+                        btnSubmitExam.style.backgroundColor = '#04AA6D';
+                        btnSubmitExam.innerHTML = '<i class="fa-solid fa-play me-2"></i> Masuk Ruang Ujian (Akses Terverifikasi) &raquo;';
+                    }
+                } else {
+                    if (verifiedNotice) verifiedNotice.style.display = 'none';
+                    if (voucherBoxWrapper) voucherBoxWrapper.style.display = 'block';
+                    if (qrisBoxWrapper) qrisBoxWrapper.style.display = 'block';
+                    if (qrisVerifiedBoxWrapper) qrisVerifiedBoxWrapper.style.display = 'none';
+                    if (btnSubmitExam) {
+                        btnSubmitExam.className = 'btn btn-navy btn-lg fw-bold w-100 py-3 rounded-pill text-white shadow-sm';
+                        btnSubmitExam.style.backgroundColor = '#0d2e5c';
+                        btnSubmitExam.innerHTML = '<i class="fa-solid fa-play me-2 text-warning"></i> Masuk Ruang Ujian Kompetensi &raquo;';
+                    }
+                }
+
                 // Update WA link
-                const inv = document.getElementById('formInvoiceNo').value;
                 const name = document.getElementById('inputRecipientName').value || 'Peserta Mahasiswa';
                 const waMsg = `Halo Admin Skillance Academy (0822-9170-0778),
 
@@ -770,20 +906,25 @@ Saya ingin konfirmasi pembayaran Ujian Sertifikasi Resmi:
 - Nama: ${name}
 
 Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
-                document.getElementById('btnWaConfirm').href = 'https://wa.me/6282291700778?text=' + encodeURIComponent(waMsg);
+                const btnWa = document.getElementById('btnWaConfirm');
+                if (btnWa) {
+                    btnWa.href = 'https://wa.me/6282291700778?text=' + encodeURIComponent(waMsg);
+                }
 
                 // Auto register order in background
-                fetch('api/order_status.php?action=register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        invoice_no: inv,
-                        product_id: 'cert_' + trackKey,
-                        product_title: 'Sertifikat Resmi ' + trackTitle,
-                        nominal: price,
-                        buyer_name: name
-                    })
-                }).catch(() => {});
+                if (!userVerifInv) {
+                    fetch('api/order_status.php?action=register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            invoice_no: inv,
+                            product_id: 'cert_' + trackKey,
+                            product_title: 'Sertifikat Resmi ' + trackTitle,
+                            nominal: price,
+                            buyer_name: name
+                        })
+                    }).catch(() => {});
+                }
             }
         </script>
 

@@ -52,6 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (!empty($inv)) {
         $invSafe = $conn->real_escape_string($inv);
         $conn->query("UPDATE academy_orders SET status = 'verified', verified_at = NOW() WHERE invoice_no = '$invSafe'");
+        
+        // Ensure columns user_id & buyer_email exist
+        $chkCol = $conn->query("SHOW COLUMNS FROM `academy_orders` LIKE 'user_id'");
+        if ($chkCol && $chkCol->num_rows == 0) {
+            $conn->query("ALTER TABLE `academy_orders` ADD COLUMN `user_id` INT NULL AFTER `id`, ADD COLUMN `buyer_email` VARCHAR(150) NULL AFTER `buyer_name`");
+        }
+        
+        // Auto link order to users table by buyer_name, buyer_email, or phone
+        $conn->query("
+            UPDATE academy_orders o
+            JOIN users u ON (
+                LOWER(TRIM(o.buyer_name)) = LOWER(TRIM(u.name))
+                OR (o.buyer_whatsapp IS NOT NULL AND o.buyer_whatsapp != '' AND o.buyer_whatsapp = u.phone)
+                OR (o.buyer_email IS NOT NULL AND o.buyer_email != '' AND o.buyer_email = u.email)
+            )
+            SET o.user_id = u.id, o.buyer_email = COALESCE(o.buyer_email, u.email)
+            WHERE o.invoice_no = '$invSafe' AND o.user_id IS NULL
+        ");
     }
     header("Location: leads.php?msg=order_approved");
     exit();
