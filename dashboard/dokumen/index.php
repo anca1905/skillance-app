@@ -425,6 +425,84 @@ $activeMenu = "dokumen";
             </div>
         </div>
 
+        <!-- PAKET BERKAS KEMITRAAN RESMI MEDIA SIBER (PORTAL BERITA SKILLANCE) -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #fe9800 !important; background: #ffffff;">
+            <div class="card-body p-3.5">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="badge bg-gold text-navy fw-bold px-2 py-0.5 small">
+                                <i class="fa-solid fa-newspaper me-1"></i>PORTAL BERITA SIBER SKILLANCE
+                            </span>
+                            <span class="badge bg-navy text-white px-2 py-0.5 small">
+                                Cerita Rakyat ID (www.xyronnews.com)
+                            </span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-1">3 Paket Berkas Kerja Sama Media Kedinasan & Mitra Pemda</h5>
+                        <p class="text-muted small mb-0">
+                            Berkas kemitraan resmi penerbit media pers PT Skillance Digital Indonesia, lengkap dengan Kop Surat terstandarisasi dan format tanda tangan fisik (bebas tanda stempel/meterai digital agar siap ditempel meterai Rp 10.000 & cap stempel basah manual).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row g-2.5">
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size:0.7rem;">BERKAS #1 &bull; 4 HALAMAN</span>
+                                    <i class="fa-solid fa-file-contract text-primary fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">MoU & PKS Kemitraan Media</h6>
+                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
+                                    Nota Kesepahaman Induk, Perjanjian Operasional Publikasi Kedinasan, Rincian Paket Tarif, dan BAST Hasil Pekerjaan.
+                                </p>
+                            </div>
+                            <a href="mou-media-kemitraan.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak MoU &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size:0.7rem;">BERKAS #2 &bull; 7 HALAMAN</span>
+                                    <i class="fa-solid fa-book-open text-success fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">LPJ & Kliping Media Digital</h6>
+                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
+                                    Laporan Pertanggungjawaban Resmi, Cover LPJ, Surat Pengantar Redaksi, Berita Acara Verifikasi, dan Kliping Bukti Tayang Berita.
+                                </p>
+                            </div>
+                            <a href="lpj-kliping-media.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak LPJ &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-warning bg-opacity-20 text-warning fw-bold text-dark" style="font-size:0.7rem;">BERKAS #3 &bull; 6 HALAMAN</span>
+                                    <i class="fa-solid fa-file-invoice-dollar text-warning fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Faktur & Berkas Pajak PT</h6>
+                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
+                                    Surat Permohonan Pembayaran, Faktur Tagihan (Invoice), Kwitansi Resmi 2 Lembar, SPTJM, dan Surat Rekening Bank / NPWP Badan.
+                                </p>
+                            </div>
+                            <a href="berkas-pembayaran-pajak.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak Pajak &raquo;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- LIVE GENERATOR & DOCUMENT PREVIEW AREA -->
         <div id="generatorSection" class="row g-4">
             
@@ -502,16 +580,20 @@ $activeMenu = "dokumen";
                         </select>
                     </div>
 
-                    <div class="fw-bold small text-navy mb-2"><i class="fa-solid fa-stamp me-1 text-gold"></i>STEMPEL & METERAI:</div>
+                    <div class="fw-bold small text-navy mb-2"><i class="fa-solid fa-stamp me-1 text-gold"></i>STEMPEL & METERAI (OPSIONAL):</div>
+
+                    <div class="p-2 rounded bg-light border mb-2 small text-muted" style="font-size: 0.75rem;">
+                        <i class="fa-solid fa-circle-info text-primary me-1"></i><strong>Mode Fisik Standar:</strong> Cap & kotak meterai digital dimatikan agar area tanda tangan bersih saat dicetak untuk ditempel meterai fisik Rp 10.000 & cap stempel basah.
+                    </div>
 
                     <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="chkShowStamp" checked onchange="toggleStampPreview()">
-                        <label class="form-check-label small fw-semibold" for="chkShowStamp">Tampilkan Cap Stempel Resmi PT</label>
+                        <input class="form-check-input" type="checkbox" id="chkShowStamp" onchange="toggleStampPreview()">
+                        <label class="form-check-label small fw-semibold" for="chkShowStamp">Tampilkan Cap Digital PT (Hanya untuk File Digital)</label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="chkShowMaterai" checked onchange="toggleMateraiPreview()">
-                        <label class="form-check-label small fw-semibold" for="chkShowMaterai">Tampilkan Kotak Meterai Rp 10.000</label>
+                        <input class="form-check-input" type="checkbox" id="chkShowMaterai" onchange="toggleMateraiPreview()">
+                        <label class="form-check-label small fw-semibold" for="chkShowMaterai">Tampilkan Kotak Meterai (Hanya untuk Panduan)</label>
                     </div>
 
                     <div class="d-grid gap-2">

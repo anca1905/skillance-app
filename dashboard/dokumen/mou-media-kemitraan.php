@@ -1,0 +1,836 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../config/config.php';
+
+$currentUserRole = strtolower(trim($_SESSION['user_role'] ?? $_SESSION['role'] ?? ''));
+$currentUserId = (int)($_SESSION['user_id'] ?? 0);
+$currentUserEmail = strtolower(trim($_SESSION['user_email'] ?? ''));
+$currentUserName = strtolower(trim($_SESSION['user_name'] ?? ''));
+
+$isAuthorized = (
+    in_array($currentUserRole, ['admin', 'direktur', 'director', 'ceo', 'bendahara', 'leader', 'pimpinan'])
+    || in_array($currentUserId, [1, 4])
+    || strpos($currentUserEmail, 'arsyad') !== false
+    || strpos($currentUserName, 'arsyad') !== false
+);
+
+if (!isset($_SESSION['user_id']) || !$isAuthorized) {
+    header("Location: ../../auth/index.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>MoU & Perjanjian Kerja Sama Media - PT Skillance Digital Indonesia</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 20mm 20mm 20mm;
+    }
+    @media print {
+      body {
+        margin: 0;
+        background: #fff;
+        font-size: 11pt;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 11.5pt;
+      line-height: 1.45;
+      color: #000;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .paper {
+      background: #fff;
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 30px auto;
+      padding: 25mm 22mm;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+      position: relative;
+    }
+    .kop-surat {
+      border-bottom: 3px double #000;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .kop-logo {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+    }
+    .kop-text {
+      text-align: center;
+      flex: 1;
+    }
+    .kop-text h2 {
+      margin: 0;
+      font-size: 15pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .kop-text h1 {
+      margin: 2px 0;
+      font-size: 17pt;
+      font-weight: 900;
+      color: #0047CC;
+      text-transform: uppercase;
+    }
+    .kop-text p {
+      margin: 1px 0;
+      font-size: 9pt;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    .doc-title {
+      text-align: center;
+      margin: 18px 0 22px 0;
+    }
+    .doc-title h3 {
+      margin: 0;
+      font-size: 13pt;
+      font-weight: bold;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+    .doc-title p {
+      margin: 3px 0 0 0;
+      font-size: 11pt;
+    }
+    p, li {
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+    ol, ul {
+      margin-top: 4px;
+      margin-bottom: 10px;
+      padding-left: 24px;
+    }
+    .pasal-title {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-size: 11.5pt;
+    }
+    .pasal-sub {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 11pt;
+    }
+    .pihak-box {
+      margin-left: 15px;
+      margin-bottom: 12px;
+    }
+    .pihak-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+    }
+    .pihak-table td {
+      padding: 2px 4px;
+      vertical-align: top;
+    }
+    .pihak-table td:first-child {
+      width: 150px;
+    }
+    .pihak-table td:nth-child(2) {
+      width: 15px;
+    }
+    .tanda-tangan-grid {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 35px;
+      page-break-inside: avoid;
+    }
+    .ttd-box {
+      width: 45%;
+      text-align: center;
+    }
+    .ttd-space {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9pt;
+      color: #888;
+    }
+    .materai-box {
+      border: 1px dashed #999;
+      padding: 6px 12px;
+      font-size: 8pt;
+      color: #555;
+      display: inline-block;
+    }
+    .ttd-name {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .lampiran-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 10.5pt;
+    }
+    .lampiran-table th, .lampiran-table td {
+      border: 1px solid #000;
+      padding: 6px 10px;
+    }
+    .lampiran-table th {
+      background: #f0f0f0;
+      text-align: center;
+    }
+    .btn-print-bar {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 9999;
+      background: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+    .btn-print {
+      background: #0047CC;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn-print:hover {
+      background: #003399;
+    }
+  
+    /* Standardized Official PT Skillance Kop Surat */
+    .kop-surat {
+      border-bottom: 3px double #0d2e5c !important;
+      padding-bottom: 12px !important;
+      margin-bottom: 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+    .kop-logo {
+      width: 82px !important;
+      height: 82px !important;
+      object-fit: contain !important;
+      flex-shrink: 0 !important;
+    }
+    .kop-text {
+      text-align: left !important;
+      flex: 1 !important;
+    }
+    .kop-text h2, .kop-title-main, .kop-text h1 {
+      margin: 0 0 2px 0 !important;
+      font-size: 15pt !important;
+      font-weight: 800 !important;
+      color: #0d2e5c !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      font-family: 'Poppins', Arial, sans-serif !important;
+    }
+    .kop-sub {
+      margin: 0 0 3px 0 !important;
+      font-size: 8pt !important;
+      font-weight: 700 !important;
+      color: #d97706 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      font-family: Arial, sans-serif !important;
+    }
+    .kop-text p.meta, .kop-text p {
+      margin: 1px 0 !important;
+      font-size: 7.8pt !important;
+      font-family: 'Inter', Arial, sans-serif !important;
+      color: #374151 !important;
+      line-height: 1.35 !important;
+    }
+
+    /* Clean Physical Stamp & Materai Area (No Digital Print Overlay) */
+    .materai-box, .materai {
+      display: none !important;
+    }
+    .ttd-space {
+      height: 85px !important;
+      min-height: 85px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative !important;
+      background: transparent !important;
+    }
+
+
+    /* Top Navigation Toolbar for Executive Dashboard */
+    .top-nav-bar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #0d2e5c;
+      color: #ffffff;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      z-index: 99999;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: -20px -20px 25px -20px;
+    }
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-back {
+      background: rgba(255,255,255,0.15);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      background: rgba(255,255,255,0.3);
+      color: #ffffff;
+    }
+    .badge-org {
+      background: #fe9800;
+      color: #0d2e5c;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .badge-doc {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .doc-main-name {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .print-mode-tag {
+      font-size: 11.5px;
+      color: #e2e8f0;
+      background: rgba(0,0,0,0.25);
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px dashed rgba(255,255,255,0.3);
+    }
+    .btn-print-main {
+      background: #fe9800;
+      color: #0d2e5c;
+      border: none;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .btn-print-main:hover {
+      background: #ffa726;
+      transform: translateY(-1px);
+    }
+
+</style>
+</head>
+<body>
+
+  <!-- Floating Print Bar -->
+    <!-- Master Top Navigation & Printing Toolbar (No Print) -->
+  <div class="top-nav-bar no-print">
+    <div class="toolbar-left">
+      <a href="index.php" class="btn-back">
+        &larr; Pusat Dokumen Legal
+      </a>
+      <span class="badge-org">PT SKILLANCE DIGITAL INDONESIA</span>
+      <span class="badge-doc">Naskah Perjanjian Resmi</span>
+      <span class="doc-main-name">MoU & PKS Kemitraan Media Siber</span>
+    </div>
+    <div class="toolbar-right">
+      <span class="print-mode-tag">
+        <i class="fa-solid fa-stamp"></i> <strong>Mode Cetak Fisik:</strong> Siap untuk Materai Tempel Rp 10.000 & Cap Basah Manual
+      </span>
+      <button class="btn-print-main" onclick="window.print()">
+        🖨️ Cetak / Simpan PDF (A4)
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- HALAMAN 1: NOTA KESEPAHAMAN (MoU)                              -->
+  <!-- ============================================================== -->
+  <div class="paper">
+    
+    <!-- KOP SURAT RESMI -->
+    <div class="kop-surat">
+      <img src="../../assets/img/logo_skillance_icon.png" class="kop-logo" alt="Logo PT Skillance Digital Indonesia">
+      <div class="kop-text">
+        <h2 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h2>
+        <div class="kop-sub">KONSORSIUM MEDIA SIBER & KEMITRAAN DISEMINASI INFORMASI PUBLIK</div>
+        <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
+        <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
+        <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+      </div>
+    </div>
+
+    <!-- JUDUL SURAT -->
+    <div class="doc-title">
+      <h3>NOTA KESEPAHAMAN (MEMORANDUM OF UNDERSTANDING)</h3>
+      <p><strong>TENTANG KEMITRAAN PUBLIKASI KEGIATAN KEDINASAN, DISEMINASI INFORMASI PUBLIK, DAN MEDIA PARTNER</strong></p>
+      <p>Nomor: 014/MoU-PUB/SDI-CRID/XI/2026<br>
+         Nomor Pihak Kedua: .....................................................</p>
+    </div>
+
+    <p>Pada hari ini, <strong>....................</strong> tanggal <strong>.....</strong> bulan <strong>November</strong> tahun <strong>Dua Ribu Dua Puluh Enam (..-11-2026)</strong>, bertempat di Kendari, pihak-pihak yang bertandatangan di bawah ini:</p>
+
+    <div class="pihak-box">
+      <table class="pihak-table">
+        <tr>
+          <td><strong>1. Nama</strong></td>
+          <td>:</td>
+          <td><strong>MUH. RAHWAN</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Jabatan</strong></td>
+          <td>:</td>
+          <td>Pemimpin Umum / Direktur Utama</td>
+        </tr>
+        <tr>
+          <td><strong>Instansi / Perusahaan</strong></td>
+          <td>:</td>
+          <td><strong>PT SKILLANCE DIGITAL INDONESIA</strong> (Penerbit Media Siber <em>Cerita Rakyat ID / xyronnews.com</em>)</td>
+        </tr>
+        <tr>
+          <td><strong>Alamat</strong></td>
+          <td>:</td>
+          <td>Kendari, Sulawesi Tenggara, Indonesia</td>
+        </tr>
+      </table>
+      <p>Dalam hal ini bertindak untuk dan atas nama <strong>PT SKILLANCE DIGITAL INDONESIA</strong> beserta dewan redaksi media siber <strong>Cerita Rakyat ID</strong>, selanjutnya disebut sebagai <strong>PIHAK PERTAMA</strong>.</p>
+    </div>
+
+    <div class="pihak-box">
+      <table class="pihak-table">
+        <tr>
+          <td><strong>2. Nama</strong></td>
+          <td>:</td>
+          <td><strong>...........................................................................................</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Jabatan</strong></td>
+          <td>:</td>
+          <td><strong>...........................................................................................</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Instansi / Lembaga</strong></td>
+          <td>:</td>
+          <td><strong>...........................................................................................</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Alamat</strong></td>
+          <td>:</td>
+          <td>...........................................................................................</td>
+        </tr>
+      </table>
+      <p>Dalam hal ini bertindak untuk dan atas nama <strong>...........................................................................................</strong>, selanjutnya disebut sebagai <strong>PIHAK KEDUA</strong>.</p>
+    </div>
+
+    <p><strong>PIHAK PERTAMA</strong> dan <strong>PIHAK KEDUA</strong> secara bersama-sama selanjutnya disebut sebagai <strong>PARA PIHAK</strong>, dan masing-masing disebut <strong>PIHAK</strong>.</p>
+
+    <p>PARA PIHAK terlebih dahulu menerangkan hal-hal sebagai berikut:</p>
+    <ol type="a">
+      <li>Bahwa PIHAK PERTAMA adalah Badan Hukum Perusahaan Pers resmi berbadan hukum Perseroan Terbatas (PT) yang mengelola media siber berita independen dan profesional <em>Cerita Rakyat ID (xyronnews.com)</em>, yang berpedoman pada UU Pers No. 40 Tahun 1999 dan Pedoman Pemberitaan Media Siber Dewan Pers.</li>
+      <li>Bahwa PIHAK KEDUA adalah instansi pemerintah / lembaga / perguruan tinggi / badan usaha / organisasi yang memiliki program kerja, kegiatan kedinasan, kebijakan publik, dan agenda strategis yang membutuhkan penyebarluasan informasi resmi secara terstruktur, terpercaya, dan menjangkau masyarakat luas.</li>
+      <li>Bahwa PARA PIHAK sepakat untuk saling mendukung berdasarkan prinsip kemitraan yang setara, profesional, saling menguntungkan, serta berlandaskan kepatuhan hukum yang berlaku di Negara Kesatuan Republik Indonesia.</li>
+    </ol>
+
+    <p>Berdasarkan pertimbangan di atas, PARA PIHAK bersepakat untuk mengikatkan diri dalam Nota Kesepahaman ini dengan ketentuan dan syarat-syarat sebagai berikut:</p>
+
+    <div class="pasal-title">PASAL 1</div>
+    <div class="pasal-sub">MAKSUD DAN TUJUAN</div>
+    <ol>
+      <li><strong>Maksud</strong> Nota Kesepahaman ini adalah sebagai landasan hukum dan pedoman kerja sama bagi PARA PIHAK dalam pelaksanaan kemitraan publikasi kegiatan kedinasan, advertorial, media partner, dan diseminasi informasi publik.</li>
+      <li><strong>Tujuan</strong> kerja sama ini adalah untuk:
+        <ol type="a">
+          <li>Meningkatkan keterbukaan informasi publik dan citra positif program kerja PIHAK KEDUA kepada masyarakat luas.</li>
+          <li>Menyediakan saluran media resmi yang cepat, terindeks mesin pencari secara permanen, dan berintegritas jurnalistik.</li>
+          <li>Memfasilitasi akuntabilitas publikasi melalui penyusunan Laporan Pertanggungjawaban (LPJ) dan kliping bukti tayang resmi.</li>
+        </ol>
+      </li>
+    </ol>
+
+    <div class="pasal-title">PASAL 2</div>
+    <div class="pasal-sub">RUANG LINGKUP KERJA SAMA</div>
+    <p>Ruang lingkup kemitraan dan kerja sama publikasi ini meliputi:</p>
+    <ol>
+      <li><strong>Publikasi Liputan Kegiatan Kedinasan / Instansi:</strong> Penerbitan siaran pers (press release), liputan langsung wartawan terhadap agenda kegiatan kedinasan, seminar, konferensi pers, sosialisasi kebijakan, dan advokasi program kerja PIHAK KEDUA.</li>
+      <li><strong>Pencantuman Logo di Widget Mitra Resmi:</strong> Pemasangan logo resmi instansi/lembaga PIHAK KEDUA pada widget <em>Official Partner / Mitra Resmi</em> di portal berita siber <em>xyronnews.com</em> yang terhubung langsung ke tautan resmi PIHAK KEDUA.</li>
+      <li><strong>Dukungan Laporan Pertanggungjawaban (LPJ) & Kliping Media:</strong> Penyusunan rekapitulasi bukti publikasi digital (screenshot tayang, URL permanen, dan Berita Acara Pelaksanaan) sebagai lampiran pertanggungjawaban SPJ keuangan instansi.</li>
+      <li><strong>Penerbitan Berkas Pembayaran Resmi Perusahaan Pers:</strong> Penyediaan Faktur Tagihan (Invoice), Kwitansi Resmi bermaterai cukup, dan dokumen perpajakan perusahaan berbadan hukum PT untuk keperluan pencairan anggaran keuangan.</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <!-- HALAMAN 2: LANJUTAN NOTA KESEPAHAMAN -->
+    <div class="pasal-title">PASAL 3</div>
+    <div class="pasal-sub">PELAKSANAAN TEKNIS</div>
+    <ol>
+      <li>Pelaksanaan rincian operasional, alokasi anggaran, kuota tayang berita, durasi banner, serta penugasan teknis diatur secara mendalam pada <strong>Perjanjian Kerja Sama (PKS)</strong> atau <strong>Surat Perintah Kerja (SPK)</strong> yang merupakan satu kesatuan tak terpisahkan dari Nota Kesepahaman ini.</li>
+      <li>Setiap materi siaran pers yang diserahkan oleh PIHAK KEDUA akan diterbitkan oleh PIHAK PERTAMA selambat-lambatnya dalam waktu 1x24 jam setelah materi naskah dan dokumentasi foto disetujui.</li>
+      <li>Wartawan/Reporter PIHAK PERTAMA yang ditugaskan melakukan liputan diwajibkan membawa Kartu Identitas Pers resmi yang masih berlaku dan dilarang meminta atau menerima imbalan/gratifikasi pribadi di luar ketentuan kontrak kemitraan resmi.</li>
+    </ol>
+
+    <div class="pasal-title">PASAL 4</div>
+    <div class="pasal-sub">JANGKA WAKTU KERJA SAMA</div>
+    <ol>
+      <li>Nota Kesepahaman ini berlaku untuk jangka waktu <strong>1 (satu) Tahun</strong> terhitung sejak tanggal ditandatangani oleh PARA PIHAK, yakni mulai tanggal <strong>..... November 2026</strong> sampai dengan tanggal <strong>..... November 2027</strong>.</li>
+      <li>Jangka waktu pelaksanaan kerja sama paket kemitraan bersifat fleksibel dan dapat disepakati dalam skema <strong>Paket Bulanan (Monthly Rolling)</strong>, <strong>Paket Semester</strong>, atau <strong>Paket Tahunan</strong> sesuai periode Tahun Anggaran berjalan PIHAK KEDUA.</li>
+      <li>Nota Kesepahaman ini dapat diperpanjang atau diakhiri lebih awal berdasarkan persetujuan tertulis dari PARA PIHAK selambat-lambatnya 14 (empat belas) hari kalender sebelum tanggal pengakhiran yang dikehendaki.</li>
+    </ol>
+
+    <div class="pasal-title">PASAL 5</div>
+    <div class="pasal-sub">PEMBIAYAAN DAN SISTEM ADMINISTRASI</div>
+    <ol>
+      <li>Segala pembiayaan yang timbul sebagai akibat dari pelaksanaan Nota Kesepahaman ini dibebankan pada pos anggaran kerja sama media/publikasi PIHAK KEDUA atau sumber dana lain yang sah dan tidak mengikat.</li>
+      <li>PIHAK PERTAMA wajib menyerahkan kelengkapan berkas penagihan yang sah, meliputi:
+        <ol type="a">
+          <li>Surat Permohonan Pembayaran / Invoice Tagihan Resmi Kop Surat PT;</li>
+          <li>Kwitansi Pembayaran bermeterai Rp 10.000,- (sepuluh ribu rupiah);</li>
+          <li>Laporan Pertanggungjawaban (LPJ) bukti tayang kliping berita media;</li>
+          <li>Salinan legalitas perusahaan (NPWP, NIB, dan Rekening Bank atas nama PT Skillance Digital Indonesia).</li>
+        </ol>
+      </li>
+      <li>Pembayaran dilakukan melalui mekanisme transfer non-tunai (bank transfer / SP2D) ke Rekening Resmi Perusahaan PIHAK PERTAMA.</li>
+    </ol>
+
+    <div class="pasal-title">PASAL 6</div>
+    <div class="pasal-sub">PENYELESAIAN PERSELISIHAN</div>
+    <p>Apabila di kemudian hari timbul perbedaan penafsiran atau perselisihan dalam pelaksanaan Nota Kesepahaman ini, maka PARA PIHAK sepakat untuk menyelesaikan perselisihan tersebut secara musyawarah untuk mufakat.</p>
+
+    <div class="pasal-title">PASAL 7</div>
+    <div class="pasal-sub">PENUTUP</div>
+    <p>Demikian Nota Kesepahaman ini dibuat dan ditandatangani di Kendari pada hari dan tanggal tersebut di atas, dalam rangkap 2 (dua) asli bermaterai cukup, masing-masing mempunyai kekuatan hukum yang sama bagi PARA PIHAK.</p>
+
+    <!-- LEMBAR TANDA TANGAN -->
+    <div class="tanda-tangan-grid">
+      <div class="ttd-box">
+        <p><strong>PIHAK KEDUA</strong><br>
+        [Nama Instansi / Lembaga]<br>
+        [Jabatan Pimpinan / Pejabat]</p>
+        <div class="ttd-space">
+          
+        </div>
+        <p class="ttd-name">( ..................................................... )</p>
+        <p style="margin:0;font-size:10pt;">NIP. .....................................................</p>
+      </div>
+
+      <div class="ttd-box">
+        <p><strong>PIHAK PERTAMA</strong><br>
+        PT SKILLANCE DIGITAL INDONESIA<br>
+        Pemimpin Umum / Direktur Utama</p>
+        <div class="ttd-space">
+          
+        </div>
+        <p class="ttd-name">MUH. RAHWAN</p>
+        <p style="margin:0;font-size:10pt;">Direktur Utama / Pemimpin Umum</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================== -->
+  <!-- HALAMAN 3: PERJANJIAN KERJA SAMA (PKS TEKNIS & FINANSIAL)      -->
+  <!-- ============================================================== -->
+  <div class="paper">
+    <div class="kop-surat">
+      <img src="../../assets/img/logo_skillance_icon.png" class="kop-logo" alt="Logo PT Skillance Digital Indonesia">
+      <div class="kop-text">
+        <h2 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h2>
+        <div class="kop-sub">SURAT PERJANJIAN KERJA SAMA (PKS) OPERASIONAL & TEKNIS</div>
+        <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
+        <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
+        <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+      </div>
+    </div>
+
+    <div class="doc-title" style="margin-top:10px;">
+      <h3>SURAT PERJANJIAN KERJA SAMA (PKS)</h3>
+      <p><strong>PAKET KERJASAMA PUBLIKASI KEDINASAN, HUMAS & MEDIA PARTNER</strong></p>
+      <p>Nomor Pihak Pertama: 015/PKS-PUB/SDI-CRID/XI/2026<br>
+         Nomor Pihak Kedua: .....................................................</p>
+    </div>
+
+    <p>Merujuk pada Nota Kesepahaman (MoU) Nomor: 014/MoU-PUB/SDI-CRID/XI/2026 tanggal ..... November 2026, PARA PIHAK menyepakati rincian teknis operasional dan paket pembiayaan publikasi kemitraan media sebagai berikut:</p>
+
+    <div class="pasal-title">PASAL 1</div>
+    <div class="pasal-sub">RINCIAN HAK DAN KEWAJIBAN PARA PIHAK</div>
+    
+    <p><strong>1. Kewajiban & Hak PIHAK PERTAMA (PT Skillance Digital Indonesia / Media):</strong></p>
+    <ol type="a">
+      <li><strong>Penerbitan Berita Kegiatan:</strong> Menerbitkan artikel rilis pers dan berita liputan kegiatan kedinasan PIHAK KEDUA di portal berita siber <em>xyronnews.com</em> sebanyak kuota yang disepakati, tayang permanen dan dilengkapi minimal 2–3 foto dokumentasi kegiatan beresolusi tinggi.</li>
+      <li><strong>Pencantuman Logo Widget Mitra:</strong> Memasang logo resmi PIHAK KEDUA pada widget <em>Mitra Resmi (Official Partner)</em> di halaman portal berita selama masa perjanjian aktif.</li>
+      <li><strong>Optimalisasi SEO & Jangkauan:</strong> Mengoptimasi artikel agar terindeks cepat di mesin pencari Google serta membagikan tautan rilis ke jejaring media sosial redaksi.</li>
+      <li><strong>Penyusunan LPJ & Kliping:</strong> Membuat dan menyerahkan dokumen Laporan Pertanggungjawaban (LPJ) publikasi berupa bundel kliping berita digital/cetak sebagai bukti fisik kinerja publikasi.</li>
+      <li><strong>Hak Penerimaan Pembayaran:</strong> Berhak menerima pembayaran paket kerja sama sesuai dengan nilai kontrak dan termin yang disepakati secara tepat waktu.</li>
+    </ol>
+
+    <p><strong>2. Kewajiban & Hak PIHAK KEDUA (Instansi / Lembaga Mitra):</strong></p>
+    <ol type="a">
+      <li><strong>Penyediaan Materi & Akses Informasi:</strong> Menyerahkan bahan rilis pers, data kegiatan, foto dokumentasi, atau memberikan akses peliputan bagi wartawan PIHAK PERTAMA dalam agenda kedinasan.</li>
+      <li><strong>Penyediaan Materi Logo:</strong> Menyerahkan file logo resmi instansi dalam format resolusi tinggi (PNG/JPG) untuk penayangan di widget website.</li>
+      <li><strong>Pelaksanaan Pembayaran:</strong> Wajib membayarkan biaya publikasi sesuai dengan nilai kesepakatan paket setelah menerima invoice penagihan resmi dan bukti tayang dari PIHAK PERTAMA.</li>
+      <li><strong>Hak Penerimaan Layanan:</strong> Berhak mendapatkan bukti tayang artikel berita, penayangan logo, serta laporan kliping media berkala.</li>
+    </ol>
+
+    <div class="pasal-title">PASAL 2</div>
+    <div class="pasal-sub">PILIHAN PAKET KEMITRAAN & NILAI KERJA SAMA</div>
+    
+    <p>PARA PIHAK bersepakat untuk mengambil paket kemitraan publikasi dengan rincian sebagai berikut (beri tanda centang [✓] pada paket yang dipilih):</p>
+
+    <table class="lampiran-table">
+      <thead>
+        <tr>
+          <th style="width:50px;">PILIH</th>
+          <th>NAMA PAKET</th>
+          <th>RINCIAN BENEFIT PUBLIKASI</th>
+          <th style="width:140px;">BIAYA / PERIODE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;">[ &nbsp; ]</td>
+          <td><strong>Paket Bulanan (Silver)</strong></td>
+          <td>
+            • Maksimal 4 (empat) artikel rilis kedinasan per bulan<br>
+            • Logo di Widget Mitra Resmi selama 1 bulan<br>
+            • Laporan Kliping Berita Bulanan (PDF)
+          </td>
+          <td style="text-align:right;"><strong>Rp 1.000.000,-</strong><br><small>/ bulan</small></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">[ &nbsp; ]</td>
+          <td><strong>Paket Bulanan (Gold)</strong></td>
+          <td>
+            • Maksimal 8 (delapan) artikel rilis & liputan per bulan<br>
+            • 1x Banner Display di Sidebar Kanan (300x250 px)<br>
+            • Logo di Widget Mitra Resmi<br>
+            • LPJ & Kliping Lengkap + BAST Cetak
+          </td>
+          <td style="text-align:right;"><strong>Rp 2.000.000,-</strong><br><small>/ bulan</small></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">[ &nbsp; ]</td>
+          <td><strong>Paket Triwulan / Semester (Platinum)</strong></td>
+          <td>
+            • Kuota hingga 25 artikel publikasi program kedinasan<br>
+            • Banner Display Header Utama (728x90) / Sidebar<br>
+            • Prioritas Liputan Langsung Wartawan di Lokasi Acara<br>
+            • Berita Acara (BAST) & LPJ Kliping Berkala
+          </td>
+          <td style="text-align:right;"><strong>Rp 5.500.000,-</strong><br><small>/ triwulan</small></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">[ &nbsp; ]</td>
+          <td><strong>Paket Tahunan (MoU Khusus APBD)</strong></td>
+          <td>
+            • Publikasi intensif seluruh program dinas selama 1 tahun<br>
+            • Penayangan Banner Utama, Liputan Khusus, Wawancara Eksklusif<br>
+            • Logo Permanen Mitra Strategis di Web dan Header Event<br>
+            • Rekapitulasi LPJ Tahunan Lengkap untuk BPK / Inspektorat
+          </td>
+          <td style="text-align:right;"><strong>Rp 15.000.000,- s/d<br>Rp 25.000.000,-</strong><br><small>/ tahun (Fleksibel)</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pasal-title">PASAL 3</div>
+    <div class="pasal-sub">REKENING PEMBAYARAN RESMI</div>
+    <p>Pembayaran resmi dari PIHAK KEDUA ditransfer langsung ke rekening resmi perbankan PIHAK PERTAMA sebagai berikut:</p>
+    <div style="background:#f9f9f9;border:1px solid #ddd;padding:12px 18px;margin-bottom:15px;border-radius:4px;">
+      <table style="width:100%;">
+        <tr>
+          <td style="width:140px;"><strong>Nama Bank</strong></td>
+          <td style="width:15px;">:</td>
+          <td><strong>BANK CENTRAL ASIA (BCA) / BANK BNI / BANK SULTRA</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Nomor Rekening</strong></td>
+          <td>:</td>
+          <td><strong>[No. Rekening PT Skillance Digital Indonesia]</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Atas Nama</strong></td>
+          <td>:</td>
+          <td><strong>PT SKILLANCE DIGITAL INDONESIA</strong></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- TTD PKS -->
+    <div class="tanda-tangan-grid">
+      <div class="ttd-box">
+        <p><strong>PIHAK KEDUA</strong><br>
+        [Nama Instansi / Lembaga]</p>
+        <div class="ttd-space">
+          
+        </div>
+        <p class="ttd-name">( ..................................................... )</p>
+        <p style="margin:0;font-size:10pt;">NIP. .....................................................</p>
+      </div>
+
+      <div class="ttd-box">
+        <p><strong>PIHAK PERTAMA</strong><br>
+        PT SKILLANCE DIGITAL INDONESIA</p>
+        <div class="ttd-space">
+          
+        </div>
+        <p class="ttd-name">MUH. RAHWAN</p>
+        <p style="margin:0;font-size:10pt;">Direktur Utama / Pemimpin Umum</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ============================================================== -->
+  <!-- HALAMAN 4: FORMULIR BERITA ACARA SERAH TERIMA & LPJ KLIPING    -->
+  <!-- ============================================================== -->
+  <div class="paper">
+    <div class="kop-surat">
+      <img src="../../assets/img/logo_skillance_icon.png" class="kop-logo" alt="Logo PT Skillance Digital Indonesia">
+      <div class="kop-text">
+        <h2 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h2>
+        <div class="kop-sub">BERITA ACARA SERAH TERIMA & KELENGKAPAN SPJ / LPJ PUBLIKASI</div>
+        <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
+        <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
+        <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+      </div>
+    </div>
+
+    <div class="doc-title" style="margin-top:10px;">
+      <h3>BERITA ACARA SERAH TERIMA (BAST) HASIL PEKERJAAN PUBLIKASI</h3>
+      <p>Nomor: ...../BAST-PUB/SDI-CRID/...../2026</p>
+    </div>
+
+    <p>Pada hari ini, <strong>....................</strong> tanggal <strong>.....</strong> bulan <strong>....................</strong> tahun <strong>2026</strong>, kami yang bertandatangan di bawah ini menerangkan bahwa:</p>
+    <ol>
+      <li><strong>PIHAK PERTAMA (PT Skillance Digital Indonesia / Cerita Rakyat ID)</strong> telah menyelesaikan dan menayangkan seluruh publikasi berita rilis kedinasan serta pemasangan logo mitra resmi untuk <strong>PIHAK KEDUA</strong> sesuai dengan Perjanjian Kerja Sama Nomor: 015/PKS-PUB/SDI-CRID/XI/2026.</li>
+      <li><strong>PIHAK KEDUA</strong> telah memeriksa dan menerima dengan baik dokumen bukti tayang (kliping media siber) dengan rincian publikasi sebagai berikut:</li>
+    </ol>
+
+    <table class="lampiran-table">
+      <thead>
+        <tr>
+          <th style="width:30px;">NO</th>
+          <th style="width:90px;">TANGGAL</th>
+          <th>JUDUL BERITA / KEGIATAN PUBLIKASI</th>
+          <th style="width:160px;">TAUTAN (LINK RESMI)</th>
+          <th style="width:65px;">STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:center;">.../.../2026</td>
+          <td>[Contoh: Pelaksanaan Program Kerja Sosialisasi Dinas...]</td>
+          <td><small>xyronnews.com/berita/...</small></td>
+          <td style="text-align:center;color:green;"><strong>TAYANG</strong></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">2</td>
+          <td style="text-align:center;">.../.../2026</td>
+          <td>[Contoh: Liputan Kunjungan Kerja Lapangan...]</td>
+          <td><small>xyronnews.com/berita/...</small></td>
+          <td style="text-align:center;color:green;"><strong>TAYANG</strong></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">3</td>
+          <td style="text-align:center;">.../.../2026</td>
+          <td>[Contoh: Siaran Pers Peringatan Hari Besar Kedinasan...]</td>
+          <td><small>xyronnews.com/berita/...</small></td>
+          <td style="text-align:center;color:green;"><strong>TAYANG</strong></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">4</td>
+          <td style="text-align:center;">.../.../2026</td>
+          <td>Penayangan Logo Instansi di Widget Mitra Resmi</td>
+          <td><small>xyronnews.com (Widget)</small></td>
+          <td style="text-align:center;color:green;"><strong>AKTIF</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Demikian Berita Acara Serah Terima (BAST) ini dibuat dalam rangkap secukupnya untuk dipergunakan sebagai kelengkapan Laporan Pertanggungjawaban (LPJ) dan syarat pencairan Surat Pertanggungjawaban (SPJ) keuangan.</p>
+
+    <!-- TTD BAST -->
+    <div class="tanda-tangan-grid" style="margin-top:25px;">
+      <div class="ttd-box">
+        <p>Yang Menerima Hasil Pekerjaan:<br>
+        <strong>PIHAK KEDUA</strong><br>
+        Pejabat Pelaksana Teknis Kegiatan (PPTK) / Pimpinan</p>
+        <div class="ttd-space"></div>
+        <p class="ttd-name">( ..................................................... )</p>
+        <p style="margin:0;font-size:10pt;">NIP. .....................................................</p>
+      </div>
+
+      <div class="ttd-box">
+        <p>Yang Menyerahkan Hasil Pekerjaan:<br>
+        <strong>PIHAK PERTAMA</strong><br>
+        PT SKILLANCE DIGITAL INDONESIA</p>
+        <div class="ttd-space"></div>
+        <p class="ttd-name">MUH ARSYAD RAMSI</p>
+        <p style="margin:0;font-size:10pt;">Redaktur Pelaksana / Pemasaran</p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
