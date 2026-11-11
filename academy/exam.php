@@ -1230,15 +1230,23 @@ Mohon diverifikasi agar akses ujian terbuka. Terima kasih!`;
 
                             <!-- SCORE AND CERT NO BADGES -->
                             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                                <div class="bg-white bg-opacity-15 p-3 rounded-4 border border-white border-opacity-25 text-start" style="min-width: 170px;">
-                                    <small class="text-white-50 d-block">Nilai Kelulusan:</small>
-                                    <div class="display-6 fw-bold text-warning" style="color: #fca311 !important;"><?= $resultData['score'] ?><span class="fs-5 text-white-50">/100</span></div>
-                                    <small class="text-white-50"><?= $resultData['correct'] ?> dari <?= $resultData['total'] ?> Soal Benar</small>
+                                <div class="p-3.5 rounded-4 text-start shadow-sm" style="min-width: 180px; background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.08); padding: 18px 22px;">
+                                    <small class="d-block fw-bold text-uppercase" style="color: #64748b !important; font-size: 0.72rem; letter-spacing: 0.5px;">Nilai Kelulusan:</small>
+                                    <div class="display-6 fw-bold my-1" style="color: #04AA6D !important; font-weight: 800; line-height: 1.1;">
+                                        <?= $resultData['score'] ?><span class="fs-6 text-muted fw-normal">/100</span>
+                                    </div>
+                                    <small class="d-block fw-semibold" style="color: #475569 !important; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-check text-success me-1"></i><?= $resultData['correct'] ?> dari <?= $resultData['total'] ?> Soal Benar
+                                    </small>
                                 </div>
-                                <div class="bg-white bg-opacity-15 p-3 rounded-4 border border-white border-opacity-25 text-start" style="min-width: 260px;">
-                                    <small class="text-white-50 d-block">No. Seri Sertifikat Digital Resmi:</small>
-                                    <div class="fs-4 fw-bold font-monospace text-white mt-1"><?= htmlspecialchars($resultData['certificate_no']) ?></div>
-                                    <small class="text-white-50"><i class="fa-solid fa-circle-check text-success me-1"></i> Terdaftar di Basis Data SKPI</small>
+                                <div class="p-3.5 rounded-4 text-start shadow-sm" style="min-width: 320px; background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.08); padding: 18px 22px;">
+                                    <small class="d-block fw-bold text-uppercase" style="color: #64748b !important; font-size: 0.72rem; letter-spacing: 0.5px;">No. Seri Sertifikat Resmi:</small>
+                                    <div class="fs-4 fw-bold font-monospace my-1" style="color: #0d2e5c !important; letter-spacing: 0.5px;">
+                                        <?= htmlspecialchars($resultData['certificate_no']) ?>
+                                    </div>
+                                    <small class="d-block fw-semibold" style="color: #059669 !important; font-size: 0.8rem;">
+                                        <i class="fa-solid fa-circle-check text-success me-1"></i> Terdaftar di Basis Data SKPI Skillance
+                                    </small>
                                 </div>
                             </div>
 
