@@ -177,6 +177,9 @@ $currentUserName = $_SESSION['user_name'] ?? 'Pengguna';
                     <a href="print_spt.php" target="_blank" class="btn btn-warning text-navy btn-sm fw-bold shadow-sm">
                         <i class="fa-solid fa-file-invoice-dollar me-1"></i> Cetak Rekap SPT 1771
                     </a>
+                    <a href="stempel.php" class="btn btn-outline-light btn-sm shadow-sm">
+                        <i class="fa-solid fa-stamp me-1 text-gold"></i> Stempel PT
+                    </a>
                     <a href="print.php" target="_blank" class="btn btn-outline-light btn-sm shadow-sm">
                         <i class="fa-solid fa-print me-1"></i> Laba / Rugi
                     </a>
