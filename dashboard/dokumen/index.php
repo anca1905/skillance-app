@@ -35,7 +35,7 @@ $activeMenu = "dokumen";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css?v=<?= filemtime(__DIR__ . '/../../assets/css/style.css') ?>">
     
     <style>
         body {
@@ -46,6 +46,95 @@ $activeMenu = "dokumen";
         .bg-navy { background-color: #0d2e5c !important; }
         .text-gold { color: #fe9800 !important; }
         .bg-gold { background-color: #fe9800 !important; }
+
+        /* Universal Dashboard Sidebar & Nav-Link Layout (Matches dashboard/index.php) */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 20px;
+            z-index: 1000;
+            transition: margin-left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 24px 30px;
+            transition: 0.3s;
+            min-height: 100vh;
+        }
+
+        .sidebar .nav-link,
+        .nav-link {
+            color: var(--text-body, #555555);
+            padding: 12px 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active,
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--navy-subtle, #eef2f7);
+            color: var(--navy, #0d2e5c) !important;
+            border-right: 3px solid var(--navy, #0d2e5c);
+            font-weight: 600;
+        }
+
+        .sidebar .nav-link i,
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Mobile Sidebar Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13, 46, 92, 0.45);
+            backdrop-filter: blur(3px);
+            z-index: 1040;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -260px !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 260px !important;
+                height: 100vh !important;
+                z-index: 1050 !important;
+                box-shadow: 4px 0 25px rgba(0, 0, 0, 0.25) !important;
+            }
+
+            .sidebar.active {
+                margin-left: 0 !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                padding: 16px 12px !important;
+            }
+        }
 
         .legal-hub-banner {
             background: linear-gradient(135deg, #0d2e5c 0%, #174276 100%);
@@ -232,6 +321,19 @@ $activeMenu = "dokumen";
     </div>
 
     <div class="main-content">
+        <!-- Mobile Header Bar (Only visible on mobile) -->
+        <div class="d-flex justify-content-between align-items-center mb-3 d-md-none no-print">
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-navy btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm sidebar-toggle-btn" style="width: 38px; height: 38px;" id="sidebarToggle" title="Buka Menu">
+                    <i class="fa-solid fa-bars fs-6 text-white"></i>
+                </button>
+                <span class="fw-bold text-navy fs-5">Pusat Dokumen</span>
+            </div>
+            <div class="bg-navy text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                <i class="fa-solid fa-user small"></i>
+            </div>
+        </div>
+
         <!-- Top Banner Header (No Print) -->
         <div class="legal-hub-banner shadow-sm mb-4 no-print">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
@@ -392,6 +494,14 @@ $activeMenu = "dokumen";
                     </div>
 
                     <hr class="my-2 text-muted">
+                    <div class="fw-bold small text-navy mb-2"><i class="fa-solid fa-image me-1 text-gold"></i>FORMAT LOGO KOP SURAT:</div>
+                    <div class="mb-3">
+                        <select id="kopStyleSelect" class="form-select form-select-sm fw-semibold text-navy" onchange="switchKopStyle(this.value)">
+                            <option value="icon" selected>1. Ikon Emblem &lt;/&gt; Resmi + Teks PT (Standar)</option>
+                            <option value="banner">2. Logo Horizontal Lengkap (&lt;/&gt; SKILLANCE DIGITAL INDONESIA)</option>
+                        </select>
+                    </div>
+
                     <div class="fw-bold small text-navy mb-2"><i class="fa-solid fa-stamp me-1 text-gold"></i>STEMPEL & METERAI:</div>
 
                     <div class="form-check form-switch mb-2">
@@ -421,9 +531,9 @@ $activeMenu = "dokumen";
                     <div class="paper-sheet" id="printArea">
                         
                         <!-- KOP SURAT RESMI PT SKILLANCE DIGITAL INDONESIA -->
-                        <div class="kop-surat">
-                            <img src="../../assets/img/stempel_skillance_asli_circle.png" class="kop-logo" alt="Logo Skillance">
-                            <div class="kop-text">
+                        <div class="kop-surat" id="kopSuratWrapper">
+                            <img src="../../assets/img/logo_skillance_icon.png" class="kop-logo" id="kopLogoImg" alt="Logo PT Skillance Digital Indonesia">
+                            <div class="kop-text" id="kopTextContent">
                                 <h2>PT SKILLANCE DIGITAL INDONESIA</h2>
                                 <p><strong>Keputusan Menkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526</p>
                                 <p><strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI &bull; <strong>Sektor Usaha:</strong> IT Solutions, Creative Print & Digital Media Portal</p>

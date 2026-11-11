@@ -530,6 +530,30 @@ footer .btn-outline-light:hover {
     min-height: 100vh;
 }
 
+/* Master Sidebar Navigation Links */
+.sidebar .nav-link {
+    color: var(--text-body, #555555);
+    padding: 12px 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: var(--navy-subtle, #eef2f7);
+    color: var(--navy, #0d2e5c) !important;
+    border-right: 3px solid var(--navy, #0d2e5c);
+    font-weight: 600;
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         margin-left: -260px !important;
