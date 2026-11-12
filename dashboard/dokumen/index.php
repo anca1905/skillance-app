@@ -425,40 +425,54 @@ $activeMenu = "dokumen";
             </div>
         </div>
 
-        <!-- PAKET BERKAS KEMITRAAN RESMI MEDIA SIBER (PORTAL BERITA SKILLANCE) -->
-        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #fe9800 !important; background: #ffffff;">
+        <!-- SURAT PENGANTAR AUDIENSI SOLUSI APLIKASI DINAS (SOFTWARE HOUSE PT SKILLANCE DIGITAL INDONESIA) -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #0d2e5c !important; background: #ffffff;">
+            <div class="card-body p-3.5">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                            <span class="badge bg-gold text-navy fw-bold px-2.5 py-1 small">
+                                <i class="fa-solid fa-laptop-code me-1"></i>SOFTWARE HOUSE & IT SOLUTIONS
+                            </span>
+                            <span class="badge bg-navy text-white px-2.5 py-1 small">
+                                PT Skillance Digital Indonesia
+                            </span>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 fw-bold px-2 py-0.5 small">
+                                <i class="fa-solid fa-check-circle me-1"></i>5 Dinas Sasaran Tersedia
+                            </span>
+                        </div>
+                        <h5 class="fw-bold text-navy mb-1">Surat Pengantar & Permohonan Audiensi Penawaran Aplikasi Dinas</h5>
+                        <p class="text-muted small mb-0">
+                            Surat resmi permohonan audiensi & penawaran aplikasi kustom untuk 5 instansi kedinasan: <strong>Dinas Pendidikan</strong> (Smart School & CBT), <strong>Dinas Kehutanan</strong> (Web-GIS & Mobile Patroli), <strong>Dispora</strong> (SIM-ORDA & Database Atlet), <strong>Inspektorat</strong> (E-Pengawasan & WBS), dan <strong>Dinas Capil</strong> (Antrean Online & Adminduk). Dilengkapi lembar tanda terima ekspedisi surat untuk bagian TU/Umum, serta mode cetak fisik (bebas stempel digital).
+                        </p>
+                    </div>
+                    <div class="text-md-end flex-shrink-0">
+                        <a href="surat-pengantar-audiensi.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 text-nowrap shadow-sm">
+                            <i class="fa-solid fa-envelope-open-text me-1.5"></i>Buka & Cetak Surat Pengantar (5 Dinas) &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAKET BERKAS KEMITRAAN MEDIA SIBER (ARSIP / PENDUKUNG) -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #cbd5e1 !important; background: #ffffff;">
             <div class="card-body p-3.5">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-gold text-navy fw-bold px-2 py-0.5 small">
-                                <i class="fa-solid fa-newspaper me-1"></i>PORTAL BERITA SIBER SKILLANCE
+                            <span class="badge bg-secondary text-white fw-bold px-2 py-0.5 small">
+                                <i class="fa-solid fa-newspaper me-1"></i>ARSIP / BERKAS MEDIA SIBER
                             </span>
-                            <span class="badge bg-navy text-white px-2 py-0.5 small">
+                            <span class="badge bg-light text-muted border px-2 py-0.5 small">
                                 Cerita Rakyat ID (www.xyronnews.com)
                             </span>
                         </div>
-                        <h5 class="fw-bold text-navy mb-1">Paket Berkas & Surat Pengantar Resmi Kemitraan Media</h5>
+                        <h5 class="fw-bold text-navy mb-1">Paket Berkas Kemitraan Publikasi Media Pers</h5>
                         <p class="text-muted small mb-0">
-                            Berkas kemitraan resmi penerbit media pers PT Skillance Digital Indonesia, lengkap dengan Kop Surat terstandarisasi dan format tanda tangan fisik (bebas tanda stempel/meterai digital agar siap ditempel meterai Rp 10.000 & cap stempel basah manual).
+                            Dokumen kemitraan media pers naungan PT Skillance Digital Indonesia (MoU Kemitraan, LPJ & Kliping Tayang, serta Faktur/Kwitansi/SPTJM Pajak PT) untuk keperluan publikasi berita bilamana dibutuhkan.
                         </p>
                     </div>
-                </div>
-
-                <!-- SURAT PENGANTAR UTAMA (WAJIB DIANTAR TERLEBIH DAHULU) -->
-                <div class="p-3 mb-3 rounded-3 border-start border-4 border-primary bg-primary bg-opacity-10 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-primary text-white fw-bold small"><i class="fa-solid fa-paper-plane me-1"></i>TAHAP 1: DIANTAR KE TU / UMUM</span>
-                            <span class="fw-bold text-navy">Surat Pengantar & Permohonan Audiensi Resmi Kedinasan</span>
-                        </div>
-                        <p class="text-muted small mb-0">
-                            Surat resmi pengantar penawaran kemitraan dan permohonan audiensi silaturahmi, dilengkapi lembar bukti tanda terima ekspedisi surat untuk distempel TU instansi penerima.
-                        </p>
-                    </div>
-                    <a href="surat-pengantar-audiensi.php" target="_blank" class="btn btn-primary btn-sm fw-bold px-3 py-2 text-nowrap shadow-sm">
-                        <i class="fa-solid fa-envelope-open-text me-1.5"></i>Buka & Cetak Surat Pengantar &raquo;
-                    </a>
                 </div>
 
                 <div class="row g-2.5">
