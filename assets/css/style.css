@@ -36,19 +36,40 @@ h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
 .bg-navy-dark h1, .bg-navy-dark h2, .bg-navy-dark h3, .bg-navy-dark h4, .bg-navy-dark h5, .bg-navy-dark h6,
 header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
 .page-header-banner h1, .page-header-banner h2, .page-header-banner h3,
-[style*="linear-gradient"] h1, [style*="linear-gradient"] h2, [style*="linear-gradient"] h3,
-[style*="linear-gradient"] h4, [style*="linear-gradient"] h5, [style*="linear-gradient"] h6,
 .card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4, .card-dark h5, .card-dark h6 {
     color: #ffffff !important;
 }
+
+/* Ensure light cards inside dark or themed containers retain dark text */
+.bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4, .bg-white h5, .bg-white h6,
+.bg-light h1, .bg-light h2, .bg-light h3, .bg-light h4, .bg-light h5, .bg-light h6,
+.card:not(.card-dark) h1, .card:not(.card-dark) h2, .card:not(.card-dark) h3,
+.card:not(.card-dark) h4, .card:not(.card-dark) h5, .card:not(.card-dark) h6 {
+    color: var(--text-heading) !important;
+}
+
+/* Explicit text color utilities */
+.text-navy,
+h1.text-navy, h2.text-navy, h3.text-navy, h4.text-navy, h5.text-navy, h6.text-navy {
+    color: var(--navy) !important;
+}
+.text-dark,
+h1.text-dark, h2.text-dark, h3.text-dark, h4.text-dark, h5.text-dark, h6.text-dark {
+    color: #14213d !important;
+}
+
+/* Spacing utility helpers */
+.p-2\.5 { padding: 0.75rem !important; }
+.p-3\.5 { padding: 1.25rem !important; }
+.py-1\.5 { padding-top: 0.375rem !important; padding-bottom: 0.375rem !important; }
+.px-2\.5 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
 
 /* Ensure text-white-50 has high contrast and is never washed out */
 .text-white-50,
 .bg-navy .text-white-50,
 .bg-navy-dark .text-white-50,
 .page-header-banner .text-white-50,
-footer .text-white-50,
-[style*="linear-gradient"] .text-white-50 {
+footer .text-white-50 {
     color: #cbd5e1 !important;
     opacity: 1 !important;
 }
