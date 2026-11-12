@@ -31,7 +31,10 @@ h1, h2, h3, h4, h5, h6, .font-heading, .navbar-brand {
 }
 
 /* Ensure headings in dark containers stay pure crisp white */
+.text-white,
 .text-white h1, .text-white h2, .text-white h3, .text-white h4, .text-white h5, .text-white h6,
+h1.text-white, h2.text-white, h3.text-white, h4.text-white, h5.text-white, h6.text-white,
+.card.text-white h1, .card.text-white h2, .card.text-white h3, .card.text-white h4, .card.text-white h5, .card.text-white h6,
 .bg-navy h1, .bg-navy h2, .bg-navy h3, .bg-navy h4, .bg-navy h5, .bg-navy h6,
 .bg-navy-dark h1, .bg-navy-dark h2, .bg-navy-dark h3, .bg-navy-dark h4, .bg-navy-dark h5, .bg-navy-dark h6,
 header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
@@ -40,11 +43,13 @@ header.bg-navy h1, header.bg-navy h2, header.bg-navy h3,
     color: #ffffff !important;
 }
 
-/* Ensure light cards inside dark or themed containers retain dark text */
-.bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4, .bg-white h5, .bg-white h6,
-.bg-light h1, .bg-light h2, .bg-light h3, .bg-light h4, .bg-light h5, .bg-light h6,
-.card:not(.card-dark) h1, .card:not(.card-dark) h2, .card:not(.card-dark) h3,
-.card:not(.card-dark) h4, .card:not(.card-dark) h5, .card:not(.card-dark) h6 {
+/* Ensure light cards inside dark containers retain dark text */
+.bg-navy .bg-white h1, .bg-navy .bg-white h2, .bg-navy .bg-white h3,
+.bg-navy .bg-white h4, .bg-navy .bg-white h5, .bg-navy .bg-white h6,
+.bg-navy .bg-light h1, .bg-navy .bg-light h2, .bg-navy .bg-light h3,
+.bg-navy .bg-light h4, .bg-navy .bg-light h5, .bg-navy .bg-light h6,
+.bg-navy-dark .bg-white h1, .bg-navy-dark .bg-white h2, .bg-navy-dark .bg-white h3,
+.bg-navy-dark .bg-white h4, .bg-navy-dark .bg-white h5, .bg-navy-dark .bg-white h6 {
     color: var(--text-heading) !important;
 }
 
