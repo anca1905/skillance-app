@@ -140,7 +140,7 @@ if ($year < 2020 || $year > 2035) $year = intval(date('Y'));
         <h3>PT SKILLANCE DIGITAL INDONESIA</h3>
         <p><strong>Keputusan Menkumham RI No:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP:</strong> 100000011940526</p>
         <p>Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p>Website: https://skillance.my.id &bull; Rekening Perusahaan: Bank Mandiri a.n. PT Skillance Digital Indonesia</p>
+        <p>Website: https://skillance.cloud &bull; Rekening Perusahaan: Bank Mandiri a.n. PT Skillance Digital Indonesia</p>
     </div>
 
     <!-- JUDUL DOKUMEN -->

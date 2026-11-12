@@ -100,7 +100,7 @@ if ($conn) {
 }
 
 // Send WhatsApp confirmation / thank you with access link if gateway active
-$welcomeMsg = "Halo Kak {$fullName}! 🎉\n\nNomor WhatsApp Anda berhasil terverifikasi di *Skillance Academy*.\n\nBerikut tautan langsung untuk membaca Bab 1 dan mengunduh paket proyek *{$productTitle}*:\n🔗 https://skillance.my.id/academy/sample_preview.php?pid={$productId}&lead={$leadId}\n\nSelamat belajar & semoga sukses skripsinya!";
+$welcomeMsg = "Halo Kak {$fullName}! 🎉\n\nNomor WhatsApp Anda berhasil terverifikasi di *Skillance Academy*.\n\nBerikut tautan langsung untuk membaca Bab 1 dan mengunduh paket proyek *{$productTitle}*:\n🔗 https://skillance.cloud/academy/sample_preview.php?pid={$productId}&lead={$leadId}\n\nSelamat belajar & semoga sukses skripsinya!";
 sendWhatsAppMessage($cleanPhone, $welcomeMsg);
 
 $previewUrl = 'sample_preview.php?pid=' . urlencode($productId) . '&lead=' . $leadId . '&verified=1';

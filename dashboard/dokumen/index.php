@@ -650,7 +650,7 @@ $activeMenu = "dokumen";
                                 <p><strong>Keputusan Menkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526</p>
                                 <p><strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI &bull; <strong>Sektor Usaha:</strong> IT Solutions, Creative Print & Digital Media Portal</p>
                                 <p>Alamat Kantor: Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-                                <p>Website: https://skillance.my.id &bull; Surel: official@skillance.my.id &bull; Narahubung: 0811-4030-800</p>
+                                <p>Website: https://skillance.cloud &bull; Surel: official@skillance.cloud &bull; Narahubung: 0811-4030-800</p>
                             </div>
                         </div>
 

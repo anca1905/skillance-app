@@ -31,7 +31,7 @@ if (empty($seoOgImage)) {
     $seoOgImage = $baseSiteUrl . '/' . ltrim($seoOgImage, '/');
 }
 
-$faviconUrl = 'https://skillance.my.id/assets/img/favicon.png';
+$faviconUrl = 'https://skillance.cloud/assets/img/favicon.png';
 ?>
 <!-- PRIMARY SEARCH ENGINE METADATA -->
 <title><?= htmlspecialchars($seoTitle) ?></title>
@@ -98,7 +98,7 @@ $faviconUrl = 'https://skillance.my.id/assets/img/favicon.png';
         "caption": "Skillance Academy Logo"
       },
       "sameAs": [
-        "https://skillance.my.id",
+        "https://skillance.cloud",
         "https://instagram.com/skillance.id",
         "https://github.com/anca1905/skillance-app"
       ],

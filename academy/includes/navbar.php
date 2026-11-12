@@ -219,11 +219,11 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 <div class="top-hub-bar">
     <div class="container-fluid px-3 px-xl-4 d-flex justify-content-between align-items-center" style="max-width: 1440px;">
         <div class="d-flex align-items-center gap-3">
-            <a href="https://skillance.my.id" class="text-decoration-none text-white-50">
-                <i class="fa-solid fa-arrow-left me-1"></i> skillance.my.id
+            <a href="https://skillance.cloud" class="text-decoration-none text-white-50">
+                <i class="fa-solid fa-arrow-left me-1"></i> skillance.cloud
             </a>
             <span class="text-white-50 opacity-25 d-none d-md-inline">|</span>
-            <a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-warning d-none d-md-inline fw-semibold">
+            <a href="https://skillance.cloud/bursa-freelance.php" class="text-decoration-none text-warning d-none d-md-inline fw-semibold">
                 <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
             </a>
         </div>
@@ -231,9 +231,9 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
             <span class="small d-none d-lg-inline" style="color: #94a3b8;">Skillance Academy Indonesia</span>
             <?php if ($isLoggedIn): ?>
                 <span class="badge bg-success-subtle text-success py-1 px-2"><i class="fa-solid fa-circle-check me-1"></i> <?= htmlspecialchars($userName ?? 'Siswa Skillance') ?></span>
-                <a href="https://skillance.my.id/auth/logout.php" class="text-white-50 text-decoration-none small"><i class="fa-solid fa-right-from-bracket me-1"></i> Keluar</a>
+                <a href="https://skillance.cloud/auth/logout.php" class="text-white-50 text-decoration-none small"><i class="fa-solid fa-right-from-bracket me-1"></i> Keluar</a>
             <?php else: ?>
-                <a href="https://skillance.my.id/auth/index.php?ref=academy" class="text-warning text-decoration-none fw-semibold small">
+                <a href="https://skillance.cloud/auth/index.php?ref=academy" class="text-warning text-decoration-none fw-semibold small">
                     <i class="fa-solid fa-user me-1"></i> Masuk Akun
                 </a>
             <?php endif; ?>
@@ -356,11 +356,11 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                         <span>Dasbor Siswa</span>
                     </a>
                 <?php else: ?>
-                    <a href="https://skillance.my.id/auth/index.php?ref=academy" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="border-color: #cbd5e1; color: #0d2e5c; font-size: 0.82rem; height: 34px;">
+                    <a href="https://skillance.cloud/auth/index.php?ref=academy" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="border-color: #cbd5e1; color: #0d2e5c; font-size: 0.82rem; height: 34px;">
                         <i class="fa-solid fa-user small"></i> Masuk
                     </a>
                 <?php endif; ?>
-                <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-1 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-1" style="background: #0d2e5c; font-size: 0.82rem; height: 34px;">
+                <a href="https://skillance.cloud/dashboard/freelancer/" class="btn btn-sm btn-navy rounded-pill px-3 py-1 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-1" style="background: #0d2e5c; font-size: 0.82rem; height: 34px;">
                     <i class="fa-solid fa-briefcase text-warning me-1"></i> <span>Bursa Freelance</span>
                 </a>
             </div>

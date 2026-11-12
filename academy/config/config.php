@@ -5,6 +5,7 @@ if (!function_exists('loadEnvAcademy')) {
         $paths = [
             __DIR__ . '/../.env',
             __DIR__ . '/../../.env',
+            '/www/wwwroot/skillance.cloud/.env',
             '/www/wwwroot/skillance.my.id/.env'
         ];
         foreach ($paths as $path) {

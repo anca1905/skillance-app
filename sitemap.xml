@@ -6,7 +6,7 @@
     
     <!-- Beranda Utama -->
     <url>
-        <loc>https://skillance.my.id/</loc>
+        <loc>https://skillance.cloud/</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
@@ -14,25 +14,25 @@
 
     <!-- Bursa Lowongan Freelance (Mahasiswa & Umum) -->
     <url>
-        <loc>https://skillance.my.id/freelance.html</loc>
+        <loc>https://skillance.cloud/freelance.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
-        <loc>https://skillance.my.id/job.php?id=3</loc>
+        <loc>https://skillance.cloud/job.php?id=3</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
-        <loc>https://skillance.my.id/job.php?id=2</loc>
+        <loc>https://skillance.cloud/job.php?id=2</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
-        <loc>https://skillance.my.id/job.php?id=1</loc>
+        <loc>https://skillance.cloud/job.php?id=1</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.85</priority>
@@ -40,7 +40,7 @@
 
     <!-- Layanan Software House & IT Consultant -->
     <url>
-        <loc>https://skillance.my.id/services.html</loc>
+        <loc>https://skillance.cloud/services.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.90</priority>
@@ -48,7 +48,7 @@
 
     <!-- Portofolio Proyek & Studi Kasus -->
     <url>
-        <loc>https://skillance.my.id/portfolio.html</loc>
+        <loc>https://skillance.cloud/portfolio.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
@@ -56,7 +56,7 @@
 
     <!-- Wawasan & Artikel Blog -->
     <url>
-        <loc>https://skillance.my.id/blog.html</loc>
+        <loc>https://skillance.cloud/blog.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.85</priority>
@@ -64,13 +64,13 @@
 
     <!-- Artikel Blog Spesifik -->
     <url>
-        <loc>https://skillance.my.id/blog-detail.html?id=1</loc>
+        <loc>https://skillance.cloud/blog-detail.html?id=1</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.75</priority>
     </url>
     <url>
-        <loc>https://skillance.my.id/blog-detail.html?id=2</loc>
+        <loc>https://skillance.cloud/blog-detail.html?id=2</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.75</priority>
@@ -78,7 +78,7 @@
 
     <!-- Tentang Perusahaan (Skillance Digital Indonesia) -->
     <url>
-        <loc>https://skillance.my.id/about.html</loc>
+        <loc>https://skillance.cloud/about.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>
@@ -86,7 +86,7 @@
 
     <!-- Skillance Academy & Bootcamp Komunitas -->
     <url>
-        <loc>https://skillance.my.id/academy.html</loc>
+        <loc>https://skillance.cloud/academy.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.80</priority>
@@ -94,7 +94,7 @@
 
     <!-- Kontak & Konsultasi Langsung -->
     <url>
-        <loc>https://skillance.my.id/contact.html</loc>
+        <loc>https://skillance.cloud/contact.html</loc>
         <lastmod>2026-11-02</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>

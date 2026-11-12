@@ -722,7 +722,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
         <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
         <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.cloud &bull; <strong>Surel:</strong> official@skillance.cloud / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
       </div>
     </div>
 
@@ -899,7 +899,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
         <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
         <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.cloud &bull; <strong>Surel:</strong> official@skillance.cloud / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
       </div>
     </div>
 
@@ -1020,7 +1020,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
         <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
         <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.cloud &bull; <strong>Surel:</strong> official@skillance.cloud / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
       </div>
     </div>
 
@@ -1117,7 +1117,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
         <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
         <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.cloud &bull; <strong>Surel:</strong> official@skillance.cloud / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
       </div>
     </div>
 
@@ -1211,7 +1211,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         <p class="meta"><strong>Portal Berita Siber:</strong> Cerita Rakyat ID (www.xyronnews.com) &bull; XyronNews Network</p>
         <p class="meta"><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP Badan:</strong> 100000011940526 &bull; <strong>NIB OSS:</strong> Terdaftar Resmi BKPM RI</p>
         <p class="meta"><strong>Alamat Kantor:</strong> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-        <p class="meta"><strong>Website:</strong> https://skillance.my.id &bull; <strong>Surel:</strong> official@skillance.my.id / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
+        <p class="meta"><strong>Website:</strong> https://skillance.cloud &bull; <strong>Surel:</strong> official@skillance.cloud / redaksi@xyronnews.com &bull; <strong>Hotline/Redaksi:</strong> 0811-4030-800</p>
       </div>
     </div>
 

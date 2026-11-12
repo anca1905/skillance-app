@@ -42,12 +42,12 @@ if ($jobFound) {
     $daysLeft    = intval($job['days_left']);
     $desc        = trim($job['description']);
     $reqs        = trim($job['requirements'] ?? '');
-    $pageUrl     = "https://skillance.my.id/job.php?id=" . $job['id'];
+    $pageUrl     = "https://skillance.cloud/job.php?id=" . $job['id'];
     
     // Cover image banner logic
     $jobImageName = trim($job['image'] ?? '');
     if (!empty($jobImageName)) {
-        $jobImageUrl = "https://skillance.my.id/uploads/freelance_jobs/" . $jobImageName;
+        $jobImageUrl = "https://skillance.cloud/uploads/freelance_jobs/" . $jobImageName;
         $ogImgUrl    = $jobImageUrl; // Use custom uploaded image for WhatsApp / Social Media preview!
     } else {
         $categoryFallbacks = [
@@ -59,7 +59,7 @@ if ($jobFound) {
             'Lainnya' => 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80'
         ];
         $jobImageUrl = $categoryFallbacks[$category] ?? 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80';
-        $ogImgUrl    = "https://skillance.my.id/api/og_job.php?id=" . $job['id'];
+        $ogImgUrl    = "https://skillance.cloud/api/og_job.php?id=" . $job['id'];
     }
 
     $pageTitle   = "[Lowongan Freelance] " . $jobTitle . " (Fee " . $rewardText . ") | Skillance";
@@ -78,9 +78,9 @@ if ($jobFound) {
     $pageTitle   = "Lowongan Tidak Ditemukan | Skillance Freelance";
     $ogTitle     = "Bursa Lowongan Freelance | Skillance Indonesia";
     $ogDesc      = "Cari dan ambil lowongan freelance digital untuk mahasiswa dan umum di Skillance.";
-    $ogImgUrl    = "https://skillance.my.id/assets/img/og-preview.png";
+    $ogImgUrl    = "https://skillance.cloud/assets/img/og-preview.png";
     $ogImgMime   = "image/png";
-    $pageUrl     = "https://skillance.my.id/freelance.html";
+    $pageUrl     = "https://skillance.cloud/freelance.html";
 }
 ?>
 <!DOCTYPE html>
@@ -132,8 +132,8 @@ if ($jobFound) {
       "hiringOrganization": {
         "@type": "Organization",
         "name": "Skillance Digital Indonesia",
-        "sameAs": "https://skillance.my.id",
-        "logo": "https://skillance.my.id/assets/img/favicon.png"
+        "sameAs": "https://skillance.cloud",
+        "logo": "https://skillance.cloud/assets/img/favicon.png"
       },
       "jobLocationType": "TELECOMMUTE",
       "applicantLocationRequirements": {
@@ -455,7 +455,7 @@ if ($jobFound) {
                     <h6 class="fw-bold text-gold text-uppercase mb-3">Kontak Kantor</h6>
                     <p class="text-white-50 small mb-2"><i class="fa-solid fa-location-dot text-gold me-2"></i> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra</p>
                     <p class="text-white-50 small mb-2"><i class="fa-solid fa-phone text-gold me-2"></i> +62 822-9170-0778</p>
-                    <p class="text-white-50 small mb-0"><i class="fa-solid fa-envelope text-gold me-2"></i> official@skillance.my.id</p>
+                    <p class="text-white-50 small mb-0"><i class="fa-solid fa-envelope text-gold me-2"></i> official@skillance.cloud</p>
                 </div>
             </div>
             <div class="border-top border-secondary pt-3 text-center small text-white-50">

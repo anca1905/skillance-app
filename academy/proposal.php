@@ -227,7 +227,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
                     <div class="kop-sub mt-1">
                         SK Kemenkumham: <strong>AHU-A138609.AH.01.30.Tahun 2026</strong> &bull; NPWP: <strong>100000011940526</strong><br>
                         Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra &bull; WA: +62 822-9170-0778<br>
-                        Portal Resmi: <strong>academy.skillance.cloud</strong> &bull; Website: <strong>skillance.my.id</strong>
+                        Portal Resmi: <strong>academy.skillance.cloud</strong> &bull; Website: <strong>skillance.cloud</strong>
                     </div>
                 </div>
             </div>
@@ -543,7 +543,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waMsg}";
 
         <!-- FOOTER CONTACT -->
         <div class="mt-4 pt-3 border-top text-center text-muted small" style="font-size: 0.75rem;">
-            Kontak Konfirmasi & Pengiriman Berkas: <strong>Admin Kemitraan Skillance Academy (+62 822-9170-0778)</strong> &bull; Email: <strong>partnership@skillance.my.id</strong>
+            Kontak Konfirmasi & Pengiriman Berkas: <strong>Admin Kemitraan Skillance Academy (+62 822-9170-0778)</strong> &bull; Email: <strong>partnership@skillance.cloud</strong>
         </div>
 
     </article>

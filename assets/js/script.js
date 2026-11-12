@@ -224,7 +224,7 @@ window.openPortfolioModal = function(index) {
         });
     }
 
-    const waText = encodeURIComponent(`Halo Tim Skillance Digital Indonesia, saya melihat studi kasus portofolio: "${item.name}" di website skillance.my.id. Saya tertarik berkonsultasi untuk pembuatan sistem serupa.`);
+    const waText = encodeURIComponent(`Halo Tim Skillance Digital Indonesia, saya melihat studi kasus portofolio: "${item.name}" di website skillance.cloud. Saya tertarik berkonsultasi untuk pembuatan sistem serupa.`);
     document.getElementById('modalProjectWaBtn').href = `https://api.whatsapp.com/send?phone=6282291700778&text=${waText}`;
 
     const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl);

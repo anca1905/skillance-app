@@ -57,7 +57,7 @@
                     <li><a href="bootcamp.php" class="text-decoration-none text-navy fw-semibold"><i class="fa-solid fa-fire text-danger me-1"></i> Online Bootcamp (Dicoding Style)</a></li>
                     <li><a href="partner.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-building-columns text-primary me-1"></i> Kemitraan Kampus / BEM</a></li>
                     <li><a href="my-learning.php" class="text-decoration-none text-secondary"><i class="fa-solid fa-chart-line text-success me-1"></i> Dasbor & Leaderboard</a></li>
-                    <li><a href="https://skillance.my.id/bursa-freelance.php" class="text-decoration-none text-navy fw-semibold"><i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;</a></li>
+                    <li><a href="https://skillance.cloud/bursa-freelance.php" class="text-decoration-none text-navy fw-semibold"><i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;</a></li>
                 </ul>
             </div>
 
@@ -73,8 +73,8 @@
                             <small class="text-muted" style="font-size: 0.7rem;">WhatsApp Official Support</small>
                         </div>
                     </a>
-                    <a href="mailto:support@skillance.my.id" class="text-decoration-none text-secondary d-flex align-items-center gap-2">
-                        <i class="fa-regular fa-envelope text-primary"></i> support@skillance.my.id
+                    <a href="mailto:support@skillance.cloud" class="text-decoration-none text-secondary d-flex align-items-center gap-2">
+                        <i class="fa-regular fa-envelope text-primary"></i> support@skillance.cloud
                     </a>
                     <span class="text-secondary d-flex align-items-center gap-2">
                         <i class="fa-solid fa-location-dot text-danger"></i> Kolaka, Sulawesi Tenggara, ID
@@ -126,7 +126,7 @@
                 &copy; <?= date('Y') ?> <strong>Skillance Academy Indonesia</strong> &bull; Dikelola secara profesional oleh <strong>PT Skillance Digital Indonesia</strong>. Hak Cipta Dilindungi Undang-Undang.
             </p>
             <div class="d-flex align-items-center gap-3 small text-muted">
-                <a href="https://skillance.my.id" class="text-decoration-none text-secondary">Portal Utama</a>
+                <a href="https://skillance.cloud" class="text-decoration-none text-secondary">Portal Utama</a>
                 <span>&bull;</span>
                 <a href="partner.php" class="text-decoration-none text-secondary">Kemitraan SKPI</a>
                 <span>&bull;</span>

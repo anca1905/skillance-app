@@ -140,7 +140,7 @@ HTML_CONTENT,
     <h1>Judul Halaman (H1)</h1>
     <p>Ini adalah teks paragraf biasa.</p>
 
-    <a href="https://skillance.my.id" target="_blank">Kunjungi Website Skillance</a>
+    <a href="https://skillance.cloud" target="_blank">Kunjungi Website Skillance</a>
     <br><br>
 
     <button onclick="alert(\'Tombol dasar ditekan!\')">Tombol HTML</button>
@@ -415,7 +415,7 @@ HTML_CONTENT,
 
     <p>Kutipan pendek Albert Einstein: <q>Imajinasi lebih penting daripada pengetahuan.</q></p>
 
-    <blockquote cite="https://skillance.my.id">
+    <blockquote cite="https://skillance.cloud">
         Belajar koding praktis dari nol dengan kurikulum terstruktur dan latihan langsung di browser.
     </blockquote>
 
@@ -576,7 +576,7 @@ HTML_EXPLANATION,
             <li><code>target="_parent"</code> & <code>target="_top"</code> : Digunakan jika halaman berada di dalam frame/iframe.</li>
         </ul>
         <h4>Tautan Khusus:</h4>
-        <p>Untuk membuat tautan kirim email, gunakan <code>href="mailto:info@skillance.my.id"</code>.<br>
+        <p>Untuk membuat tautan kirim email, gunakan <code>href="mailto:info@skillance.cloud"</code>.<br>
         Untuk membuat tautan telepon, gunakan <code>href="tel:+62812345678"</code>.</p>
 HTML_CONTENT,
                 'example_title' => 'Contoh Beragam Tautan HTML',
@@ -586,10 +586,10 @@ HTML_CONTENT,
 <body>
 
     <h3>Tautan Halaman & Tab Baru</h3>
-    <p><a href="https://skillance.my.id" target="_blank">Buka Skillance di Tab Baru &raquo;</a></p>
+    <p><a href="https://skillance.cloud" target="_blank">Buka Skillance di Tab Baru &raquo;</a></p>
 
     <h3>Tautan Email</h3>
-    <p><a href="mailto:support@skillance.my.id">Kirim Email ke Dukungan Kami</a></p>
+    <p><a href="mailto:support@skillance.cloud">Kirim Email ke Dukungan Kami</a></p>
 
     <h3>Tautan Tombol</h3>
     <a href="#" onclick="alert(\'Tautan tombol diklik!\')" style="background:#04AA6D; color:white; padding:8px 16px; text-decoration:none; border-radius:6px;">Tombol Link</a>
@@ -678,7 +678,7 @@ HTML_CONTENT,
             </ul>
         </div>
 
-        <a href="mailto:sarah@skillance.my.id" class="btn-hire">Hubungi Saya »</a>
+        <a href="mailto:sarah@skillance.cloud" class="btn-hire">Hubungi Saya »</a>
     </div>
 
 </body>

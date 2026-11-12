@@ -155,7 +155,7 @@ if (!empty($_SESSION['auth_redirect'])) {
         exit();
     }
 
-    if (strpos($redirectUrl, '://') === false || strpos($redirectUrl, 'skillance.my.id') !== false) {
+    if (strpos($redirectUrl, '://') === false || strpos($redirectUrl, 'skillance.cloud') !== false) {
         header("Location: ../" . ltrim($redirectUrl, '/'));
         exit();
     }

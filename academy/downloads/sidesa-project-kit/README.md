@@ -111,4 +111,4 @@ Sistem SIDESA telah terhubung dengan service `App\Services\WhatsAppService`.
 ---
 **Pusat Bantuan & Konsultasi:**  
 WhatsApp Admin Skillance: `0822-9170-0778`  
-Website: [https://skillance.my.id/academy/](https://skillance.my.id/academy/)
+Website: [https://skillance.cloud/academy/](https://skillance.cloud/academy/)

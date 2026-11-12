@@ -1,4 +1,4 @@
-# robots.txt for https://skillance.my.id
+# robots.txt for https://skillance.cloud
 # Skillance Digital Indonesia - Software House & Bursa Freelance
 
 User-agent: *
@@ -25,5 +25,5 @@ Disallow: /mobile/
 Disallow: /wa-gateway/
 
 # Host & Sitemap specification
-Host: https://skillance.my.id
-Sitemap: https://skillance.my.id/sitemap.xml
+Host: https://skillance.cloud
+Sitemap: https://skillance.cloud/sitemap.xml

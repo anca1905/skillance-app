@@ -245,7 +245,7 @@ return json_decode(<<<'JSON_DATA'
         "summary": "Pencarian pola ekspresi reguler dengan modul `re`: `re.search()`, `re.findall()`, `re.sub()`.",
         "content": "<p class=\"lead\">Pencarian pola ekspresi reguler dengan modul `re`: `re.search()`, `re.findall()`, `re.sub()`.</p>\n<div class=\"card bg-light border-0 p-3 mb-4 rounded-3\">\n    <h6 class=\"fw-bold text-navy mb-2\"><i class=\"fa-brands fa-python text-primary me-2\"></i>Konsep Kunci Python RegEx:</h6>\n    <p class=\"small mb-0\" style=\"line-height: 1.8;\">\n        Pelajari sintaks di bawah, pahami alur eksekusi logika interpreter Python, dan uji secara langsung di Code Lab Skillance Academy.\n    </p>\n</div>",
         "example_title": "Contoh Kode Python: Python RegEx",
-        "example_code": "# Skrip Python - Skillance Academy Indonesia\nimport re\ntxt = 'Hubungi admin@skillance.my.id hari ini'\nmatch = re.search(r'[\\w\\.-]+@[\\w\\.-]+', txt)\nprint('Email Terdeteksi:', match.group())",
+        "example_code": "# Skrip Python - Skillance Academy Indonesia\nimport re\ntxt = 'Hubungi admin@skillance.cloud hari ini'\nmatch = re.search(r'[\\w\\.-]+@[\\w\\.-]+', txt)\nprint('Email Terdeteksi:', match.group())",
         "explanation": "<p>Uji skrip Python untuk topik <strong>Python RegEx</strong> di atas dan amati hasil eksekusi terminalnya secara instan.</p>"
       },
       "py_pip": {

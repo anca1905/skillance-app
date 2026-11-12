@@ -486,7 +486,7 @@ $seoBreadcrumbs = [
                             <strong>Mode Pratinjau Demo:</strong> Anda saat ini sedang menjelajahi simulasi Dashboard Siswa. Masuk dengan akun Google untuk menyinkronkan progres Anda secara permanen.
                         </span>
                     </div>
-                    <a href="https://skillance.my.id/auth/index.php" class="btn btn-navy text-white btn-sm rounded-pill fw-bold px-4" style="background: #0d2e5c;">
+                    <a href="https://skillance.cloud/auth/index.php" class="btn btn-navy text-white btn-sm rounded-pill fw-bold px-4" style="background: #0d2e5c;">
                         <i class="fa-brands fa-google text-warning me-1"></i> Masuk Sekarang &raquo;
                     </a>
                 </div>
@@ -525,7 +525,7 @@ $seoBreadcrumbs = [
                         <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#atsResumeModal">
                             <i class="fa-solid fa-file-lines me-1 text-gold"></i> Buat CV ATS Koding
                         </button>
-                        <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-warning fw-bold px-3 py-2 rounded-pill text-navy shadow-sm">
+                        <a href="https://skillance.cloud/dashboard/freelancer/" class="btn btn-warning fw-bold px-3 py-2 rounded-pill text-navy shadow-sm">
                             <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;
                         </a>
                         <?php if ($isLoggedIn): ?>
@@ -533,7 +533,7 @@ $seoBreadcrumbs = [
                                 <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Keluar
                             </a>
                         <?php else: ?>
-                            <a href="https://skillance.my.id/auth/index.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
+                            <a href="https://skillance.cloud/auth/index.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
                                 <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login Akun
                             </a>
                         <?php endif; ?>
@@ -1175,10 +1175,10 @@ $seoBreadcrumbs = [
                             </div>
                         </div>
                         <div class="col-lg-4 text-lg-end">
-                            <a href="https://skillance.my.id/dashboard/freelancer/" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow w-100 mb-2">
+                            <a href="https://skillance.cloud/dashboard/freelancer/" class="btn btn-warning btn-lg fw-bold px-4 py-3 rounded-pill text-navy shadow w-100 mb-2">
                                 <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Buka Dashboard Freelancer &raquo;
                             </a>
-                            <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 w-100">
+                            <a href="https://skillance.cloud/bursa-freelance.php" class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 w-100">
                                 Cari Lowongan Proyek Terbuka
                             </a>
                         </div>

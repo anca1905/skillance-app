@@ -487,7 +487,7 @@ $seoBreadcrumbs = [
                 <div class="fs-1 text-warning mb-2"><i class="fa-solid fa-triangle-exclamation"></i></div>
                 <h4 class="fw-bold text-navy">Sertifikat Tidak Terdaftar</h4>
                 <p class="mb-3 text-muted"><?= $errorMsg ?></p>
-                <p class="small text-muted mb-0">Pastikan nomor sertifikat yang Anda masukkan sudah benar termasuk tanda hubung (-). Jika Anda merasa ini adalah kekeliruan, silakan hubungi tim akademik di <strong>support@skillance.my.id</strong>.</p>
+                <p class="small text-muted mb-0">Pastikan nomor sertifikat yang Anda masukkan sudah benar termasuk tanda hubung (-). Jika Anda merasa ini adalah kekeliruan, silakan hubungi tim akademik di <strong>support@skillance.cloud</strong>.</p>
             </div>
         <?php endif; ?>
 
@@ -647,7 +647,7 @@ $seoBreadcrumbs = [
                         </div>
                     </div>
                     <div class="col-md-4 text-md-end">
-                        <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-navy text-white fw-bold px-4 py-3 rounded-pill shadow-sm" style="background: #0d2e5c;">
+                        <a href="https://skillance.cloud/bursa-freelance.php" class="btn btn-navy text-white fw-bold px-4 py-3 rounded-pill shadow-sm" style="background: #0d2e5c;">
                             <i class="fa-solid fa-briefcase text-warning me-1"></i> Cek Bursa Freelance &raquo;
                         </a>
                     </div>

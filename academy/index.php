@@ -896,7 +896,7 @@ $seoBreadcrumbs = [
                             <a href="partner.php" class="btn btn-navy text-white btn-sm rounded-pill px-3 py-2 fw-bold shadow-sm" style="background-color: #0d2e5c !important; color: #ffffff !important;">
                                 <i class="fa-solid fa-file-pdf text-warning me-1"></i> Pelajari Proposal Kerjasama &raquo;
                             </a>
-                            <a href="https://skillance.my.id/bursa-freelance.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 py-2 fw-bold text-navy" style="border: 1.5px solid #0d2e5c; color: #0d2e5c !important;">
+                            <a href="https://skillance.cloud/bursa-freelance.php" class="btn btn-outline-navy btn-sm rounded-pill px-3 py-2 fw-bold text-navy" style="border: 1.5px solid #0d2e5c; color: #0d2e5c !important;">
                                 <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance
                             </a>
                         </div>

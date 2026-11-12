@@ -146,7 +146,7 @@ if ($fontBold) {
     // Bottom bar
     imageline($im, 80, 545, $width - 80, 545, $cBorder);
     imagettftext($im, 16, 0, 80, 580, $cSlate, $fontRegular, "Daftar & ambil pekerjaan langsung di:");
-    imagettftext($im, 18, 0, 420, 580, $cGold, $fontBold, "https://skillance.my.id/job.php?id=" . $jobId);
+    imagettftext($im, 18, 0, 420, 580, $cGold, $fontBold, "https://skillance.cloud/job.php?id=" . $jobId);
 } else {
     // Basic fallback without TTF
     imagestring($im, 5, 80, 80, "BURSA FREELANCE - SKILLANCE", $cGold);
