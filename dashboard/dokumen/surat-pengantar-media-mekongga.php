@@ -422,6 +422,9 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
       <span style="font-size: 13px; font-weight: bold; color: #fff;">Surat Pengantar Kemitraan Media Siber & Publikasi CSR</span>
     </div>
     <div class="toolbar-right">
+      <a href="proposal-kemitraan-mekongga.php" target="_blank" class="btn-envelope-top" style="background: #0d2e5c; border-color: #fe9800; color: #fe9800;">
+        <i class="fa-solid fa-file-contract"></i> Buka Proposal (5 Hal)
+      </a>
       <a href="amplop-surat-mekongga.php" target="_blank" class="btn-envelope-top">
         <i class="fa-solid fa-envelope"></i> Cetak Desain Amplop
       </a>
