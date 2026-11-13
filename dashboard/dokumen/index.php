@@ -569,6 +569,9 @@ $activeMenu = "dokumen";
                                     <a href="surat-pengantar-media-mekongga.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 shadow-sm text-nowrap">
                                         <i class="fa-solid fa-print me-1.5"></i>Buka & Cetak Surat Pengantar (A4) &raquo;
                                     </a>
+                                    <a href="amplop-surat-mekongga.php" target="_blank" class="btn btn-outline-navy fw-bold px-3 py-1.5 shadow-sm text-nowrap" style="border: 1.5px solid #0d2e5c; color: #0d2e5c; background: #f8fafc; font-size: 0.85rem;">
+                                        <i class="fa-solid fa-envelope me-1.5 text-warning"></i>Cetak Desain Amplop Resmi &raquo;
+                                    </a>
                                 </div>
                             </div>
                         </div>

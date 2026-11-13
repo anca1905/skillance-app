@@ -389,6 +389,9 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
       <span style="font-size: 13px; font-weight: bold; color: #fff;">Surat Pengantar Kemitraan Media Siber & Publikasi CSR</span>
     </div>
     <div class="toolbar-right">
+      <a href="amplop-surat-mekongga.php" target="_blank" class="btn-back" style="background: rgba(254, 152, 0, 0.25); border-color: #fe9800; color: #ffedd5; font-weight: 700;">
+        <i class="fa-solid fa-envelope"></i> Cetak Desain Amplop
+      </a>
       <span class="print-mode-tag">
         <i class="fa-solid fa-stamp"></i> <strong>Mode Cetak Fisik:</strong> Siap Tanda Tangan & Cap Basah
       </span>
