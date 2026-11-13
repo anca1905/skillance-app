@@ -550,14 +550,14 @@ $activeMenu = "dokumen";
                                             <i class="fa-solid fa-check-circle me-1"></i>Siap Cetak Fisik A4 & Ekspedisi
                                         </span>
                                         <span class="text-muted small" style="font-size: 0.75rem;">
-                                            No. Arsip: <strong class="text-navy">028/EXT-MED/SDI-CRID/XI/2026</strong>
+                                            No. Arsip: <strong class="text-navy">028/EXT-MED/SDI-CRO/XI/2026</strong>
                                         </span>
                                     </div>
                                     <h5 class="fw-bold text-navy mb-1">
                                         Surat Pengantar & Permohonan Kemitraan Media Siber &bull; PT Putra Mekongga Sejahtera
                                     </h5>
                                     <p class="text-muted small mb-2" style="line-height: 1.45;">
-                                        Surat pengantar resmi pengajuan proposal kemitraan publikasi kegiatan perusahaan, diseminasi program Corporate Social Responsibility (CSR / PPM), advertorial profil korporasi, serta hak pencantuman logo official partner di portal siber <em>Cerita Rakyat ID (xyronnews.com)</em>. Disertai lembar ekspedisi tanda terima surat untuk bagian resepsionis/security.
+                                        Surat pengantar resmi pengajuan proposal kemitraan publikasi kegiatan perusahaan, diseminasi program Corporate Social Responsibility (CSR / PPM), advertorial profil korporasi, serta hak pencantuman logo official partner di portal siber <em>Cerita Rakyat Official (xyronnews.com)</em>. Disertai lembar ekspedisi tanda terima surat untuk bagian resepsionis/security.
                                     </p>
                                     <div class="d-flex align-items-center gap-3 flex-wrap">
                                         <span class="archive-meta-tag"><i class="fa-solid fa-folder text-warning"></i> Folder: Media Siber & CSR</span>
