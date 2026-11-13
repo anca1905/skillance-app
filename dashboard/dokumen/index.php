@@ -533,7 +533,7 @@ $activeMenu = "dokumen";
                 <div class="row g-3" id="archiveItemsContainer">
 
                     <!-- ========================================== -->
-                    <!-- DOKUMEN #1: SURAT PENGANTAR PT PUTRA MEKONNGA SEJAHTERA (FEATURED) -->
+                    <!-- DOKUMEN #1: SURAT PENGANTAR PT PUTRA MEKONGGA SEJAHTERA (FEATURED) -->
                     <!-- ========================================== -->
                     <div class="col-12 archive-item-wrapper" data-folder="media">
                         <div class="archive-card featured-card p-3.5 shadow-sm">
@@ -544,7 +544,7 @@ $activeMenu = "dokumen";
                                             <i class="fa-solid fa-sparkles me-1"></i>BARU DIARSIPKAN (13 NOV 2026)
                                         </span>
                                         <span class="badge bg-navy text-white px-2 py-0.5" style="font-size: 0.72rem;">
-                                            <i class="fa-solid fa-building me-1"></i>Target: PT. PUTRA MEKONNGA SEJAHTERA
+                                            <i class="fa-solid fa-building me-1"></i>Target: PT. PUTRA MEKONGGA SEJAHTERA
                                         </span>
                                         <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5" style="font-size: 0.72rem;">
                                             <i class="fa-solid fa-check-circle me-1"></i>Siap Cetak Fisik A4 & Ekspedisi

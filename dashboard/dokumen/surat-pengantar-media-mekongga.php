@@ -554,7 +554,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
       <table class="receipt-table">
         <tr>
           <td class="header-col">Perusahaan Penerima</td>
-          <td contenteditable="true"><strong>PT. PUTRA MEKONNGA SEJAHTERA</strong></td>
+          <td contenteditable="true"><strong>PT. PUTRA MEKONGGA SEJAHTERA</strong></td>
           <td class="header-col">No. Agenda Masuk</td>
           <td contenteditable="true">................................................</td>
         </tr>
