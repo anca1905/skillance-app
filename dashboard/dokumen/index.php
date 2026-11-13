@@ -160,6 +160,103 @@ $activeMenu = "dokumen";
             border-color: #fe9800;
         }
 
+        /* Digital Archive & Folder Explorer Styles */
+        .archive-folder-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .folder-pill-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .folder-pill-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0d2e5c;
+            transform: translateY(-1px);
+        }
+        .folder-pill-btn.active {
+            background: #0d2e5c;
+            color: #ffffff;
+            border-color: #0d2e5c;
+            box-shadow: 0 4px 12px rgba(13, 46, 92, 0.22);
+        }
+        .folder-pill-btn .folder-badge {
+            background: rgba(0, 0, 0, 0.08);
+            color: inherit;
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .folder-pill-btn.active .folder-badge {
+            background: #fe9800;
+            color: #0d2e5c;
+        }
+
+        .archive-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: all 0.25s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .archive-card:hover {
+            border-color: #0d2e5c;
+            box-shadow: 0 8px 24px rgba(13, 46, 92, 0.09);
+            transform: translateY(-3px);
+        }
+        .archive-card.featured-card {
+            border-left: 5px solid #fe9800 !important;
+            background: linear-gradient(180deg, #fffcf7 0%, #ffffff 100%);
+        }
+        .archive-card.media-card {
+            border-left: 5px solid #0d2e5c;
+        }
+        .archive-card.it-card {
+            border-left: 5px solid #10b981;
+        }
+        .archive-card.retail-card {
+            border-left: 5px solid #3b82f6;
+        }
+        .archive-card.holding-card {
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .archive-badge-type {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .archive-meta-tag {
+            font-size: 11.5px;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         /* Paper Sheet Preview */
         .paper-container {
             background-color: #525659;
@@ -368,125 +465,134 @@ $activeMenu = "dokumen";
             </div>
         </div>
 
-        <!-- Quick Info Cards (No Print) -->
-        <div class="row g-3 mb-4 no-print">
-            <div class="col-md-4">
-                <div class="doc-card">
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold">Unit Produk & Toko</span>
-                            <i class="fa-solid fa-store fs-4 text-primary"></i>
-                        </div>
-                        <h5 class="fw-bold text-navy mb-1">Aquirist Print & Acrylic</h5>
-                        <p class="text-muted small mb-3">
-                            Kerja sama titip jual (konsinyasi) plakat akrilik, gantungan kunci kustom, standing banner di toko ATK, kafe, fotokopi, dan souvenir.
-                        </p>
-                    </div>
-                    <button onclick="pickDocumentType('pks_konsinyasi')" class="btn btn-outline-primary btn-sm w-100 fw-semibold">
-                        <i class="fa-solid fa-file-signature me-1"></i>Buat PKS Konsinyasi &raquo;
-                    </button>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="doc-card">
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge bg-success bg-opacity-10 text-success fw-bold">Unit IT & Software</span>
-                            <i class="fa-solid fa-laptop-code fs-4 text-success"></i>
-                        </div>
-                        <h5 class="fw-bold text-navy mb-1">Software House Skillance</h5>
-                        <p class="text-muted small mb-3">
-                            Perjanjian kemitraan reseller / agen pemasaran website sekolah, SIMS instansi, sistem kasir (POS) UMKM dengan komisi 15% – 20%.
-                        </p>
-                    </div>
-                    <button onclick="pickDocumentType('pks_reseller_software')" class="btn btn-outline-success btn-sm w-100 fw-semibold">
-                        <i class="fa-solid fa-file-signature me-1"></i>Buat PKS Reseller &raquo;
-                    </button>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="doc-card">
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge bg-warning bg-opacity-10 text-warning fw-bold">Unit Portal Media</span>
-                            <i class="fa-solid fa-newspaper fs-4 text-warning"></i>
-                        </div>
-                        <h5 class="fw-bold text-navy mb-1">XyronNews / Media Skillance</h5>
-                        <p class="text-muted small mb-3">
-                            Official Media Partner rilis berita kegiatan event/kampus/lomba (skema barter logo) dan publikasi advertorial komersial berbayar.
-                        </p>
-                    </div>
-                    <button onclick="pickDocumentType('pks_media_barter')" class="btn btn-outline-warning text-dark btn-sm w-100 fw-semibold">
-                        <i class="fa-solid fa-file-signature me-1"></i>Buat PKS Media Partner &raquo;
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- SURAT PENGANTAR AUDIENSI SOLUSI APLIKASI DINAS (SOFTWARE HOUSE PT SKILLANCE DIGITAL INDONESIA) -->
-        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #0d2e5c !important; background: #ffffff;">
-            <div class="card-body p-3.5">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
-                            <span class="badge bg-gold text-navy fw-bold px-2.5 py-1 small">
-                                <i class="fa-solid fa-laptop-code me-1"></i>SOFTWARE HOUSE & IT SOLUTIONS
-                            </span>
-                            <span class="badge bg-navy text-white px-2.5 py-1 small">
-                                PT Skillance Digital Indonesia
-                            </span>
-                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 fw-bold px-2 py-0.5 small">
-                                <i class="fa-solid fa-check-circle me-1"></i>5 Dinas Sasaran Tersedia
-                            </span>
-                        </div>
-                        <h5 class="fw-bold text-navy mb-1">Surat Pengantar & Permohonan Audiensi Penawaran Aplikasi Dinas</h5>
-                        <p class="text-muted small mb-0">
-                            Surat resmi permohonan audiensi & penawaran aplikasi kustom untuk 5 instansi kedinasan: <strong>Dinas Pendidikan</strong> (Smart School & CBT), <strong>Dinas Kehutanan</strong> (Web-GIS & Mobile Patroli), <strong>Dispora</strong> (SIM-ORDA & Database Atlet), <strong>Inspektorat</strong> (E-Pengawasan & WBS), dan <strong>Dinas Capil</strong> (Antrean Online & Adminduk). Dilengkapi lembar tanda terima ekspedisi surat untuk bagian TU/Umum, serta mode cetak fisik (bebas stempel digital).
-                        </p>
-                    </div>
-                    <div class="text-md-end flex-shrink-0">
-                        <a href="surat-pengantar-audiensi.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 text-nowrap shadow-sm">
-                            <i class="fa-solid fa-envelope-open-text me-1.5"></i>Buka & Cetak Surat Pengantar (5 Dinas) &raquo;
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAKET BERKAS KEMITRAAN MEDIA SIBER (ARSIP / PENDUKUNG) -->
-        <div class="card border-0 shadow-sm rounded-3 mb-4 no-print overflow-hidden" style="border-left: 5px solid #cbd5e1 !important; background: #ffffff;">
-            <div class="card-body p-3.5">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+        <!-- ============================================================== -->
+        <!-- SISTEM PENGARSIPAN DIGITAL BERFOLDER (DOCUMENT ARCHIVE HUB)     -->
+        <!-- ============================================================== -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4 no-print overflow-hidden" style="background: #ffffff; border: 1px solid #e2e8f0;">
+            <div class="card-body p-4">
+                
+                <!-- Header Pengarsipan & Search Bar -->
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3 pb-3 border-bottom">
                     <div>
                         <div class="d-flex align-items-center gap-2 mb-1">
-                            <span class="badge bg-secondary text-white fw-bold px-2 py-0.5 small">
-                                <i class="fa-solid fa-newspaper me-1"></i>ARSIP / BERKAS MEDIA SIBER
+                            <span class="badge bg-gold text-navy fw-bold px-2.5 py-1 small">
+                                <i class="fa-solid fa-folder-tree me-1"></i>SISTEM PENGARSIPAN RESMI
                             </span>
-                            <span class="badge bg-light text-muted border px-2 py-0.5 small">
-                                Cerita Rakyat ID (www.xyronnews.com)
+                            <span class="badge bg-navy text-white px-2 py-1 small">
+                                PT Skillance Digital Indonesia
+                            </span>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5 small fw-semibold">
+                                <i class="fa-solid fa-cloud-arrow-up me-1"></i>Sinkron Cloud Live
                             </span>
                         </div>
-                        <h5 class="fw-bold text-navy mb-1">Paket Berkas Kemitraan Publikasi Media Pers</h5>
+                        <h4 class="fw-bold text-navy mb-1">Pengarsipan Dokumen & Surat Kemitraan</h4>
                         <p class="text-muted small mb-0">
-                            Dokumen kemitraan media pers naungan PT Skillance Digital Indonesia (MoU Kemitraan, LPJ & Kliping Tayang, serta Faktur/Kwitansi/SPTJM Pajak PT) untuk keperluan publikasi berita bilamana dibutuhkan.
+                            Penyimpanan berkas legal, naskah MoU, LPJ, faktur tagihan, serta surat pengantar kemitraan resmi terorganisasi per folder kategori unit usaha.
                         </p>
+                    </div>
+
+                    <!-- Search Input Box -->
+                    <div class="flex-shrink-0" style="min-width: 320px;">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="searchArchiveInput" class="form-control border-start-0 bg-light" placeholder="Cari nama mitra, surat, atau no. arsip..." oninput="filterArchiveSearch()">
+                            <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('searchArchiveInput').value=''; filterArchiveSearch();" title="Reset Pencarian">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row g-2.5">
-                    <div class="col-md-4">
-                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                <!-- Navigation Tabs / Folder Pills -->
+                <div class="archive-folder-nav mb-3">
+                    <button type="button" class="folder-pill-btn active" data-folder="all" onclick="switchArchiveFolder('all')">
+                        <i class="fa-solid fa-layer-group text-primary"></i> Semua Folder
+                        <span class="folder-badge">8 Berkas</span>
+                    </button>
+                    <button type="button" class="folder-pill-btn" data-folder="media" onclick="switchArchiveFolder('media')">
+                        <i class="fa-solid fa-newspaper text-warning"></i> 📁 Folder 01: Media Siber & Publikasi CSR
+                        <span class="folder-badge">4 Berkas</span>
+                    </button>
+                    <button type="button" class="folder-pill-btn" data-folder="software" onclick="switchArchiveFolder('software')">
+                        <i class="fa-solid fa-laptop-code text-success"></i> 📁 Folder 02: Software House & Solusi IT
+                        <span class="folder-badge">2 Berkas</span>
+                    </button>
+                    <button type="button" class="folder-pill-btn" data-folder="retail" onclick="switchArchiveFolder('retail')">
+                        <i class="fa-solid fa-store text-info"></i> 📁 Folder 03: Retail & Produk Kreatif
+                        <span class="folder-badge">1 Berkas</span>
+                    </button>
+                    <button type="button" class="folder-pill-btn" data-folder="holding" onclick="switchArchiveFolder('holding')">
+                        <i class="fa-solid fa-building-columns text-purple" style="color: #8b5cf6;"></i> 📁 Folder 04: Perjanjian Induk Holding
+                        <span class="folder-badge">2 Berkas</span>
+                    </button>
+                </div>
+
+                <!-- Container Berkas Arsip (Grid) -->
+                <div class="row g-3" id="archiveItemsContainer">
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #1: SURAT PENGANTAR PT PUTRA MEKONNGA SEJAHTERA (FEATURED) -->
+                    <!-- ========================================== -->
+                    <div class="col-12 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card featured-card p-3.5 shadow-sm">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
+                                        <span class="badge bg-gold text-navy fw-bold px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-sparkles me-1"></i>BARU DIARSIPKAN (13 NOV 2026)
+                                        </span>
+                                        <span class="badge bg-navy text-white px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-building me-1"></i>Target: PT. PUTRA MEKONNGA SEJAHTERA
+                                        </span>
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-check-circle me-1"></i>Siap Cetak Fisik A4 & Ekspedisi
+                                        </span>
+                                        <span class="text-muted small" style="font-size: 0.75rem;">
+                                            No. Arsip: <strong class="text-navy">028/EXT-MED/SDI-CRID/XI/2026</strong>
+                                        </span>
+                                    </div>
+                                    <h5 class="fw-bold text-navy mb-1">
+                                        Surat Pengantar & Permohonan Kemitraan Media Siber &bull; PT Putra Mekongga Sejahtera
+                                    </h5>
+                                    <p class="text-muted small mb-2" style="line-height: 1.45;">
+                                        Surat pengantar resmi pengajuan proposal kemitraan publikasi kegiatan perusahaan, diseminasi program Corporate Social Responsibility (CSR / PPM), advertorial profil korporasi, serta hak pencantuman logo official partner di portal siber <em>Cerita Rakyat ID (xyronnews.com)</em>. Disertai lembar ekspedisi tanda terima surat untuk bagian resepsionis/security.
+                                    </p>
+                                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-folder text-warning"></i> Folder: Media Siber & CSR</span>
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-user-tie text-primary"></i> Pimpinan: MUH. RAHWAN</span>
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-calendar-check text-success"></i> 13 November 2026</span>
+                                    </div>
+                                </div>
+                                <div class="text-lg-end flex-shrink-0 d-flex flex-column gap-2">
+                                    <a href="surat-pengantar-media-mekongga.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 shadow-sm text-nowrap">
+                                        <i class="fa-solid fa-print me-1.5"></i>Buka & Cetak Surat Pengantar (A4) &raquo;
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #2: MOU MEDIA KEMITRAAN (4 HALAMAN) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card media-card">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size:0.7rem;">BERKAS #1 &bull; 4 HALAMAN</span>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 0.7rem;">
+                                        BERKAS #2 &bull; 4 HALAMAN
+                                    </span>
                                     <i class="fa-solid fa-file-contract text-primary fs-5"></i>
                                 </div>
-                                <h6 class="fw-bold text-navy mb-1">MoU & PKS Kemitraan Media</h6>
-                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
-                                    Nota Kesepahaman Induk, Perjanjian Operasional Publikasi Kedinasan, Rincian Paket Tarif, dan BAST Hasil Pekerjaan.
+                                <h6 class="fw-bold text-navy mb-1">MoU & PKS Kemitraan Media Pers</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Nota Kesepahaman Induk, Perjanjian Operasional Publikasi Kedinasan / Korporasi, Rincian Paket Tarif, dan BAST Hasil Pekerjaan.
                                 </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>014/MoU-PUB/SDI-CRID/XI/2026
+                                </div>
                             </div>
                             <a href="mou-media-kemitraan.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
                                 <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak MoU &raquo;
@@ -494,17 +600,25 @@ $activeMenu = "dokumen";
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #3: LPJ KLIPING MEDIA (7 HALAMAN) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card media-card">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size:0.7rem;">BERKAS #2 &bull; 7 HALAMAN</span>
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size: 0.7rem;">
+                                        BERKAS #3 &bull; 7 HALAMAN
+                                    </span>
                                     <i class="fa-solid fa-book-open text-success fs-5"></i>
                                 </div>
                                 <h6 class="fw-bold text-navy mb-1">LPJ & Kliping Media Digital</h6>
-                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
                                     Laporan Pertanggungjawaban Resmi, Cover LPJ, Surat Pengantar Redaksi, Berita Acara Verifikasi, dan Kliping Bukti Tayang Berita.
                                 </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>018/LPJ-PUB/SDI-CRID/XI/2026
+                                </div>
                             </div>
                             <a href="lpj-kliping-media.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
                                 <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak LPJ &raquo;
@@ -512,24 +626,164 @@ $activeMenu = "dokumen";
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #4: FAKTUR & BERKAS PAJAK PT (6 HALAMAN) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card media-card">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="badge bg-warning bg-opacity-20 text-warning fw-bold text-dark" style="font-size:0.7rem;">BERKAS #3 &bull; 6 HALAMAN</span>
+                                    <span class="badge bg-warning bg-opacity-20 text-warning fw-bold text-dark" style="font-size: 0.7rem;">
+                                        BERKAS #4 &bull; 6 HALAMAN
+                                    </span>
                                     <i class="fa-solid fa-file-invoice-dollar text-warning fs-5"></i>
                                 </div>
                                 <h6 class="fw-bold text-navy mb-1">Faktur & Berkas Pajak PT</h6>
-                                <p class="text-muted small mb-3" style="font-size:0.78rem;">
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
                                     Surat Permohonan Pembayaran, Faktur Tagihan (Invoice), Kwitansi Resmi 2 Lembar, SPTJM, dan Surat Rekening Bank / NPWP Badan.
                                 </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>021/EXT-PUB/SDI-CRID/XI/2026
+                                </div>
                             </div>
                             <a href="berkas-pembayaran-pajak.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
                                 <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak Pajak &raquo;
                             </a>
                         </div>
                     </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #5: SURAT PENGANTAR APLIKASI DINAS (5 DINAS) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-6 archive-item-wrapper" data-folder="software">
+                        <div class="archive-card it-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size: 0.7rem;">
+                                        SOFTWARE HOUSE &bull; 5 DINAS SASARAN
+                                    </span>
+                                    <i class="fa-solid fa-laptop-code text-success fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Surat Pengantar Audiensi Solusi Aplikasi Dinas</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Penawaran aplikasi resmi untuk <strong>5 Dinas Sasaran</strong> (Pendidikan, Kehutanan, Dispora, Inspektorat, dan Dukcapil) lengkap dengan tanda terima ekspedisi.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>031-035/EXT-IT/SDI/XI/2026 &bull; Mode Batch 5 Halaman
+                                </div>
+                            </div>
+                            <a href="surat-pengantar-audiensi.php" target="_blank" class="btn btn-outline-success btn-sm w-100 fw-bold py-1.5">
+                                <i class="fa-solid fa-envelope-open-text me-1"></i>Buka Surat Pengantar (5 Dinas) &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #6: PKS RESELLER SOFTWARE -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-6 archive-item-wrapper" data-folder="software">
+                        <div class="archive-card it-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size: 0.7rem;">
+                                        TEMPLATE RESELLER &bull; KOMISI 15%-20%
+                                    </span>
+                                    <i class="fa-solid fa-handshake text-success fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">PKS Reseller & Agen Penjualan Software</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Perjanjian kemitraan reseller / agen pemasaran website sekolah, SIMS instansi, sistem kasir (POS) UMKM dengan proteksi hak cipta source code.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>PKS-SW/SDI/XI/2026 &bull; Live Generator
+                                </div>
+                            </div>
+                            <button onclick="pickDocumentType('pks_reseller_software')" class="btn btn-outline-success btn-sm w-100 fw-semibold py-1.5">
+                                <i class="fa-solid fa-file-signature me-1"></i>Generate PKS Reseller Software &raquo;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #7: PKS KONSINYASI TITIP JUAL PRODUK -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="retail">
+                        <div class="archive-card retail-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 0.7rem;">
+                                        AQUIRIST PRINT &bull; PRODUK FISIK
+                                    </span>
+                                    <i class="fa-solid fa-store text-primary fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">PKS Konsinyasi Titip Jual Produk</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Titip jual plakat akrilik, gantungan kunci kustom, standing banner di toko ATK, kafe, fotokopi, dan souvenir (margin 15% – 30%).
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>PKS-KNS/SDI/XI/2026 &bull; Live Generator
+                                </div>
+                            </div>
+                            <button onclick="pickDocumentType('pks_konsinyasi')" class="btn btn-outline-primary btn-sm w-100 fw-semibold py-1.5">
+                                <i class="fa-solid fa-file-signature me-1"></i>Generate PKS Konsinyasi &raquo;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #8: MOU KEMITRAAN INDUK STRATEGIS -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-purple fw-bold" style="font-size: 0.7rem; color: #8b5cf6;">
+                                        HOLDING &bull; KAMPUS / SEKOLAH
+                                    </span>
+                                    <i class="fa-solid fa-building-columns text-purple fs-5" style="color: #8b5cf6;"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">MoU Kemitraan Induk Strategis</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Payung hukum kerja sama strategis multi-tahun (1–3 tahun) dengan Universitas, Lembaga Pemerintahan, atau Asosiasi Daerah.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>MOU-STR/SDI/XI/2026 &bull; Live Generator
+                                </div>
+                            </div>
+                            <button onclick="pickDocumentType('mou_strategis')" class="btn btn-outline-secondary btn-sm w-100 fw-semibold py-1.5">
+                                <i class="fa-solid fa-file-signature me-1"></i>Generate MoU Strategis &raquo;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #9: BERITA ACARA SERAH TERIMA (BAST) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-purple fw-bold" style="font-size: 0.7rem; color: #8b5cf6;">
+                                        ADMINISTRASI &bull; SYARAT INVOICE
+                                    </span>
+                                    <i class="fa-solid fa-box-archive text-purple fs-5" style="color: #8b5cf6;"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Berita Acara Serah Terima (BAST)</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Bukti serah terima hasil pekerjaan sistem software atau produk fisik yang telah diuji dan berfungsi baik sebagai syarat pencairan.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>BAST/SDI/XI/2026 &bull; Live Generator
+                                </div>
+                            </div>
+                            <button onclick="pickDocumentType('bast_pekerjaan')" class="btn btn-outline-secondary btn-sm w-100 fw-semibold py-1.5">
+                                <i class="fa-solid fa-file-signature me-1"></i>Generate BAST Pekerjaan &raquo;
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
 
@@ -1277,6 +1531,50 @@ $activeMenu = "dokumen";
                 alert('Teks dokumen berhasil disalin ke clipboard! Anda dapat menempelkannya (Paste) langsung ke Microsoft Word.');
             }).catch(err => {
                 alert('Gagal menyalin teks: ' + err);
+            });
+        }
+
+        // Archive Folder Navigation & Filtering
+        function switchArchiveFolder(folder) {
+            const pills = document.querySelectorAll('.folder-pill-btn');
+            pills.forEach(p => p.classList.remove('active'));
+            
+            const activeBtn = document.querySelector(`.folder-pill-btn[data-folder="${folder}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const items = document.querySelectorAll('.archive-item-wrapper');
+            items.forEach(item => {
+                if (folder === 'all' || item.getAttribute('data-folder') === folder) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Re-apply search filter if there's text
+            const q = document.getElementById('searchArchiveInput').value.trim();
+            if (q) {
+                filterArchiveSearch();
+            }
+        }
+
+        function filterArchiveSearch() {
+            const q = document.getElementById('searchArchiveInput').value.toLowerCase().trim();
+            const activeBtn = document.querySelector('.folder-pill-btn.active');
+            const activeFolder = activeBtn ? activeBtn.getAttribute('data-folder') : 'all';
+            const items = document.querySelectorAll('.archive-item-wrapper');
+
+            items.forEach(item => {
+                const itemFolder = item.getAttribute('data-folder');
+                const text = item.innerText.toLowerCase();
+                const matchesFolder = (activeFolder === 'all' || itemFolder === activeFolder);
+                const matchesSearch = (!q || text.includes(q));
+
+                if (matchesFolder && matchesSearch) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
             });
         }
 
