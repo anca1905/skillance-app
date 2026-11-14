@@ -640,7 +640,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
           <h1 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h1>
           <div class="kop-sub">PENERBIT MEDIA SIBER &bull; CERITA RAKYAT OFFICIAL (WWW.XYRONNEWS.COM)</div>
           <p class="meta">Alamat Kantor: Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0811-4030-800</p>
+          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0822-9170-0778</p>
         </div>
         <div class="kop-spacer"></div>
       </div>
@@ -703,7 +703,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
           <h1 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h1>
           <div class="kop-sub">PENERBIT MEDIA SIBER &bull; CERITA RAKYAT OFFICIAL (WWW.XYRONNEWS.COM)</div>
           <p class="meta">Alamat Kantor: Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0811-4030-800</p>
+          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0822-9170-0778</p>
         </div>
         <div class="kop-spacer"></div>
       </div>
@@ -767,7 +767,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
           <h1 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h1>
           <div class="kop-sub">PENERBIT MEDIA SIBER &bull; CERITA RAKYAT OFFICIAL (WWW.XYRONNEWS.COM)</div>
           <p class="meta">Alamat Kantor: Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0811-4030-800</p>
+          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0822-9170-0778</p>
         </div>
         <div class="kop-spacer"></div>
       </div>
@@ -863,7 +863,7 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
           <h1 class="kop-title-main">PT SKILLANCE DIGITAL INDONESIA</h1>
           <div class="kop-sub">PENERBIT MEDIA SIBER &bull; CERITA RAKYAT OFFICIAL (WWW.XYRONNEWS.COM)</div>
           <p class="meta">Alamat Kantor: Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sulawesi Tenggara 93772</p>
-          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0811-4030-800</p>
+          <p class="meta">Website: https://skillance.cloud &bull; Surel: redaksi@xyronnews.com &bull; Hotline/Redaksi: 0822-9170-0778</p>
         </div>
         <div class="kop-spacer"></div>
       </div>
