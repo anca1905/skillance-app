@@ -3,15 +3,12 @@ session_start();
 require_once __DIR__ . '/../config/config.php';
 
 $clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
-$redirectUri = $_ENV['GOOGLE_REDIRECT_URI'] ?? (function_exists('getenv') ? getenv('GOOGLE_REDIRECT_URI') : '');
+// Gunakan redirect URI yang sudah terverifikasi resmi pada Google Cloud Console (skillance.my.id)
+$redirectUri = "https://skillance.my.id/auth/google_callback.php";
 
-// Jika redirect URI tidak diset atau mengarah ke localhost, kita gunakan callback auth default
-if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false) {
-    // Deteksi host otomatis
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
-    $host = $_SERVER['HTTP_HOST'];
-    $basePath = (strpos($host, 'localhost') !== false || strpos($_SERVER['REQUEST_URI'] ?? '', '/skillance/') !== false) ? '/skillance' : '';
-    $redirectUri = "$protocol://$host$basePath/auth/google_callback.php";
+// Jika di masa depan skillance.cloud sudah ditambahkan ke Google Cloud Console, bisa membaca dari .env
+if (!empty($_ENV['GOOGLE_REDIRECT_URI']) && strpos($_ENV['GOOGLE_REDIRECT_URI'], 'skillance.my.id') !== false) {
+    $redirectUri = $_ENV['GOOGLE_REDIRECT_URI'];
 }
 
 if (empty($clientId)) {

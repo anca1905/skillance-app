@@ -4,17 +4,9 @@ require_once __DIR__ . '/../config/config.php';
 
 $clientId     = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
 $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_SECRET') : '');
-$redirectUri  = $_ENV['GOOGLE_REDIRECT_URI'] ?? (function_exists('getenv') ? getenv('GOOGLE_REDIRECT_URI') : '');
-
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$basePath = (strpos($host, 'localhost') !== false || strpos($_SERVER['REQUEST_URI'] ?? '', '/skillance/') !== false) ? '/skillance' : '';
-$defaultCallback = "$protocol://$host$basePath/auth/google_callback.php";
-
-// Gunakan callback yang cocok dengan request
-if (empty($redirectUri) || strpos($redirectUri, 'localhost') !== false) {
-    $redirectUri = $defaultCallback;
-}
+// Gunakan callback yang cocok dengan Google Cloud Console (skillance.my.id)
+$redirectUri  = 'https://skillance.my.id/auth/google_callback.php';
+$defaultCallback = 'https://skillance.my.id/auth/google_callback.php';
 
 if (isset($_GET['error'])) {
     $_SESSION['login_error'] = "Login Google Dibatalkan atau Error: " . htmlspecialchars($_GET['error']);
