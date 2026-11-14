@@ -317,7 +317,19 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                         <li>
                             <a class="dropdown-item py-2 d-flex align-items-center gap-2 <?= $activeNav === 'partner' ? 'active fw-bold text-navy' : '' ?>" href="partner.php">
                                 <i class="fa-solid fa-handshake text-primary" style="width: 20px;"></i>
-                                <span>Kemitraan Kampus (BEM/HIMA)</span>
+                                <span>Kemitraan Kampus & Ormawa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="partner-portal.php">
+                                <i class="fa-solid fa-laptop-file text-warning" style="width: 20px;"></i>
+                                <span>Portal Mahasiswa Mitra</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="dashboard-partner.php">
+                                <i class="fa-solid fa-chart-line text-info" style="width: 20px;"></i>
+                                <span>Dashboard Fakultas & UKM</span>
                             </a>
                         </li>
                         <li><hr class="dropdown-divider my-1"></li>

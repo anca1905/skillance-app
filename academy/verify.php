@@ -71,6 +71,32 @@ if (!empty($certNo)) {
                 'score' => 94,
                 'issue_date' => '2026-10-20',
                 'status' => 'active'
+            ],
+            'SKL-MSC-2026-001' => [
+                'certificate_no' => 'SKL-MSC-2026-001',
+                'recipient_name' => 'Muhammad Rian Pratama',
+                'recipient_email' => 'rian@usn.ac.id',
+                'track_id' => 'msc-web-arch',
+                'track_title' => 'Fullstack Web Architecture & RESTful API (Kemitraan FTI USN x UKM MSC)',
+                'competencies' => 'Semantic Architecture & Advanced Layout, JavaScript ES6+ Reactive Logic, RESTful API Engineering with PHP & MySQL, Application Security & OWASP, Capstone Project & SKPI Standard',
+                'score' => 95,
+                'issue_date' => '2026-11-16',
+                'status' => 'active',
+                'is_partner' => true,
+                'partner_name' => 'FTI USN Kolaka x UKM MSC'
+            ],
+            'SKL-MSC-2026-002' => [
+                'certificate_no' => 'SKL-MSC-2026-002',
+                'recipient_name' => 'Dewi Sartika Putri',
+                'recipient_email' => 'dewi.sartika@usn.ac.id',
+                'track_id' => 'msc-web-arch',
+                'track_title' => 'Fullstack Web Architecture & RESTful API (Kemitraan FTI USN x UKM MSC)',
+                'competencies' => 'Semantic Architecture & Advanced Layout, JavaScript ES6+ Reactive Logic, RESTful API Engineering with PHP & MySQL, Application Security & OWASP, Capstone Project & SKPI Standard',
+                'score' => 92,
+                'issue_date' => '2026-11-16',
+                'status' => 'active',
+                'is_partner' => true,
+                'partner_name' => 'FTI USN Kolaka x UKM MSC'
             ]
         ];
         if (isset($sampleMap[$certNo])) {
@@ -514,6 +540,11 @@ $seoBreadcrumbs = [
                     . '&certId=' . urlencode($certificate['certificate_no']);
                 ?>
                 <div class="d-flex flex-wrap gap-2">
+                    <?php if (!empty($certificate['is_partner'])): ?>
+                        <a href="certificate-partner.php?cert=<?= urlencode($certificate['certificate_no']) ?>" class="btn btn-sm btn-gold fw-bold rounded-pill px-3 py-2 shadow-sm">
+                            <i class="fa-solid fa-graduation-cap me-1"></i> Buka Format Tripartit & Transkrip SKPI
+                        </a>
+                    <?php endif; ?>
                     <button id="btnDownloadPdf" onclick="downloadCertificatePDF()" class="btn btn-sm btn-success fw-bold rounded-pill px-3 py-2 text-white shadow-sm">
                         <i class="fa-solid fa-file-pdf me-1"></i> Download PDF (HD A4)
                     </button>

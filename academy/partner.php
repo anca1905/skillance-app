@@ -289,6 +289,34 @@ $seoBreadcrumbs = [
                     </div>
                 </div>
             </div>
+
+            <!-- LIVE SYSTEM SHOWCASE BANNER -->
+            <div class="mt-4 p-4 rounded-4 text-white shadow-sm" style="background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%); border-left: 6px solid #fca311;">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-7">
+                        <span class="badge bg-gold text-navy px-3 py-1 rounded-pill fw-bold small mb-2">
+                            <i class="fa-solid fa-bolt me-1"></i> FITUR UNGGULAN MULTI-TENANT
+                        </span>
+                        <h4 class="fw-bold font-heading mb-1 text-white">Sistem Kemitraan Kampus Terintegrasi</h4>
+                        <p class="text-light small mb-0" style="opacity: 0.9; line-height: 1.6;">
+                            Setiap fakultas dan UKM mitra memiliki <strong>Portal Mahasiswa Khusus</strong>, <strong>Dashboard Pemantauan Dekanat</strong>, dan <strong>Sertifikat Tripartit Resmi</strong> yang terpisah dari jalur umum.
+                        </p>
+                    </div>
+                    <div class="col-lg-5 text-lg-end">
+                        <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                            <a href="partner-portal.php?partner=msc-usn" class="btn btn-warning fw-bold rounded-pill px-3 py-2 text-navy shadow-sm" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-laptop-code me-1"></i> Portal Mahasiswa
+                            </a>
+                            <a href="dashboard-partner.php?partner=msc-usn" class="btn btn-outline-light fw-bold rounded-pill px-3 py-2" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-chart-line me-1 text-warning"></i> Dashboard Dekanat
+                            </a>
+                            <a href="certificate-partner.php?cert=SKL-MSC-2026-001" target="_blank" class="btn btn-outline-light fw-bold rounded-pill px-3 py-2" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-award me-1 text-warning"></i> Sertifikat Tripartit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- WHY PARTNER WITH US -->
