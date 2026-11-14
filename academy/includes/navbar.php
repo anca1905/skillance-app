@@ -362,6 +362,10 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                     <span class="d-inline d-xxl-none">Cari</span>
                     <kbd class="bg-white border text-secondary px-1 py-0 rounded ms-1" style="font-size: 0.65rem; font-family: inherit;">Ctrl K</kbd>
                 </button>
+                <a href="../auth/select_role.php" class="btn btn-sm btn-light border text-navy fw-semibold rounded-pill px-2 px-md-3 py-1 d-inline-flex align-items-center gap-1 shadow-sm" style="font-size: 0.80rem; height: 34px;" title="Ganti Portal / Peran Akses (SIAKAD)">
+                    <i class="fa-solid fa-users-gear text-warning"></i>
+                    <span class="d-none d-md-inline">Ganti Peran</span>
+                </a>
                 <?php if ($isLoggedIn): ?>
                     <a href="my-learning.php" class="btn btn-sm btn-outline-navy rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-2 <?= $activeNav === 'my-learning' ? 'bg-navy text-white' : '' ?>" style="border-color: #0d2e5c; color: #0d2e5c; font-size: 0.82rem; height: 34px;">
                         <img src="<?= htmlspecialchars($avatarUrl ?? 'https://ui-avatars.com/api/?name=User&background=0d2e5c&color=fff') ?>" class="rounded-circle" width="20" height="20" alt="Avatar">

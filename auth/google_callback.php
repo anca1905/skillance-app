@@ -161,18 +161,10 @@ if (!empty($_SESSION['auth_redirect'])) {
     }
 }
 
-// Redirect berdasarkan role
-if ($role === 'freelancer') {
-    if ($isNewUser) {
-        header("Location: ../dashboard/freelancer/profile.php?welcome=1");
-    } else {
-        header("Location: ../dashboard/freelancer/index.php");
-    }
-} elseif ($role === 'admin') {
+// Redirect ke Layar Pemilihan Peran (SIAKAD Multi-Role Gateway)
+if ($role === 'admin') {
     header("Location: ../dashboard/index.php");
-} elseif ($role === 'investor') {
-    header("Location: ../dashboard/investor.php");
 } else {
-    header("Location: ../dashboard/index.php");
+    header("Location: select_role.php");
 }
 exit();
