@@ -12,15 +12,7 @@ if (isset($_SESSION['user_id'])) {
         header("Location: sso_jump.php?target=academy");
         exit();
     }
-    if ($_SESSION['user_role'] === 'investor') {
-        header("Location: ../dashboard/investor.php");
-    } elseif ($_SESSION['user_role'] === 'freelancer') {
-        header("Location: ../dashboard/freelancer/index.php");
-    } elseif ($_SESSION['user_role'] === 'bendahara') {
-        header("Location: ../dashboard/finance/index.php");
-    } else {
-        header("Location: ../dashboard/index.php");
-    }
+    header("Location: select_role.php");
     exit();
 }
 
@@ -279,7 +271,7 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
                     timer: 1200,
                     showConfirmButton: false
                 }).then(() => {
-                    window.location.href = data.redirect || '../dashboard/freelancer/index.php';
+                    window.location.href = data.redirect || 'select_role.php';
                 });
             } else {
                 Swal.fire({

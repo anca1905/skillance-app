@@ -206,6 +206,9 @@ $seoBreadcrumbs = [
                     </div>
 
                     <?php if ($isAuthorized): ?>
+                        <a href="https://skillance.cloud/auth/select_role.php" class="btn btn-sm btn-navy text-white rounded-pill px-3 fw-bold shadow-sm" title="Kembali ke Pemilihan Peran SIAKAD">
+                            <i class="fa-solid fa-shuffle me-1 text-warning"></i> Ganti Peran (SIAKAD)
+                        </a>
                         <a href="dashboard-partner.php?partner=<?= urlencode($partnerSlug) ?>&logout=1" class="btn btn-sm btn-outline-danger rounded-pill px-3" title="Kunci Dashboard">
                             <i class="fa-solid fa-lock me-1"></i> Kunci Panel
                         </a>

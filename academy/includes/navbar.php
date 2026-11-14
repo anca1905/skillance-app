@@ -332,6 +332,12 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
                                 <span>Dashboard Fakultas & UKM</span>
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="https://skillance.cloud/auth/select_role.php">
+                                <i class="fa-solid fa-shuffle text-warning" style="width: 20px;"></i>
+                                <span>Ganti Peran Akses (SIAKAD)</span>
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider my-1"></li>
                         <li>
                             <a class="dropdown-item py-2 d-flex align-items-center gap-2 <?= $activeNav === 'glossary' ? 'active fw-bold text-navy' : '' ?>" href="glossary.php">

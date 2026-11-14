@@ -1,38 +1,124 @@
 <?php
 session_start();
 
-$userName = $_SESSION['user_name'] ?? 'Pengguna Skillance';
-$userEmail = $_SESSION['user_email'] ?? 'user@skillance.cloud';
-$userPhoto = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
-$currentRole = $_SESSION['user_role'] ?? 'freelancer';
+require_once __DIR__ . '/../config/config.php';
+
+// Check if user is logged in
+if (empty($_SESSION['user_id']) && empty($_SESSION['user_email'])) {
+    header("Location: index.php");
+    exit();
+}
+
+$userId    = $_SESSION['user_id'] ?? 0;
+$userEmail = $_SESSION['user_email'] ?? '';
+$userName  = $_SESSION['user_name'] ?? 'Pengguna Skillance';
+$userPhoto = $_SESSION['user_photo'] ?? null;
+$userRole  = $_SESSION['user_role'] ?? 'freelancer';
+
+// Query fresh user permissions from database
+$assignedRolesStr = $_SESSION['assigned_roles'] ?? 'freelancer,mahasiswa';
+$partnerSlug      = $_SESSION['partner_slug'] ?? 'msc-usn';
+$positionTitle    = $_SESSION['position_title'] ?? '';
+
+if (!empty($userEmail) && isset($conn) && $conn instanceof mysqli) {
+    $stmt = $conn->prepare("SELECT id, name, email, role, photo, assigned_roles, partner_slug, position_title FROM users WHERE email = ? OR id = ? LIMIT 1");
+    if ($stmt) {
+        $stmt->bind_param("si", $userEmail, $userId);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res && $res->num_rows > 0) {
+            $u = $res->fetch_assoc();
+            $userName         = $u['name'] ?? $userName;
+            $userRole         = $u['role'] ?? $userRole;
+            $userPhoto        = $u['photo'] ?? $userPhoto;
+            $assignedRolesStr = $u['assigned_roles'] ?? $assignedRolesStr;
+            $partnerSlug      = $u['partner_slug'] ?? $partnerSlug;
+            $positionTitle    = $u['position_title'] ?? $positionTitle;
+
+            $_SESSION['user_name']      = $userName;
+            $_SESSION['user_role']      = $userRole;
+            $_SESSION['user_photo']     = $userPhoto;
+            $_SESSION['assigned_roles'] = $assignedRolesStr;
+            $_SESSION['partner_slug']   = $partnerSlug;
+            $_SESSION['position_title'] = $positionTitle;
+        }
+        $stmt->close();
+    }
+}
+
+if (empty($userPhoto)) {
+    $userPhoto = 'https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff';
+}
+
+// Parse assigned roles into array
+$rolesList = array_filter(array_map('trim', explode(',', strtolower($assignedRolesStr))));
+if (empty($rolesList)) {
+    $rolesList = ['freelancer', 'mahasiswa'];
+}
+
+$isAdmin = ($userRole === 'admin' || in_array('admin', $rolesList));
+
+$canMahasiswa  = $isAdmin || in_array('mahasiswa', $rolesList);
+$canDekanat    = $isAdmin || in_array('dekanat', $rolesList);
+$canOrmawa     = $isAdmin || in_array('ormawa', $rolesList);
+$canFreelancer = $isAdmin || in_array('freelancer', $rolesList);
 
 // Handle Role Selection Action
 if (isset($_GET['select'])) {
-    $selected = $_GET['select'];
-    $_SESSION['active_portal'] = $selected;
+    $selected = strtolower(trim($_GET['select']));
 
-    switch ($selected) {
-        case 'mahasiswa':
-            header("Location: https://academy.skillance.cloud/partner-portal.php?partner=msc-usn");
+    if ($selected === 'admin') {
+        if (!$isAdmin) {
+            header("Location: select_role.php?denied=admin");
             exit();
-        case 'dekanat':
-            $_SESSION['partner_auth_msc-usn'] = true;
-            header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=msc-usn&auth=demo");
+        }
+        $_SESSION['active_portal'] = 'admin';
+        header("Location: ../dashboard/index.php");
+        exit();
+    }
+
+    if ($selected === 'mahasiswa') {
+        if (!$canMahasiswa) {
+            header("Location: select_role.php?denied=mahasiswa");
             exit();
-        case 'ormawa':
-            $_SESSION['partner_auth_msc-usn'] = true;
-            header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=msc-usn&auth=demo");
+        }
+        $_SESSION['active_portal'] = 'mahasiswa';
+        header("Location: https://academy.skillance.cloud/partner-portal.php?partner=" . urlencode($partnerSlug));
+        exit();
+    }
+
+    if ($selected === 'dekanat') {
+        if (!$canDekanat) {
+            header("Location: select_role.php?denied=dekanat");
             exit();
-        case 'freelancer':
-            header("Location: ../dashboard/freelancer/index.php");
+        }
+        $_SESSION['active_portal'] = 'dekanat';
+        $_SESSION['partner_auth_' . $partnerSlug] = true;
+        $_SESSION['partner_role_' . $partnerSlug] = 'dekanat';
+        header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=" . urlencode($partnerSlug) . "&role=dekanat&auth=demo");
+        exit();
+    }
+
+    if ($selected === 'ormawa') {
+        if (!$canOrmawa) {
+            header("Location: select_role.php?denied=ormawa");
             exit();
-        case 'admin':
-            header("Location: ../dashboard/index.php");
+        }
+        $_SESSION['active_portal'] = 'ormawa';
+        $_SESSION['partner_auth_' . $partnerSlug] = true;
+        $_SESSION['partner_role_' . $partnerSlug] = 'ormawa';
+        header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=" . urlencode($partnerSlug) . "&role=ormawa&auth=demo");
+        exit();
+    }
+
+    if ($selected === 'freelancer') {
+        if (!$canFreelancer) {
+            header("Location: select_role.php?denied=freelancer");
             exit();
-        case 'umum':
-        default:
-            header("Location: https://academy.skillance.cloud/my-learning.php");
-            exit();
+        }
+        $_SESSION['active_portal'] = 'freelancer';
+        header("Location: ../dashboard/freelancer/index.php");
+        exit();
     }
 }
 ?>
@@ -41,7 +127,7 @@ if (isset($_GET['select'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Peran & Portal Akses | S-OS Skillance Ecosystem</title>
+    <title>Pilih Portal & Peran Akses | SIAKAD Skillance Ecosystem</title>
     
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +167,7 @@ if (isset($_GET['select'])) {
         }
 
         .portal-container {
-            max-width: 1050px;
+            max-width: 1080px;
             width: 100%;
             z-index: 2;
             position: relative;
@@ -91,17 +177,17 @@ if (isset($_GET['select'])) {
         .glass-box {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 24px;
-            padding: 40px 35px;
+            padding: 35px 30px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Role Selection Card */
+        /* Role Selection Card (Active / Unlocked) */
         .role-card {
             background: #ffffff;
             border: 2px solid #e2e8f0;
             border-radius: 18px;
-            padding: 24px 20px;
+            padding: 22px 18px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -116,34 +202,54 @@ if (isset($_GET['select'])) {
         .role-card:hover {
             transform: translateY(-5px);
             border-color: #0d2e5c;
-            box-shadow: 0 12px 28px rgba(13, 46, 92, 0.12);
+            box-shadow: 0 12px 28px rgba(13, 46, 92, 0.14);
             color: inherit;
         }
 
-        .role-card.active-recommended {
+        .role-card.unlocked-highlight {
             border-color: #fca311;
-            box-shadow: 0 8px 25px rgba(252, 163, 17, 0.18);
+            box-shadow: 0 8px 22px rgba(252, 163, 17, 0.16);
+        }
+
+        /* Locked / Restricted Role Card */
+        .role-card.is-locked {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            opacity: 0.72;
+            cursor: pointer;
+        }
+        .role-card.is-locked:hover {
+            transform: none;
+            border-color: #94a3b8;
+            box-shadow: none;
         }
 
         .role-icon-box {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 16px;
+            font-size: 22px;
+            margin-bottom: 14px;
         }
 
         .user-profile-badge {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 50rem;
-            padding: 6px 16px 6px 8px;
+            padding: 6px 14px 6px 8px;
             display: inline-flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .admin-banner {
+            background: linear-gradient(135deg, #071a35 0%, #0d2e5c 100%);
+            border-radius: 16px;
+            border: 1.5px solid rgba(252, 163, 17, 0.4);
+            box-shadow: 0 8px 25px rgba(13, 46, 92, 0.25);
         }
     </style>
 </head>
@@ -153,12 +259,12 @@ if (isset($_GET['select'])) {
         <div class="glass-box">
 
             <!-- HEADER / IDENTITY -->
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4 mb-4 border-bottom gap-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom gap-3">
                 <div class="d-flex align-items-center gap-3">
-                    <img src="../assets/img/logo_skillance_official.png" alt="Logo Skillance" style="max-height: 44px; width: auto;">
+                    <img src="../assets/img/logo_skillance_official.png" alt="Logo Skillance" style="max-height: 42px; width: auto;">
                     <div>
-                        <span class="badge bg-warning text-navy fw-bold px-2 py-1 small">SIAKAD Unified Gateway</span>
-                        <h4 class="fw-bold mb-0 text-navy font-heading" style="color: #0d2e5c;">Pilih Portal & Peran Akses</h4>
+                        <span class="badge bg-warning text-navy fw-bold px-2 py-0.5 small">SIAKAD Unified Gateway</span>
+                        <h4 class="fw-bold mb-0 text-navy font-heading" style="color: #0d2e5c; font-size: 1.25rem;">Pilih Portal & Peran Akses</h4>
                     </div>
                 </div>
 
@@ -166,8 +272,15 @@ if (isset($_GET['select'])) {
                 <div class="user-profile-badge">
                     <img src="<?= htmlspecialchars($userPhoto) ?>" alt="Avatar" width="34" height="34" class="rounded-circle border">
                     <div class="text-start" style="line-height: 1.2;">
-                        <span class="d-block fw-bold text-dark small"><?= htmlspecialchars($userName) ?></span>
-                        <small class="text-muted" style="font-size: 0.72rem;"><?= htmlspecialchars($userEmail) ?></small>
+                        <span class="d-block fw-bold text-dark small">
+                            <?= htmlspecialchars($userName) ?>
+                            <?php if ($isAdmin): ?>
+                                <span class="badge bg-danger text-white ms-1" style="font-size: 0.65rem;">Admin</span>
+                            <?php endif; ?>
+                        </span>
+                        <small class="text-muted" style="font-size: 0.70rem;">
+                            <?= !empty($positionTitle) ? htmlspecialchars($positionTitle) : htmlspecialchars($userEmail) ?>
+                        </small>
                     </div>
                     <a href="logout.php" class="btn btn-sm btn-outline-danger rounded-circle p-1 ms-2" style="width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;" title="Keluar Akun">
                         <i class="fa-solid fa-power-off" style="font-size: 11px;"></i>
@@ -175,125 +288,294 @@ if (isset($_GET['select'])) {
                 </div>
             </div>
 
+            <!-- SUPERADMIN VIP BANNER (KHUSUS ARSYAD / ADMIN) -->
+            <?php if ($isAdmin): ?>
+                <div class="admin-banner p-3 p-md-3.5 text-white mb-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-warning text-navy d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm" style="width: 44px; height: 44px; flex-shrink: 0;">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h6 class="fw-bold text-white mb-0" style="font-size: 1rem;">Otoritas Superadmin Skillance Aktif</h6>
+                                    <span class="badge bg-gold text-navy fw-bold" style="font-size: 0.65rem;">Pusat Kontrol</span>
+                                </div>
+                                <small class="text-white-50" style="font-size: 0.78rem;">
+                                    Anda memiliki hak akses penuh ke seluruh 4 mode portal, serta berwenang menentukan peran setiap pengguna.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="../dashboard/hrd/index.php" class="btn btn-sm btn-warning text-navy fw-bold rounded-pill px-3 py-1.5 shadow-sm" style="font-size: 0.8rem;">
+                                <i class="fa-solid fa-users-gear me-1"></i> Kelola Hak Akses Pengguna
+                            </a>
+                            <a href="../dashboard/index.php" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1.5" style="font-size: 0.8rem;">
+                                <i class="fa-solid fa-gauge-high me-1"></i> Dashboard Eksekutif PT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <!-- SUBTITLE PROMPT -->
-            <div class="text-center mb-4">
-                <h5 class="fw-bold text-navy mb-1">Masuk Sebagai Apa Hari Ini?</h5>
-                <p class="text-muted small mx-auto mb-0" style="max-width: 620px;">
-                    Satu akun terintegrasi untuk seluruh ekosistem PT Skillance Digital Indonesia. Anda dapat berpindah peran kapan saja melalui menu profil.
+            <div class="text-center mb-3">
+                <h5 class="fw-bold text-navy mb-1" style="font-size: 1.15rem;">Masuk Sebagai Apa Hari Ini?</h5>
+                <p class="text-muted small mx-auto mb-0" style="max-width: 650px; font-size: 0.82rem;">
+                    Satu akun terintegrasi untuk seluruh ekosistem Skillance. Peran dan hak akses Anda ditentukan langsung oleh Administrator PT Skillance Digital Indonesia.
                 </p>
             </div>
 
             <!-- 4 ROLE SELECTION CARDS (SIAKAD PATTERN) -->
             <div class="row g-3">
+
                 <!-- PERAN 1: MAHASISWA / PESERTA KEMITRAAN -->
                 <div class="col-md-6 col-lg-3">
-                    <a href="select_role.php?select=mahasiswa" class="role-card active-recommended">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-gold text-navy fw-bold" style="font-size: 0.68rem;">Program Mahasiswa</span>
-                                <i class="fa-solid fa-arrow-right text-muted small"></i>
+                    <?php if ($canMahasiswa): ?>
+                        <a href="select_role.php?select=mahasiswa" class="role-card unlocked-highlight">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Akses Terbuka
+                                    </span>
+                                    <i class="fa-solid fa-arrow-right text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-warning bg-opacity-15 text-warning">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
+                                <h5 class="fw-bold text-navy mb-1" style="font-size: 1rem;">Mahasiswa Mitra</h5>
+                                <small class="text-muted fw-semibold d-block mb-2">FTI USN Kolaka & UKM MSC</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Akses silabus 32 JP, modul praktikum koding, ujian kompetensi, dan klaim sertifikat SKPI.
+                                </p>
                             </div>
-                            <div class="role-icon-box bg-warning bg-opacity-10 text-warning">
-                                <i class="fa-solid fa-user-graduate"></i>
+                            <div class="pt-3 mt-3 border-top">
+                                <span class="btn btn-sm btn-navy fw-bold w-100 rounded-pill py-2">
+                                    Masuk ke Kelas &raquo;
+                                </span>
                             </div>
-                            <h5 class="fw-bold text-navy mb-1" style="font-size: 1.05rem;">Mahasiswa Mitra</h5>
-                            <small class="text-muted fw-semibold d-block mb-2">FTI USN Kolaka & UKM MSC</small>
-                            <p class="text-muted small mb-0" style="font-size: 0.80rem; line-height: 1.5;">
-                                Akses silabus terstruktur 32 JP, modul praktikum koding, ujian kompetensi, dan klaim sertifikat SKPI.
-                            </p>
+                        </a>
+                    <?php else: ?>
+                        <div class="role-card is-locked" onclick="alertLockedRole('Mahasiswa Mitra Kampus')">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-lock me-1"></i> Perlu Izin Admin
+                                    </span>
+                                    <i class="fa-solid fa-lock text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-secondary bg-opacity-10 text-secondary">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
+                                <h5 class="fw-bold text-muted mb-1" style="font-size: 1rem;">Mahasiswa Mitra</h5>
+                                <small class="text-muted d-block mb-2">Khusus Peserta Kemitraan</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Silabus 32 JP dan sertifikasi SKPI hanya dapat diakses oleh mahasiswa yang telah diizinkan.
+                                </p>
+                            </div>
+                            <div class="pt-3 mt-3 border-top">
+                                <button class="btn btn-sm btn-light border text-muted w-100 rounded-pill py-2">
+                                    <i class="fa-solid fa-lock me-1"></i> Akses Dibatasi
+                                </button>
+                            </div>
                         </div>
-                        <div class="pt-3 mt-3 border-top">
-                            <span class="btn btn-sm btn-navy fw-bold w-100 rounded-pill py-2">
-                                Masuk ke Kelas &raquo;
-                            </span>
-                        </div>
-                    </a>
+                    <?php endif; ?>
                 </div>
 
                 <!-- PERAN 2: DEKANAT & DOSEN PEMBINA -->
                 <div class="col-md-6 col-lg-3">
-                    <a href="select_role.php?select=dekanat" class="role-card">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-primary-subtle text-primary fw-bold" style="font-size: 0.68rem;">Otoritas Kampus</span>
-                                <i class="fa-solid fa-arrow-right text-muted small"></i>
+                    <?php if ($canDekanat): ?>
+                        <a href="select_role.php?select=dekanat" class="role-card unlocked-highlight">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Akses Terbuka
+                                    </span>
+                                    <i class="fa-solid fa-arrow-right text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-primary bg-opacity-15 text-primary">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <h5 class="fw-bold text-navy mb-1" style="font-size: 1rem;">Dekanat & Dosen</h5>
+                                <small class="text-muted fw-semibold d-block mb-2">Pimpinan Fakultas & Dosen</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Panel monitoring keaktifan mahasiswa, progres modul, skor, serta unduh Berita Acara SKPI.
+                                </p>
                             </div>
-                            <div class="role-icon-box bg-primary bg-opacity-10 text-primary">
-                                <i class="fa-solid fa-building-columns"></i>
+                            <div class="pt-3 mt-3 border-top">
+                                <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
+                                    Buka Dashboard &raquo;
+                                </span>
                             </div>
-                            <h5 class="fw-bold text-navy mb-1" style="font-size: 1.05rem;">Dekanat & Dosen</h5>
-                            <small class="text-muted fw-semibold d-block mb-2">Pimpinan Fakultas & Prodi</small>
-                            <p class="text-muted small mb-0" style="font-size: 0.80rem; line-height: 1.5;">
-                                Panel monitoring keaktifan mahasiswa, progres modul, skor kelulusan, serta unduh Berita Acara SKPI.
-                            </p>
+                        </a>
+                    <?php else: ?>
+                        <div class="role-card is-locked" onclick="alertLockedRole('Dekanat & Pimpinan Fakultas')">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-lock me-1"></i> Perlu Izin Admin
+                                    </span>
+                                    <i class="fa-solid fa-lock text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-secondary bg-opacity-10 text-secondary">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <h5 class="fw-bold text-muted mb-1" style="font-size: 1rem;">Dekanat & Dosen</h5>
+                                <small class="text-muted d-block mb-2">Khusus Pimpinan Kampus</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Monitoring nilai dan penandatanganan SKPI hanya dibuka untuk Dekan, Wakil Dekan, dan Dosen.
+                                </p>
+                            </div>
+                            <div class="pt-3 mt-3 border-top">
+                                <button class="btn btn-sm btn-light border text-muted w-100 rounded-pill py-2">
+                                    <i class="fa-solid fa-lock me-1"></i> Akses Dibatasi
+                                </button>
+                            </div>
                         </div>
-                        <div class="pt-3 mt-3 border-top">
-                            <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
-                                Buka Dashboard &raquo;
-                            </span>
-                        </div>
-                    </a>
+                    <?php endif; ?>
                 </div>
 
-                <!-- PERAN 3: PENGURUS ORMAWA / KETUA UKM -->
+                <!-- PERAN 3: PENGURUS ORMAWA / KETUA UKM MSC -->
                 <div class="col-md-6 col-lg-3">
-                    <a href="select_role.php?select=ormawa" class="role-card">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-success-subtle text-success fw-bold" style="font-size: 0.68rem;">Penyelenggara</span>
-                                <i class="fa-solid fa-arrow-right text-muted small"></i>
+                    <?php if ($canOrmawa): ?>
+                        <a href="select_role.php?select=ormawa" class="role-card unlocked-highlight">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Akses Terbuka
+                                    </span>
+                                    <i class="fa-solid fa-arrow-right text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-success bg-opacity-15 text-success">
+                                    <i class="fa-solid fa-handshake-angle"></i>
+                                </div>
+                                <h5 class="fw-bold text-navy mb-1" style="font-size: 1rem;">Pengurus UKM MSC</h5>
+                                <small class="text-muted fw-semibold d-block mb-2">Ketua & Panitia Ormawa</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Kelola pendaftaran anggota, absensi bootcamp, verifikasi berkas, dan bagi hasil kas ormawa.
+                                </p>
                             </div>
-                            <div class="role-icon-box bg-success bg-opacity-10 text-success">
-                                <i class="fa-solid fa-handshake-angle"></i>
+                            <div class="pt-3 mt-3 border-top">
+                                <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
+                                    Kelola Anggota &raquo;
+                                </span>
                             </div>
-                            <h5 class="fw-bold text-navy mb-1" style="font-size: 1.05rem;">Pengurus UKM MSC</h5>
-                            <small class="text-muted fw-semibold d-block mb-2">Ketua & Panitia Ormawa</small>
-                            <p class="text-muted small mb-0" style="font-size: 0.80rem; line-height: 1.5;">
-                                Kelola pendaftaran anggota, absensi bootcamp, verifikasi berkas, dan bagi hasil kas organisasi.
-                            </p>
+                        </a>
+                    <?php else: ?>
+                        <div class="role-card is-locked" onclick="alertLockedRole('Pengurus UKM / Ormawa')">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-lock me-1"></i> Perlu Izin Admin
+                                    </span>
+                                    <i class="fa-solid fa-lock text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-secondary bg-opacity-10 text-secondary">
+                                    <i class="fa-solid fa-handshake-angle"></i>
+                                </div>
+                                <h5 class="fw-bold text-muted mb-1" style="font-size: 1rem;">Pengurus UKM MSC</h5>
+                                <small class="text-muted d-block mb-2">Khusus Panitia & Ketua</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Fitur kepengurusan ormawa hanya dibuka untuk Ketua dan panitia pelaksana bootcamp terdaftar.
+                                </p>
+                            </div>
+                            <div class="pt-3 mt-3 border-top">
+                                <button class="btn btn-sm btn-light border text-muted w-100 rounded-pill py-2">
+                                    <i class="fa-solid fa-lock me-1"></i> Akses Dibatasi
+                                </button>
+                            </div>
                         </div>
-                        <div class="pt-3 mt-3 border-top">
-                            <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
-                                Kelola Anggota &raquo;
-                            </span>
-                        </div>
-                    </a>
+                    <?php endif; ?>
                 </div>
 
-                <!-- PERAN 4: FREELANCER / TALENTA DIGITAL -->
+                <!-- PERAN 4: FREELANCE & IT WORK -->
                 <div class="col-md-6 col-lg-3">
-                    <a href="select_role.php?select=freelancer" class="role-card">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-info-subtle text-info fw-bold" style="font-size: 0.68rem;">Studio & Proyek</span>
-                                <i class="fa-solid fa-arrow-right text-muted small"></i>
+                    <?php if ($canFreelancer): ?>
+                        <a href="select_role.php?select=freelancer" class="role-card unlocked-highlight">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Akses Terbuka
+                                    </span>
+                                    <i class="fa-solid fa-arrow-right text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-info bg-opacity-15 text-info">
+                                    <i class="fa-solid fa-laptop-code"></i>
+                                </div>
+                                <h5 class="fw-bold text-navy mb-1" style="font-size: 1rem;">Freelance & IT Work</h5>
+                                <small class="text-muted fw-semibold d-block mb-2">Skillance Tech Network</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Ambil proyek pembuatan software, submit tugas freelance, pantau saldo dompet dan penarikan fee.
+                                </p>
                             </div>
-                            <div class="role-icon-box bg-info bg-opacity-10 text-info">
-                                <i class="fa-solid fa-laptop-code"></i>
+                            <div class="pt-3 mt-3 border-top">
+                                <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
+                                    Ke Dashboard &raquo;
+                                </span>
                             </div>
-                            <h5 class="fw-bold text-navy mb-1" style="font-size: 1.05rem;">Freelance & IT Work</h5>
-                            <small class="text-muted fw-semibold d-block mb-2">Skillance Tech Network</small>
-                            <p class="text-muted small mb-0" style="font-size: 0.80rem; line-height: 1.5;">
-                                Ambil proyek pembuatan software, submit tugas freelance, pantau saldo dompet dan penarikan fee.
-                            </p>
+                        </a>
+                    <?php else: ?>
+                        <div class="role-card is-locked" onclick="alertLockedRole('Freelance Network')">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border fw-bold" style="font-size: 0.68rem;">
+                                        <i class="fa-solid fa-lock me-1"></i> Perlu Izin Admin
+                                    </span>
+                                    <i class="fa-solid fa-lock text-muted small"></i>
+                                </div>
+                                <div class="role-icon-box bg-secondary bg-opacity-10 text-secondary">
+                                    <i class="fa-solid fa-laptop-code"></i>
+                                </div>
+                                <h5 class="fw-bold text-muted mb-1" style="font-size: 1rem;">Freelance & IT Work</h5>
+                                <small class="text-muted d-block mb-2">Talenta Profesional</small>
+                                <p class="text-muted small mb-0" style="font-size: 0.78rem; line-height: 1.5;">
+                                    Akses bursa proyek dan pembayaran honor freelance Skillance.
+                                </p>
+                            </div>
+                            <div class="pt-3 mt-3 border-top">
+                                <button class="btn btn-sm btn-light border text-muted w-100 rounded-pill py-2">
+                                    <i class="fa-solid fa-lock me-1"></i> Akses Dibatasi
+                                </button>
+                            </div>
                         </div>
-                        <div class="pt-3 mt-3 border-top">
-                            <span class="btn btn-sm btn-outline-navy fw-bold w-100 rounded-pill py-2">
-                                Ke Dashboard &raquo;
-                            </span>
-                        </div>
-                    </a>
+                    <?php endif; ?>
                 </div>
+
             </div>
 
             <!-- FOOTER HELPER -->
             <div class="mt-4 pt-3 border-top d-flex flex-wrap justify-content-between align-items-center text-muted small">
                 <span><i class="fa-solid fa-shield-halved text-success me-1"></i> Keamanan S-OS Terenkripsi Google OAuth 2.0</span>
-                <span>Ingin menjalin kerjasama baru? <a href="../academy/partner.php#formKemitraan" class="text-primary fw-semibold">Ajukan Kemitraan Kampus</a></span>
+                <span>Ingin menjalin kerjasama baru? <a href="https://academy.skillance.cloud/partner.php#formKemitraan" class="text-primary fw-semibold">Ajukan Kemitraan Kampus</a></span>
             </div>
 
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function alertLockedRole(roleName) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Hak Akses Belum Diaktifkan',
+                html: `Peran <strong>${roleName}</strong> belum dibuka untuk akun Anda.<br><br>` +
+                      `Hak akses dan multi-role diatur langsung oleh <strong>Administrator PT Skillance Digital Indonesia</strong>.<br>` +
+                      `Silakan hubungi admin untuk aktivasi peran ini.`,
+                confirmButtonColor: '#0d2e5c',
+                confirmButtonText: 'Mengerti'
+            });
+        }
+
+        <?php if (isset($_GET['denied'])): ?>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Akses Ditolak',
+                text: 'Akun Anda tidak memiliki izin untuk mengakses peran <?= htmlspecialchars($_GET['denied']) ?>.',
+                confirmButtonColor: '#0d2e5c',
+                confirmButtonText: 'Tutup'
+            });
+        <?php endif; ?>
+    </script>
 </body>
 </html>

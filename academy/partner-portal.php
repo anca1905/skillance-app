@@ -197,7 +197,10 @@ $seoBreadcrumbs = [
                         <i class="fa-solid fa-key me-2"></i> Klaim Akses Mahasiswa Mitra
                     </a>
                     <a href="dashboard-partner.php?partner=<?= urlencode($partnerSlug) ?>" class="btn btn-outline-light btn-lg fw-bold px-4 py-2 rounded-pill">
-                        <i class="fa-solid fa-chart-line me-2 text-warning"></i> Dashboard Pemantauan Fakultas & UKM
+                        <i class="fa-solid fa-chart-line me-2 text-warning"></i> Dashboard Fakultas & UKM
+                    </a>
+                    <a href="https://skillance.cloud/auth/select_role.php" class="btn btn-outline-light btn-lg fw-bold px-4 py-2 rounded-pill">
+                        <i class="fa-solid fa-shuffle me-2 text-warning"></i> Ganti Peran (SIAKAD)
                     </a>
                     <a href="certificate-partner.php?cert=SKL-MSC-2026-001" target="_blank" class="btn btn-outline-light btn-lg fw-bold px-4 py-2 rounded-pill">
                         <i class="fa-solid fa-certificate me-2 text-warning"></i> Contoh Sertifikat Tripartit

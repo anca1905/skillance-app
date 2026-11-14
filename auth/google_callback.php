@@ -96,6 +96,9 @@ $res = $stmt->get_result();
 $userId = null;
 $role   = 'freelancer';
 $userType = 'umum';
+$assignedRoles = 'freelancer,mahasiswa';
+$partnerSlug = 'msc-usn';
+$positionTitle = '';
 $isNewUser = false;
 
 if ($res->num_rows > 0) {
@@ -103,6 +106,9 @@ if ($res->num_rows > 0) {
     $userId = $existing['id'];
     $role   = $existing['role'];
     $userType = $existing['user_type'] ?? 'umum';
+    $assignedRoles = $existing['assigned_roles'] ?? ($role === 'admin' ? 'admin,dekanat,ormawa,mahasiswa,freelancer' : 'freelancer,mahasiswa');
+    $partnerSlug = $existing['partner_slug'] ?? 'msc-usn';
+    $positionTitle = $existing['position_title'] ?? '';
 
     // Update google_id dan photo jika belum ada
     $updateStmt = $conn->prepare("UPDATE `users` SET `google_id` = ?, `photo` = IFNULL(`photo`, ?) WHERE `id` = ?");
@@ -110,10 +116,12 @@ if ($res->num_rows > 0) {
     $updateStmt->execute();
     $updateStmt->close();
 } else {
-    // User baru -> Otomatis daftar sebagai FREELANCER
+    // User baru -> Otomatis daftar dengan akses default
     $isNewUser = true;
-    $insertStmt = $conn->prepare("INSERT INTO `users` (`name`, `email`, `google_id`, `photo`, `role`, `user_type`) VALUES (?, ?, ?, ?, 'freelancer', 'umum')");
-    $insertStmt->bind_param("ssss", $name, $email, $googleId, $photo);
+    $assignedRoles = 'freelancer,mahasiswa';
+    $partnerSlug = 'msc-usn';
+    $insertStmt = $conn->prepare("INSERT INTO `users` (`name`, `email`, `google_id`, `photo`, `role`, `user_type`, `assigned_roles`, `partner_slug`) VALUES (?, ?, ?, ?, 'freelancer', 'umum', ?, ?)");
+    $insertStmt->bind_param("ssssss", $name, $email, $googleId, $photo, $assignedRoles, $partnerSlug);
     $insertStmt->execute();
     $userId = $insertStmt->insert_id;
     $role = 'freelancer';
@@ -121,13 +129,16 @@ if ($res->num_rows > 0) {
 }
 $stmt->close();
 
-// Set session
-$_SESSION['user_id']    = $userId;
-$_SESSION['user_name']  = $name;
-$_SESSION['user_email'] = $email;
-$_SESSION['user_role']  = $role;
-$_SESSION['user_photo'] = $photo;
-$_SESSION['user_type']  = $userType;
+// Set session lengkap
+$_SESSION['user_id']        = $userId;
+$_SESSION['user_name']      = $name;
+$_SESSION['user_email']     = $email;
+$_SESSION['user_role']      = $role;
+$_SESSION['user_photo']     = $photo;
+$_SESSION['user_type']      = $userType;
+$_SESSION['assigned_roles'] = $assignedRoles;
+$_SESSION['partner_slug']   = $partnerSlug;
+$_SESSION['position_title'] = $positionTitle;
 
 // Redirect khusus jika sebelumnya diarahkan dari link tugas/job tertentu atau dari Academy
 if (!empty($_SESSION['auth_redirect'])) {
@@ -153,9 +164,5 @@ if (!empty($_SESSION['auth_redirect'])) {
 }
 
 // Redirect ke Layar Pemilihan Peran (SIAKAD Multi-Role Gateway)
-if ($role === 'admin') {
-    header("Location: ../dashboard/index.php");
-} else {
-    header("Location: select_role.php");
-}
+header("Location: select_role.php");
 exit();

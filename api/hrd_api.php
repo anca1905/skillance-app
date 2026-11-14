@@ -11,7 +11,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'GET') {
     $role = isset($_GET['role']) ? $conn->real_escape_string($_GET['role']) : null;
 
-    $query = "SELECT id, name, email, role, user_type, institution, created_at FROM users";
+    $query = "SELECT id, name, email, role, user_type, institution, photo, assigned_roles, partner_slug, position_title, created_at FROM users";
     if ($role) {
         $query .= " WHERE role='$role'";
     }
@@ -25,21 +25,22 @@ if ($method === 'GET') {
     $countBendahara = 0;
     $countFreelancer = 0;
     $countTotal = 0;
-
-    // Get role summaries
-    $q_summary = $conn->query("SELECT role, COUNT(id) as total FROM users GROUP BY role");
-    if ($q_summary) {
-        while ($row = $q_summary->fetch_assoc()) {
-            if ($row['role'] === 'admin') $countAdmin = (int)$row['total'];
-            if ($row['role'] === 'bendahara') $countBendahara = (int)$row['total'];
-            if ($row['role'] === 'staff') $countStaff = (int)$row['total'];
-            if ($row['role'] === 'freelancer') $countFreelancer = (int)$row['total'];
-            $countTotal += (int)$row['total'];
-        }
-    }
+    $countDekanat = 0;
+    $countOrmawa = 0;
+    $countMahasiswa = 0;
 
     if ($result) {
         while ($row = $result->fetch_assoc()) {
+            $assigned = strtolower($row['assigned_roles'] ?? '');
+            if ($row['role'] === 'admin' || strpos($assigned, 'admin') !== false) $countAdmin++;
+            if ($row['role'] === 'bendahara') $countBendahara++;
+            if ($row['role'] === 'staff') $countStaff++;
+            if (strpos($assigned, 'freelancer') !== false || $row['role'] === 'freelancer') $countFreelancer++;
+            if (strpos($assigned, 'dekanat') !== false) $countDekanat++;
+            if (strpos($assigned, 'ormawa') !== false) $countOrmawa++;
+            if (strpos($assigned, 'mahasiswa') !== false) $countMahasiswa++;
+            
+            $countTotal++;
             $users[] = $row;
         }
     }
@@ -52,6 +53,9 @@ if ($method === 'GET') {
             "bendahara" => $countBendahara,
             "staff" => $countStaff,
             "freelancer" => $countFreelancer,
+            "dekanat" => $countDekanat,
+            "ormawa" => $countOrmawa,
+            "mahasiswa" => $countMahasiswa,
             "total" => $countTotal
         ]
     ]);
@@ -62,10 +66,49 @@ if ($method === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
     if (!$data) $data = $_POST;
 
+    // ACTION: UPDATE ROLES & ACCESS PERMISSIONS
+    if (isset($data['action']) && $data['action'] === 'update_roles') {
+        $id = intval($data['id'] ?? 0);
+        $assignedRoles = trim($data['assigned_roles'] ?? 'freelancer,mahasiswa');
+        $partnerSlug = trim($data['partner_slug'] ?? 'msc-usn');
+        $positionTitle = trim($data['position_title'] ?? '');
+        $role = trim($data['role'] ?? '');
+
+        if ($id <= 0) {
+            echo json_encode(["status" => "error", "message" => "ID Pengguna tidak valid."]);
+            exit();
+        }
+
+        // Auto-sync primary role if admin is selected
+        if (strpos($assignedRoles, 'admin') !== false) {
+            $role = 'admin';
+        }
+
+        if (!empty($role)) {
+            $stmt = $conn->prepare("UPDATE users SET assigned_roles = ?, partner_slug = ?, position_title = ?, role = ? WHERE id = ?");
+            $stmt->bind_param("ssssi", $assignedRoles, $partnerSlug, $positionTitle, $role, $id);
+        } else {
+            $stmt = $conn->prepare("UPDATE users SET assigned_roles = ?, partner_slug = ?, position_title = ? WHERE id = ?");
+            $stmt->bind_param("sssi", $assignedRoles, $partnerSlug, $positionTitle, $id);
+        }
+
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Hak akses multi-peran pengguna berhasil diperbarui!"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Gagal memperbarui hak akses: " . $stmt->error]);
+        }
+        $stmt->close();
+        exit();
+    }
+
+    // ACTION: CREATE NEW USER
     $name = trim($data['name'] ?? '');
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
-    $role = in_array($data['role'] ?? '', ['admin', 'staff', 'bendahara']) ? $data['role'] : 'staff';
+    $role = in_array($data['role'] ?? '', ['admin', 'staff', 'bendahara', 'freelancer']) ? $data['role'] : 'staff';
+    $assignedRoles = trim($data['assigned_roles'] ?? ($role === 'admin' ? 'admin,dekanat,ormawa,mahasiswa,freelancer' : 'freelancer,mahasiswa'));
+    $partnerSlug = trim($data['partner_slug'] ?? 'msc-usn');
+    $positionTitle = trim($data['position_title'] ?? '');
     $userType = 'umum';
 
     if (empty($name) || empty($email) || empty($password)) {
@@ -87,11 +130,11 @@ if ($method === 'POST') {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmtInsert = $conn->prepare("INSERT INTO users (name, email, password, role, user_type) VALUES (?, ?, ?, ?, ?)");
-    $stmtInsert->bind_param("sssss", $name, $email, $hashedPassword, $role, $userType);
+    $stmtInsert = $conn->prepare("INSERT INTO users (name, email, password, role, user_type, assigned_roles, partner_slug, position_title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmtInsert->bind_param("ssssssss", $name, $email, $hashedPassword, $role, $userType, $assignedRoles, $partnerSlug, $positionTitle);
     
     if ($stmtInsert->execute()) {
-        echo json_encode(["status" => "success", "message" => "Akun pengguna baru berhasil dibuat."]);
+        echo json_encode(["status" => "success", "message" => "Akun pengguna baru berhasil dibuat beserta hak aksesnya."]);
     } else {
         echo json_encode(["status" => "error", "message" => "Gagal menyimpan akun: " . $stmtInsert->error]);
     }
