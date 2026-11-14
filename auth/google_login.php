@@ -3,11 +3,10 @@ session_start();
 require_once __DIR__ . '/../config/config.php';
 
 $clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
-// Gunakan redirect URI yang sudah terverifikasi resmi pada Google Cloud Console (skillance.my.id)
-$redirectUri = "https://skillance.my.id/auth/google_callback.php";
+// Redirect URI resmi domain aktif: skillance.cloud
+$redirectUri = "https://skillance.cloud/auth/google_callback.php";
 
-// Jika di masa depan skillance.cloud sudah ditambahkan ke Google Cloud Console, bisa membaca dari .env
-if (!empty($_ENV['GOOGLE_REDIRECT_URI']) && strpos($_ENV['GOOGLE_REDIRECT_URI'], 'skillance.my.id') !== false) {
+if (!empty($_ENV['GOOGLE_REDIRECT_URI'])) {
     $redirectUri = $_ENV['GOOGLE_REDIRECT_URI'];
 }
 

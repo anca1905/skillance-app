@@ -4,9 +4,8 @@ require_once __DIR__ . '/../config/config.php';
 
 $clientId     = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
 $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_SECRET') : '');
-// Gunakan callback yang cocok dengan Google Cloud Console (skillance.my.id)
-$redirectUri  = 'https://skillance.my.id/auth/google_callback.php';
-$defaultCallback = 'https://skillance.my.id/auth/google_callback.php';
+$redirectUri  = 'https://skillance.cloud/auth/google_callback.php';
+$defaultCallback = 'https://skillance.cloud/auth/google_callback.php';
 
 if (isset($_GET['error'])) {
     $_SESSION['login_error'] = "Login Google Dibatalkan atau Error: " . htmlspecialchars($_GET['error']);

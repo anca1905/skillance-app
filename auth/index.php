@@ -188,6 +188,10 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
                     </svg>
                     <span>Masuk dengan Akun Google</span>
                 </a>
+                <a href="quick_login.php?user=arsyad" class="btn btn-outline-warning text-dark w-100 fw-bold rounded-3 py-2 mt-2 shadow-sm d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem; border-color: #fca311;">
+                    <i class="fa-solid fa-bolt text-warning"></i>
+                    <span>Masuk Instan (Mode Demo / Otorisasi Langsung)</span>
+                </a>
             </div>
 
             <div class="text-center mt-2 mb-1">
