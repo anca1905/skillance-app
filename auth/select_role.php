@@ -13,15 +13,15 @@ if (isset($_GET['select'])) {
 
     switch ($selected) {
         case 'mahasiswa':
-            header("Location: ../academy/partner-portal.php?partner=msc-usn");
+            header("Location: https://academy.skillance.cloud/partner-portal.php?partner=msc-usn");
             exit();
         case 'dekanat':
             $_SESSION['partner_auth_msc-usn'] = true;
-            header("Location: ../academy/dashboard-partner.php?partner=msc-usn&auth=demo");
+            header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=msc-usn&auth=demo");
             exit();
         case 'ormawa':
             $_SESSION['partner_auth_msc-usn'] = true;
-            header("Location: ../academy/dashboard-partner.php?partner=msc-usn&auth=demo");
+            header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=msc-usn&auth=demo");
             exit();
         case 'freelancer':
             header("Location: ../dashboard/freelancer/index.php");
@@ -31,7 +31,7 @@ if (isset($_GET['select'])) {
             exit();
         case 'umum':
         default:
-            header("Location: ../academy/my-learning.php");
+            header("Location: https://academy.skillance.cloud/my-learning.php");
             exit();
     }
 }
