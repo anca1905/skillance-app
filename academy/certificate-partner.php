@@ -135,28 +135,77 @@ $seoKeywords = 'sertifikat tripartit, skpi usn kolaka, skillance academy, ukm ms
             line-height: 1.2;
         }
 
-        /* Signatures Container */
-        .sig-block {
-            position: relative;
-            text-align: center;
+        /* UNIFORM HORIZONTAL BASELINE FOR ALL 4 SIGNATURE COLUMNS */
+        .sig-row {
+            display: flex;
+            align-items: stretch;
+            border-top: 1.5px solid #cbd5e1;
+            padding-top: 8px;
+            margin-top: 8px;
+            gap: 12px;
         }
 
-        .sig-img-container {
-            height: 48px;
+        .sig-col {
+            flex: 1;
+            padding: 0 4px;
+            text-align: center;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .sig-graphic-area {
+            height: 52px;
+            display: flex;
+            align-items: flex-end;
             justify-content: center;
             position: relative;
+            margin-bottom: 6px;
         }
 
         .sig-stamp-overlay {
             position: absolute;
             top: -16px;
-            right: 0px;
+            right: -6px;
             max-height: 72px;
-            opacity: 0.88;
+            opacity: 0.90;
             pointer-events: none;
             transform: rotate(-8deg);
+            z-index: 5;
+        }
+
+        .sig-line {
+            border-top: 1.5px solid #334155;
+            width: 88%;
+            margin: 0 auto 5px auto;
+        }
+
+        .sig-name {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 0.78rem;
+            line-height: 1.2;
+            min-height: 17px;
+            white-space: nowrap;
+        }
+
+        .sig-role {
+            color: #475569;
+            font-size: 0.65rem;
+            line-height: 1.25;
+            min-height: 28px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .sig-id {
+            color: #64748b;
+            font-size: 0.62rem;
+            line-height: 1.2;
+            min-height: 14px;
         }
 
         /* Navigation Tab Pill */
@@ -323,52 +372,77 @@ $seoKeywords = 'sertifikat tripartit, skpi usn kolaka, skillance academy, ukm ms
                         </span>
                     </div>
 
-                    <!-- 3 TANDA TANGAN & STEMPEL TRIPARTIT -->
-                    <div class="row align-items-end pt-2 border-top border-2 g-2">
+                    <!-- 3 TANDA TANGAN & STEMPEL TRIPARTIT (BAKU LURUS HORIZONTAL) -->
+                    <div class="sig-row">
                         <!-- TTD 1: MITRA INDUSTRI (SKILLANCE) -->
-                        <div class="col-3 sig-block">
-                            <div class="sig-img-container">
-                                <img src="<?= htmlspecialchars($partner['signature_industry']) ?>" alt="TTD Direktur" style="max-height: 44px; z-index: 2; position: relative;">
+                        <div class="sig-col">
+                            <div class="sig-graphic-area">
+                                <img src="<?= htmlspecialchars($partner['signature_industry']) ?>" alt="TTD Direktur" style="max-height: 48px; z-index: 2; position: relative;">
                                 <img src="<?= htmlspecialchars($partner['stamp_industry']) ?>" alt="Stempel PT Skillance" class="sig-stamp-overlay">
                             </div>
-                            <div class="fw-bold text-dark small" style="border-top: 1px solid #64748b; padding-top: 2px; font-size: 0.78rem;">
+                            <div class="sig-line"></div>
+                            <div class="sig-name">
                                 <?= htmlspecialchars($partner['signers']['industry']['name']) ?>
                             </div>
-                            <small class="text-muted d-block" style="font-size: 0.65rem;"><?= htmlspecialchars($partner['signers']['industry']['title']) ?></small>
-                            <small class="text-muted d-block" style="font-size: 0.62rem;"><?= htmlspecialchars($partner['signers']['industry']['company']) ?></small>
+                            <div class="sig-role">
+                                <?= htmlspecialchars($partner['signers']['industry']['title']) ?>
+                            </div>
+                            <div class="sig-id">
+                                <?= htmlspecialchars($partner['signers']['industry']['company']) ?>
+                            </div>
                         </div>
 
                         <!-- TTD 2: QR CODE VALIDASI -->
-                        <div class="col-3 text-center">
-                            <img src="<?= $qrUrl ?>" alt="QR Code" width="62" height="62" class="border p-1 bg-white rounded shadow-sm">
-                            <small class="d-block text-muted font-monospace mt-1" style="font-size: 0.60rem;">Scan Validasi Online</small>
-                            <small class="text-muted d-block" style="font-size: 0.60rem;">Terbit: <?= date('d M Y', strtotime($student['issue_date'])) ?></small>
+                        <div class="sig-col">
+                            <div class="sig-graphic-area">
+                                <img src="<?= $qrUrl ?>" alt="QR Code" width="52" height="52" class="border p-1 bg-white rounded shadow-sm">
+                            </div>
+                            <div class="sig-line" style="border-top-style: dashed; border-color: #94a3b8;"></div>
+                            <div class="sig-name font-monospace" style="font-size: 0.68rem; color: #334155;">
+                                VALIDASI ONLINE
+                            </div>
+                            <div class="sig-role text-muted" style="font-size: 0.62rem;">
+                                Scan QR Code untuk cek keaslian SKPI
+                            </div>
+                            <div class="sig-id font-monospace" style="font-size: 0.60rem;">
+                                Terbit: <?= date('d M Y', strtotime($student['issue_date'])) ?>
+                            </div>
                         </div>
 
                         <!-- TTD 3: UKM MSC -->
-                        <div class="col-3 sig-block">
-                            <div class="sig-img-container">
-                                <div class="font-signature text-navy" style="font-size: 1.5rem; line-height: 1;">Fadel Al-Farizi</div>
+                        <div class="sig-col">
+                            <div class="sig-graphic-area">
+                                <div class="font-signature text-navy" style="font-size: 1.65rem; line-height: 1; padding-bottom: 2px;">Fadel Al-Farizi</div>
                             </div>
-                            <div class="fw-bold text-dark small" style="border-top: 1px solid #64748b; padding-top: 2px; font-size: 0.78rem;">
+                            <div class="sig-line"></div>
+                            <div class="sig-name">
                                 <?= htmlspecialchars($partner['signers']['org']['name']) ?>
                             </div>
-                            <small class="text-muted d-block" style="font-size: 0.65rem;"><?= htmlspecialchars($partner['signers']['org']['title']) ?></small>
-                            <small class="text-muted d-block" style="font-size: 0.62rem;"><?= htmlspecialchars($partner['signers']['org']['company']) ?></small>
+                            <div class="sig-role">
+                                <?= htmlspecialchars($partner['signers']['org']['title']) ?>
+                            </div>
+                            <div class="sig-id">
+                                <?= htmlspecialchars($partner['signers']['org']['company']) ?>
+                            </div>
                         </div>
 
                         <!-- TTD 4: WADEK FAKULTAS -->
-                        <div class="col-3 sig-block">
-                            <div class="sig-img-container">
-                                <div class="text-muted small border border-dashed rounded p-1" style="font-size: 0.58rem; line-height: 1.1;">
+                        <div class="sig-col">
+                            <div class="sig-graphic-area">
+                                <div class="border border-dashed border-secondary rounded px-2 py-1 text-muted" style="font-size: 0.58rem; line-height: 1.15; max-width: 170px;">
                                     Tanda Tangan & Cap Stempel Fakultas
                                 </div>
                             </div>
-                            <div class="fw-bold text-dark small" style="border-top: 1px solid #64748b; padding-top: 2px; font-size: 0.78rem;">
+                            <div class="sig-line"></div>
+                            <div class="sig-name">
                                 <?= htmlspecialchars($partner['signers']['faculty']['name']) ?>
                             </div>
-                            <small class="text-muted d-block" style="font-size: 0.65rem;"><?= htmlspecialchars($partner['signers']['faculty']['title']) ?></small>
-                            <small class="text-muted d-block" style="font-size: 0.62rem;"><?= htmlspecialchars($partner['signers']['faculty']['id_number']) ?></small>
+                            <div class="sig-role">
+                                <?= htmlspecialchars($partner['signers']['faculty']['title']) ?>
+                            </div>
+                            <div class="sig-id">
+                                <?= htmlspecialchars($partner['signers']['faculty']['id_number']) ?>
+                            </div>
                         </div>
                     </div>
 
