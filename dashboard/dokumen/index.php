@@ -509,11 +509,11 @@ $activeMenu = "dokumen";
                 <div class="archive-folder-nav mb-3">
                     <button type="button" class="folder-pill-btn active" data-folder="all" onclick="switchArchiveFolder('all')">
                         <i class="fa-solid fa-layer-group text-primary"></i> Semua Folder
-                        <span class="folder-badge">8 Berkas</span>
+                        <span class="folder-badge">10 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="media" onclick="switchArchiveFolder('media')">
                         <i class="fa-solid fa-newspaper text-warning"></i> 📁 Folder 01: Media Siber & Publikasi CSR
-                        <span class="folder-badge">4 Berkas</span>
+                        <span class="folder-badge">5 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="software" onclick="switchArchiveFolder('software')">
                         <i class="fa-solid fa-laptop-code text-success"></i> 📁 Folder 02: Software House & Solusi IT
@@ -525,7 +525,7 @@ $activeMenu = "dokumen";
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="holding" onclick="switchArchiveFolder('holding')">
                         <i class="fa-solid fa-building-columns text-purple" style="color: #8b5cf6;"></i> 📁 Folder 04: Perjanjian Induk Holding
-                        <span class="folder-badge">2 Berkas</span>
+                        <span class="folder-badge">3 Berkas</span>
                     </button>
                 </div>
 
@@ -583,7 +583,33 @@ $activeMenu = "dokumen";
                     </div>
 
                     <!-- ========================================== -->
-                    <!-- DOKUMEN #2: MOU MEDIA KEMITRAAN (4 HALAMAN) -->
+                    <!-- DOKUMEN #2: COMPANY PROFILE & MEDIA KIT (5 HALAMAN) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card media-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-warning bg-opacity-20 text-warning fw-bold text-dark" style="font-size: 0.7rem;">
+                                        PROFIL RESMI &bull; 5 HALAMAN
+                                    </span>
+                                    <i class="fa-solid fa-newspaper text-warning fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Company Profile & Media Kit</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Profil Media Siber Cerita Rakyat Official (xyronnews.com), Pedoman Redaksi, Kepatuhan UU Pers, Metrik Traffic 285k+ Pembaca & Paket Kemitraan CSR.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>MED-KIT/SDI-CRO/XI/2026
+                                </div>
+                            </div>
+                            <a href="company-profile-media.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak Media Kit &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #3: MOU MEDIA KEMITRAAN (4 HALAMAN) -->
                     <!-- ========================================== -->
                     <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="media">
                         <div class="archive-card media-card">
@@ -787,6 +813,32 @@ $activeMenu = "dokumen";
                             <button onclick="pickDocumentType('bast_pekerjaan')" class="btn btn-outline-secondary btn-sm w-100 fw-semibold py-1.5">
                                 <i class="fa-solid fa-file-signature me-1"></i>Generate BAST Pekerjaan &raquo;
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #10: CORPORATE PROFILE PT SKILLANCE (5 HALAMAN) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-purple bg-opacity-10 fw-bold" style="font-size: 0.7rem; color: #8b5cf6; background: rgba(139,92,246,0.1);">
+                                        HOLDING RESMI &bull; 5 HALAMAN
+                                    </span>
+                                    <i class="fa-solid fa-building-flag fs-5" style="color: #8b5cf6;"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Corporate Profile PT Skillance</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Profil Holding Perseroan Terbatas (PT Skillance Digital Indonesia), 3 Pilar Bisnis (Edutech, Media Siber, IT Solutions), Legalitas Kemenkumham & NIB.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>CORP-PROF/SDI/XI/2026
+                                </div>
+                            </div>
+                            <a href="company-profile-corporate.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Buka & Cetak Profil Korporat &raquo;
+                            </a>
                         </div>
                     </div>
 
