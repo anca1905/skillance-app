@@ -212,6 +212,27 @@ $seoBreadcrumbs = [
 
     <main class="container py-5">
 
+        <!-- STATUS TIMELINE CALLOUT BANNER -->
+        <div class="alert alert-warning border-warning border-opacity-50 shadow-sm rounded-4 p-3 p-md-3.5 mb-5 d-flex flex-wrap align-items-center gap-3 bg-white" style="border-left: 5px solid #fe9800 !important;">
+            <div class="rounded-circle bg-warning text-navy p-2 fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; flex-shrink: 0;">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                    <h6 class="fw-bold text-navy mb-0" style="font-size: 0.98rem;">Fase Pembelajaran Mandiri Aktif &bull; Masa Sinkronisasi Teknis: 15 s/d 22 November 2026</h6>
+                    <span class="badge bg-gold text-navy fw-bold" style="font-size: 0.65rem;">Timeline Resmi 7 Hari</span>
+                </div>
+                <p class="text-muted small mb-0" style="line-height: 1.5; font-size: 0.82rem;">
+                    Mahasiswa cohort FTI USN Kolaka & UKM MSC saat ini dapat mulai mempelajari seluruh modul silabus 32 JP. Fitur jadwal mentoring bootcamp intensif dan klaim sertifikat SKPI sedang dalam tahap sinkronisasi akhir selama 7 hari kalender dan akan dibuka penuh pada <strong>22 November 2026</strong>.
+                </p>
+            </div>
+            <div>
+                <a href="https://skillance.cloud/dashboard/dokumen/surat-pemberitahuan-msc.php" target="_blank" class="btn btn-sm btn-outline-navy fw-bold rounded-pill px-3 py-1.5" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-file-lines me-1"></i> Baca Surat Resmi PT
+                </a>
+            </div>
+        </div>
+
         <!-- CLAIM TOKEN FORM -->
         <div id="claimForm" class="row justify-content-center mb-5">
             <div class="col-lg-8">

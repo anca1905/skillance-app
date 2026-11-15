@@ -842,6 +842,84 @@ $activeMenu = "dokumen";
                         </div>
                     </div>
 
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #11: SURAT RESMI UNTUK UKM MSC (FASE BELAJAR & TIMELINE 7 HARI) -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #fe9800;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-warning bg-opacity-20 text-navy fw-bold" style="font-size: 0.7rem;">
+                                        KEMITRAAN KAMPUS &bull; ORMAWA MSC
+                                    </span>
+                                    <i class="fa-solid fa-envelope-open-text text-warning fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Surat Pemberitahuan UKM MSC</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Surat resmi Direktur Utama ke Pengurus UKM MSC: Pembukaan akses modul belajar mandiri 32 JP & masa sinkronisasi sistem bootcamp/SKPI 7 hari.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>031/SKL-DIR/PKS-MSC/XI/2026
+                                </div>
+                            </div>
+                            <a href="surat-pemberitahuan-msc.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-print me-1"></i>Buka & Cetak Surat UKM MSC &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #12: SURAT LAPORAN UNTUK DEKANAT FTI USN KOLAKA -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #0d2e5c;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 0.7rem;">
+                                        KEMITRAAN KAMPUS &bull; DEKANAT FTI
+                                    </span>
+                                    <i class="fa-solid fa-building-columns text-primary fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Surat Laporan Dekanat FTI USN</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Surat resmi ke Wadek/Dekan FTI USN Kolaka: Kesiapan dashboard monitoring pimpinan, pembukaan portal mahasiswa & sinkronisasi SKPI 7 hari.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>032/SKL-DIR/PKS-FTI/XI/2026
+                                </div>
+                            </div>
+                            <a href="surat-pemberitahuan-fakultas.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-print me-1"></i>Buka & Cetak Surat Dekanat &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #13: NASKAH LENGKAP PKS TRIPARTIT FTI-MSC-SKILLANCE -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #10b981;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold" style="font-size: 0.7rem;">
+                                        PKS RESMI TRIPARTIT &bull; 1 TAHUN
+                                    </span>
+                                    <i class="fa-solid fa-file-contract text-success fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Naskah Lengkap PKS Tripartit</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Naskah perjanjian kerja sama Tripartit FTI USN Kolaka x UKM MSC x PT Skillance: 10 pasal legal, kurikulum 32 JP, & 3 tanda tangan stempel sah.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>014/PKS-SKL/FTI-USN/XI/2026
+                                </div>
+                            </div>
+                            <a href="pks-kemitraan-fti-msc.php" target="_blank" class="btn btn-outline-success btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-file-signature me-1"></i>Buka Naskah PKS Tripartit &raquo;
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

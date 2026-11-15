@@ -273,6 +273,51 @@ $seoBreadcrumbs = [
                     </p>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-navy dropdown-toggle fw-bold rounded-pill px-3 py-2 shadow-sm" type="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-file-shield text-warning me-1"></i> Berkas Surat & PKS Resmi
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 p-2" style="font-size: 0.85rem; min-width: 280px;">
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2" href="https://skillance.cloud/dashboard/dokumen/surat-pemberitahuan-msc.php" target="_blank">
+                                    <i class="fa-solid fa-envelope-open-text text-warning" style="width: 20px;"></i>
+                                    <div>
+                                        <div class="fw-bold text-navy">Surat untuk UKM MSC</div>
+                                        <small class="text-muted" style="font-size: 0.72rem;">Fase Belajar & Timeline 7 Hari</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2" href="https://skillance.cloud/dashboard/dokumen/surat-pemberitahuan-fakultas.php" target="_blank">
+                                    <i class="fa-solid fa-building-columns text-info" style="width: 20px;"></i>
+                                    <div>
+                                        <div class="fw-bold text-navy">Surat untuk Dekanat FTI</div>
+                                        <small class="text-muted" style="font-size: 0.72rem;">Laporan & Sinkronisasi 7 Hari</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2" href="https://skillance.cloud/dashboard/dokumen/pks-kemitraan-fti-msc.php" target="_blank">
+                                    <i class="fa-solid fa-file-contract text-success" style="width: 20px;"></i>
+                                    <div>
+                                        <div class="fw-bold text-navy">Naskah PKS Tripartit</div>
+                                        <small class="text-muted" style="font-size: 0.72rem;">No: 014/PKS-SKL/FTI-USN/XI/2026</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2" href="certificate-partner.php?cert=SKL-MSC-2026-001" target="_blank">
+                                    <i class="fa-solid fa-award text-gold" style="width: 20px;"></i>
+                                    <div>
+                                        <div class="fw-bold text-navy">Format Sertifikat SKPI</div>
+                                        <small class="text-muted" style="font-size: 0.72rem;">Depan & Belakang Transkrip 32 JP</small>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <button type="button" class="btn btn-navy fw-bold rounded-pill px-3 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBeritaAcara">
                         <i class="fa-solid fa-file-invoice text-warning me-1"></i> Cetak Berita Acara SKPI (Resmi)
                     </button>
