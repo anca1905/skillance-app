@@ -509,28 +509,77 @@ $activeMenu = "dokumen";
                 <div class="archive-folder-nav mb-3">
                     <button type="button" class="folder-pill-btn active" data-folder="all" onclick="switchArchiveFolder('all')">
                         <i class="fa-solid fa-layer-group text-primary"></i> Semua Folder
-                        <span class="folder-badge">10 Berkas</span>
+                        <span class="folder-badge">12 Berkas</span>
+                    </button>
+                    <button type="button" class="folder-pill-btn" data-folder="hibah" onclick="switchArchiveFolder('hibah')">
+                        <i class="fa-solid fa-hand-holding-dollar text-danger"></i> 📁 Folder 01: Hibah Usaha & Pendanaan Pemuda
+                        <span class="folder-badge">2 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="media" onclick="switchArchiveFolder('media')">
-                        <i class="fa-solid fa-newspaper text-warning"></i> 📁 Folder 01: Media Siber & Publikasi CSR
+                        <i class="fa-solid fa-newspaper text-warning"></i> 📁 Folder 02: Media Siber & Publikasi CSR
                         <span class="folder-badge">5 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="software" onclick="switchArchiveFolder('software')">
-                        <i class="fa-solid fa-laptop-code text-success"></i> 📁 Folder 02: Software House & Solusi IT
+                        <i class="fa-solid fa-laptop-code text-success"></i> 📁 Folder 03: Software House & Solusi IT
                         <span class="folder-badge">2 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="retail" onclick="switchArchiveFolder('retail')">
-                        <i class="fa-solid fa-store text-info"></i> 📁 Folder 03: Retail & Produk Kreatif
+                        <i class="fa-solid fa-store text-info"></i> 📁 Folder 04: Retail & Produk Kreatif
                         <span class="folder-badge">1 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="holding" onclick="switchArchiveFolder('holding')">
-                        <i class="fa-solid fa-building-columns text-purple" style="color: #8b5cf6;"></i> 📁 Folder 04: Perjanjian Induk Holding
+                        <i class="fa-solid fa-building-columns text-purple" style="color: #8b5cf6;"></i> 📁 Folder 05: Perjanjian Induk Holding
                         <span class="folder-badge">3 Berkas</span>
                     </button>
                 </div>
 
                 <!-- Container Berkas Arsip (Grid) -->
                 <div class="row g-3" id="archiveItemsContainer">
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #0: PROPOSAL HIBAH WIRAUSAHA PEMUDA (KEMENPORA / KEMENKOP) -->
+                    <!-- ========================================== -->
+                    <div class="col-12 archive-item-wrapper" data-folder="hibah">
+                        <div class="archive-card featured-card p-3.5 shadow-sm" style="border-left: 5px solid #ef4444 !important; background: #ffffff;">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
+                                        <span class="badge bg-danger text-white fw-bold px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-gift me-1"></i>DANA HIBAH NON-DILUTIVE (TANPA UTANG & SAHAM)
+                                        </span>
+                                        <span class="badge bg-navy text-white px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-award me-1"></i>Target: Kemenpora RI / KemenKopUKM / Dispora
+                                        </span>
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-check-circle me-1"></i>Lengkap 6 Hal A4 + RAB Rp 18 Juta
+                                        </span>
+                                        <span class="text-muted small" style="font-size: 0.75rem;">
+                                            No. Arsip: <strong class="text-navy">038/EXT-GR/SDI/XI/2026</strong>
+                                        </span>
+                                    </div>
+                                    <h5 class="fw-bold text-navy mb-1">
+                                        Paket Proposal Pengajuan Bantuan Hibah Wirausaha Pemuda Pemula (WMP) & Industri Kreatif Digital
+                                    </h5>
+                                    <p class="text-muted small mb-2" style="line-height: 1.45;">
+                                        Dokumen proposal komprehensif pengajuan hibah modal usaha wirausaha muda ke Kemenpora RI / Kementerian Koperasi & UKM / Dinas Pemuda & Olahraga. Memuat ringkasan eksekutif, profil tim (Arsyad & Rina), analisis pasar, Rencana Anggaran Biaya (RAB) pengadaan mesin cetak akrilik UV & server cloud senilai <strong>Rp 18.000.000</strong>, Surat Pernyataan Tanggung Jawab Mutlak (SPTJM), dan lembar ekspedisi tanda terima TU.
+                                    </p>
+                                    <div class="d-flex align-items-center gap-3 text-muted small flex-wrap" style="font-size: 0.78rem;">
+                                        <span><i class="fa-solid fa-file-pdf text-danger me-1"></i>Format Resmi A4 (Multi-Page)</span>
+                                        <span><i class="fa-solid fa-stamp text-warning me-1"></i>Siap Meterai Fisik Rp 10.000 & Cap Basah</span>
+                                        <span><i class="fa-solid fa-users text-primary me-1"></i>Penyerapan Vokasi Magang SMK</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row gap-2 flex-shrink-0">
+                                    <a href="surat-pengantar-hibah.php" target="_blank" class="btn btn-outline-danger btn-sm fw-bold px-3 py-2 text-nowrap shadow-sm">
+                                        <i class="fa-solid fa-envelope-open-text me-1"></i>Surat Pengantar &raquo;
+                                    </a>
+                                    <a href="proposal-hibah-wirausaha.php" target="_blank" class="btn btn-danger btn-sm fw-bold px-3.5 py-2 text-nowrap shadow-sm">
+                                        <i class="fa-solid fa-file-invoice-dollar me-1"></i>Buka Proposal Hibah (6 Hal) &raquo;
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- ========================================== -->
                     <!-- DOKUMEN #1: SURAT PENGANTAR PT PUTRA MEKONGGA SEJAHTERA (FEATURED) -->

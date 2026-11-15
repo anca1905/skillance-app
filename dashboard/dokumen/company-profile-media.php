@@ -158,81 +158,24 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
 
     /* COVER PAGE DESIGN */
     .paper.cover-page {
-      padding: 0;
-      background: linear-gradient(135deg, #091a36 0%, #0d2e5c 60%, #16427d 100%);
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 0 !important;
+      margin: 0 auto 24px auto !important;
+      width: 210mm;
+      height: 297mm;
+      max-height: 297mm;
       overflow: hidden;
-      position: relative;
-    }
-    .cover-header {
-      padding: 40px 45px 20px 45px;
+      background: #0d2e5c;
+      border-radius: 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-    }
-    .cover-body {
-      padding: 40px 45px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
       justify-content: center;
+      align-items: center;
     }
-    .cover-footer {
-      padding: 25px 45px;
-      background: rgba(0,0,0,0.25);
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
-    .cover-badge {
-      display: inline-block;
-      background: rgba(254, 152, 0, 0.18);
-      border: 1px solid #fe9800;
-      color: #fe9800;
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    .cover-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 34pt;
-      font-weight: 900;
-      line-height: 1.15;
-      color: #ffffff;
-      margin: 0 0 15px 0;
-      letter-spacing: -0.5px;
-    }
-    .cover-subtitle {
-      font-family: 'Inter', sans-serif;
-      font-size: 15pt;
-      font-weight: 600;
-      color: #fe9800;
-      margin: 0 0 20px 0;
-    }
-    .cover-desc {
-      font-family: 'Inter', sans-serif;
-      font-size: 11pt;
-      line-height: 1.6;
-      color: #cbd5e1;
-      max-width: 580px;
-      margin-bottom: 30px;
-    }
-    .cover-meta-box {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-left: 4px solid #fe9800;
-      border-radius: 8px;
-      padding: 16px 20px;
-      font-family: 'Inter', sans-serif;
-      font-size: 9.5pt;
-      line-height: 1.55;
+    .cover-graphic-img {
+      width: 210mm;
+      height: 297mm;
+      object-fit: fill;
+      display: block;
     }
 
     /* KOP SURAT */
@@ -446,46 +389,10 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
   <div class="paper-container">
 
     <!-- =================================================================== -->
-    <!-- HALAMAN 1: COVER SAMPUL EKSKLUSIF MEDIA                           -->
+    <!-- HALAMAN 1: DESAIN COVER SAMPUL KHUSUS (A4 FULL PRINT READY)        -->
     <!-- =================================================================== -->
     <div class="paper cover-page">
-      <div class="cover-header">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 24pt; color: #fe9800; line-height: 1;">&lt;/&gt;</div>
-          <div>
-            <div style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 11pt; color: #ffffff; letter-spacing: 0.5px;">PT SKILLANCE DIGITAL INDONESIA</div>
-            <div style="font-family: 'Inter', sans-serif; font-size: 8pt; color: #94a3b8;">Badan Hukum Penerbit Media Siber Resmi</div>
-          </div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 10pt; color: #fe9800;">PORTAL RESMI:</div>
-          <div style="font-family: 'Inter', sans-serif; font-size: 9pt; color: #ffffff;">WWW.XYRONNEWS.COM</div>
-        </div>
-      </div>
-
-      <div class="cover-body">
-        <div class="cover-badge"><i class="fa-solid fa-shield-halved me-1"></i> DOKUMEN RESMI MEDIA SIBER &bull; TAHUN 2026</div>
-        <h1 class="cover-title">COMPANY PROFILE<br>& MEDIA KIT</h1>
-        <div class="cover-subtitle">CERITA RAKYAT OFFICIAL (XYRONNEWS.COM)</div>
-        <div class="cover-desc">
-          Profil resmi media siber, pedoman redaksional, metrik jangkauan publik, kepatuhan Undang-Undang Pers, serta solusi strategis kemitraan publikasi korporasi, advertorial CSR/PPM, dan diseminasi informasi publik di Sulawesi Tenggara dan Nasional.
-        </div>
-
-        <div class="cover-meta-box">
-          <div style="font-weight: 700; color: #fe9800; margin-bottom: 4px; font-size: 10pt;">LEGALITAS PENERBIT MEDIA:</div>
-          <div><strong>Badan Hukum Penerbit:</strong> PT SKILLANCE DIGITAL INDONESIA</div>
-          <div><strong>SK Kemenkumham RI:</strong> AHU-A138609.AH.01.30.Tahun 2026 &bull; <strong>NPWP:</strong> 100000011940526</div>
-          <div><strong>Regulasi Acuan:</strong> UU Pers No. 40 Tahun 1999 & Standar Pedoman Pemberitaan Media Siber (PPMS)</div>
-          <div><strong>Hotline Redaksi:</strong> 0822-9170-0778 &bull; <strong>Website:</strong> https://skillance.cloud</div>
-        </div>
-      </div>
-
-      <div class="cover-footer">
-        <div style="display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; font-size: 8.5pt; color: #94a3b8;">
-          <div><i class="fa-solid fa-location-dot text-warning me-1"></i> Desa Pabiring Dusun Taruseng, Kec. Poleang Barat, Kab. Bombana, Sultra 93772</div>
-          <div>KONSORSIUM CERITA RAKYAT OFFICIAL &bull; XYRONNEWS NETWORK</div>
-        </div>
-      </div>
+      <img src="../../assets/img/sampul_company_profile_media.jpg" alt="Cover Sampul Company Profile & Media Kit" class="cover-graphic-img">
     </div>
 
     <!-- =================================================================== -->
