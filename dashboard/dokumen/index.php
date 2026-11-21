@@ -509,7 +509,7 @@ $activeMenu = "dokumen";
                 <div class="archive-folder-nav mb-3">
                     <button type="button" class="folder-pill-btn active" data-folder="all" onclick="switchArchiveFolder('all')">
                         <i class="fa-solid fa-layer-group text-primary"></i> Semua Folder
-                        <span class="folder-badge">12 Berkas</span>
+                        <span class="folder-badge">13 Berkas</span>
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="hibah" onclick="switchArchiveFolder('hibah')">
                         <i class="fa-solid fa-hand-holding-dollar text-danger"></i> 📁 Folder 01: Hibah Usaha & Pendanaan Pemuda
@@ -529,7 +529,7 @@ $activeMenu = "dokumen";
                     </button>
                     <button type="button" class="folder-pill-btn" data-folder="holding" onclick="switchArchiveFolder('holding')">
                         <i class="fa-solid fa-building-columns text-purple" style="color: #8b5cf6;"></i> 📁 Folder 05: Perjanjian Induk Holding
-                        <span class="folder-badge">3 Berkas</span>
+                        <span class="folder-badge">4 Berkas</span>
                     </button>
                 </div>
 
@@ -965,6 +965,32 @@ $activeMenu = "dokumen";
                             </div>
                             <a href="pks-kemitraan-fti-msc.php" target="_blank" class="btn btn-outline-success btn-sm w-100 fw-bold py-1.5 shadow-sm">
                                 <i class="fa-solid fa-file-signature me-1"></i>Buka Naskah PKS Tripartit &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #14: PROPOSAL PROGRAM KOLABORASI TERPADU FTI USN x MSC x PT SKILLANCE -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #ef4444;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-danger bg-opacity-10 text-danger fw-bold" style="font-size: 0.7rem;">
+                                        PROPOSAL TERPADU &bull; ALL-IN-ONE
+                                    </span>
+                                    <i class="fa-solid fa-file-lines text-danger fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Proposal Kolaborasi Terpadu FTI x MSC</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Proposal lengkap kemitraan DUDI (5 Hal A4): Bootcamp Koding 32 JP, Pengadaan Seminar Kit & Plakat Akrilik Aquirist, serta Publikasi Media Siber XyronNews.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>039/EXT-PROP/SDI-MSC/XI/2026
+                                </div>
+                            </div>
+                            <a href="proposal-kemitraan-fti-msc.php" target="_blank" class="btn btn-danger btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-file-lines me-1"></i>Buka & Cetak Proposal Terpadu &raquo;
                             </a>
                         </div>
                     </div>

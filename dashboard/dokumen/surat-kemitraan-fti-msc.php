@@ -415,6 +415,9 @@ if (!in_array($view, ['msc', 'fakultas', 'pks'])) {
         <a href="surat-kemitraan-fti-msc.php?view=pks" class="doc-pill <?= $view === 'pks' ? 'active' : '' ?>">
           <i class="fa-solid fa-file-contract text-success"></i> 3. Naskah Lengkap PKS Tripartit
         </a>
+        <a href="proposal-kemitraan-fti-msc.php" class="doc-pill">
+          <i class="fa-solid fa-file-lines text-warning"></i> 4. Proposal Program Kolaborasi Terpadu
+        </a>
       </div>
       <div style="font-size: 11px; color: #64748b;">
         <i class="fa-solid fa-circle-check text-success me-1"></i> Standar Surat Resmi Korporat PT
