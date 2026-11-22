@@ -42,8 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         const photoUrl = data.user.photo ? (data.user.photo.startsWith('http') ? data.user.photo : `../assets/img/profile/${data.user.photo}`) : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user.name)}&background=0D2E5C&color=fff`;
                         localStorage.setItem('userPhoto', photoUrl);
 
-                        // Redirect ke Dashboard berdasarkan role
-                        if (data.user.role === 'investor') {
+                        // Redirect ke Dashboard atau target role/SSO
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else if (data.user.role === 'investor') {
                             window.location.href = '../dashboard/investor.php';
                         } else if (data.user.role === 'freelancer') {
                             window.location.href = '../dashboard/freelancer/index.php';

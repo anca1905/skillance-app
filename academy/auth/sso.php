@@ -60,5 +60,14 @@ if ($trackCheck->get_result()->num_rows === 0) {
 }
 $trackCheck->close();
 
-header("Location: ../index.php?logged_in=1");
+$target = trim($_GET['target'] ?? '');
+$targetPath = 'index.php';
+
+// Validasi target lokal untuk keamanan redirect
+if (!empty($target) && !preg_match('#^https?://#i', $target) && strpos($target, '//') === false) {
+    $targetPath = ltrim($target, '/');
+}
+
+$sep = (strpos($targetPath, '?') !== false) ? '&' : '?';
+header("Location: ../" . $targetPath . $sep . "logged_in=1");
 exit();

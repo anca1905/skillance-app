@@ -182,10 +182,21 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
                 </a>
             </div>
 
-            <div class="text-center mt-2 mb-1">
-                <small class="text-muted" style="font-size: 0.76rem;">
-                    Buka proyek freelance untuk <strong>Mahasiswa & Umum</strong>.
-                </small>
+            <!-- Tombol Masuk Instan (Siswa Academy & Pengelola) -->
+            <div class="mt-2 mb-3">
+                <a href="quick_login.php?user=mahasiswa<?= $isAcademyRef ? '&redirect=academy' : '' ?>" class="btn w-100 fw-bold rounded-3 py-2 shadow-sm d-flex align-items-center justify-content-center gap-2 mb-2" style="background-color: #fca311; color: #0d2e5c; border: 1px solid #e5930e; font-size: 0.88rem;">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Masuk Langsung: Siswa Academy (Instan)</span>
+                </a>
+                <a href="quick_login.php?user=arsyad<?= $isAcademyRef ? '&redirect=academy' : '' ?>" class="btn btn-outline-secondary w-100 fw-semibold rounded-3 py-1 shadow-sm d-flex align-items-center justify-content-center gap-2" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-user-shield text-muted"></i>
+                    <span>Masuk Cepat: Admin / Pengelola (SIAKAD Multi-Role)</span>
+                </a>
+                <div class="text-center mt-2">
+                    <small class="text-muted" style="font-size: 0.72rem; line-height: 1.3; display: block;">
+                        <i class="fa-solid fa-circle-check text-success me-1"></i>Akses instan untuk evaluasi & pengujian materi modul Academy.
+                    </small>
+                </div>
             </div>
 
             <!-- GSI Native Container (jika didukung) -->
@@ -195,7 +206,7 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
                 data-auto_prompt="false">
             </div>
 
-            <div class="divider">ATAU LOGIN PEGAWAI / ADMIN</div>
+            <div class="divider">ATAU LOGIN EMAIL PEGAWAI / ADMIN</div>
 
             <!-- Form Login Email Biasa (Untuk Admin & Pegawai Internal) -->
             <form id="loginForm">

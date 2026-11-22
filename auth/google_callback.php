@@ -4,12 +4,12 @@ require_once __DIR__ . '/../config/config.php';
 
 $clientId     = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
 $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_SECRET') : '');
-$redirectUri  = 'https://skillance.cloud/auth/google_callback.php';
+$redirectUri  = $_ENV['GOOGLE_REDIRECT_URI'] ?? 'https://skillance.cloud/auth/google_callback.php';
 $defaultCallback = 'https://skillance.cloud/auth/google_callback.php';
 
 if (isset($_GET['error'])) {
     $_SESSION['login_error'] = "Login Google Dibatalkan atau Error: " . htmlspecialchars($_GET['error']);
-    header("Location: index.php");
+    header("Location: index.php" . (!empty($_SESSION['auth_redirect']) ? '?ref=' . urlencode($_SESSION['auth_redirect']) : ''));
     exit();
 }
 

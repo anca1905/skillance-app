@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$ref = $_GET['ref'] ?? '';
+
 // Hapus semua variabel sesi
 $_SESSION = [];
 
@@ -15,6 +17,11 @@ if (ini_get("session.use_cookies")) {
 
 // Hancurkan sesi
 session_destroy();
+
+if ($ref === 'academy') {
+    header("Location: https://academy.skillance.cloud/auth/logout.php");
+    exit();
+}
 
 // Redirect ke halaman login auth
 header("Location: index.php?logged_out=1");

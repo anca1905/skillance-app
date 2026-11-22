@@ -39,11 +39,27 @@ if(!empty($data->email) && !empty($data->password)) {
             $_SESSION['partner_slug'] = $partnerSlug;
             $_SESSION['position_title'] = $positionTitle;
 
+            $redirectTarget = "select_role.php";
+            if (!empty($_SESSION['auth_redirect']) && ($_SESSION['auth_redirect'] === 'academy' || strpos($_SESSION['auth_redirect'], 'academy') !== false)) {
+                unset($_SESSION['auth_redirect']);
+                $token = bin2hex(random_bytes(32));
+                $expiresAt = date('Y-m-d H:i:s', time() + 300);
+                $ssoStmt = $conn->prepare("INSERT INTO `sso_tokens` (`token`, `user_id`, `expires_at`) VALUES (?, ?, ?)");
+                if ($ssoStmt) {
+                    $ssoStmt->bind_param("sis", $token, $user['id'], $expiresAt);
+                    $ssoStmt->execute();
+                    $ssoStmt->close();
+                    $redirectTarget = "https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token) . "&target=my-learning.php";
+                } else {
+                    $redirectTarget = "https://academy.skillance.cloud/my-learning.php?logged_in=1";
+                }
+            }
+
             http_response_code(200);
             echo json_encode([
                 "status" => "success",
                 "message" => "Login berhasil!",
-                "redirect" => "select_role.php",
+                "redirect" => $redirectTarget,
                 "user" => [
                     "id" => $user['id'],
                     "name" => $user['name'],

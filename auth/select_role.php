@@ -83,7 +83,7 @@ if (isset($_GET['select'])) {
             exit();
         }
         $_SESSION['active_portal'] = 'mahasiswa';
-        header("Location: https://academy.skillance.cloud/partner-portal.php?partner=" . urlencode($partnerSlug));
+        header("Location: sso_jump.php?target=" . urlencode("partner-portal.php?partner=" . $partnerSlug));
         exit();
     }
 
@@ -95,7 +95,7 @@ if (isset($_GET['select'])) {
         $_SESSION['active_portal'] = 'dekanat';
         $_SESSION['partner_auth_' . $partnerSlug] = true;
         $_SESSION['partner_role_' . $partnerSlug] = 'dekanat';
-        header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=" . urlencode($partnerSlug) . "&role=dekanat&auth=demo");
+        header("Location: sso_jump.php?target=" . urlencode("dashboard-partner.php?partner=" . $partnerSlug . "&role=dekanat&auth=demo"));
         exit();
     }
 
@@ -107,7 +107,7 @@ if (isset($_GET['select'])) {
         $_SESSION['active_portal'] = 'ormawa';
         $_SESSION['partner_auth_' . $partnerSlug] = true;
         $_SESSION['partner_role_' . $partnerSlug] = 'ormawa';
-        header("Location: https://academy.skillance.cloud/dashboard-partner.php?partner=" . urlencode($partnerSlug) . "&role=ormawa&auth=demo");
+        header("Location: sso_jump.php?target=" . urlencode("dashboard-partner.php?partner=" . $partnerSlug . "&role=ormawa&auth=demo"));
         exit();
     }
 
