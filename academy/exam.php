@@ -21,8 +21,8 @@ $resultData = null;
 $errorMsg = '';
 $paymentNotice = '';
 
-// Allowed instant access demo / student vouchers
-$validVouchers = ['MAHASISWA', 'SKILLANCE2026', 'DEMO19K', 'SOLOLEARN', 'SKPI2026', 'GRATISUJIAN'];
+// Allowed partner & scholarship vouchers (khusus jalur yang ditanggung oleh Fakultas/UKM MSC)
+$validVouchers = ['MSC2026', 'FTIUSN2026', 'SKPI2026', 'MAHASISWA', 'SKILLANCE2026'];
 
 // Separate tracks into Modular Courses (SoloLearn Style) and Career Tracks
 $modularCourseTracks = [];
@@ -112,7 +112,7 @@ if ($action === 'start_exam') {
                 $isUnlocked = true;
                 $_SESSION['unlocked_tracks'][$trackKey] = true;
             } else {
-                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> berstatus <em>PENDING</em> (Menunggu konfirmasi admin 1x24 jam). Jika Anda telah transfer, silakan konfirmasi ke WhatsApp Admin atau gunakan Kode Voucher Mahasiswa.";
+                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> berstatus <em>PENDING</em> (Menunggu konfirmasi admin 1x24 jam). Jika Anda telah transfer, silakan konfirmasi ke WhatsApp Admin atau gunakan Kode Voucher Kemitraan resmi dari Fakultas/UKM MSC.";
                 $action = 'welcome';
             }
         } else {
@@ -128,7 +128,7 @@ if ($action === 'start_exam') {
                     $stmt->execute();
                     $stmt->close();
                 }
-                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> baru saja tercatat dan sedang dalam antrean verifikasi Admin (1x24 Jam). Silakan kirimkan bukti bayar ke WA Admin atau masukkan Voucher Mahasiswa untuk akses instan.";
+                $errorMsg = "Nomor Invoice <strong>" . htmlspecialchars($invoiceNo) . "</strong> baru saja tercatat dan sedang dalam antrean verifikasi Admin (1x24 Jam). Silakan kirimkan bukti bayar ke WA Admin atau masukkan Kode Voucher Kemitraan Kampus.";
                 $action = 'welcome';
             } else {
                 $errorMsg = "Nomor Invoice atau Kode Voucher <strong>" . htmlspecialchars($invoiceNo) . "</strong> tidak valid.";
@@ -141,7 +141,7 @@ if ($action === 'start_exam') {
     if (!$isUnlocked && empty($errorMsg)) {
         // If track has a price and no unlock provided, route back to welcome with selection
         $action = 'welcome';
-        $paymentNotice = 'Silakan lakukan pembayaran administrasi ujian via QRIS atau gunakan Kode Voucher Mahasiswa di bawah ini.';
+        $paymentNotice = 'Silakan lakukan pembayaran administrasi ujian via QRIS atau gunakan Kode Voucher Kemitraan Kampus di bawah ini jika ditanggung oleh Fakultas/MSC.';
     }
 }
 
@@ -793,11 +793,11 @@ $seoBreadcrumbs = [
                                             </div>
                                         </div>
 
-                                        <!-- VOUCHER / BYPASS INPUT -->
+                                        <!-- VOUCHER / KEMITRAAN KAMPUS INPUT -->
                                         <div class="mb-4 p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-50" id="voucherBoxWrapper" style="<?= $isTrackVerified ? 'display: none;' : '' ?>">
                                             <label class="form-label small fw-bold text-navy d-flex justify-content-between align-items-center mb-1">
-                                                <span><i class="fa-solid fa-ticket text-warning me-1"></i> Punya Kode Voucher / Akses Instan?</span>
-                                                <span class="badge bg-navy text-white small" style="background: #0d2e5c; font-size: 0.68rem;">Khusus Mahasiswa: MAHASISWA</span>
+                                                <span><i class="fa-solid fa-ticket text-warning me-1"></i> Punya Kode Voucher Kemitraan / Beasiswa?</span>
+                                                <span class="badge bg-navy text-white small" style="background: #0d2e5c; font-size: 0.68rem;">Jalur Kemitraan Kampus & UKM MSC</span>
                                             </label>
                                             <div class="input-group">
                                                 <input type="text" name="voucher_code" id="inputVoucherCode" class="form-control text-uppercase font-monospace" placeholder="Masukkan kode voucher atau no. invoice" value="">
@@ -805,7 +805,7 @@ $seoBreadcrumbs = [
                                                     <i class="fa-solid fa-unlock me-1"></i> Buka Ujian &raquo;
                                                 </button>
                                             </div>
-                                            <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">*Mahasiswa/penguji dapat mengetik kode <code>MAHASISWA</code> atau <code>DEMO19K</code> untuk aktivasi instan tanpa menunggu konfirmasi manual.</small>
+                                            <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">*Bagi mahasiswa peserta kemitraan yang biayanya ditanggung oleh Fakultas (FTI USN) atau UKM MSC, silakan masukkan kode voucher resmi yang Anda terima dari panitia kemitraan.</small>
                                         </div>
 
                                         <!-- START EXAM BUTTON -->
