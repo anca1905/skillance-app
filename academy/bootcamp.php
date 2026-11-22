@@ -50,6 +50,10 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
         .text-gold { color: var(--gold) !important; }
         .bg-navy { background-color: var(--navy-dark) !important; }
 
+        .bg-opacity-10 { --bs-bg-opacity: 0.10 !important; }
+        .bg-opacity-15 { --bs-bg-opacity: 0.15 !important; }
+        .bg-opacity-20 { --bs-bg-opacity: 0.20 !important; }
+
         /* Hero Banner */
         .bootcamp-hero {
             background: linear-gradient(135deg, #071a35 0%, #0d2e5c 65%, #0284c7 100%);
@@ -150,7 +154,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                         <span class="badge bg-gold text-navy fw-bold px-3 py-2 rounded-pill shadow-xs" style="background-color: #fca311 !important; color: #071a35 !important;">
                             <i class="fa-solid fa-fire me-1"></i> MODEL BELAJAR ALA DICODING
                         </span>
-                        <span class="badge bg-white bg-opacity-15 text-white border border-white border-opacity-25 px-3 py-2 rounded-pill small">
+                        <span class="badge text-white border border-white border-opacity-25 px-3 py-2 rounded-pill small" style="background-color: rgba(255, 255, 255, 0.18) !important;">
                             <i class="fa-solid fa-infinity text-warning me-1"></i> SEKALI BAYAR &bull; AKSES SELAMANYA
                         </span>
                     </div>
@@ -265,7 +269,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                         <div class="class-card-header">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <span class="badge bg-warning text-navy fw-bold px-3 py-1.5 rounded-pill">PALING POPULER UNTUK SKRIPSI</span>
-                                <span class="badge bg-white bg-opacity-20 text-white rounded-pill">12 Modul + 1 Proyek Akhir</span>
+                                <span class="badge text-white rounded-pill" style="background-color: rgba(255, 255, 255, 0.2) !important; border: 1px solid rgba(255, 255, 255, 0.25);">12 Modul + 1 Proyek Akhir</span>
                             </div>
                             <h4 class="fw-bold mb-1 text-white font-heading">Fullstack Web Developer: Laravel 10 & Blade Template HTML5</h4>
                             <p class="text-white-50 small mb-0">Membangun Sistem Informasi Manajemen (SIM) standar instansi dari nol tanpa kerumitan framework SPA.</p>
@@ -312,7 +316,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                         <div class="class-card-header" style="background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <span class="badge bg-info text-dark fw-bold px-3 py-1.5 rounded-pill">MOBILE MULTIPLATFORM</span>
-                                <span class="badge bg-white bg-opacity-20 text-white rounded-pill">10 Modul + 1 Proyek Akhir</span>
+                                <span class="badge text-white rounded-pill" style="background-color: rgba(255, 255, 255, 0.2) !important; border: 1px solid rgba(255, 255, 255, 0.25);">10 Modul + 1 Proyek Akhir</span>
                             </div>
                             <h4 class="fw-bold mb-1 text-white font-heading">Mobile App Developer: Flutter 3 & Dart Multiplatform</h4>
                             <p class="text-white-50 small mb-0">Membangun aplikasi Android & iOS profesional terintegrasi REST API dan penyimpanan lokal.</p>
@@ -358,7 +362,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                         <div class="class-card-header" style="background: linear-gradient(135deg, #b45309 0%, #78350f 100%);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <span class="badge bg-warning text-dark fw-bold px-3 py-1.5 rounded-pill">COCOK UNTUK PEMULA</span>
-                                <span class="badge bg-white bg-opacity-20 text-white rounded-pill">8 Modul + 1 Proyek Akhir</span>
+                                <span class="badge text-white rounded-pill" style="background-color: rgba(255, 255, 255, 0.2) !important; border: 1px solid rgba(255, 255, 255, 0.25);">8 Modul + 1 Proyek Akhir</span>
                             </div>
                             <h4 class="fw-bold mb-1 text-white font-heading">Frontend Web Engineer: Modern JavaScript, DOM & UI/UX</h4>
                             <p class="text-white-50 small mb-0">Kuasai logika JavaScript modern, manipulasi DOM, konsumsi API publik, dan desain web responsif.</p>
@@ -404,7 +408,7 @@ $seoDesc = 'Bootcamp online praktis model Dicoding di Skillance Academy: Sekali 
                         <div class="class-card-header" style="background: linear-gradient(135deg, #15803d 0%, #14532d 100%);">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <span class="badge bg-success text-white fw-bold px-3 py-1.5 rounded-pill">ARSITEKTUR & SERVER</span>
-                                <span class="badge bg-white bg-opacity-20 text-white rounded-pill">11 Modul + 1 Proyek Akhir</span>
+                                <span class="badge text-white rounded-pill" style="background-color: rgba(255, 255, 255, 0.2) !important; border: 1px solid rgba(255, 255, 255, 0.25);">11 Modul + 1 Proyek Akhir</span>
                             </div>
                             <h4 class="fw-bold mb-1 text-white font-heading">Backend Specialist & Cloud Server Architecture</h4>
                             <p class="text-white-50 small mb-0">Membangun REST API performa tinggi, optimasi database relasional, dan administrasi VPS Linux Ubuntu.</p>

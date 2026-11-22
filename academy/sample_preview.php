@@ -522,7 +522,7 @@ $waUrl = "https://wa.me/{$adminWa}?text={$waOrderMsg}";
 
             <div class="d-flex flex-wrap gap-2 mb-5">
                 <?php foreach ($book['tech_stack'] as $tech): ?>
-                    <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 rounded-pill px-3 py-1">
+                    <span class="badge text-white border border-white border-opacity-25 rounded-pill px-3 py-1" style="background-color: rgba(255, 255, 255, 0.2) !important;">
                         <?= htmlspecialchars($tech) ?>
                     </span>
                 <?php endforeach; ?>

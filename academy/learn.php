@@ -104,6 +104,10 @@ $seoCustomSchemaJson = json_encode([
             --content-max-w: 880px;
         }
 
+        .bg-opacity-10 { --bs-bg-opacity: 0.10 !important; }
+        .bg-opacity-15 { --bs-bg-opacity: 0.15 !important; }
+        .bg-opacity-20 { --bs-bg-opacity: 0.20 !important; }
+
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background-color: #ffffff;
@@ -912,7 +916,7 @@ $seoCustomSchemaJson = json_encode([
                             <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold small shadow-sm">
                                 <i class="fa-solid fa-graduation-cap me-1"></i> SERTIFIKAT KELULUSAN RESMI
                             </span>
-                            <span class="badge bg-white bg-opacity-15 text-white px-2 py-1 rounded-pill small">
+                            <span class="badge px-3 py-1 rounded-pill small fw-semibold" style="background-color: rgba(255, 255, 255, 0.18) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.3) !important;">
                                 <i class="fa-solid fa-bolt text-warning me-1"></i> Standar SoloLearn
                             </span>
                             <span class="badge bg-success bg-opacity-25 text-white border border-success border-opacity-50 px-2 py-1 rounded-pill small">

@@ -628,3 +628,9 @@ footer .btn-outline-light:hover {
         word-break: break-word;
     }
 }
+
+/* Custom Opacity Utility Classes */
+.bg-opacity-10 { --bs-bg-opacity: 0.10 !important; }
+.bg-opacity-15 { --bs-bg-opacity: 0.15 !important; }
+.bg-opacity-20 { --bs-bg-opacity: 0.20 !important; }
+

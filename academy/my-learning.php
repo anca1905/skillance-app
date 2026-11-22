@@ -510,7 +510,7 @@ $seoBreadcrumbs = [
                             <span class="badge bg-warning text-dark rounded-pill px-3 py-1 small fw-bold shadow-sm">
                                 <i class="fa-solid fa-fire me-1 text-danger"></i> <?= number_format($userXp) ?> XP
                             </span>
-                            <span class="badge bg-white bg-opacity-20 text-white rounded-pill px-3 py-1 small">
+                            <span class="badge text-white rounded-pill px-3 py-1 small" style="background-color: rgba(255, 255, 255, 0.2) !important; border: 1px solid rgba(255, 255, 255, 0.25);">
                                 <i class="fa-solid fa-shield-halved me-1 text-success"></i> SKPI Ready
                             </span>
                         </div>
