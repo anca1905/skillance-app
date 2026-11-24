@@ -1070,27 +1070,79 @@ $activeMenu = "dokumen";
                     </div>
 
                     <!-- ========================================== -->
-                    <!-- DOKUMEN #14: PROPOSAL PROGRAM KOLABORASI TERPADU FTI USN x MSC x PT SKILLANCE -->
+                    <!-- DOKUMEN #14: PROPOSAL RESMI KEMITRAAN TRIPARTIT (5 HALAMAN A4) -->
                     <!-- ========================================== -->
                     <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
                         <div class="archive-card holding-card" style="border-top: 3px solid #ef4444;">
                             <div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <span class="badge bg-danger bg-opacity-10 text-danger fw-bold" style="font-size: 0.7rem;">
-                                        PROPOSAL TERPADU &bull; ALL-IN-ONE
+                                        PROPOSAL KEMITRAAN &bull; 5 HALAMAN A4
                                     </span>
-                                    <i class="fa-solid fa-file-lines text-danger fs-5"></i>
+                                    <i class="fa-solid fa-file-pdf text-danger fs-5"></i>
                                 </div>
-                                <h6 class="fw-bold text-navy mb-1">Proposal Kolaborasi Terpadu FTI x MSC</h6>
+                                <h6 class="fw-bold text-navy mb-1">Proposal Kemitraan Tripartit (FTI x MSC)</h6>
                                 <p class="text-muted small mb-2" style="font-size: 0.78rem;">
-                                    Proposal lengkap kemitraan DUDI (5 Hal A4): Bootcamp Koding 32 JP, Pengadaan Seminar Kit & Plakat Akrilik Aquirist, serta Publikasi Media Siber XyronNews.
+                                    Proposal lengkap kemitraan DUDI (5 Halaman A4): Kurikulum 32 JP, Bootcamp Koding, Analisis Manfaat Tripartit, Sertifikasi SKPI, & Lembar Pengesahan.
                                 </p>
                                 <div class="small text-muted mb-3" style="font-size: 0.72rem;">
-                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>039/EXT-PROP/SDI-MSC/XI/2026
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>012/PROP-SKL/FTI-MSC/XI/2026
                                 </div>
                             </div>
                             <a href="proposal-kemitraan-fti-msc.php" target="_blank" class="btn btn-danger btn-sm w-100 fw-bold py-1.5 shadow-sm">
-                                <i class="fa-solid fa-file-lines me-1"></i>Buka & Cetak Proposal Terpadu &raquo;
+                                <i class="fa-solid fa-file-pdf me-1"></i>Buka & Cetak Proposal Lengkap &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #15: SURAT PENGANTAR PROPOSAL UNTUK DEKANAT FTI USN -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #0d2e5c;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold" style="font-size: 0.7rem;">
+                                        SURAT PENGANTAR &bull; DEKANAT FTI
+                                    </span>
+                                    <i class="fa-solid fa-envelope-open-text text-primary fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Surat Pengantar Proposal Dekanat</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Surat permohonan kerjasama tripartit & pengantar berkas proposal program sertifikasi SKPI kepada Dekan / Wadek FTI USN Kolaka.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>033/SKL-DIR/PROP-FTI/XI/2026
+                                </div>
+                            </div>
+                            <a href="surat-pengantar-fakultas-proposal.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-print me-1"></i>Buka Surat Pengantar Dekanat &raquo;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #16: SURAT PENGANTAR PROPOSAL UNTUK UKM MSC -->
+                    <!-- ========================================== -->
+                    <div class="col-md-6 col-lg-4 archive-item-wrapper" data-folder="holding">
+                        <div class="archive-card holding-card" style="border-top: 3px solid #fe9800;">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-warning bg-opacity-20 text-navy fw-bold" style="font-size: 0.7rem;">
+                                        SURAT PENGANTAR &bull; PENGURUS MSC
+                                    </span>
+                                    <i class="fa-solid fa-envelope-open-text text-warning fs-5"></i>
+                                </div>
+                                <h6 class="fw-bold text-navy mb-1">Surat Pengantar Proposal UKM MSC</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+                                    Surat pengantar proposal kemitraan kolaboratif penyelenggaraan bootcamp koding & pembagian benefit ormawa kepada Pengurus UKM MSC.
+                                </p>
+                                <div class="small text-muted mb-3" style="font-size: 0.72rem;">
+                                    <i class="fa-solid fa-hashtag text-secondary me-1"></i>034/SKL-DIR/PROP-MSC/XI/2026
+                                </div>
+                            </div>
+                            <a href="surat-pengantar-msc-proposal.php" target="_blank" class="btn btn-navy text-white btn-sm w-100 fw-bold py-1.5 shadow-sm">
+                                <i class="fa-solid fa-print me-1"></i>Buka Surat Pengantar MSC &raquo;
                             </a>
                         </div>
                     </div>
