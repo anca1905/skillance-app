@@ -561,12 +561,12 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
           </tr>
           <tr>
             <td><strong>Redaktur Pelaksana</strong></td>
-            <td>Asdar Jaya</td>
+            <td>Muh. Rahwan</td>
             <td>Koordinasi harian agenda liputan & kurasi naskah</td>
           </tr>
           <tr>
             <td><strong>Redaktur Advertorial & CSR</strong></td>
-            <td>Andi Fajaruddin</td>
+            <td>Muh. Rahwan</td>
             <td>Spesialisasi riset & peliputan program pemberdayaan korporasi</td>
           </tr>
           <tr>
