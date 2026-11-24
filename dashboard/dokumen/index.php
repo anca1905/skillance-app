@@ -665,8 +665,8 @@ $activeMenu = "dokumen";
                                     </div>
                                 </div>
                                 <div class="text-lg-end flex-shrink-0 d-flex flex-column gap-2">
-                                    <a href="company-profile-media.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 shadow-sm text-nowrap">
-                                        <i class="fa-solid fa-file-contract me-1.5"></i>Buka Company Profile Media &raquo;
+                                    <a href="proposal-kemitraan-antam-pomalaa.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 shadow-sm text-nowrap">
+                                        <i class="fa-solid fa-file-contract me-1.5"></i>Buka & Cetak Proposal Resmi (5 Hal) &raquo;
                                     </a>
                                     <div class="d-flex gap-2">
                                         <a href="surat-pengantar-antam-pomalaa.php" target="_blank" class="btn btn-outline-navy fw-bold px-2.5 py-1.5 shadow-sm text-nowrap flex-fill" style="border: 1.5px solid #0d2e5c; color: #0d2e5c; background: #ffffff; font-size: 0.8rem;">

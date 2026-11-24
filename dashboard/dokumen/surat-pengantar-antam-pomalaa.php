@@ -422,8 +422,8 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
       <span style="font-size: 13px; font-weight: bold; color: #fff;">Surat Pengantar Kemitraan Media Siber & Publikasi CSR / TJSL</span>
     </div>
     <div class="toolbar-right">
-      <a href="company-profile-media.php" target="_blank" class="btn-envelope-top" style="background: #0d2e5c; border-color: #fe9800; color: #fe9800;">
-        <i class="fa-solid fa-file-contract"></i> Buka Company Profile
+      <a href="proposal-kemitraan-antam-pomalaa.php" target="_blank" class="btn-envelope-top" style="background: #0d2e5c; border-color: #fe9800; color: #fe9800;">
+        <i class="fa-solid fa-file-contract"></i> Buka Proposal (5 Hal)
       </a>
       <a href="amplop-surat-antam-pomalaa.php" target="_blank" class="btn-envelope-top">
         <i class="fa-solid fa-envelope"></i> Cetak Desain Amplop
