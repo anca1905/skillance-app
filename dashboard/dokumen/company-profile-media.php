@@ -540,11 +540,6 @@ if (!isset($_SESSION['user_id']) || !$isAuthorized) {
         </thead>
         <tbody>
           <tr>
-            <td><strong>Dewan Pembina / Penasihat</strong></td>
-            <td>Dr. Ir. H. Sudirman, M.Si</td>
-            <td>Pengarah kebijakan etika & relasi kelembagaan</td>
-          </tr>
-          <tr>
             <td><strong>Pemimpin Umum</strong></td>
             <td><strong>MUH. RAHWAN</strong></td>
             <td>Penanggung jawab umum seluruh lini redaksional & korporasi</td>

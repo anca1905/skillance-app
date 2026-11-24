@@ -590,7 +590,7 @@ $activeMenu = "dokumen";
                                 <div>
                                     <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
                                         <span class="badge bg-gold text-navy fw-bold px-2 py-0.5" style="font-size: 0.72rem;">
-                                            <i class="fa-solid fa-sparkles me-1"></i>BARU DIARSIPKAN (13 NOV 2026)
+                                            <i class="fa-solid fa-sparkles me-1"></i>DIARSIPKAN (13 NOV 2026)
                                         </span>
                                         <span class="badge bg-navy text-white px-2 py-0.5" style="font-size: 0.72rem;">
                                             <i class="fa-solid fa-building me-1"></i>Target: PT. PUTRA MEKONGGA SEJAHTERA
@@ -623,6 +623,56 @@ $activeMenu = "dokumen";
                                             <i class="fa-solid fa-file-lines me-1 text-primary"></i>Surat Pengantar A4
                                         </a>
                                         <a href="amplop-surat-mekongga.php" target="_blank" class="btn btn-outline-navy fw-bold px-2.5 py-1.5 shadow-sm text-nowrap flex-fill" style="border: 1.5px solid #0d2e5c; color: #0d2e5c; background: #ffffff; font-size: 0.8rem;">
+                                            <i class="fa-solid fa-envelope me-1 text-warning"></i>Desain Amplop
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================== -->
+                    <!-- DOKUMEN #1B: SURAT PENGANTAR PT ANEKA TAMBANG TBK (ANTAM) UBPN KOLAKA (POMALAA) (FEATURED) -->
+                    <!-- ========================================== -->
+                    <div class="col-12 archive-item-wrapper" data-folder="media">
+                        <div class="archive-card featured-card p-3.5 shadow-sm" style="border-left: 4.5px solid #fe9800; background: linear-gradient(180deg, #ffffff 0%, #fffbf2 100%);">
+                            <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
+                                        <span class="badge bg-gold text-navy fw-bold px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-sparkles me-1"></i>BARU DIARSIPKAN (24 NOV 2026)
+                                        </span>
+                                        <span class="badge bg-navy text-white px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-industry me-1"></i>Target: PT. ANEKA TAMBANG TBK (UBPN KOLAKA - POMALAA)
+                                        </span>
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-check-circle me-1"></i>Siap Cetak Fisik A4 & Ekspedisi
+                                        </span>
+                                        <span class="text-muted small" style="font-size: 0.75rem;">
+                                            No. Arsip: <strong class="text-navy">029/EXT-MED/SDI-CRO/XI/2026</strong>
+                                        </span>
+                                    </div>
+                                    <h5 class="fw-bold text-navy mb-1">
+                                        Surat Pengantar & Permohonan Kemitraan Media Siber &bull; PT Aneka Tambang Tbk UBPN Kolaka (Pomalaa)
+                                    </h5>
+                                    <p class="text-muted small mb-2" style="line-height: 1.45;">
+                                        Surat pengantar resmi pengajuan kemitraan publikasi kegiatan korporasi BUMN, diseminasi program Tanggung Jawab Sosial dan Lingkungan (TJSL / CSR / PPM) lingkar tambang Pomalaa, advertorial profil BUMN nikel, serta hak pencantuman logo resmi di portal siber <em>Cerita Rakyat Official (xyronnews.com)</em>. Disertai lembar tanda terima ekspedisi surat.
+                                    </p>
+                                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-folder text-warning"></i> Folder: Media Siber & CSR BUMN</span>
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-user-tie text-primary"></i> Pimpinan: MUH. RAHWAN</span>
+                                        <span class="archive-meta-tag"><i class="fa-solid fa-calendar-check text-success"></i> 24 November 2026</span>
+                                    </div>
+                                </div>
+                                <div class="text-lg-end flex-shrink-0 d-flex flex-column gap-2">
+                                    <a href="company-profile-media.php" target="_blank" class="btn btn-warning text-navy fw-bold px-3 py-2 shadow-sm text-nowrap">
+                                        <i class="fa-solid fa-file-contract me-1.5"></i>Buka Company Profile Media &raquo;
+                                    </a>
+                                    <div class="d-flex gap-2">
+                                        <a href="surat-pengantar-antam-pomalaa.php" target="_blank" class="btn btn-outline-navy fw-bold px-2.5 py-1.5 shadow-sm text-nowrap flex-fill" style="border: 1.5px solid #0d2e5c; color: #0d2e5c; background: #ffffff; font-size: 0.8rem;">
+                                            <i class="fa-solid fa-file-lines me-1 text-primary"></i>Surat Pengantar A4
+                                        </a>
+                                        <a href="amplop-surat-antam-pomalaa.php" target="_blank" class="btn btn-outline-navy fw-bold px-2.5 py-1.5 shadow-sm text-nowrap flex-fill" style="border: 1.5px solid #0d2e5c; color: #0d2e5c; background: #ffffff; font-size: 0.8rem;">
                                             <i class="fa-solid fa-envelope me-1 text-warning"></i>Desain Amplop
                                         </a>
                                     </div>
