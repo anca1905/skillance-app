@@ -486,7 +486,7 @@ $seoBreadcrumbs = [
                             <strong>Mode Pratinjau Demo:</strong> Anda saat ini sedang menjelajahi simulasi Dashboard Siswa. Masuk dengan akun Google untuk menyinkronkan progres Anda secara permanen.
                         </span>
                     </div>
-                    <a href="https://skillance.cloud/auth/index.php?ref=academy" class="btn btn-navy text-white btn-sm rounded-pill fw-bold px-4" style="background: #0d2e5c;">
+                    <a href="login.php" class="btn btn-navy text-white btn-sm rounded-pill fw-bold px-4" style="background: #0d2e5c;">
                         <i class="fa-brands fa-google text-warning me-1"></i> Masuk Sekarang &raquo;
                     </a>
                 </div>
@@ -533,7 +533,7 @@ $seoBreadcrumbs = [
                                 <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Keluar
                             </a>
                         <?php else: ?>
-                            <a href="https://skillance.cloud/auth/index.php?ref=academy" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
+                            <a href="login.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
                                 <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login Akun
                             </a>
                         <?php endif; ?>

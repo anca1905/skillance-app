@@ -3,6 +3,10 @@ session_start();
 
 $ref = $_GET['ref'] ?? '';
 if ($ref === 'academy' || strpos($_GET['redirect'] ?? '', 'academy') !== false) {
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: https://academy.skillance.cloud/login.php");
+        exit();
+    }
     $_SESSION['auth_redirect'] = 'academy';
 }
 
@@ -171,7 +175,7 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
 
             <!-- Tombol Login Google Utama -->
             <div class="mb-2">
-                <a href="google_login.php<?= $isAcademyRef ? '?redirect=academy' : '' ?>" class="btn-google w-100" id="btnGoogleDirect">
+                <a href="<?= $isAcademyRef ? 'https://academy.skillance.cloud/login.php' : 'google_login.php' ?>" class="btn-google w-100" id="btnGoogleDirect">
                     <svg width="20" height="20" viewBox="0 0 48 48">
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
                         <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -184,6 +188,10 @@ $isAcademyRef = ($ref === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'a
 
             <!-- Tombol Masuk Instan (Siswa Academy & Pengelola) -->
             <div class="mt-2 mb-3">
+                <a href="quick_login.php?user=google<?= $isAcademyRef ? '&redirect=academy' : '' ?>" class="btn w-100 fw-bold rounded-3 py-2 shadow-sm d-flex align-items-center justify-content-center gap-2 mb-2" style="background-color: #f8fafc; color: #d93025; border: 1.5px solid #ea4335; font-size: 0.88rem;">
+                    <i class="fa-brands fa-google text-danger"></i>
+                    <span>Masuk Akun Google (skillance.id@gmail.com)</span>
+                </a>
                 <a href="quick_login.php?user=mahasiswa<?= $isAcademyRef ? '&redirect=academy' : '' ?>" class="btn w-100 fw-bold rounded-3 py-2 shadow-sm d-flex align-items-center justify-content-center gap-2 mb-2" style="background-color: #fca311; color: #0d2e5c; border: 1px solid #e5930e; font-size: 0.88rem;">
                     <i class="fa-solid fa-graduation-cap"></i>
                     <span>Masuk Langsung: Siswa Academy (Instan)</span>
