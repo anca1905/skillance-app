@@ -217,7 +217,7 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 
 <!-- TOP HUB BAR -->
 <div class="top-hub-bar">
-    <div class="container-fluid px-3 px-xl-4 d-flex justify-content-between align-items-center" style="max-width: 1440px;">
+    <div class="container-fluid px-3 px-xl-4 d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
             <a href="https://skillance.cloud" class="text-decoration-none text-white-50">
                 <i class="fa-solid fa-arrow-left me-1"></i> skillance.cloud
@@ -243,7 +243,7 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 
 <!-- MAIN NAVBAR (Modern, Slim & Perfectly Aligned) -->
 <nav class="navbar navbar-expand-xl academy-navbar">
-    <div class="container-fluid px-3 px-xl-4" style="max-width: 1440px;">
+    <div class="container-fluid px-3 px-xl-4">
         <!-- Brand Logo -->
         <a class="navbar-brand d-flex align-items-center gap-2 py-0 me-3 me-xl-4" href="index.php">
             <div class="bg-navy text-gold rounded-3 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: #0d2e5c;">
@@ -393,7 +393,7 @@ $showSubnav = $showSubnav ?? in_array($activeNav, ['home', 'learn', 'roadmap']);
 <?php if ($showSubnav): ?>
 <!-- COURSE SUBNAV BAR (Slim, Modern & Fast Horizontal Scroll) -->
 <div class="course-subnav">
-    <div class="container-fluid px-3 px-xl-4 d-flex" style="max-width: 1440px;">
+    <div class="container-fluid px-3 px-xl-4 d-flex">
         <a href="learn.php?c=html" class="course-nav-item <?= ($currentCourse === 'html') ? 'active' : '' ?>"><i class="fa-brands fa-html5 me-1 text-warning"></i> HTML</a>
         <a href="learn.php?c=css" class="course-nav-item <?= ($currentCourse === 'css') ? 'active' : '' ?>"><i class="fa-brands fa-css3-alt me-1 text-info"></i> CSS</a>
         <a href="learn.php?c=javascript" class="course-nav-item <?= ($currentCourse === 'javascript') ? 'active' : '' ?>"><i class="fa-brands fa-js me-1 text-warning"></i> JAVASCRIPT</a>

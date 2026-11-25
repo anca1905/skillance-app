@@ -496,7 +496,7 @@ $seoBreadcrumbs = [
 
             <!-- Quick Sample Links -->
             <div class="d-flex flex-wrap align-items-center gap-2 mt-3 pt-2 border-top">
-                <span class="small text-muted fw-semibold">Contoh Demo Verifikasi:</span>
+                <span class="small text-muted fw-semibold">Contoh Format Sertifikat Terverifikasi:</span>
                 <?php foreach ($sampleCerts as $sc): ?>
                     <a href="verify.php?cert=<?= urlencode($sc['no']) ?>" class="btn-sample-cert text-decoration-none py-1 px-3 fw-bold rounded-pill border d-inline-flex align-items-center gap-2">
                         <i class="fa-solid fa-circle-check text-success"></i> 

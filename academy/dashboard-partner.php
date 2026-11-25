@@ -242,19 +242,16 @@ $seoBreadcrumbs = [
                         <form method="POST" action="dashboard-partner.php?partner=<?= urlencode($partnerSlug) ?>">
                             <input type="hidden" name="action" value="login_pin">
                             <div class="mb-3 text-start">
-                                <label class="form-label fw-bold text-navy small">PIN Akses Mitra</label>
-                                <input type="password" name="pin" class="form-control form-control-lg text-center font-monospace" placeholder="Masukkan PIN (Default: <?= htmlspecialchars($partner['access_pin']) ?>)" required autofocus>
+                                <label class="form-label fw-bold text-navy small">PIN Akses Mitra Resmi</label>
+                                <input type="password" name="pin" class="form-control form-control-lg text-center font-monospace" placeholder="Masukkan 4-Digit PIN Akses" required autofocus>
                                 <div class="form-text text-muted" style="font-size: 0.78rem;">
-                                    PIN resmi untuk demo pengujian: <strong class="text-dark font-monospace"><?= htmlspecialchars($partner['access_pin']) ?></strong>
+                                    PIN Otorisasi tercantum pada Surat Keputusan (SK) Kemitraan resmi institusi.
                                 </div>
                             </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-navy btn-lg fw-bold rounded-pill shadow-sm">
                                     <i class="fa-solid fa-unlock me-2 text-warning"></i> Masuk ke Dashboard Pemantauan
                                 </button>
-                                <a href="dashboard-partner.php?partner=<?= urlencode($partnerSlug) ?>&auth=demo" class="btn btn-sm btn-outline-secondary rounded-pill py-2">
-                                    <i class="fa-solid fa-eye me-1"></i> Buka Mode Demo Cepat (1-Klik)
-                                </a>
                             </div>
                         </form>
                     </div>

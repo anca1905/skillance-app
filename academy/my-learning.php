@@ -4,22 +4,16 @@ require_once __DIR__ . '/config/config.php';
 
 // Check user login session
 $isLoggedIn = !empty($_SESSION['user_id']);
-$isDemo = !$isLoggedIn;
-
-if ($isLoggedIn) {
-    $userId = (int)$_SESSION['user_id'];
-    $userName = $_SESSION['user_name'] ?? 'Mahasiswa Skillance';
-    $userEmail = $_SESSION['user_email'] ?? '';
-    $userPhoto = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
-    $userType = $_SESSION['user_type'] ?? 'student';
-} else {
-    // Demo guest preview state
-    $userId = 0;
-    $userName = 'Fajar Nugraha (Demo Siswa)';
-    $userEmail = 'fajar.nugraha@student.ac.id';
-    $userPhoto = 'https://ui-avatars.com/api/?name=Fajar+Nugraha&background=0d2e5c&color=fca311';
-    $userType = 'Mahasiswa Teknik Informatika';
+if (!$isLoggedIn) {
+    header("Location: login.php");
+    exit();
 }
+
+$userId = (int)$_SESSION['user_id'];
+$userName = $_SESSION['user_name'] ?? 'Mahasiswa Skillance';
+$userEmail = $_SESSION['user_email'] ?? '';
+$userPhoto = $_SESSION['user_photo'] ?? ('https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=0d2e5c&color=fff');
+$userType = $_SESSION['user_type'] ?? 'Mahasiswa Skillance';
 
 // 1. Fetch Real or Demo Module Progress
 $completedModules = [];
@@ -38,19 +32,6 @@ if ($isLoggedIn && $conn) {
     }
 }
 
-// If demo or no modules yet, provide realistic rich demo data
-if (empty($completedModules) && $isDemo) {
-    $completedModules = [
-        ['track_id' => 'web_frontend', 'module_id' => 'html_semantic', 'module_title' => 'HTML5 Semantik & Elemen Modern', 'completed_at' => date('Y-m-d H:i:s', strtotime('-1 day'))],
-        ['track_id' => 'web_frontend', 'module_id' => 'css_flexbox', 'module_title' => 'CSS3 Flexbox & Layout Responsif', 'completed_at' => date('Y-m-d H:i:s', strtotime('-2 days'))],
-        ['track_id' => 'web_frontend', 'module_id' => 'css_grid', 'module_title' => 'CSS3 Grid System Tingkat Lanjut', 'completed_at' => date('Y-m-d H:i:s', strtotime('-3 days'))],
-        ['track_id' => 'web_frontend', 'module_id' => 'js_es6', 'module_title' => 'JavaScript Modern (ES6+, Arrow Function & Promise)', 'completed_at' => date('Y-m-d H:i:s', strtotime('-4 days'))],
-        ['track_id' => 'web_frontend', 'module_id' => 'js_dom', 'module_title' => 'DOM Manipulation & Event Handling', 'completed_at' => date('Y-m-d H:i:s', strtotime('-5 days'))],
-        ['track_id' => 'web_frontend', 'module_id' => 'vue_basics', 'module_title' => 'Vue.js 3 Reaktifitas & Single File Component (SFC)', 'completed_at' => date('Y-m-d H:i:s', strtotime('-6 days'))],
-        ['track_id' => 'backend_api', 'module_id' => 'php_oop', 'module_title' => 'PHP 8.3 Pemrograman Berorientasi Objek (OOP)', 'completed_at' => date('Y-m-d H:i:s', strtotime('-8 days'))],
-        ['track_id' => 'backend_api', 'module_id' => 'sql_indexing', 'module_title' => 'MySQL Relasional, Foreign Key & Query Indexing', 'completed_at' => date('Y-m-d H:i:s', strtotime('-10 days'))],
-    ];
-}
 $totalModulesCount = count($completedModules);
 
 // 2. Fetch Certificates (Strict deduplication by track to prevent duplicate display)
@@ -71,21 +52,6 @@ if ($isLoggedIn && $conn) {
         }
         $stmtCert->close();
     }
-}
-
-// Fallback demo certificate if demo
-if (empty($certificates) && $isDemo) {
-    $certificates = [
-        [
-            'certificate_no' => 'SKL-2026-FE-8877',
-            'recipient_name' => $userName,
-            'track_title' => 'Jalur Frontend Web Developer Modern',
-            'score' => 96,
-            'issue_date' => date('Y-m-d', strtotime('-3 days')),
-            'competencies' => 'HTML5 Semantics, CSS3 Flexbox & Grid, JavaScript ES6+, DOM Manipulation, Bootstrap 5, Vue.js 3 SPA Component Architecture',
-            'status' => 'active'
-        ]
-    ];
 }
 
 // 3. Fetch Downloaded Project Kits / Leads
@@ -478,19 +444,7 @@ $seoBreadcrumbs = [
     <!-- PROFILE HEADER BANNER -->
     <header class="dashboard-header">
         <div class="container">
-            <?php if ($isDemo): ?>
-                <div class="alert alert-warning border-0 shadow-sm d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4 p-3 rounded-3">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-circle-info fs-5 text-warning"></i>
-                        <span class="small text-dark">
-                            <strong>Mode Pratinjau Demo:</strong> Anda saat ini sedang menjelajahi simulasi Dashboard Siswa. Masuk dengan akun Google untuk menyinkronkan progres Anda secara permanen.
-                        </span>
-                    </div>
-                    <a href="login.php" class="btn btn-navy text-white btn-sm rounded-pill fw-bold px-4" style="background: #0d2e5c;">
-                        <i class="fa-brands fa-google text-warning me-1"></i> Masuk Sekarang &raquo;
-                    </a>
-                </div>
-            <?php endif; ?>
+
 
             <div class="row align-items-center g-4">
                 <div class="col-md-8 d-flex align-items-center gap-3">
