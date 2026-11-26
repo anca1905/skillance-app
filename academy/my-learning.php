@@ -133,11 +133,13 @@ if (empty($downloadedKits)) {
 
 // Average Exam Score
 $avgScore = 0;
+$hasExamTaken = false;
 if (!empty($certificates)) {
-    $scores = array_column($certificates, 'score');
-    $avgScore = round(array_sum($scores) / count($scores));
-} else {
-    $avgScore = 92;
+    $scores = array_filter(array_column($certificates, 'score'));
+    if (!empty($scores)) {
+        $avgScore = round(array_sum($scores) / count($scores));
+        $hasExamTaken = true;
+    }
 }
 
 $adminWa = "6282291700778";
@@ -150,22 +152,27 @@ $userXp = ($totalModulesCount * $xpPerModule) + (count($certificates) * $xpPerCe
 // Level definition
 if ($userXp >= 1500) {
     $userLevel = 'Level 5: Master Software Architect';
+    $nextLevelName = 'Max Level';
     $levelBadge = 'bg-danger text-white';
     $nextLevelXp = 2000;
 } elseif ($userXp >= 1000) {
     $userLevel = 'Level 4: Senior Fullstack Engineer';
+    $nextLevelName = 'Level 5: Master Architect';
     $levelBadge = 'bg-primary text-white';
     $nextLevelXp = 1500;
 } elseif ($userXp >= 500) {
     $userLevel = 'Level 3: Certified Developer';
+    $nextLevelName = 'Level 4: Senior Fullstack';
     $levelBadge = 'bg-warning text-dark';
     $nextLevelXp = 1000;
 } elseif ($userXp >= 200) {
     $userLevel = 'Level 2: Apprentice Coder';
+    $nextLevelName = 'Level 3: Certified Developer';
     $levelBadge = 'bg-info text-dark';
     $nextLevelXp = 500;
 } else {
     $userLevel = 'Level 1: Junior Explorer';
+    $nextLevelName = 'Level 2: Apprentice Coder';
     $levelBadge = 'bg-secondary text-white';
     $nextLevelXp = 200;
 }
@@ -179,7 +186,7 @@ $leaderboard = [
     ['rank' => 3, 'name' => 'Muh Arsyad Ramsi', 'campus' => 'Skillance Academy Core Team', 'modules' => 18, 'certs' => 2, 'xp' => 1300, 'avatar' => 'https://ui-avatars.com/api/?name=Muh+Arsyad&background=04AA6D&color=fff'],
     ['rank' => 4, 'name' => 'Rian Hidayat', 'campus' => 'Institut Teknologi BJ Habibie Parepare', 'modules' => 15, 'certs' => 2, 'xp' => 1150, 'avatar' => 'https://ui-avatars.com/api/?name=Rian+Hidayat&background=6366f1&color=fff'],
     ['rank' => 5, 'name' => 'Dewi Anggraini', 'campus' => 'Universitas Negeri Makassar (UNM)', 'modules' => 14, 'certs' => 2, 'xp' => 1100, 'avatar' => 'https://ui-avatars.com/api/?name=Dewi+Anggraini&background=ec4899&color=fff'],
-    ['rank' => 6, 'name' => $userName . ($isDemo ? ' (Akun Anda)' : ''), 'campus' => 'Teknik Informatika (Anda)', 'modules' => $totalModulesCount, 'certs' => count($certificates), 'xp' => $userXp, 'avatar' => $userPhoto, 'is_current_user' => true],
+    ['rank' => 6, 'name' => $userName, 'campus' => 'Teknik Informatika (Anda)', 'modules' => $totalModulesCount, 'certs' => count($certificates), 'xp' => $userXp, 'avatar' => $userPhoto, 'is_current_user' => true],
     ['rank' => 7, 'name' => 'Budi Santoso', 'campus' => 'Politeknik Negeri Ujung Pandang', 'modules' => 9, 'certs' => 1, 'xp' => 650, 'avatar' => 'https://ui-avatars.com/api/?name=Budi+Santoso&background=14b8a6&color=fff'],
     ['rank' => 8, 'name' => 'Nurul Fadilah', 'campus' => 'Universitas Muslim Indonesia (UMI)', 'modules' => 8, 'certs' => 1, 'xp' => 600, 'avatar' => 'https://ui-avatars.com/api/?name=Nurul+Fadilah&background=f97316&color=fff'],
     ['rank' => 9, 'name' => 'Kevin Sanjaya', 'campus' => 'Universitas Hasanuddin (UNHAS)', 'modules' => 7, 'certs' => 1, 'xp' => 550, 'avatar' => 'https://ui-avatars.com/api/?name=Kevin+Sanjaya&background=8b5cf6&color=fff'],
@@ -378,20 +385,74 @@ $seoBreadcrumbs = [
         }
 
         /* Dashboard Tabs */
+        .dash-nav-pills {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+        .dash-nav-pills::-webkit-scrollbar {
+            height: 4px;
+        }
+        .dash-nav-pills::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
         .dash-nav-pills .nav-link {
             color: #475569;
-            font-weight: 700;
-            font-size: 0.92rem;
-            padding: 12px 20px;
-            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.86rem;
+            padding: 9px 16px;
+            border-radius: 10px;
             transition: all 0.2s;
             border: 1px solid transparent;
+            white-space: nowrap !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .dash-nav-pills .nav-link.active {
             background-color: var(--navy);
             color: #ffffff;
             box-shadow: 0 4px 12px rgba(13, 46, 92, 0.2);
+        }
+
+        /* Action Buttons */
+        .dash-action-btn {
+            white-space: nowrap !important;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .dash-action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Student Course Quick Launcher */
+        .quick-course-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #0f172a;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .quick-course-card:hover {
+            background: #f8fafc;
+            border-color: #0d2e5c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(13, 46, 92, 0.08);
+            color: #0d2e5c;
         }
 
         /* Certificate Mini Card */
@@ -443,14 +504,12 @@ $seoBreadcrumbs = [
 
     <!-- PROFILE HEADER BANNER -->
     <header class="dashboard-header">
-        <div class="container">
-
-
-            <div class="row align-items-center g-4">
-                <div class="col-md-8 d-flex align-items-center gap-3">
-                    <img src="<?= htmlspecialchars($userPhoto) ?>" alt="Avatar" class="profile-avatar">
+        <div class="container-fluid px-3 px-xl-4">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-7 col-xl-7 d-flex align-items-center gap-3">
+                    <img src="<?= htmlspecialchars($userPhoto) ?>" alt="Avatar" class="profile-avatar flex-shrink-0">
                     <div>
-                        <div class="d-flex align-items-center gap-2 mb-1">
+                        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
                             <h2 class="h4 fw-bold font-heading mb-0 text-white"><?= htmlspecialchars($userName) ?></h2>
                             <span class="badge bg-gold text-navy fw-bold small px-2 py-1 rounded-pill" style="background-color: #fca311 !important; color: #071a35 !important;">
                                 <i class="fa-solid fa-circle-check text-success me-1"></i> Verified Student
@@ -468,27 +527,34 @@ $seoBreadcrumbs = [
                                 <i class="fa-solid fa-shield-halved me-1 text-success"></i> SKPI Ready
                             </span>
                         </div>
+
+                        <!-- Progress XP to Next Level -->
+                        <div class="d-none d-sm-block mt-2" style="max-width: 300px;">
+                            <div class="d-flex justify-content-between text-white-50 small mb-1" style="font-size: 0.72rem;">
+                                <span>Progress ke <?= htmlspecialchars($nextLevelName ?? 'Level Berikutnya') ?></span>
+                                <span class="text-gold fw-bold"><?= $userXp ?> / <?= $nextLevelXp ?> XP</span>
+                            </div>
+                            <div class="progress" style="height: 6px; background-color: rgba(255,255,255,0.18); border-radius: 10px;">
+                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: <?= $levelProgressPercent ?>%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 text-md-end">
-                    <div class="d-flex flex-column flex-sm-row justify-content-md-end gap-2">
-                        <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#achievementCardModal">
+                <div class="col-lg-5 col-xl-5 text-lg-end">
+                    <div class="d-flex flex-wrap align-items-center justify-content-start justify-content-lg-end gap-2">
+                        <button type="button" class="btn btn-outline-light dash-action-btn px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#achievementCardModal">
                             <i class="fa-solid fa-id-card me-1 text-gold"></i> Kartu Prestasi Siswa
                         </button>
-                        <button type="button" class="btn btn-outline-light fw-bold px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#atsResumeModal">
-                            <i class="fa-solid fa-file-lines me-1 text-gold"></i> Buat CV ATS Koding
+                        <button type="button" class="btn btn-outline-light dash-action-btn px-3 py-2 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#atsResumeModal">
+                            <i class="fa-solid fa-file-lines me-1 text-gold"></i> Buat CV ATS
                         </button>
-                        <a href="https://skillance.cloud/dashboard/freelancer/" class="btn btn-warning fw-bold px-3 py-2 rounded-pill text-navy shadow-sm">
-                            <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance &raquo;
+                        <a href="https://skillance.cloud/dashboard/freelancer/" class="btn btn-warning dash-action-btn px-3 py-2 rounded-pill text-navy shadow-sm" style="background-color: #fca311 !important; color: #071a35 !important;">
+                            <i class="fa-solid fa-briefcase me-1"></i> Bursa Freelance <i class="fa-solid fa-chevron-right small ms-1"></i>
                         </a>
                         <?php if ($isLoggedIn): ?>
-                            <a href="auth/logout.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
+                            <a href="auth/logout.php" class="btn btn-outline-light btn-sm dash-action-btn rounded-pill px-3 py-2" title="Keluar">
                                 <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Keluar
-                            </a>
-                        <?php else: ?>
-                            <a href="login.php" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2">
-                                <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login Akun
                             </a>
                         <?php endif; ?>
                     </div>
@@ -498,7 +564,7 @@ $seoBreadcrumbs = [
     </header>
 
     <!-- MAIN DASHBOARD CONTENT -->
-    <main class="container py-4">
+    <main class="container-fluid px-3 px-xl-4 py-4">
 
         <!-- METRIC KPI ROW -->
         <div class="row g-3 mb-4">
@@ -539,7 +605,7 @@ $seoBreadcrumbs = [
                     </div>
                     <div class="text-muted small fw-semibold">Koleksi Kit Proyek</div>
                     <div class="fs-3 fw-bold text-navy font-heading"><?= count($downloadedKits) ?> <span class="fs-6 text-muted fw-normal">E-Book</span></div>
-                    <small class="text-danger fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-file-pdf me-1"></i> Source Code Siap Pakai</small>
+                    <small class="text-danger fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-file-pdf me-1"></i> Source Code & Sampel E-Book</small>
                 </div>
             </div>
 
@@ -549,8 +615,13 @@ $seoBreadcrumbs = [
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div class="text-muted small fw-semibold">Rata-rata Nilai Ujian</div>
-                    <div class="fs-3 fw-bold text-navy font-heading"><?= $avgScore ?>%</div>
-                    <small class="text-success fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-circle-check me-1"></i> Grade A (Sangat Baik)</small>
+                    <?php if ($hasExamTaken): ?>
+                        <div class="fs-3 fw-bold text-navy font-heading"><?= $avgScore ?>%</div>
+                        <small class="text-success fw-bold" style="font-size: 0.72rem;"><i class="fa-solid fa-circle-check me-1"></i> Grade <?= ($avgScore >= 85 ? 'A (Sangat Baik)' : ($avgScore >= 75 ? 'B (Baik)' : 'C (Cukup)')) ?></small>
+                    <?php else: ?>
+                        <div class="fs-3 fw-bold text-navy font-heading">-</div>
+                        <small class="text-muted fw-semibold" style="font-size: 0.72rem;"><i class="fa-regular fa-clock me-1"></i> Belum Mengikuti Ujian</small>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -775,12 +846,78 @@ $seoBreadcrumbs = [
                                         <?php endforeach; ?>
                                     </div>
                                 <?php else: ?>
-                                    <div class="text-center py-4">
-                                        <i class="fa-solid fa-book-open-reader fs-1 text-muted opacity-25 mb-2 d-block"></i>
-                                        <p class="text-muted small mb-3">Belum ada modul yang dicentang selesai. Buka tutorial koding gratis dan tandai pemahaman Anda.</p>
-                                        <a href="learn.php?c=html" class="btn btn-navy text-white btn-sm rounded-pill px-4" style="background: #0d2e5c;">
-                                            Mulai Belajar Materi HTML &raquo;
-                                        </a>
+                                    <div class="py-2">
+                                        <div class="text-center py-3 mb-3">
+                                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 54px; height: 54px;">
+                                                <i class="fa-solid fa-book-open-reader fs-4"></i>
+                                            </div>
+                                            <h6 class="fw-bold text-navy mb-1">Mulai Belajar Modul Koding Anda</h6>
+                                            <p class="text-muted small mx-auto mb-0" style="max-width: 520px; line-height: 1.6;">
+                                                Pilih materi sesuai kebutuhan matakuliah atau peminatan Anda. Selesaikan latihan dan tandai pemahaman untuk mendapatkan <strong>+50 XP</strong> per modul dan membuka sertifikasi kompetensi SKPI!
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <span class="text-muted small fw-bold text-uppercase d-block mb-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">
+                                                <i class="fa-solid fa-compass text-warning me-1"></i> Rekomendasi Jalur Matakuliah Mahasiswa:
+                                            </span>
+                                            <div class="row g-2">
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=html" class="quick-course-card">
+                                                        <i class="fa-brands fa-html5 text-warning fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">HTML5 & Web</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">Struktur & Semantik</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=javascript" class="quick-course-card">
+                                                        <i class="fa-brands fa-js text-warning fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">JavaScript</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">DOM & Logika Web</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=php" class="quick-course-card">
+                                                        <i class="fa-brands fa-php text-primary fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">PHP & MySQL</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">Backend & CRUD</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=python" class="quick-course-card">
+                                                        <i class="fa-brands fa-python text-info fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">Python</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">Algoritma & Data</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=sql" class="quick-course-card">
+                                                        <i class="fa-solid fa-database text-info fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">SQL Basis Data</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">Query & Relasi</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <a href="learn.php?c=flutter" class="quick-course-card">
+                                                        <i class="fa-solid fa-mobile-screen-button text-success fs-3"></i>
+                                                        <div>
+                                                            <strong class="d-block text-navy small">Flutter & Dart</strong>
+                                                            <small class="text-muted" style="font-size: 0.7rem;">Aplikasi Mobile</small>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </div>

@@ -16,13 +16,8 @@ if (empty($clientId)) {
 
 if (!empty($_GET['redirect'])) {
     $_SESSION['auth_redirect'] = $_GET['redirect'];
-}
-
-// Jika request dari Academy, alihkan langsung ke Academy Login mandiri untuk menghindari redirect_uri_mismatch
-if (($_GET['redirect'] ?? '') === 'academy' || ($_SESSION['auth_redirect'] ?? '') === 'academy' || strpos($_SERVER['HTTP_REFERER'] ?? '', 'academy') !== false) {
-    unset($_SESSION['auth_redirect']);
-    header("Location: https://academy.skillance.cloud/login.php?action=google");
-    exit();
+} elseif (!empty($_GET['ref'])) {
+    $_SESSION['auth_redirect'] = $_GET['ref'];
 }
 
 $state = bin2hex(random_bytes(16));

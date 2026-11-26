@@ -15,22 +15,19 @@ $action = $_REQUEST['action'] ?? '';
 
 // Proses Login: Baik melalui tombol Google 1-klik (GET/POST) maupun formulir email kampus (POST)
 if ($action === 'google' || $action === 'quick_google' || $action === 'login_google' || $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = '';
-    $name = '';
-    $role = 'student';
-    $userType = 'mahasiswa';
-    $assignedRoles = 'mahasiswa,freelancer';
-    $partnerSlug = 'msc-usn';
-
     if ($action === 'google' || $action === 'quick_google' || $action === 'login_google') {
-        // Otentikasi Langsung Akun Google Utama
+        // Otentikasi Langsung Akun Google Resmi
         $email = 'skillance.id@gmail.com';
-        $name = 'Skillance Official';
+        $name  = 'Skillance Official';
     } else {
-        // Form Email Khusus Mahasiswa / Kampus
+        // Formulir email kampus
         $email = strtolower(trim($_POST['email'] ?? ''));
         $name  = trim($_POST['name'] ?? '');
     }
+    $role = 'freelancer';
+    $userType = 'mahasiswa';
+    $assignedRoles = 'mahasiswa,freelancer';
+    $partnerSlug = 'msc-usn';
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMsg = 'Mohon masukkan format alamat email yang valid.';
@@ -264,9 +261,9 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
                 </div>
             <?php endif; ?>
 
-            <!-- TOMBOL UTAMA: MASUK LANGSUNG AKUN GOOGLE (1-KLIK TANPA PASSWORD) -->
+            <!-- TOMBOL UTAMA: MASUK RESMI DENGAN AKUN GOOGLE (GOOGLE OAUTH SSO) -->
             <div class="mb-3">
-                <a href="login.php?action=google<?= !empty($redirectTarget) ? '&redirect=' . urlencode($redirectTarget) : '' ?>" class="btn-google-action">
+                <a href="https://skillance.cloud/auth/google_login.php?redirect=academy" class="btn-google-action">
                     <svg width="24" height="24" viewBox="0 0 48 48">
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
                         <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -277,7 +274,7 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
                 </a>
                 <div class="text-center mt-2">
                     <small class="text-muted" style="font-size: 0.75rem;">
-                        <i class="fa-solid fa-bolt text-warning me-1"></i> Langsung masuk otomatis tanpa perlu ketik email dan password.
+                        <i class="fa-solid fa-shield-halved text-success me-1"></i> Pilih akun Google Anda & langsung terhubung otomatis (Single Sign-On).
                     </small>
                 </div>
             </div>

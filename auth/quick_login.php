@@ -8,7 +8,7 @@ $redirectParam = $_GET['redirect'] ?? ($_SESSION['auth_redirect'] ?? '');
 if ($userType === 'google' || $userType === 'skillance' || $userType === 'skillance_official') {
     $email = 'skillance.id@gmail.com';
     $name = 'Skillance Official';
-    $role = 'student';
+    $role = 'freelancer';
     $uType = 'mahasiswa';
     $assignedRoles = 'mahasiswa,freelancer';
     $partnerSlug = 'msc-usn';
@@ -73,7 +73,7 @@ if ($userType === 'mahasiswa' || $userType === 'student' || $userType === 'siswa
     // Kredensial Siswa/Mahasiswa Skillance Academy
     $email = 'rian@usn.ac.id';
     $name = 'Muhammad Rian Pratama';
-    $role = 'student';
+    $role = 'freelancer';
     $uType = 'mahasiswa';
     $assignedRoles = 'mahasiswa,freelancer';
     $partnerSlug = 'msc-usn';

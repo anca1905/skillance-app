@@ -153,7 +153,7 @@ if (!empty($_SESSION['auth_redirect'])) {
         $ssoStmt->bind_param("sis", $token, $userId, $expiresAt);
         $ssoStmt->execute();
         $ssoStmt->close();
-        header("Location: https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token));
+        header("Location: https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token) . "&target=my-learning.php");
         exit();
     }
 
