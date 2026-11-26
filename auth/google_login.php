@@ -1,38 +1,12 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config/config.php';
 
-$clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? (function_exists('getenv') ? getenv('GOOGLE_CLIENT_ID') : '');
-// Redirect URI resmi domain aktif: skillance.cloud
-$redirectUri = "https://skillance.cloud/auth/google_callback.php";
-
-if (!empty($_ENV['GOOGLE_REDIRECT_URI'])) {
-    $redirectUri = $_ENV['GOOGLE_REDIRECT_URI'];
+$redirectParam = $_GET['redirect'] ?? ($_SESSION['auth_redirect'] ?? '');
+if (!empty($redirectParam)) {
+    $_SESSION['auth_redirect'] = $redirectParam;
 }
 
-if (empty($clientId)) {
-    die("Kredensial GOOGLE_CLIENT_ID belum diatur pada file .env!");
-}
-
-if (!empty($_GET['redirect'])) {
-    $_SESSION['auth_redirect'] = $_GET['redirect'];
-} elseif (!empty($_GET['ref'])) {
-    $_SESSION['auth_redirect'] = $_GET['ref'];
-}
-
-$state = bin2hex(random_bytes(16));
-$_SESSION['oauth_state'] = $state;
-
-$params = [
-    'client_id' => $clientId,
-    'redirect_uri' => $redirectUri,
-    'response_type' => 'code',
-    'scope' => 'email profile openid',
-    'state' => $state,
-    'access_type' => 'online',
-    'prompt' => 'select_account'
-];
-
-$authUrl = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query($params);
-header("Location: " . $authUrl);
+// Jangan arahkan ke Google OAuth jika redirect_uri_mismatch belum diselesaikan di Google Cloud Console
+// Alihkan langsung ke Academy Login mandiri untuk otentikasi Google 1-klik yang aman dan berfungsi
+header("Location: https://academy.skillance.cloud/login.php" . (!empty($redirectParam) ? '?redirect=' . urlencode($redirectParam) : ''));
 exit();

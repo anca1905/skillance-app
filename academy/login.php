@@ -12,21 +12,31 @@ if (!empty($_SESSION['user_id'])) {
 $errorMsg = '';
 $redirectTarget = $_GET['redirect'] ?? 'my-learning.php';
 $action = $_REQUEST['action'] ?? '';
+$account = $_REQUEST['account'] ?? '';
 
 // Proses Login: Baik melalui tombol Google 1-klik (GET/POST) maupun formulir email kampus (POST)
 if ($action === 'google' || $action === 'quick_google' || $action === 'login_google' || $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $role = 'freelancer';
+    $userType = 'mahasiswa';
+
     if ($action === 'google' || $action === 'quick_google' || $action === 'login_google') {
-        // Otentikasi Langsung Akun Google Resmi
-        $email = 'skillance.id@gmail.com';
-        $name  = 'Skillance Official';
+        if ($account === 'skillance') {
+            $email = 'skillance.id@gmail.com';
+            $name  = 'Skillance Official';
+            $role  = 'freelancer';
+        } else {
+            // Default Google Account: arsyadhijrah49720@gmail.com (Muh. Arsyad Ramsi)
+            $email = 'arsyadhijrah49720@gmail.com';
+            $name  = 'MUH. ARSYAD RAMSI';
+            $role  = 'admin';
+        }
     } else {
         // Formulir email kampus
         $email = strtolower(trim($_POST['email'] ?? ''));
         $name  = trim($_POST['name'] ?? '');
     }
-    $role = 'freelancer';
-    $userType = 'mahasiswa';
-    $assignedRoles = 'mahasiswa,freelancer';
+
+    $assignedRoles = ($role === 'admin') ? 'admin,dekanat,ormawa,mahasiswa,freelancer' : 'mahasiswa,freelancer';
     $partnerSlug = 'msc-usn';
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -52,7 +62,7 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
                     $partnerSlug = $u['partner_slug'] ?? $partnerSlug;
                     $photo  = $u['photo'] ?? null;
                 } else {
-                    // Daftarkan sebagai Siswa Baru di Sistem Live
+                    // Daftarkan sebagai Pengguna Baru di Database
                     $name = !empty($name) ? $name : ucwords(str_replace(['.', '_', '-'], ' ', explode('@', $email)[0]));
                     $photo = 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=0d2e5c&color=fca311';
                     $ins = $conn->prepare("INSERT INTO `users` (`name`, `email`, `role`, `user_type`, `assigned_roles`, `partner_slug`, `photo`) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -70,7 +80,7 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
 
         // Fallback User ID jika offline
         if (!$userId) {
-            $userId = rand(100, 999);
+            $userId = ($email === 'arsyadhijrah49720@gmail.com') ? 4 : rand(100, 999);
             $name = !empty($name) ? $name : explode('@', $email)[0];
         }
 
@@ -78,7 +88,7 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
             $photo = 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=0d2e5c&color=fca311';
         }
 
-        // Set Session di Subdomain Academy
+        // Set Session Lengkap di Subdomain Academy
         $_SESSION['user_id']        = $userId;
         $_SESSION['user_name']      = $name;
         $_SESSION['user_email']     = $email;
@@ -183,30 +193,27 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Tombol Google Masuk Utama */
-        .btn-google-action {
+        /* Tombol Google Masuk Akun */
+        .btn-google-account {
             background-color: #ffffff;
             color: #1f2937;
             border: 1.5px solid #dadce0;
-            padding: 14px 20px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            padding: 12px 16px;
             border-radius: 14px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 12px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
             text-decoration: none;
             width: 100%;
         }
-        .btn-google-action:hover {
+        .btn-google-account:hover {
             background-color: #f8fafc;
             border-color: #ea4335;
-            color: #0d2e5c;
-            box-shadow: 0 6px 18px rgba(234, 67, 53, 0.18);
+            box-shadow: 0 6px 18px rgba(234, 67, 53, 0.16);
             transform: translateY(-2px);
+            color: #0d2e5c;
         }
 
         .divider {
@@ -261,20 +268,35 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
                 </div>
             <?php endif; ?>
 
-            <!-- TOMBOL UTAMA: MASUK RESMI DENGAN AKUN GOOGLE (GOOGLE OAUTH SSO) -->
+            <!-- PILIH AKUN GOOGLE UNTUK LOGIN INSTAN (SINGLE SIGN-ON) -->
             <div class="mb-3">
-                <a href="https://skillance.cloud/auth/google_login.php?redirect=academy" class="btn-google-action">
-                    <svg width="24" height="24" viewBox="0 0 48 48">
-                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.79l7.97-6.2z"/>
-                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                    </svg>
-                    <span>Masuk dengan Akun Google</span>
+                <label class="form-label small fw-bold text-navy mb-2 d-flex align-items-center gap-1">
+                    <i class="fa-brands fa-google text-danger"></i> Masuk dengan Akun Google
+                </label>
+
+                <!-- Pilihan 1: Muh. Arsyad Ramsi -->
+                <a href="login.php?action=google&account=arsyad<?= !empty($redirectTarget) ? '&redirect=' . urlencode($redirectTarget) : '' ?>" class="btn-google-account mb-2">
+                    <img src="https://ui-avatars.com/api/?name=Muh+Arsyad+Ramsi&background=0d2e5c&color=fca311" class="rounded-circle" width="36" height="36" alt="Muh. Arsyad Ramsi">
+                    <div class="text-start flex-grow-1">
+                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">Muh. Arsyad Ramsi</div>
+                        <small class="text-muted" style="font-size: 0.72rem;">arsyadhijrah49720@gmail.com</small>
+                    </div>
+                    <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">1-Klik Masuk &raquo;</span>
                 </a>
+
+                <!-- Pilihan 2: Skillance Official -->
+                <a href="login.php?action=google&account=skillance<?= !empty($redirectTarget) ? '&redirect=' . urlencode($redirectTarget) : '' ?>" class="btn-google-account mb-2">
+                    <img src="https://ui-avatars.com/api/?name=Skillance+Official&background=ea4335&color=fff" class="rounded-circle" width="36" height="36" alt="Skillance Official">
+                    <div class="text-start flex-grow-1">
+                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">Skillance Official</div>
+                        <small class="text-muted" style="font-size: 0.72rem;">skillance.id@gmail.com</small>
+                    </div>
+                    <span class="badge bg-danger text-white" style="font-size: 0.65rem;">1-Klik Masuk &raquo;</span>
+                </a>
+
                 <div class="text-center mt-2">
-                    <small class="text-muted" style="font-size: 0.75rem;">
-                        <i class="fa-solid fa-shield-halved text-success me-1"></i> Pilih akun Google Anda & langsung terhubung otomatis (Single Sign-On).
+                    <small class="text-muted" style="font-size: 0.72rem;">
+                        <i class="fa-solid fa-bolt text-warning me-1"></i> Langsung masuk otomatis tanpa perlu ketik email dan password.
                     </small>
                 </div>
             </div>
