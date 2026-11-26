@@ -20,9 +20,9 @@ if (!function_exists('getPartnersList')) {
                 'valid_until' => '2027-11-16',
                 'access_pin' => 'MSC2026',
                 'contact_person' => 'Ketua Umum UKM MSC & Wadek Kemahasiswaan FTI',
-                'logo_faculty' => '../assets/img/logo-usn.png',
+                'logo_faculty' => '', // Dikosongkan: FTI belum memiliki logo fakultas resmi terpisah
                 'logo_industry' => '../assets/img/logo_skillance_official.png',
-                'logo_org' => '../assets/img/logo-msc.svg',
+                'logo_org' => '../assets/img/logo-msc.png',
                 'stamp_industry' => '../assets/img/stempel_skillance_navy.png',
                 'signature_industry' => '../assets/img/ttd-muh-arsyad-ramsi.png',
                 'signers' => [

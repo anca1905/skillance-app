@@ -262,7 +262,9 @@ $seoBreadcrumbs = [
                 <!-- FTI USN -->
                 <div class="col-md-4 col-sm-6">
                     <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column align-items-center justify-content-center">
-                        <img src="../assets/img/logo-usn.png" alt="Logo FTI USN Kolaka" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
+                        <div class="rounded-circle bg-white shadow-xs border d-flex align-items-center justify-content-center text-primary mb-2" style="width: 58px; height: 58px; font-size: 1.5rem;">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
                         <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem;">Fakultas Teknologi Informasi (FTI)</h6>
                         <span class="text-muted small" style="font-size: 0.75rem;">Universitas Sembilanbelas November Kolaka</span>
                         <span class="badge bg-primary-subtle text-primary border border-primary-subtle mt-2" style="font-size: 0.65rem;">Mitra Akademik & SKPI</span>
@@ -272,7 +274,7 @@ $seoBreadcrumbs = [
                 <!-- UKM MSC -->
                 <div class="col-md-4 col-sm-6">
                     <div class="p-3 rounded-3 border bg-light h-100 d-flex flex-column align-items-center justify-content-center">
-                        <img src="../assets/img/logo-msc.svg" alt="Logo UKM MSC" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
+                        <img src="../assets/img/logo-msc.png" alt="Logo UKM MSC" class="img-fluid mb-2" style="max-height: 60px; object-fit: contain;">
                         <h6 class="fw-bold text-navy mb-1" style="font-size: 0.95rem;">UKM MSC USN Kolaka</h6>
                         <span class="text-muted small" style="font-size: 0.75rem;">Multimedia & Software Community</span>
                         <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle mt-2" style="font-size: 0.65rem;">Mitra Workshop & Ormawa</span>

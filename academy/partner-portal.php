@@ -165,12 +165,14 @@ $seoBreadcrumbs = [
     <!-- CO-BRANDING HEADER -->
     <header class="cobrand-hero">
         <div class="container position-relative">
-            <!-- 3 PARTNER LOGOS EMBLEM -->
+            <!-- PARTNER LOGOS EMBLEM -->
             <div class="d-flex flex-wrap align-items-center justify-content-center gap-3 mb-4">
+                <?php if (!empty($partner['logo_faculty'])): ?>
                 <div class="partner-logo-badge" title="<?= htmlspecialchars($partner['faculty']) ?>">
                     <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas">
                 </div>
                 <div class="text-warning fs-4 fw-bold">✕</div>
+                <?php endif; ?>
                 <div class="partner-logo-badge" title="PT Skillance Digital Indonesia">
                     <img src="<?= htmlspecialchars($partner['logo_industry']) ?>" alt="Logo PT Skillance">
                 </div>

@@ -174,7 +174,11 @@ $seoBreadcrumbs = [
         <div class="container">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                 <div class="d-flex align-items-center gap-3">
-                    <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 42px; width: auto;" class="rounded border p-1 bg-white">
+                    <?php if (!empty($partner['logo_faculty'])): ?>
+                        <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 42px; width: auto;" class="rounded border p-1 bg-white">
+                    <?php else: ?>
+                        <img src="<?= htmlspecialchars($partner['logo_org']) ?>" alt="Logo Mitra" style="max-height: 42px; width: auto;" class="rounded border p-1 bg-white">
+                    <?php endif; ?>
                     <div>
                         <div class="d-flex align-items-center gap-2">
                             <h5 class="fw-bold text-navy mb-0 font-heading"><?= htmlspecialchars($partner['name']) ?></h5>
@@ -488,7 +492,11 @@ $seoBreadcrumbs = [
                             <!-- KOP RESMI LAPORAN -->
                             <div class="border-bottom border-3 border-dark pb-3 mb-4 text-center">
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 55px; width: auto;">
+                                    <?php if (!empty($partner['logo_faculty'])): ?>
+                                        <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 55px; width: auto;">
+                                    <?php else: ?>
+                                        <img src="<?= htmlspecialchars($partner['logo_org']) ?>" alt="Logo Mitra" style="max-height: 52px; width: auto;">
+                                    <?php endif; ?>
                                     <div class="flex-grow-1 px-3">
                                         <h5 class="fw-bold mb-0 text-uppercase" style="letter-spacing: 1px; color: #000;"><?= htmlspecialchars($partner['institution']) ?></h5>
                                         <h6 class="fw-bold mb-0 text-uppercase text-dark"><?= htmlspecialchars($partner['faculty']) ?></h6>

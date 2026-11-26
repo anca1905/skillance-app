@@ -453,11 +453,10 @@ $isAuthorized = (
   <div class="paper cover-page">
     <div class="cover-inner">
       
-      <!-- 3 LOGO LEMBAGA -->
+      <!-- LOGO MITRA RESMI -->
       <div class="cover-header-logos">
-        <img src="../../assets/img/logo-usn.png" alt="Logo USN Kolaka" title="Universitas Sembilanbelas November Kolaka">
-        <img src="../../assets/img/logo-msc.svg" alt="Logo UKM MSC" title="UKM Multimedia Study Club">
         <img src="../../assets/img/logo_skillance_official.png" alt="Logo PT Skillance" title="PT Skillance Digital Indonesia">
+        <img src="../../assets/img/logo-msc.png" alt="Logo UKM MSC" title="UKM Multimedia Study Club">
       </div>
 
       <!-- TITLE CONTENT -->

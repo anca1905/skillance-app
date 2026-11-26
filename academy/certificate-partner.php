@@ -312,9 +312,15 @@ $seoKeywords = 'sertifikat tripartit, skpi usn kolaka, skillance academy, ukm ms
                 <div class="cert-border-inner">
                     <!-- KOP 3 LOGO -->
                     <div class="d-flex justify-content-between align-items-center pb-2 border-bottom border-2">
-                        <!-- LOGO FAKULTAS -->
+                        <!-- IDENTITAS FAKULTAS -->
                         <div class="text-start" style="width: 28%;">
-                            <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 46px; max-width: 140px; object-fit: contain;">
+                            <?php if (!empty($partner['logo_faculty'])): ?>
+                                <img src="<?= htmlspecialchars($partner['logo_faculty']) ?>" alt="Logo Fakultas" style="max-height: 46px; max-width: 140px; object-fit: contain;">
+                            <?php else: ?>
+                                <div class="d-inline-flex align-items-center justify-content-center text-primary" style="height: 38px;">
+                                    <i class="fa-solid fa-graduation-cap fs-3"></i>
+                                </div>
+                            <?php endif; ?>
                             <div class="fw-bold text-dark text-uppercase mt-1" style="font-size: 0.68rem; letter-spacing: 0.5px; line-height: 1.2;">
                                 <?= htmlspecialchars($partner['faculty']) ?>
                             </div>
