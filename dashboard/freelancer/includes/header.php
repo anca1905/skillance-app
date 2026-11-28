@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
-if (($_SESSION['user_role'] ?? '') === 'bendahara') {
+if (($_SESSION['user_role'] ?? '') === 'bendahara' || ($_SESSION['user_role'] ?? '') === 'keuangan') {
     header("Location: ../finance/index.php");
     exit();
 }

@@ -42,19 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         const photoUrl = data.user.photo ? (data.user.photo.startsWith('http') ? data.user.photo : `../assets/img/profile/${data.user.photo}`) : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user.name)}&background=0D2E5C&color=fff`;
                         localStorage.setItem('userPhoto', photoUrl);
 
-                        // Redirect ke Dashboard atau target role/SSO
+                        // Redirect ke Dashboard berdasarkan 3 peran utama (admin, keuangan, pengguna)
                         if (data.redirect) {
                             window.location.href = data.redirect;
-                        } else if (data.user.role === 'investor') {
-                            window.location.href = '../dashboard/investor.php';
-                        } else if (data.user.role === 'freelancer') {
-                            window.location.href = '../dashboard/freelancer/index.php';
-                        } else if (data.user.role === 'bendahara') {
+                        } else if (data.user.role === 'admin') {
+                            window.location.href = '../dashboard/index.php';
+                        } else if (data.user.role === 'keuangan' || data.user.role === 'bendahara') {
                             window.location.href = '../dashboard/finance/index.php';
-                        } else if (data.user.role === 'staff') {
-                            window.location.href = '../dashboard/index.php';
                         } else {
-                            window.location.href = '../dashboard/index.php';
+                            window.location.href = '../dashboard/freelancer/index.php';
                         }
                     });
                 } else {

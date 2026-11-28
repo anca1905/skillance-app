@@ -4,7 +4,8 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../../auth/index.php");
     exit();
 }
-if (($_SESSION['user_role'] ?? '') === 'freelancer') {
+$checkRole = strtolower(trim($_SESSION['user_role'] ?? 'pengguna'));
+if (!in_array($checkRole, ['admin', 'keuangan', 'bendahara'])) {
     header("Location: ../freelancer/index.php");
     exit();
 }

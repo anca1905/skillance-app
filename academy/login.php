@@ -2,140 +2,128 @@
 session_start();
 require_once __DIR__ . '/config/config.php';
 
-// Jika sudah login di Academy, langsung arahkan ke my-learning
+// Jika sudah login di Academy, langsung arahkan ke my-learning atau dashboard sesuai role
 if (!empty($_SESSION['user_id'])) {
-    $target = $_GET['redirect'] ?? 'my-learning.php';
-    header("Location: " . $target);
-    exit();
+    $currentRole = strtolower(trim($_SESSION['user_role'] ?? 'pengguna'));
+    if ($currentRole === 'admin') {
+        header("Location: https://skillance.cloud/dashboard/index.php");
+        exit();
+    } elseif ($currentRole === 'keuangan' || $currentRole === 'bendahara') {
+        header("Location: https://skillance.cloud/dashboard/finance/index.php");
+        exit();
+    } else {
+        $target = $_GET['redirect'] ?? 'my-learning.php';
+        header("Location: " . $target);
+        exit();
+    }
 }
 
 $errorMsg = '';
 $redirectTarget = $_GET['redirect'] ?? 'my-learning.php';
-$action = $_REQUEST['action'] ?? '';
-$account = $_REQUEST['account'] ?? '';
 
-// Proses Login: Baik melalui tombol Google 1-klik (GET/POST) maupun formulir email kampus (POST)
-if ($action === 'google' || $action === 'quick_google' || $action === 'login_google' || $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $role = 'freelancer';
-    $userType = 'mahasiswa';
-
-    if ($action === 'google' || $action === 'quick_google' || $action === 'login_google') {
-        if ($account === 'skillance') {
-            $email = 'skillance.id@gmail.com';
-            $name  = 'Skillance Official';
-            $role  = 'freelancer';
-        } else {
-            // Default Google Account: arsyadhijrah49720@gmail.com (Muh. Arsyad Ramsi)
-            $email = 'arsyadhijrah49720@gmail.com';
-            $name  = 'MUH. ARSYAD RAMSI';
-            $role  = 'admin';
-        }
-    } else {
-        // Formulir email kampus
-        $email = strtolower(trim($_POST['email'] ?? ''));
-        $name  = trim($_POST['name'] ?? '');
-    }
-
-    $assignedRoles = ($role === 'admin') ? 'admin,dekanat,ormawa,mahasiswa,freelancer' : 'mahasiswa,freelancer';
-    $partnerSlug = 'msc-usn';
+// Proses Login dengan Email & Password
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = strtolower(trim($_POST['email'] ?? ''));
+    $password = $_POST['password'] ?? '';
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMsg = 'Mohon masukkan format alamat email yang valid.';
+    } elseif (empty($password)) {
+        $errorMsg = 'Mohon masukkan kata sandi / password akun Anda.';
     } else {
-        $userId = null;
-        $photo = null;
+        $user = null;
 
-        // Cek dan daftarkan di Database jika koneksi DB aktif
+        // Cek pengguna di Database
         if (isset($conn) && $conn instanceof mysqli && !$conn->connect_error) {
-            $stmt = $conn->prepare("SELECT id, name, email, role, user_type, assigned_roles, partner_slug, photo FROM `users` WHERE `email` = ? LIMIT 1");
+            $stmt = $conn->prepare("SELECT id, name, email, password, role, user_type, assigned_roles, partner_slug, photo FROM `users` WHERE `email` = ? LIMIT 1");
             if ($stmt) {
                 $stmt->bind_param("s", $email);
                 $stmt->execute();
                 $res = $stmt->get_result();
                 if ($res && $res->num_rows > 0) {
-                    $u = $res->fetch_assoc();
-                    $userId = (int)$u['id'];
-                    $name   = !empty($u['name']) ? $u['name'] : (!empty($name) ? $name : explode('@', $email)[0]);
-                    $role   = $u['role'] ?? $role;
-                    $userType = $u['user_type'] ?? $userType;
-                    $assignedRoles = $u['assigned_roles'] ?? $assignedRoles;
-                    $partnerSlug = $u['partner_slug'] ?? $partnerSlug;
-                    $photo  = $u['photo'] ?? null;
-                } else {
-                    // Daftarkan sebagai Pengguna Baru di Database
-                    $name = !empty($name) ? $name : ucwords(str_replace(['.', '_', '-'], ' ', explode('@', $email)[0]));
-                    $photo = 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=0d2e5c&color=fca311';
-                    $ins = $conn->prepare("INSERT INTO `users` (`name`, `email`, `role`, `user_type`, `assigned_roles`, `partner_slug`, `photo`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    if ($ins) {
-                        $ins->bind_param("sssssss", $name, $email, $role, $userType, $assignedRoles, $partnerSlug, $photo);
-                        if ($ins->execute()) {
-                            $userId = $ins->insert_id;
-                        }
-                        $ins->close();
-                    }
+                    $user = $res->fetch_assoc();
                 }
                 $stmt->close();
             }
         }
 
-        // Fallback User ID jika offline
-        if (!$userId) {
-            $userId = ($email === 'arsyadhijrah49720@gmail.com') ? 4 : rand(100, 999);
-            $name = !empty($name) ? $name : explode('@', $email)[0];
-        }
+        if ($user && !empty($user['password']) && password_verify($password, $user['password'])) {
+            // Normalisasi 3 Peran: admin, keuangan, pengguna
+            $rawRole = strtolower(trim($user['role'] ?? 'pengguna'));
+            if ($rawRole === 'admin') {
+                $role = 'admin';
+            } elseif ($rawRole === 'keuangan' || $rawRole === 'bendahara') {
+                $role = 'keuangan';
+            } else {
+                $role = 'pengguna';
+            }
 
-        if (empty($photo)) {
-            $photo = 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=0d2e5c&color=fca311';
-        }
+            $userId = (int)$user['id'];
+            $name = $user['name'];
+            $userType = $user['user_type'] ?? 'mahasiswa';
+            $assignedRoles = $user['assigned_roles'] ?? ($role === 'admin' ? 'admin,keuangan,pengguna' : 'pengguna,mahasiswa,freelancer');
+            $partnerSlug = $user['partner_slug'] ?? 'msc-usn';
+            $photo = !empty($user['photo']) ? $user['photo'] : 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=0d2e5c&color=fca311';
 
-        // Set Session Lengkap di Subdomain Academy
-        $_SESSION['user_id']        = $userId;
-        $_SESSION['user_name']      = $name;
-        $_SESSION['user_email']     = $email;
-        $_SESSION['user_role']      = $role;
-        $_SESSION['user_photo']     = $photo;
-        $_SESSION['user_type']      = $userType;
-        $_SESSION['assigned_roles'] = $assignedRoles;
-        $_SESSION['partner_slug']   = $partnerSlug;
+            // Set Session di Subdomain Academy
+            $_SESSION['user_id']        = $userId;
+            $_SESSION['user_name']      = $name;
+            $_SESSION['user_email']     = $email;
+            $_SESSION['user_role']      = $role;
+            $_SESSION['user_photo']     = $photo;
+            $_SESSION['user_type']      = $userType;
+            $_SESSION['assigned_roles'] = $assignedRoles;
+            $_SESSION['partner_slug']   = $partnerSlug;
 
-        $_SESSION['academy_user_id']    = $userId;
-        $_SESSION['academy_user_name']  = $name;
-        $_SESSION['academy_user_email'] = $email;
-        $_SESSION['academy_user_role']  = $role;
-        $_SESSION['academy_user_photo'] = $photo;
-        $_SESSION['academy_user_type']  = $userType;
+            $_SESSION['academy_user_id']    = $userId;
+            $_SESSION['academy_user_name']  = $name;
+            $_SESSION['academy_user_email'] = $email;
+            $_SESSION['academy_user_role']  = $role;
+            $_SESSION['academy_user_photo'] = $photo;
+            $_SESSION['academy_user_type']  = $userType;
 
-        // Otomatis daftar enrollment track dasar jika DB aktif
-        if (isset($conn) && $conn instanceof mysqli && !$conn->connect_error) {
-            $trackCheck = $conn->prepare("SELECT id FROM `academy_enrollments` WHERE `user_id` = ? LIMIT 1");
-            if ($trackCheck) {
-                $trackCheck->bind_param("i", $userId);
-                $trackCheck->execute();
-                if ($trackCheck->get_result()->num_rows === 0) {
-                    $insTrack = $conn->prepare("INSERT INTO `academy_enrollments` (`user_id`, `track_id`, `progress_percent`, `status`) VALUES (?, 'web_frontend', 10, 'learning')");
-                    if ($insTrack) {
-                        $insTrack->bind_param("i", $userId);
-                        $insTrack->execute();
-                        $insTrack->close();
+            // Pastikan track dasar terdaftar
+            if (isset($conn) && $conn instanceof mysqli && !$conn->connect_error) {
+                $trackCheck = $conn->prepare("SELECT id FROM `academy_enrollments` WHERE `user_id` = ? LIMIT 1");
+                if ($trackCheck) {
+                    $trackCheck->bind_param("i", $userId);
+                    $trackCheck->execute();
+                    if ($trackCheck->get_result()->num_rows === 0) {
+                        $insTrack = $conn->prepare("INSERT INTO `academy_enrollments` (`user_id`, `track_id`, `progress_percent`, `status`) VALUES (?, 'web_frontend', 10, 'learning')");
+                        if ($insTrack) {
+                            $insTrack->bind_param("i", $userId);
+                            $insTrack->execute();
+                            $insTrack->close();
+                        }
+                    }
+                    $trackCheck->close();
+                }
+            }
+
+            // Redirect sesuai peran
+            if ($role === 'admin') {
+                header("Location: https://skillance.cloud/dashboard/index.php");
+                exit();
+            } elseif ($role === 'keuangan') {
+                header("Location: https://skillance.cloud/dashboard/finance/index.php");
+                exit();
+            } else {
+                $validTargets = ['my-learning.php', 'index.php', 'partner-portal.php', 'exam.php', 'bootcamp.php'];
+                $cleanTarget = 'my-learning.php';
+                if (!empty($redirectTarget)) {
+                    $base = basename(parse_url($redirectTarget, PHP_URL_PATH));
+                    if (in_array($base, $validTargets)) {
+                        $cleanTarget = ltrim($redirectTarget, '/');
                     }
                 }
-                $trackCheck->close();
+                $sep = (strpos($cleanTarget, '?') !== false) ? '&' : '?';
+                header("Location: " . $cleanTarget . $sep . "logged_in=1");
+                exit();
             }
-        }
 
-        // Arahkan ke halaman tujuan
-        $validTargets = ['my-learning.php', 'index.php', 'partner-portal.php', 'exam.php', 'bootcamp.php'];
-        $cleanTarget = 'my-learning.php';
-        if (!empty($redirectTarget)) {
-            $base = basename(parse_url($redirectTarget, PHP_URL_PATH));
-            if (in_array($base, $validTargets)) {
-                $cleanTarget = ltrim($redirectTarget, '/');
-            }
+        } else {
+            $errorMsg = 'Email atau password yang Anda masukkan tidak sesuai.';
         }
-
-        $sep = (strpos($cleanTarget, '?') !== false) ? '&' : '?';
-        header("Location: " . $cleanTarget . $sep . "logged_in=1");
-        exit();
     }
 }
 ?>
@@ -144,7 +132,7 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk Kelas & Dasbor Siswa | Skillance Academy Indonesia</title>
+    <title>Masuk Akun | Skillance Academy Indonesia</title>
 
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -193,59 +181,78 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Tombol Google Masuk Akun */
-        .btn-google-account {
-            background-color: #ffffff;
-            color: #1f2937;
-            border: 1.5px solid #dadce0;
-            padding: 12px 16px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-            text-decoration: none;
-            width: 100%;
+        .form-control-custom {
+            height: 46px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            padding: 10px 14px 10px 40px;
+            font-size: 0.92rem;
+            font-weight: 500;
         }
-        .btn-google-account:hover {
-            background-color: #f8fafc;
-            border-color: #ea4335;
-            box-shadow: 0 6px 18px rgba(234, 67, 53, 0.16);
-            transform: translateY(-2px);
-            color: #0d2e5c;
+        .form-control-custom:focus {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(13, 46, 92, 0.12);
         }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 1.5rem 0 1rem;
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .input-group-custom .icon-left {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #94a3b8;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+            z-index: 5;
         }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #e2e8f0;
+        .input-group-custom .btn-toggle-eye {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            z-index: 5;
+            padding: 4px;
         }
-        .divider:not(:empty)::before { margin-right: .75em; }
-        .divider:not(:empty)::after { margin-left: .75em; }
 
         .btn-navy {
             background-color: var(--navy);
             color: #ffffff;
             border: none;
-            padding: 10px;
+            padding: 11px;
             font-weight: 700;
             border-radius: 10px;
             transition: all 0.25s ease;
+            width: 100%;
+            letter-spacing: 0.3px;
         }
         .btn-navy:hover {
             background-color: var(--navy-dark);
             color: var(--gold);
+            transform: translateY(-1px);
+        }
+        .btn-register-link {
+            border: 1.5px solid #e2e8f0;
+            background: #f8fafc;
+            color: var(--navy);
+            font-weight: 700;
+            padding: 10px;
+            border-radius: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.88rem;
+        }
+        .btn-register-link:hover {
+            background: #ffffff;
+            border-color: var(--navy);
+            color: var(--navy);
         }
     </style>
 </head>
@@ -263,72 +270,47 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
         <div class="p-4 pt-2">
 
             <?php if (!empty($errorMsg)): ?>
-                <div class="alert alert-danger py-2 small rounded-3 mb-3">
+                <div class="alert alert-danger py-2 px-3 small rounded-3 mb-3">
                     <i class="fa-solid fa-circle-exclamation me-1"></i> <?= htmlspecialchars($errorMsg) ?>
                 </div>
             <?php endif; ?>
 
-            <!-- PILIH AKUN GOOGLE UNTUK LOGIN INSTAN (SINGLE SIGN-ON) -->
-            <div class="mb-3">
-                <label class="form-label small fw-bold text-navy mb-2 d-flex align-items-center gap-1">
-                    <i class="fa-brands fa-google text-danger"></i> Masuk dengan Akun Google
-                </label>
-
-                <!-- Pilihan 1: Muh. Arsyad Ramsi -->
-                <a href="login.php?action=google&account=arsyad<?= !empty($redirectTarget) ? '&redirect=' . urlencode($redirectTarget) : '' ?>" class="btn-google-account mb-2">
-                    <img src="https://ui-avatars.com/api/?name=Muh+Arsyad+Ramsi&background=0d2e5c&color=fca311" class="rounded-circle" width="36" height="36" alt="Muh. Arsyad Ramsi">
-                    <div class="text-start flex-grow-1">
-                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">Muh. Arsyad Ramsi</div>
-                        <small class="text-muted" style="font-size: 0.72rem;">arsyadhijrah49720@gmail.com</small>
-                    </div>
-                    <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">1-Klik Masuk &raquo;</span>
-                </a>
-
-                <!-- Pilihan 2: Skillance Official -->
-                <a href="login.php?action=google&account=skillance<?= !empty($redirectTarget) ? '&redirect=' . urlencode($redirectTarget) : '' ?>" class="btn-google-account mb-2">
-                    <img src="https://ui-avatars.com/api/?name=Skillance+Official&background=ea4335&color=fff" class="rounded-circle" width="36" height="36" alt="Skillance Official">
-                    <div class="text-start flex-grow-1">
-                        <div class="fw-bold text-dark" style="font-size: 0.88rem;">Skillance Official</div>
-                        <small class="text-muted" style="font-size: 0.72rem;">skillance.id@gmail.com</small>
-                    </div>
-                    <span class="badge bg-danger text-white" style="font-size: 0.65rem;">1-Klik Masuk &raquo;</span>
-                </a>
-
-                <div class="text-center mt-2">
-                    <small class="text-muted" style="font-size: 0.72rem;">
-                        <i class="fa-solid fa-bolt text-warning me-1"></i> Langsung masuk otomatis tanpa perlu ketik email dan password.
-                    </small>
+            <!-- FORM LOGIN EMAIL & PASSWORD -->
+            <form action="login.php<?= !empty($redirectTarget) ? '?redirect=' . urlencode($redirectTarget) : '' ?>" method="POST">
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-envelope icon-left"></i>
+                    <input type="email" name="email" class="form-control form-control-custom" placeholder="Alamat Email Akun" required autofocus value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
                 </div>
-            </div>
 
-            <div class="divider">ATAU GUNAKAN EMAIL KAMPUS / MAHASISWA</div>
-
-            <!-- TOGGLE COLLAPSIBLE EMAIL FORM -->
-            <div class="text-center mb-2">
-                <a class="text-decoration-none small fw-semibold text-navy" data-bs-toggle="collapse" href="#emailCollapse" role="button" aria-expanded="false" style="font-size: 0.80rem;">
-                    <i class="fa-solid fa-envelope me-1"></i> Masuk dengan Email Kampus / Institusi <i class="fa-solid fa-chevron-down ms-1 small"></i>
-                </a>
-            </div>
-
-            <div class="collapse" id="emailCollapse">
-                <form action="login.php<?= !empty($redirectTarget) ? '?redirect=' . urlencode($redirectTarget) : '' ?>" method="POST" class="bg-light p-3 rounded-3 border mt-2">
-                    <input type="hidden" name="action" value="login_email">
-
-                    <div class="mb-2">
-                        <label class="form-label small fw-bold text-navy mb-1">Email Mahasiswa</label>
-                        <input type="email" name="email" class="form-control form-control-sm rounded-2" placeholder="nim@student.usn.ac.id" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold text-navy mb-1">Nama Lengkap Mahasiswa</label>
-                        <input type="text" name="name" class="form-control form-control-sm rounded-2" placeholder="Nama untuk Sertifikat SKPI">
-                    </div>
-
-                    <button type="submit" class="btn btn-navy btn-sm w-100 shadow-sm">
-                        <i class="fa-solid fa-right-to-bracket me-1 text-warning"></i> Masuk dengan Email Kampus
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-lock icon-left"></i>
+                    <input type="password" name="password" id="passInput" class="form-control form-control-custom" placeholder="Password Akun" required>
+                    <button type="button" class="btn-toggle-eye" onclick="togglePass()">
+                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
                     </button>
-                </form>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                        <label class="form-check-label text-muted small" for="rememberMe">Ingat Saya</label>
+                    </div>
+                    <small class="text-muted"><i class="fa-solid fa-shield-halved text-success me-1"></i> Terenkripsi S-OS</small>
+                </div>
+
+                <button type="submit" class="btn-navy mb-3 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-to-bracket me-2 text-warning"></i> MASUK SEKARANG
+                </button>
+            </form>
+
+            <div class="text-center my-3">
+                <span class="text-muted small">Belum memiliki akun Skillance?</span>
             </div>
+
+            <!-- TOMBOL DAFTAR AKUN BARU -->
+            <a href="https://skillance.cloud/auth/index.php?ref=academy" class="btn-register-link">
+                <i class="fa-solid fa-user-plus me-1 text-primary"></i> Daftar Akun Baru Sekarang
+            </a>
 
             <div class="text-center mt-4 pt-2 border-top">
                 <a href="index.php" class="text-muted text-decoration-none small">
@@ -342,6 +324,20 @@ if ($action === 'google' || $action === 'quick_google' || $action === 'login_goo
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function togglePass() {
+        const input = document.getElementById('passInput');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+    </script>
 </body>
 </html>

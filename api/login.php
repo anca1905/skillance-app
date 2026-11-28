@@ -7,30 +7,44 @@ header("Access-Control-Allow-Methods: POST");
 
 require_once '../config/config.php';
 
-$data = json_decode(file_get_contents("php://input"));
+$raw = file_get_contents("php://input");
+$data = json_decode($raw);
+if (!$data && !empty($_POST)) {
+    $data = (object)$_POST;
+}
 
-if(!empty($data->email) && !empty($data->password)) {
+if (!empty($data->email) && !empty($data->password)) {
 
-    $email = trim($data->email);
+    $email = strtolower(trim($data->email));
     $password = $data->password;
 
-    $stmt = $conn->prepare("SELECT id, name, email, password, role, photo, user_type, assigned_roles, partner_slug, position_title FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, name, email, password, role, photo, user_type, assigned_roles, partner_slug, position_title FROM users WHERE email = ? LIMIT 1");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    sleep(1);
-
-    if($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        if(!empty($user['password']) && password_verify($password, $user['password'])) {
-            $assignedRoles = $user['assigned_roles'] ?? ($user['role'] === 'admin' ? 'admin,dekanat,ormawa,mahasiswa,freelancer' : 'freelancer,mahasiswa');
+        if (!empty($user['password']) && password_verify($password, $user['password'])) {
+            // Normalisasi 3 Peran Utama: admin, keuangan, pengguna
+            $rawRole = strtolower(trim($user['role'] ?? 'pengguna'));
+            if ($rawRole === 'bendahara') {
+                $role = 'keuangan';
+            } elseif ($rawRole === 'admin') {
+                $role = 'admin';
+            } elseif ($rawRole === 'keuangan') {
+                $role = 'keuangan';
+            } else {
+                $role = 'pengguna';
+            }
+
+            $assignedRoles = $user['assigned_roles'] ?? ($role === 'admin' ? 'admin,keuangan,pengguna' : 'pengguna,mahasiswa,freelancer');
             $partnerSlug = $user['partner_slug'] ?? 'msc-usn';
             $positionTitle = $user['position_title'] ?? '';
 
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_role'] = $user['role'];
+            $_SESSION['user_role'] = $role;
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_photo'] = $user['photo'];
@@ -39,32 +53,41 @@ if(!empty($data->email) && !empty($data->password)) {
             $_SESSION['partner_slug'] = $partnerSlug;
             $_SESSION['position_title'] = $positionTitle;
 
-            $redirectTarget = "select_role.php";
-            if (!empty($_SESSION['auth_redirect']) && ($_SESSION['auth_redirect'] === 'academy' || strpos($_SESSION['auth_redirect'], 'academy') !== false)) {
-                unset($_SESSION['auth_redirect']);
-                $token = bin2hex(random_bytes(32));
-                $expiresAt = date('Y-m-d H:i:s', time() + 300);
-                $ssoStmt = $conn->prepare("INSERT INTO `sso_tokens` (`token`, `user_id`, `expires_at`) VALUES (?, ?, ?)");
-                if ($ssoStmt) {
-                    $ssoStmt->bind_param("sis", $token, $user['id'], $expiresAt);
-                    $ssoStmt->execute();
-                    $ssoStmt->close();
-                    $redirectTarget = "https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token) . "&target=my-learning.php";
+            // Direct Redirect Berdasarkan 3 Peran Sederhana
+            if ($role === 'admin') {
+                $redirectTarget = "../dashboard/index.php";
+            } elseif ($role === 'keuangan') {
+                $redirectTarget = "../dashboard/finance/index.php";
+            } else {
+                // Peran Pengguna (Mahasiswa & Freelancer)
+                if (!empty($_SESSION['auth_redirect']) && ($_SESSION['auth_redirect'] === 'academy' || strpos($_SESSION['auth_redirect'], 'academy') !== false)) {
+                    unset($_SESSION['auth_redirect']);
+                    $token = bin2hex(random_bytes(32));
+                    $expiresAt = date('Y-m-d H:i:s', time() + 300);
+                    $ssoStmt = $conn->prepare("INSERT INTO `sso_tokens` (`token`, `user_id`, `expires_at`) VALUES (?, ?, ?)");
+                    if ($ssoStmt) {
+                        $ssoStmt->bind_param("sis", $token, $user['id'], $expiresAt);
+                        $ssoStmt->execute();
+                        $ssoStmt->close();
+                        $redirectTarget = "https://academy.skillance.cloud/auth/sso.php?token=" . urlencode($token) . "&target=my-learning.php";
+                    } else {
+                        $redirectTarget = "https://academy.skillance.cloud/my-learning.php";
+                    }
                 } else {
-                    $redirectTarget = "https://academy.skillance.cloud/my-learning.php?logged_in=1";
+                    $redirectTarget = "../dashboard/freelancer/index.php";
                 }
             }
 
             http_response_code(200);
             echo json_encode([
                 "status" => "success",
-                "message" => "Login berhasil!",
+                "message" => "Login berhasil! Mengalihkan ke dashboard...",
                 "redirect" => $redirectTarget,
                 "user" => [
                     "id" => $user['id'],
                     "name" => $user['name'],
                     "email" => $user['email'],
-                    "role" => $user['role'],
+                    "role" => $role,
                     "assigned_roles" => $assignedRoles,
                     "partner_slug" => $partnerSlug,
                     "position_title" => $positionTitle,
@@ -77,7 +100,7 @@ if(!empty($data->email) && !empty($data->password)) {
             http_response_code(401);
             echo json_encode([
                 "status" => "error",
-                "message" => "Email atau password yang Anda masukkan salah."
+                "message" => "Email atau password yang Anda masukkan tidak sesuai."
             ]);
         }
 
@@ -85,7 +108,7 @@ if(!empty($data->email) && !empty($data->password)) {
         http_response_code(401);
         echo json_encode([
             "status" => "error",
-            "message" => "Email atau password yang Anda masukkan salah."
+            "message" => "Akun dengan email ini belum terdaftar. Silakan daftar terlebih dahulu."
         ]);
     }
 
@@ -95,9 +118,6 @@ if(!empty($data->email) && !empty($data->password)) {
     http_response_code(400);
     echo json_encode([
         "status" => "error",
-        "message" => "Mohon isi email dan password."
+        "message" => "Mohon isi alamat email dan password."
     ]);
 }
-
-$conn->close();
-?>

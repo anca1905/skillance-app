@@ -9,11 +9,18 @@ if (empty($_SESSION['user_id']) && empty($_SESSION['user_email'])) {
     exit();
 }
 
-$userId    = $_SESSION['user_id'] ?? 0;
-$userEmail = $_SESSION['user_email'] ?? '';
-$userName  = $_SESSION['user_name'] ?? 'Pengguna Skillance';
-$userPhoto = $_SESSION['user_photo'] ?? null;
-$userRole  = $_SESSION['user_role'] ?? 'freelancer';
+// Auto redirect sesuai 3 peran utama: admin, keuangan, pengguna
+$normRole = strtolower(trim($_SESSION['user_role'] ?? 'pengguna'));
+if ($normRole === 'admin') {
+    header("Location: ../dashboard/index.php");
+    exit();
+} elseif ($normRole === 'keuangan' || $normRole === 'bendahara') {
+    header("Location: ../dashboard/finance/index.php");
+    exit();
+} else {
+    header("Location: ../dashboard/freelancer/index.php");
+    exit();
+}
 
 // Query fresh user permissions from database
 $assignedRolesStr = $_SESSION['assigned_roles'] ?? 'freelancer,mahasiswa';

@@ -4,12 +4,13 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/index.php");
     exit();
 }
-if (($_SESSION['user_role'] ?? '') === 'freelancer') {
-    header("Location: freelancer/index.php");
+$currentUserRole = strtolower(trim($_SESSION['user_role'] ?? 'pengguna'));
+if ($currentUserRole === 'keuangan' || $currentUserRole === 'bendahara') {
+    header("Location: finance/index.php");
     exit();
 }
-if (($_SESSION['user_role'] ?? '') === 'bendahara') {
-    header("Location: finance/index.php");
+if ($currentUserRole !== 'admin') {
+    header("Location: freelancer/index.php");
     exit();
 }
 ?>
